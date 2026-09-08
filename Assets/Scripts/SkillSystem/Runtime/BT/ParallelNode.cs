@@ -1,8 +1,9 @@
-using Jinhyeong_GeneratedEnums;
+using Jinhyeong_GameData;
 
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.Parallel)]
     public sealed class ParallelNode : BTNode
     {
         public ParallelNode(SkillNodeData data) : base(data) { }

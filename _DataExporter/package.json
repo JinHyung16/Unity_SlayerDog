@@ -1,0 +1,16 @@
+{
+  "name": "jinhyeong-skill-db-exporter",
+  "version": "1.0.0",
+  "description": "경로 기반 모듈 DB(트리형) -> Unity JSON + C# 코드젠. 소스 포맷은 readers/ 플러그인으로 확장한다.",
+  "main": "export.js",
+  "scripts": {
+    "export": "node export.js all",
+    "export:verbose": "node export.js all --verbose",
+    "help": "node export.js help"
+  },
+  "dependencies": {},
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

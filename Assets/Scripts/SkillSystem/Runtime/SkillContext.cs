@@ -13,6 +13,9 @@ namespace Jinhyeong_SkillSystem
 
         public SkillLevelData LevelData;
 
+        /// <summary>착용한 파츠 옵션이 만든 이 스킬 전용 보정. 없으면 SkillModifier.None.</summary>
+        public SkillModifier Modifier = SkillModifier.None;
+
         public int Depth = 0;
 
         public bool AttackPending;
@@ -39,6 +42,8 @@ namespace Jinhyeong_SkillSystem
             DebuffNodes.Clear();
             AttackPending = false;
             ManualCast = false;
+            // 호출부가 곧바로 덮어쓰지만, 안 덮어쓰는 경로에서 앞 스킬 보정이 새는 걸 막는다.
+            Modifier = SkillModifier.None;
         }
     }
 }

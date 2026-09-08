@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Jinhyeong_GeneratedEnums;
+using Jinhyeong_GameData;
 
 namespace Jinhyeong_SkillSystem
 {

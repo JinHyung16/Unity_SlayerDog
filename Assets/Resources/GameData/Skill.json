@@ -1,0 +1,1598 @@
+[
+    {
+        "id": 2001,
+        "name": "Bite Heal",
+        "desc": "앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/bite_heal",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearestForward",
+                    "params": {
+                        "Range": 2.4,
+                        "HalfAngle": 60
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 150,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "BuffSelf",
+                    "params": {
+                        "BuffId": 3006
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Teeth",
+                        "VisualColor": "#FFF3E0",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2002,
+        "name": "Bark Cone",
+        "desc": "전방 부채꼴 적에게 공격력 100% 피해 + 둔화. 2.5초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/bark_cone",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetCone",
+                    "params": {
+                        "Range": 4,
+                        "HalfAngle": 30
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 100,
+                        "Radius": 1.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2003
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Bark",
+                        "VisualColor": "#7FD8FF",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2003,
+        "name": "Growl",
+        "desc": "반경 3m 적에게 공격력 80% 피해 + 2초간 둔화. 3초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/growl_aoe",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 80,
+                        "Radius": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2003
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Growl",
+                        "VisualColor": "#FFB86B",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2004,
+        "name": "Yawn",
+        "desc": "전방 90° 적을 3초간 크게 느리게 만든다 (피해 없음). 6초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/yawn",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetCone",
+                    "params": {
+                        "Range": 5,
+                        "HalfAngle": 45
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 0,
+                        "Radius": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2005
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Yawn",
+                        "VisualColor": "#C8B6FF",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2005,
+        "name": "Dig Roll",
+        "desc": "구르는 동안 0.5초마다 반경 1.5m 공격력 30% 피해 (상시 장판)",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/dig_roll",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 30,
+                        "Radius": 1.5,
+                        "DamageInterval": 0.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_DogDust",
+                        "VisualColor": "#C9A87C",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2006,
+        "name": "Claw Volley",
+        "desc": "전방으로 발톱을 날려 각 공격력 60% 피해. 2초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/claw_volley",
+        "methodPath": "Skill/Method/projectile/straight",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetCone",
+                    "params": {
+                        "Range": 8,
+                        "HalfAngle": 30
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 60,
+                        "Radius": 0.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 16,
+                        "MaxDistance": 9,
+                        "Visual": "Fx_DogClaw",
+                        "VisualColor": "#FFFFFF",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2007,
+        "name": "Zoomies",
+        "desc": "6초간 이동속도 +40%. 12초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/zoomies",
+        "methodPath": "Skill/Method/self_cast",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 12
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "BuffSelf",
+                    "params": {
+                        "BuffId": 3005
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2008,
+        "name": "Bone Mine",
+        "desc": "발밑에 뼈다귀를 묻는다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/bone_mine",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitDeathBurst",
+                    "params": {
+                        "Damage": 200,
+                        "Radius": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Burst",
+                        "VisualColor": "#FFF6E0",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2009,
+        "name": "Tail Swipe",
+        "desc": "반월형 기를 날려 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/tail_pierce",
+        "methodPath": "Skill/Method/projectile/piercing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearestForward",
+                    "params": {
+                        "Range": 9,
+                        "HalfAngle": 70
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 120,
+                        "Radius": 0.7
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 14,
+                        "MaxDistance": 11,
+                        "Visual": "Fx_TailSwing",
+                        "VisualColor": "#FFE0B0",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2010,
+        "name": "Static Fur",
+        "desc": "털에서 정전기가 튀어 모든 적에게 공격력 40% 피해. 6초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/static_fur",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetAll",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 40,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Static",
+                        "VisualColor": "#9FD8FF",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2011,
+        "name": "Tail Whip",
+        "desc": "꼬리를 후려쳐 직선상 적에게 공격력 140% 피해. 2초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/tail_whip",
+        "methodPath": "Skill/Method/projectile/straight",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 8
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 140,
+                        "Radius": 0.7
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 18,
+                        "MaxDistance": 10,
+                        "Visual": "Fx_TailSwing",
+                        "VisualColor": "#FFE0B0",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2012,
+        "name": "Tail Copter",
+        "desc": "꼬리를 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/tail_copter",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 8
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 35,
+                        "Radius": 2,
+                        "DamageInterval": 0.4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "BuffSelf",
+                    "params": {
+                        "BuffId": 3005
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_DogDust",
+                        "VisualColor": "#C9A87C",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2013,
+        "name": "Eye Beam",
+        "desc": "전방으로 눈빛 빔을 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/eye_beam",
+        "methodPath": "Skill/Method/beam",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearestForward",
+                    "params": {
+                        "Range": 10,
+                        "HalfAngle": 45
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitBeam",
+                    "params": {
+                        "Damage": 25,
+                        "Length": 8,
+                        "Width": 1.2,
+                        "DamageInterval": 0.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 0,
+                        "MaxDistance": 999,
+                        "Visual": "Fx_EyeBeam",
+                        "VisualColor": "#FF6A6A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2014,
+        "name": "Scent Track",
+        "desc": "가장 먼 적을 유도 추적해 공격력 130% 피해 + 받는 피해 증가. 2초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/scent_homing",
+        "methodPath": "Skill/Method/projectile/homing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetFarthest",
+                    "params": {
+                        "Range": 13
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 130,
+                        "Radius": 0.7
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2004
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchHoming",
+                    "params": {
+                        "Speed": 11,
+                        "MaxDistance": 16,
+                        "TurnRate": 200,
+                        "Visual": "Fx_Scent",
+                        "VisualColor": "#A8E86B",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2015,
+        "name": "Ear Sonar",
+        "desc": "반경 4m 원형 음파로 공격력 60% 피해. 2.5초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/ear_sonar",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 60,
+                        "Radius": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Sonar",
+                        "VisualColor": "#9FE8FF",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2016,
+        "name": "Third Eye",
+        "desc": "가장 가까운 적을 관통하는 시선으로 공격력 180% 피해. 3초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/third_eye",
+        "methodPath": "Skill/Method/projectile/piercing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 11
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 180,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 22,
+                        "MaxDistance": 13,
+                        "Visual": "Fx_Gaze",
+                        "VisualColor": "#C89AFF",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2017,
+        "name": "Pack Howl",
+        "desc": "울음이 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/pack_chain",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitChain",
+                    "params": {
+                        "Damage": 70,
+                        "Radius": 4,
+                        "MaxBounces": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Howl",
+                        "VisualColor": "#8FB8FF",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2018,
+        "name": "Alpha Mode",
+        "desc": "8초간 공격속도 +40%. 16초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/alpha_mode",
+        "methodPath": "Skill/Method/self_cast",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 16
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "BuffSelf",
+                    "params": {
+                        "BuffId": 3002
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2019,
+        "name": "Fur Barrier",
+        "desc": "최대체력 15% 보호막을 8초간. 10초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/fur_barrier",
+        "methodPath": "Skill/Method/self_cast",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "BuffSelf",
+                    "params": {
+                        "BuffId": 3004
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2020,
+        "name": "Kibble Rain",
+        "desc": "랜덤한 적 위치로 사료가 낙하해 반경 1.5m 공격력 80% 피해. 5초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/kibble_rain",
+        "methodPath": "Skill/Method/projectile/arc",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetRandom",
+                    "params": {
+                        "Range": 11,
+                        "Index": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 80,
+                        "Radius": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchArc",
+                    "params": {
+                        "Speed": 12,
+                        "ArcHeight": 4,
+                        "Visual": "Fx_Kibble",
+                        "VisualColor": "#FFA23C",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2021,
+        "name": "Kibble Bomb",
+        "desc": "사료를 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/kibble_bomb",
+        "methodPath": "Skill/Method/projectile/arc",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 90,
+                        "Radius": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2001
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchArc",
+                    "params": {
+                        "Speed": 13,
+                        "ArcHeight": 3,
+                        "Visual": "Fx_Kibble",
+                        "VisualColor": "#FFA23C",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2022,
+        "name": "Frisbee",
+        "desc": "원반이 흔들리며 날아가 공격력 110% 피해. 2초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/frisbee",
+        "methodPath": "Skill/Method/projectile/wave",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetRandom",
+                    "params": {
+                        "Range": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 110,
+                        "Radius": 0.8
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchCurve",
+                    "params": {
+                        "Speed": 12,
+                        "ArcHeight": 1.5,
+                        "Visual": "Fx_Frisbee",
+                        "VisualColor": "#FF9CD2",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2023,
+        "name": "Tennis Ball",
+        "desc": "가장 가까운 적을 쫓는 테니스공, 공격력 100% 피해. 1.8초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/tennis_ball",
+        "methodPath": "Skill/Method/projectile/homing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.8
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 100,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchHoming",
+                    "params": {
+                        "Speed": 13,
+                        "MaxDistance": 14,
+                        "TurnRate": 240,
+                        "Visual": "Fx_Ball",
+                        "VisualColor": "#D8FF6B",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2024,
+        "name": "Slipper Throw",
+        "desc": "슬리퍼를 던져 공격력 300% 피해. 5초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/slipper",
+        "methodPath": "Skill/Method/projectile/straight",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 300,
+                        "Radius": 0.9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 20,
+                        "MaxDistance": 12,
+                        "Visual": "Fx_Slipper",
+                        "VisualColor": "#FFD08A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2101,
+        "name": "Ignore",
+        "desc": "3초간 단단해지며 주변 적을 끌어당긴다. 12초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/ignore_taunt",
+        "methodPath": "Skill/Method/self_cast",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 12
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "BuffSelf",
+                    "params": {
+                        "BuffId": 3004
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2102,
+        "name": "Bread Slice",
+        "desc": "엉덩이를 흔들어 사방 반경 3m 에 공격력 80% 피해. 2.5초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/bread_slice",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 80,
+                        "Radius": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Bread",
+                        "VisualColor": "#FFE9B0",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2103,
+        "name": "Afterimage",
+        "desc": "4초간 빨라지고 지나간 자리에 잔상이 남아 피해를 준다. 10초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/afterimage_dash",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 50,
+                        "Radius": 1.6,
+                        "DamageInterval": 0.3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "BuffSelf",
+                    "params": {
+                        "BuffId": 3005
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_DogDust",
+                        "VisualColor": "#C9A87C",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    }
+]

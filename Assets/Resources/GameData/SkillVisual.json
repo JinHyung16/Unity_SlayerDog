@@ -1,0 +1,470 @@
+[
+    {
+        "path": "Skill/Visual/afterimage_dash",
+        "color": "#C9A87C",
+        "desc": "잔상 질주 — 4초간 빨라지고 지나간 자리에 잔상이 남아 피해를 준다. 10초마다",
+        "values": {
+            "Projectile": "Fx_DogDust",
+            "Impact": "Fx_DogDust",
+            "Cast": "Fx_DogDust",
+            "Orient": "Ground",
+            "Color": "#C9A87C",
+            "Cooldown": 10,
+            "Range": 2,
+            "Damage": 50,
+            "Radius": 1.6,
+            "Duration": 4,
+            "DamageInterval": 0.3
+        }
+    },
+    {
+        "path": "Skill/Visual/alpha_mode",
+        "color": "#FF9A5A",
+        "desc": "개쌘놈 모드 — 8초간 공격속도 +40%. 16초마다",
+        "values": {
+            "Projectile": "Fx_Awaken",
+            "Impact": "Fx_Awaken",
+            "Cast": "Fx_Awaken",
+            "Orient": "Billboard",
+            "Color": "#FF9A5A",
+            "Cooldown": 16,
+            "Range": 1,
+            "Damage": 0,
+            "Duration": 8
+        }
+    },
+    {
+        "path": "Skill/Visual/bark_cone",
+        "color": "#7FD8FF",
+        "desc": "왈왈 — 전방 부채꼴 적에게 공격력 100% 피해 + 둔화. 2.5초마다",
+        "values": {
+            "Projectile": "Fx_Bark",
+            "Impact": "Fx_Bark",
+            "Cast": "Fx_Bark",
+            "Orient": "Ground",
+            "Color": "#7FD8FF",
+            "Cooldown": 2.5,
+            "Range": 4,
+            "Damage": 100,
+            "Radius": 1.2
+        }
+    },
+    {
+        "path": "Skill/Visual/bite_heal",
+        "color": "#FFF3E0",
+        "desc": "개튼튼 치아 — 앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다",
+        "values": {
+            "Projectile": "Fx_Teeth",
+            "Impact": "Fx_Teeth",
+            "Cast": "Fx_Paw",
+            "Orient": "Billboard",
+            "Color": "#FFF3E0",
+            "Cooldown": 1.2,
+            "Range": 2.4,
+            "Damage": 150,
+            "Radius": 0.6
+        }
+    },
+    {
+        "path": "Skill/Visual/bone_mine",
+        "color": "#FFF6E0",
+        "desc": "뼈다귀 매설 — 발밑에 뼈다귀를 묻는다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다",
+        "values": {
+            "Projectile": "Fx_Bone",
+            "Impact": "Fx_Burst",
+            "Cast": "Fx_Bone",
+            "Orient": "Billboard",
+            "Color": "#FFF6E0",
+            "Cooldown": 4,
+            "Range": 2,
+            "Damage": 200,
+            "Radius": 1.5
+        }
+    },
+    {
+        "path": "Skill/Visual/bread_slice",
+        "color": "#FFE9B0",
+        "desc": "식빵 썰기 — 엉덩이를 흔들어 사방 반경 3m 에 공격력 80% 피해. 2.5초마다",
+        "values": {
+            "Projectile": "Fx_Bread",
+            "Impact": "Fx_Bread",
+            "Cast": "Fx_Bread",
+            "Orient": "Billboard",
+            "Color": "#FFE9B0",
+            "Cooldown": 2.5,
+            "Range": 3,
+            "Damage": 80,
+            "Radius": 3
+        }
+    },
+    {
+        "path": "Skill/Visual/claw_volley",
+        "color": "#FFFFFF",
+        "desc": "발톱 세례 — 전방으로 발톱을 날려 각 공격력 60% 피해. 2초마다",
+        "values": {
+            "Projectile": "Fx_DogClaw",
+            "Impact": "Fx_DogClaw",
+            "Cast": "Fx_Paw",
+            "Orient": "Ground",
+            "Color": "#FFFFFF",
+            "Cooldown": 2,
+            "Range": 8,
+            "Damage": 60,
+            "Radius": 0.5,
+            "Speed": 16,
+            "MaxDistance": 9
+        }
+    },
+    {
+        "path": "Skill/Visual/dig_roll",
+        "color": "#C9A87C",
+        "desc": "뒹굴기 — 구르는 동안 0.5초마다 반경 1.5m 공격력 30% 피해 (상시 장판)",
+        "values": {
+            "Projectile": "Fx_DogDust",
+            "Impact": "Fx_DogDust",
+            "Cast": "Fx_DogDust",
+            "Orient": "Ground",
+            "Color": "#C9A87C",
+            "Cooldown": 4,
+            "Range": 2,
+            "Damage": 30,
+            "Radius": 1.5,
+            "Duration": 4,
+            "DamageInterval": 0.5
+        }
+    },
+    {
+        "path": "Skill/Visual/ear_sonar",
+        "color": "#9FE8FF",
+        "desc": "귀 쫑긋 — 반경 4m 원형 음파로 공격력 60% 피해. 2.5초마다",
+        "values": {
+            "Projectile": "Fx_Sonar",
+            "Impact": "Fx_Sonar",
+            "Cast": "Fx_Sonar",
+            "Orient": "Ground",
+            "Color": "#9FE8FF",
+            "Cooldown": 2.5,
+            "Range": 4,
+            "Damage": 60,
+            "Radius": 4
+        }
+    },
+    {
+        "path": "Skill/Visual/eye_beam",
+        "color": "#FF6A6A",
+        "desc": "개눈빛 레이저 — 전방으로 눈빛 빔을 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다",
+        "values": {
+            "Projectile": "Fx_EyeBeam",
+            "Impact": "Fx_EyeBeam",
+            "Cast": "Fx_EyeBeam",
+            "Orient": "Ground",
+            "Color": "#FF6A6A",
+            "Cooldown": 4,
+            "Range": 10,
+            "Damage": 25,
+            "Radius": 0.8,
+            "Length": 8,
+            "Width": 1.2,
+            "Duration": 1.5,
+            "DamageInterval": 0.2
+        }
+    },
+    {
+        "path": "Skill/Visual/frisbee",
+        "color": "#FF9CD2",
+        "desc": "원반 물어오기 — 원반이 흔들리며 날아가 공격력 110% 피해. 2초마다",
+        "values": {
+            "Projectile": "Fx_Frisbee",
+            "Impact": "Fx_Frisbee",
+            "Cast": "Fx_Frisbee",
+            "Orient": "Billboard",
+            "Color": "#FF9CD2",
+            "Cooldown": 2,
+            "Range": 10,
+            "Damage": 110,
+            "Radius": 0.8,
+            "Speed": 12,
+            "ArcHeight": 1.5,
+            "MaxPerTarget": 2
+        }
+    },
+    {
+        "path": "Skill/Visual/fur_barrier",
+        "color": "#FFE68A",
+        "desc": "털뭉치 보호막 — 최대체력 15% 보호막을 8초간. 10초마다",
+        "values": {
+            "Projectile": "Fx_Shield",
+            "Impact": "Fx_Shield",
+            "Cast": "Fx_Shield",
+            "Orient": "Billboard",
+            "Color": "#FFE68A",
+            "Cooldown": 10,
+            "Range": 1,
+            "Damage": 0,
+            "Duration": 8
+        }
+    },
+    {
+        "path": "Skill/Visual/growl_aoe",
+        "color": "#FFB86B",
+        "desc": "으르렁 — 반경 3m 적에게 공격력 80% 피해 + 2초간 둔화. 3초마다",
+        "values": {
+            "Projectile": "Fx_Growl",
+            "Impact": "Fx_Growl",
+            "Cast": "Fx_Growl",
+            "Orient": "Ground",
+            "Color": "#FFB86B",
+            "Cooldown": 3,
+            "Range": 3,
+            "Damage": 80,
+            "Radius": 3
+        }
+    },
+    {
+        "path": "Skill/Visual/ignore_taunt",
+        "color": "#C0C8D8",
+        "desc": "개무시 — 3초간 단단해지며 주변 적을 끌어당긴다. 12초마다",
+        "values": {
+            "Projectile": "Fx_Taunt",
+            "Impact": "Fx_Taunt",
+            "Cast": "Fx_Taunt",
+            "Orient": "Billboard",
+            "Color": "#C0C8D8",
+            "Cooldown": 12,
+            "Range": 3,
+            "Damage": 0,
+            "Duration": 3
+        }
+    },
+    {
+        "path": "Skill/Visual/kibble_bomb",
+        "color": "#FFA23C",
+        "desc": "God-사료 폭탄 — 사료를 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다",
+        "values": {
+            "Projectile": "Fx_Kibble",
+            "Impact": "Fx_Kibble",
+            "Cast": "Fx_Kibble",
+            "Orient": "Billboard",
+            "Color": "#FFA23C",
+            "Cooldown": 3,
+            "Range": 10,
+            "Damage": 90,
+            "Radius": 2,
+            "Speed": 13,
+            "ArcHeight": 3
+        }
+    },
+    {
+        "path": "Skill/Visual/kibble_rain",
+        "color": "#FFA23C",
+        "desc": "사료 유성우 — 랜덤한 적 위치로 사료가 낙하해 반경 1.5m 공격력 80% 피해. 5초마다",
+        "values": {
+            "Projectile": "Fx_Kibble",
+            "Impact": "Fx_Kibble",
+            "Cast": "Fx_Kibble",
+            "Orient": "Billboard",
+            "Color": "#FFA23C",
+            "Cooldown": 5,
+            "Range": 11,
+            "Damage": 80,
+            "Radius": 1.5,
+            "Speed": 12,
+            "ArcHeight": 4
+        }
+    },
+    {
+        "path": "Skill/Visual/pack_chain",
+        "color": "#8FB8FF",
+        "desc": "무리 울음 — 울음이 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다",
+        "values": {
+            "Projectile": "Fx_Howl",
+            "Impact": "Fx_Howl",
+            "Cast": "Fx_Howl",
+            "Orient": "Ground",
+            "Color": "#8FB8FF",
+            "Cooldown": 2.5,
+            "Range": 9,
+            "Damage": 70,
+            "Radius": 4
+        }
+    },
+    {
+        "path": "Skill/Visual/scent_homing",
+        "color": "#A8E86B",
+        "desc": "냄새 추적 — 가장 먼 적을 유도 추적해 공격력 130% 피해 + 받는 피해 증가. 2초마다",
+        "values": {
+            "Projectile": "Fx_Scent",
+            "Impact": "Fx_Scent",
+            "Cast": "Fx_Scent",
+            "Orient": "Ground",
+            "Color": "#A8E86B",
+            "Cooldown": 2,
+            "Range": 13,
+            "Damage": 130,
+            "Radius": 0.7,
+            "Speed": 11,
+            "MaxDistance": 16,
+            "TurnRate": 200
+        }
+    },
+    {
+        "path": "Skill/Visual/slipper",
+        "color": "#FFD08A",
+        "desc": "슬리퍼 투척 — 슬리퍼를 던져 공격력 300% 피해. 5초마다",
+        "values": {
+            "Projectile": "Fx_Slipper",
+            "Impact": "Fx_Paw",
+            "Cast": "Fx_Slipper",
+            "Orient": "Billboard",
+            "Color": "#FFD08A",
+            "Cooldown": 5,
+            "Range": 10,
+            "Damage": 300,
+            "Radius": 0.9,
+            "Speed": 20,
+            "MaxDistance": 12
+        }
+    },
+    {
+        "path": "Skill/Visual/static_fur",
+        "color": "#9FD8FF",
+        "desc": "정전기 털 — 털에서 정전기가 튀어 모든 적에게 공격력 40% 피해. 6초마다",
+        "values": {
+            "Projectile": "Fx_Static",
+            "Impact": "Fx_Static",
+            "Cast": "Fx_Static",
+            "Orient": "Ground",
+            "Color": "#9FD8FF",
+            "Cooldown": 6,
+            "Range": 14,
+            "Damage": 40,
+            "Radius": 0.6
+        }
+    },
+    {
+        "path": "Skill/Visual/tail_copter",
+        "color": "#C9A87C",
+        "desc": "꼬리 프로펠러 — 꼬리를 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다",
+        "values": {
+            "Projectile": "Fx_DogDust",
+            "Impact": "Fx_DogDust",
+            "Cast": "Fx_DogDust",
+            "Orient": "Ground",
+            "Color": "#C9A87C",
+            "Cooldown": 8,
+            "Range": 2,
+            "Damage": 35,
+            "Radius": 2,
+            "Duration": 3,
+            "DamageInterval": 0.4
+        }
+    },
+    {
+        "path": "Skill/Visual/tail_pierce",
+        "color": "#FFE0B0",
+        "desc": "꼬리 흔들기 — 반월형 기를 날려 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다",
+        "values": {
+            "Projectile": "Fx_TailSwing",
+            "Impact": "Fx_TailSwing",
+            "Cast": "Fx_TailSwing",
+            "Orient": "Ground",
+            "Color": "#FFE0B0",
+            "Cooldown": 1.5,
+            "Range": 9,
+            "Damage": 120,
+            "Radius": 0.7,
+            "Speed": 14,
+            "MaxDistance": 11,
+            "MaxPerTarget": 3
+        }
+    },
+    {
+        "path": "Skill/Visual/tail_whip",
+        "color": "#FFE0B0",
+        "desc": "꼬리 채찍 — 꼬리를 후려쳐 직선상 적에게 공격력 140% 피해. 2초마다",
+        "values": {
+            "Projectile": "Fx_TailSwing",
+            "Impact": "Fx_TailSwing",
+            "Cast": "Fx_TailSwing",
+            "Orient": "Ground",
+            "Color": "#FFE0B0",
+            "Cooldown": 2,
+            "Range": 8,
+            "Damage": 140,
+            "Radius": 0.7,
+            "Speed": 18,
+            "MaxDistance": 10
+        }
+    },
+    {
+        "path": "Skill/Visual/tennis_ball",
+        "color": "#D8FF6B",
+        "desc": "테니스공 물어와 — 가장 가까운 적을 쫓는 테니스공, 공격력 100% 피해. 1.8초마다",
+        "values": {
+            "Projectile": "Fx_Ball",
+            "Impact": "Fx_Ball",
+            "Cast": "Fx_Ball",
+            "Orient": "Billboard",
+            "Color": "#D8FF6B",
+            "Cooldown": 1.8,
+            "Range": 10,
+            "Damage": 100,
+            "Radius": 0.6,
+            "Speed": 13,
+            "MaxDistance": 14,
+            "TurnRate": 240
+        }
+    },
+    {
+        "path": "Skill/Visual/third_eye",
+        "color": "#C89AFF",
+        "desc": "제3의 눈 — 가장 가까운 적을 관통하는 시선으로 공격력 180% 피해. 3초마다",
+        "values": {
+            "Projectile": "Fx_Gaze",
+            "Impact": "Fx_Gaze",
+            "Cast": "Fx_Gaze",
+            "Orient": "Billboard",
+            "Color": "#C89AFF",
+            "Cooldown": 3,
+            "Range": 11,
+            "Damage": 180,
+            "Radius": 0.6,
+            "Speed": 22,
+            "MaxDistance": 13,
+            "MaxPerTarget": 3
+        }
+    },
+    {
+        "path": "Skill/Visual/yawn",
+        "color": "#C8B6FF",
+        "desc": "하품 — 전방 90° 적을 3초간 크게 느리게 만든다 (피해 없음). 6초마다",
+        "values": {
+            "Projectile": "Fx_Yawn",
+            "Impact": "Fx_Yawn",
+            "Cast": "Fx_Yawn",
+            "Orient": "Ground",
+            "Color": "#C8B6FF",
+            "Cooldown": 6,
+            "Range": 5,
+            "Damage": 0,
+            "Radius": 1.5,
+            "Duration": 3
+        }
+    },
+    {
+        "path": "Skill/Visual/zoomies",
+        "color": "#9CE8FF",
+        "desc": "우다다 모드 — 6초간 이동속도 +40%. 12초마다",
+        "values": {
+            "Projectile": "Fx_Zoom",
+            "Impact": "Fx_Zoom",
+            "Cast": "Fx_Zoom",
+            "Orient": "Billboard",
+            "Color": "#9CE8FF",
+            "Cooldown": 12,
+            "Range": 1,
+            "Damage": 0,
+            "Duration": 6
+        }
+    }
+]

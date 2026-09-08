@@ -1,6 +1,9 @@
+using Jinhyeong_GameData;
+
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.DebuffOnHit)]
     public sealed class DebuffLeafNode : BTNode
     {
         public DebuffLeafNode(SkillNodeData data) : base(data) { }

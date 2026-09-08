@@ -1,0 +1,80 @@
+[
+    {
+        "id": 3004,
+        "path": "Shared/buff/barrier",
+        "name": "Barrier",
+        "desc": "보호막",
+        "type": "Shield",
+        "duration": 8,
+        "tickInterval": 0,
+        "value0": 0.15,
+        "value1": 0,
+        "stackMode": "Refresh",
+        "maxStacks": 1
+    },
+    {
+        "id": 3002,
+        "path": "Shared/buff/haste",
+        "name": "Haste",
+        "desc": "신속 — 공격 속도 증가",
+        "type": "AttackSpeedBoost",
+        "duration": 8,
+        "tickInterval": 0,
+        "value0": 0.4,
+        "value1": 0,
+        "stackMode": "Refresh",
+        "maxStacks": 1
+    },
+    {
+        "id": 3006,
+        "path": "Shared/buff/leech",
+        "name": "Leech",
+        "desc": "흡혈 — 문 순간 회복",
+        "type": "HealOverTime",
+        "duration": 0.2,
+        "tickInterval": 0.1,
+        "value0": 0.15,
+        "value1": 0,
+        "stackMode": "Refresh",
+        "maxStacks": 1
+    },
+    {
+        "id": 3001,
+        "path": "Shared/buff/rage",
+        "name": "Rage",
+        "desc": "분노 — 공격력 증가",
+        "type": "DamageBoost",
+        "duration": 8,
+        "tickInterval": 0,
+        "value0": 0.4,
+        "value1": 0,
+        "stackMode": "Refresh",
+        "maxStacks": 1
+    },
+    {
+        "id": 3003,
+        "path": "Shared/buff/regen",
+        "name": "Regen",
+        "desc": "재생 — 지속 회복",
+        "type": "HealOverTime",
+        "duration": 6,
+        "tickInterval": 1,
+        "value0": 0.02,
+        "value1": 0,
+        "stackMode": "Refresh",
+        "maxStacks": 1
+    },
+    {
+        "id": 3005,
+        "path": "Shared/buff/sprint",
+        "name": "Sprint",
+        "desc": "질주 — 이동 속도 증가",
+        "type": "MoveSpeedBoost",
+        "duration": 6,
+        "tickInterval": 0,
+        "value0": 0.4,
+        "value1": 0,
+        "stackMode": "Refresh",
+        "maxStacks": 1
+    }
+]

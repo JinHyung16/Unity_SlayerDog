@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: UI
+  m_GUID: 58e2c79248324f64694641893ee01630
+  m_SerializeEntries:
+  - m_GUID: 0600786506c5ae344811f03662aa28ab
+    m_Address: UI/Lobby/HeroCard
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42a67b4da6d5a0340ad61e28b66fb844
+    m_Address: UI/Lobby/ConstellationNode
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4805eea176ec3794391e3559bf635363
+    m_Address: UI/Lobby/CharacterPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c4d9bd28e127cc4fb215788e5440fc1
+    m_Address: UI/Lobby/SettingsPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d73ebcf060ffc64292140ef82f874e3
+    m_Address: UI/Lobby/SkillPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95910e98413e1b24184bbb46995e3962
+    m_Address: UI/LobbyWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d306d7f6e426bb245a4d69c1e95ca970
+    m_Address: UI/Lobby/LabelButton
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dcdd2c6a14b09cb468d1342ab47ccdaa
+    m_Address: UI/Lobby/StartPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ee692a7449d27bb47982fbe04cd2757c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 01f667ffd8945354a928f678865ec3c9, type: 2}
+    - {fileID: 11400000, guid: decb4756576b072429b637a9c33ddba0, type: 2}

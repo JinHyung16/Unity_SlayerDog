@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Jinhyeong_GeneratedEnums;
+using Jinhyeong_GameData;
 
 namespace Jinhyeong_SkillSystem
 {
@@ -17,7 +17,7 @@ namespace Jinhyeong_SkillSystem
                 return;
 
             ESkillTeam enemyTeam = SkillTeamUtil.Opposite(ctx.Caster != null ? ctx.Caster.Team : ESkillTeam.Friend);
-            float range = node.GetFloat(ESkillParamKey.Range, level, 5f);
+            float range = node.GetFloat(ESkillParamKey.Range, level, 5f, ctx.Modifier);
             float rangeSq = range * range;
 
             switch (node.NodeType)
@@ -48,7 +48,7 @@ namespace Jinhyeong_SkillSystem
 
                 case ESkillNodeType.TargetRandom:
                 {
-                    int max = node.GetInt(ESkillParamKey.MaxPerTarget, null, 1);
+                    int max = node.GetInt(ESkillParamKey.MaxPerTarget, null, 1, ctx.Modifier);
                     GatherInRange(ctx.OriginPosition, enemyTeam, rangeSq, _candidates);
                     for (int i = 0; i < max && _candidates.Count > 0; i++)
                     {
@@ -61,7 +61,7 @@ namespace Jinhyeong_SkillSystem
 
                 case ESkillNodeType.TargetAll:
                 {
-                    int max = node.GetInt(ESkillParamKey.MaxPerTarget, null, int.MaxValue);
+                    int max = node.GetInt(ESkillParamKey.MaxPerTarget, null, int.MaxValue, ctx.Modifier);
                     Damageable.GetAllOfTeam(enemyTeam, _candidates);
                     for (int i = 0; i < _candidates.Count && ctx.Targets.Count < max; i++)
                     {
@@ -85,9 +85,9 @@ namespace Jinhyeong_SkillSystem
 
                 case ESkillNodeType.TargetCone:
                 {
-                    float maxDist = node.GetFloat(ESkillParamKey.MaxDistance, level, range);
+                    float maxDist = node.GetFloat(ESkillParamKey.MaxDistance, level, range, ctx.Modifier);
                     float maxDistSq = maxDist * maxDist;
-                    int max = node.GetInt(ESkillParamKey.MaxPerTarget, null, int.MaxValue);
+                    int max = node.GetInt(ESkillParamKey.MaxPerTarget, null, int.MaxValue, ctx.Modifier);
                     Damageable.GetAllOfTeam(enemyTeam, _candidates);
                     for (int i = 0; i < _candidates.Count && ctx.Targets.Count < max; i++)
                     {

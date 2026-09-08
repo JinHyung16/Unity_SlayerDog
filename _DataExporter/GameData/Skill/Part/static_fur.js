@@ -1,0 +1,13 @@
+/** 파츠 = 스킬 1개 + 옵션 슬롯. 착용하면 skillId 스킬이 자동 발동한다. */
+module.exports = {
+    id: 2010,
+    name: 'Static Fur',
+    desc: '털에서 정전기가 튀어 모든 적에게 공격력 40% 피해. 6초마다',
+    displayName: '정전기 털',
+    slot: 'Tail',
+    family: 'Wave',
+    appliesDebuff: 'None',
+    skillId: 2010,
+    weight: 10,
+    owner: 0
+};

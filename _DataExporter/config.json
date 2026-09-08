@@ -1,0 +1,642 @@
+{
+  "SourceRoot": "GameData",
+  "JsonOutputPath": "../Assets/Resources/GameData",
+  "CsOutputPath": "../Assets/Scripts/GameData/Runtime",
+  "CsNamespace": "Jinhyeong_GameData",
+  "GenerateMetaFiles": false,
+  "ExcludePrefix": "_",
+  "ExcludePatterns": [
+    "*~*",
+    "*.tmp",
+    ".DS_Store",
+    "Thumbs.db"
+  ],
+  "EnumFile": "_enums",
+  "_UnimplementedNodes": "enum 에는 있지만 런타임이 아직 처리하지 않는 노드. 데이터로 쓰면 조용히 아무 일도 안 하므로 빌드에서 막는다. 구현하면 여기서 빼면 된다.",
+  "UnimplementedNodes": [
+    "TriggerOnOreBreak",
+    "DespawnAfterBounces",
+    "DespawnOnWall"
+  ],
+  "Modules": {
+    "visual": {
+      "dir": "Skill/Visual",
+      "table": "SkillVisual"
+    },
+    "method": {
+      "dir": "Skill/Method",
+      "table": "SkillMethod"
+    },
+    "buff": {
+      "dir": "Shared/buff",
+      "table": "SkillBuff",
+      "idTable": true,
+      "typeEnum": "EBuffType",
+      "stackEnum": "EStatusStackMode",
+      "csClass": "SkillBuffData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "Type",
+          "json": "type",
+          "type": "EBuffType"
+        },
+        {
+          "name": "Duration",
+          "json": "duration",
+          "type": "float"
+        },
+        {
+          "name": "TickInterval",
+          "json": "tickInterval",
+          "type": "float"
+        },
+        {
+          "name": "Value0",
+          "json": "value0",
+          "type": "float"
+        },
+        {
+          "name": "Value1",
+          "json": "value1",
+          "type": "float"
+        },
+        {
+          "name": "StackMode",
+          "json": "stackMode",
+          "type": "EStatusStackMode"
+        },
+        {
+          "name": "MaxStacks",
+          "json": "maxStacks",
+          "type": "int"
+        }
+      ]
+    },
+    "debuff": {
+      "dir": "Shared/debuff",
+      "table": "SkillDebuff",
+      "idTable": true,
+      "typeEnum": "EDebuffType",
+      "stackEnum": "EStatusStackMode",
+      "csClass": "SkillDebuffData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "Type",
+          "json": "type",
+          "type": "EDebuffType"
+        },
+        {
+          "name": "Duration",
+          "json": "duration",
+          "type": "float"
+        },
+        {
+          "name": "TickInterval",
+          "json": "tickInterval",
+          "type": "float"
+        },
+        {
+          "name": "Value0",
+          "json": "value0",
+          "type": "float"
+        },
+        {
+          "name": "Value1",
+          "json": "value1",
+          "type": "float"
+        },
+        {
+          "name": "StackMode",
+          "json": "stackMode",
+          "type": "EStatusStackMode"
+        },
+        {
+          "name": "MaxStacks",
+          "json": "maxStacks",
+          "type": "int"
+        }
+      ]
+    },
+    "part": {
+      "dir": "Skill/Part",
+      "table": "Part",
+      "idTable": true,
+      "csClass": "PartData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "DisplayName",
+          "json": "displayName",
+          "type": "string"
+        },
+        {
+          "name": "Slot",
+          "json": "slot",
+          "type": "EPartSlot"
+        },
+        {
+          "name": "Family",
+          "json": "family",
+          "type": "ESkillFamily"
+        },
+        {
+          "name": "AppliesDebuff",
+          "json": "appliesDebuff",
+          "type": "EDebuffType"
+        },
+        {
+          "name": "SkillId",
+          "json": "skillId",
+          "type": "int"
+        },
+        {
+          "name": "Weight",
+          "json": "weight",
+          "type": "float"
+        },
+        {
+          "name": "Owner",
+          "json": "owner",
+          "type": "int"
+        }
+      ]
+    },
+    "option": {
+      "dir": "Skill/Option",
+      "table": "PartOption",
+      "idTable": true,
+      "csClass": "PartOptionData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "DisplayName",
+          "json": "displayName",
+          "type": "string"
+        },
+        {
+          "name": "PartId",
+          "json": "partId",
+          "type": "int"
+        },
+        {
+          "name": "Trait",
+          "json": "trait",
+          "type": "EPartTrait"
+        },
+        {
+          "name": "Value",
+          "json": "value",
+          "type": "float"
+        },
+        {
+          "name": "MaxStack",
+          "json": "maxStack",
+          "type": "int"
+        },
+        {
+          "name": "UniqueField",
+          "json": "uniqueField",
+          "type": "string"
+        }
+      ]
+    },
+    "enemy": {
+      "dir": "Tables/enemy",
+      "table": "EnemyType",
+      "idTable": true,
+      "csClass": "EnemyTypeData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "Sprite",
+          "json": "sprite",
+          "type": "string"
+        },
+        {
+          "name": "Hp",
+          "json": "hp",
+          "type": "float"
+        },
+        {
+          "name": "MoveSpeed",
+          "json": "moveSpeed",
+          "type": "float"
+        },
+        {
+          "name": "AttackDamage",
+          "json": "attackDamage",
+          "type": "float"
+        },
+        {
+          "name": "Scale",
+          "json": "scale",
+          "type": "float"
+        },
+        {
+          "name": "Color",
+          "json": "color",
+          "type": "string"
+        },
+        {
+          "name": "Xp",
+          "json": "xp",
+          "type": "float"
+        },
+        {
+          "name": "Weight",
+          "json": "weight",
+          "type": "float"
+        },
+        {
+          "name": "MinTime",
+          "json": "minTime",
+          "type": "float"
+        }
+      ]
+    },
+    "wave": {
+      "dir": "Tables/wave",
+      "table": "WaveEvent",
+      "idTable": true,
+      "csClass": "WaveEventData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "Time",
+          "json": "time",
+          "type": "float"
+        },
+        {
+          "name": "Repeat",
+          "json": "repeat",
+          "type": "float"
+        },
+        {
+          "name": "Count",
+          "json": "count",
+          "type": "int"
+        },
+        {
+          "name": "HpMul",
+          "json": "hpMul",
+          "type": "float"
+        },
+        {
+          "name": "DamageMul",
+          "json": "damageMul",
+          "type": "float"
+        },
+        {
+          "name": "ScaleMul",
+          "json": "scaleMul",
+          "type": "float"
+        },
+        {
+          "name": "XpMul",
+          "json": "xpMul",
+          "type": "float"
+        },
+        {
+          "name": "Banner",
+          "json": "banner",
+          "type": "string"
+        },
+        {
+          "name": "IsBoss",
+          "json": "boss",
+          "type": "bool"
+        },
+        {
+          "name": "EnemyTypeId",
+          "json": "enemyTypeId",
+          "type": "int"
+        },
+        {
+          "name": "SpeedMul",
+          "json": "speedMul",
+          "type": "float"
+        }
+      ]
+    },
+    "round": {
+      "dir": "Tables/round",
+      "table": "Round",
+      "idTable": true,
+      "csClass": "RoundData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "Round",
+          "json": "round",
+          "type": "int"
+        },
+        {
+          "name": "SpawnGap",
+          "json": "spawnGap",
+          "type": "float"
+        },
+        {
+          "name": "SpawnBatch",
+          "json": "spawnBatch",
+          "type": "int"
+        },
+        {
+          "name": "MaxAlive",
+          "json": "maxAlive",
+          "type": "int"
+        },
+        {
+          "name": "HpMul",
+          "json": "hpMul",
+          "type": "float"
+        },
+        {
+          "name": "DamageMul",
+          "json": "damageMul",
+          "type": "float"
+        },
+        {
+          "name": "Banner",
+          "json": "banner",
+          "type": "string"
+        }
+      ]
+    },
+    "synergy": {
+      "dir": "Tables/synergy",
+      "table": "Synergy",
+      "idTable": true,
+      "csClass": "SynergyData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "DisplayName",
+          "json": "displayName",
+          "type": "string"
+        },
+        {
+          "name": "Family",
+          "json": "family",
+          "type": "ESkillFamily"
+        },
+        {
+          "name": "ReqFamilyCount",
+          "json": "reqFamilyCount",
+          "type": "int"
+        },
+        {
+          "name": "ReqSkillId",
+          "json": "reqSkillId",
+          "type": "int"
+        },
+        {
+          "name": "ReqOwnOptions",
+          "json": "reqOwnOptions",
+          "type": "int"
+        },
+        {
+          "name": "ReqDebuff",
+          "json": "reqDebuff",
+          "type": "EDebuffType"
+        },
+        {
+          "name": "Trait",
+          "json": "trait",
+          "type": "EPartTrait"
+        },
+        {
+          "name": "Value",
+          "json": "value",
+          "type": "float"
+        },
+        {
+          "name": "VsDebuff",
+          "json": "vsDebuff",
+          "type": "EDebuffType"
+        }
+      ]
+    },
+    "constellation": {
+      "dir": "Tables/constellation",
+      "table": "ConstellationRegion",
+      "idTable": true,
+      "csClass": "ConstellationRegionData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "DisplayName",
+          "json": "displayName",
+          "type": "string"
+        },
+        {
+          "name": "Family",
+          "json": "family",
+          "type": "ESkillFamily"
+        },
+        {
+          "name": "CenterAngle",
+          "json": "centerAngle",
+          "type": "float"
+        },
+        {
+          "name": "Span",
+          "json": "span",
+          "type": "float"
+        },
+        {
+          "name": "ClusterCount",
+          "json": "clusterCount",
+          "type": "int"
+        },
+        {
+          "name": "Color",
+          "json": "color",
+          "type": "string"
+        },
+        {
+          "name": "TraitA",
+          "json": "traitA",
+          "type": "EPartTrait"
+        },
+        {
+          "name": "ValueA",
+          "json": "valueA",
+          "type": "float"
+        },
+        {
+          "name": "TraitB",
+          "json": "traitB",
+          "type": "EPartTrait"
+        },
+        {
+          "name": "ValueB",
+          "json": "valueB",
+          "type": "float"
+        },
+        {
+          "name": "KeystoneName",
+          "json": "keystoneName",
+          "type": "string"
+        },
+        {
+          "name": "KeystoneDesc",
+          "json": "keystoneDesc",
+          "type": "string"
+        },
+        {
+          "name": "KeystoneTrait",
+          "json": "keystoneTrait",
+          "type": "EPartTrait"
+        },
+        {
+          "name": "KeystoneValue",
+          "json": "keystoneValue",
+          "type": "float"
+        }
+      ]
+    }
+  },
+  "Entries": {
+    "skill": {
+      "dir": "Skill/Master",
+      "table": "Skill"
+    }
+  },
+  "CsDataOutputPath": "../Assets/Scripts/SkillSystem",
+  "CsDataNamespace": "Jinhyeong_SkillSystem",
+  "_RawTables": "도구가 만든 중간 형식을 그대로 Resources 로 옮긴다. 모듈 스캔 대상이 아니라 파일 하나를 통째로 옮기는 자리.",
+  "RawTables": {
+    "constellationGraph": {
+      "file": "_raw/ConstellationGraph.json",
+      "table": "ConstellationGraph"
+    }
+  }
+}

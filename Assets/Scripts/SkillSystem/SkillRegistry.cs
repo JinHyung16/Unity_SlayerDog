@@ -1,30 +1,33 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Jinhyeong_JsonParsing;
+using Jinhyeong_Common;
+using Jinhyeong_GameData;
+using Jinhyeong_GameData.Json;
 using Jinhyeong_Managers;
 using UnityEngine;
-using Jinhyeong_GeneratedEnums;
 
 namespace Jinhyeong_SkillSystem
 {
 
+    /// <summary>
+    /// 스킬 DB 레지스트리.
+    /// 원본은 _DataExporter/GameData (경로 기반 모듈 트리)이고, 여기서 읽는 건 그 빌드 산출물이다.
+    /// 슬롯·토큰은 빌드 타임에 이미 해석돼 있어서 런타임이 할 일은 트리를 그대로 옮겨 담는 것뿐이다.
+    /// </summary>
     public static class SkillRegistry
     {
-        public const string TableSkill       = "Skill";
-        public const string TableSkillLevel  = "SkillLevel";
-        public const string TableSkillBTNode = "SkillBTNode";
+        public const string ResourceSkill = "GameData/Skill";
 
         private static readonly Dictionary<int, SkillDefinition> _byId =
             new Dictionary<int, SkillDefinition>(32);
 
         private static Task _loadingTask;
 
-        public static int Count           { get { return _byId.Count; } }
+        public static int Count { get { return _byId.Count; } }
         public static IEnumerable<SkillDefinition> All { get { return _byId.Values; } }
-        public static bool IsLoaded       { get; private set; }
+        public static bool IsLoaded { get; private set; }
 
         public static void Add(SkillDefinition def)
         {
@@ -55,24 +58,23 @@ namespace Jinhyeong_SkillSystem
             {
                 return Task.CompletedTask;
             }
-            if (_loadingTask != null)
+            // 이미 메인스레드면 LoadInternalAsync 가 동기로 끝나 finally 가 대입보다 먼저 돈다.
+            // 그러면 완료된 태스크가 필드에 남아 다음 로드(씬 리로드)를 영원히 건너뛴다 — 완료 여부로 거른다.
+            if (_loadingTask != null && _loadingTask.IsCompleted == false)
             {
                 return _loadingTask;
             }
-            _loadingTask = LoadInternalAsync();
-            return _loadingTask;
+            Task task = LoadInternalAsync();
+            _loadingTask = task.IsCompleted ? null : task;
+            return task;
         }
 
         private static async Task LoadInternalAsync()
         {
             try
             {
-                DataManager dm = DataManager.Instance;
-                if (dm.IsInitialized == false)
-                {
-                    await dm.InitializeAsync();
-                }
-                LoadFromDataManager(dm);
+                await UniTask.SwitchToMainThread();
+                Load();
             }
             finally
             {
@@ -80,156 +82,161 @@ namespace Jinhyeong_SkillSystem
             }
         }
 
-        public static void LoadFromDataManager(DataManager dm)
+        /// <summary>
+        /// Resources 에서 동기 로드. 에디터 툴이나 테스트에서 직접 부를 수 있게 public 으로 둔다.
+        /// </summary>
+        public static void Load()
         {
-            if (dm == null)
-                throw new ArgumentNullException(nameof(dm));
-
-            DataTable skill = dm.GetTable(TableSkill);
-            DataTable level = dm.GetTable(TableSkillLevel);
-            DataTable nodes = dm.GetTable(TableSkillBTNode);
-
             Clear();
 
-            BuildSkills(skill);
-            BuildLevels(level);
-            BuildNodes(nodes);
-            SortNodes();
+            TextAsset asset = Resources.Load<TextAsset>(ResourceSkill);
+            if (asset == null)
+            {
+                Debug.LogError($"[SkillRegistry] '{ResourceSkill}' 을 찾을 수 없습니다. _DataExporter 에서 export 를 돌렸는지 확인하세요.");
+                return;
+            }
 
-            SkillBuffRegistry.LoadFromDataManager(dm);
+            JsonValue root;
+            try
+            {
+                root = JsonValue.Parse(asset.text);
+            }
+            catch (FormatException e)
+            {
+                Debug.LogError($"[SkillRegistry] {ResourceSkill}.json 파싱 실패 — {e.Message}");
+                return;
+            }
+            finally
+            {
+                Resources.UnloadAsset(asset);
+            }
+
+            if (root.IsArray == false)
+            {
+                Debug.LogError($"[SkillRegistry] {ResourceSkill}.json 최상위가 배열이 아닙니다");
+                return;
+            }
+
+            for (int i = 0; i < root.Count; i++)
+            {
+                SkillDefinition def = BuildSkill(root[i], i);
+                if (def == null)
+                    continue;
+                Add(def);
+            }
+
+            SkillBuffRegistry.Load();
+            PartRegistry.Load();
+            PartOptionRegistry.Load();
+            RoundRegistry.Load();
+            SynergyRegistry.Load();
+            EnemyTypeRegistry.Load();
+            WaveEventRegistry.Load();
 
             IsLoaded = true;
         }
 
-        private static void BuildSkills(DataTable t)
+        private static SkillDefinition BuildSkill(JsonValue row, int index)
         {
-            if (t == null)
-                return;
-            for (int r = 0; r < t.RowCount; r++)
+            int id = row.GetInt("id");
+            if (id <= 0)
             {
-                int id = t.GetInt(r, "id");
-                if (id <= 0)
-                    continue;
+                Debug.LogWarning($"[SkillRegistry] {index}번 항목에 유효한 id 가 없습니다 — 건너뜀");
+                return null;
+            }
 
-                SkillData meta = new SkillData
+            SkillDefinition def = new SkillDefinition
+            {
+                Meta = new SkillData
                 {
                     Id = id,
-                    Name = t.GetString(r, "name"),
-                    Description = t.GetString(r, "desc"),
-                    MaxLevel = Math.Max(1, t.GetInt(r, "max_level")),
-                    VisualPath = t.GetString(r, "visual_path"),
-                };
-                Add(new SkillDefinition { Meta = meta });
-            }
+                    Name = row.GetString("name"),
+                    Description = row.GetString("desc"),
+                    MaxLevel = Math.Max(1, row.GetInt("maxLevel", 1)),
+                    VisualPath = row.GetString("visualPath"),
+                    MethodPath = row.GetString("methodPath"),
+                },
+                Root = BuildNode(row["tree"], id),
+            };
+
+            BuildLevels(def, row["levels"], id);
+            return def;
         }
 
-        private static void BuildLevels(DataTable t)
+        private static SkillNodeData BuildNode(JsonValue node, int skillId)
         {
-            if (t == null)
-                return;
-            for (int r = 0; r < t.RowCount; r++)
+            if (node.IsObject == false)
             {
-                int skillId = t.GetInt(r, "skill_id");
-                if (skillId <= 0)
-                    continue;
-                SkillDefinition def = Get(skillId);
-                if (def == null)
-                    continue;
+                return null;
+            }
 
-                SkillLevelData lv = new SkillLevelData
+            string typeRaw = node.GetString("type");
+            if (Enum.TryParse(typeRaw, false, out ESkillNodeType nodeType) == false)
+            {
+                Debug.LogWarning($"[SkillRegistry] skill {skillId}: 알 수 없는 node type '{typeRaw}'");
+                nodeType = ESkillNodeType.None;
+            }
+
+            SkillNodeData data = new SkillNodeData
+            {
+                NodeId = node.GetInt("id"),
+                NodeType = nodeType,
+            };
+
+            foreach (KeyValuePair<string, JsonValue> pair in node["params"].Members)
+            {
+                if (Enum.TryParse(pair.Key, false, out ESkillParamKey key) == false || key == ESkillParamKey.None)
                 {
-                    Id = t.GetInt(r, "id"),
-                    SkillId = skillId,
-                    Level = t.GetInt(r, "level"),
-                };
+                    Debug.LogWarning($"[SkillRegistry] skill {skillId} node {data.NodeId}: 알 수 없는 param '{pair.Key}'");
+                    continue;
+                }
+                data.Params[key] = pair.Value.ToRawString();
+            }
 
-                for (int slot = 0; ; slot++)
+            JsonValue children = node["children"];
+            for (int i = 0; i < children.Count; i++)
+            {
+                SkillNodeData child = BuildNode(children[i], skillId);
+                if (child == null)
+                    continue;
+                data.Children.Add(child);
+            }
+
+            return data;
+        }
+
+        private static void BuildLevels(SkillDefinition def, JsonValue levels, int skillId)
+        {
+            for (int i = 0; i < levels.Count; i++)
+            {
+                JsonValue row = levels[i];
+                int level = row.GetInt("level");
+                if (level < 1)
                 {
-                    string keyCol = "modifier" + slot.ToString(CultureInfo.InvariantCulture);
-                    string valCol = "value" + slot.ToString(CultureInfo.InvariantCulture);
-                    if (t.TryGetColumnIndex(keyCol, out _) == false)
-                        break;
-
-                    string keyRaw = t.GetString(r, keyCol);
-                    if (string.IsNullOrEmpty(keyRaw))
-                        continue;
-                    if (Enum.TryParse(keyRaw, true, out ESkillParamKey key) == false)
-                        continue;
-                    if (key == ESkillParamKey.None)
-                        continue;
-
-                    lv.Modifiers[key] = t.GetFloat(r, valCol);
+                    continue;
                 }
 
-                if (lv.Level >= 1)
+                SkillLevelData data = new SkillLevelData
                 {
-                    def.Levels[lv.Level] = lv;
-                    if (lv.Level > def.Meta.MaxLevel)
+                    SkillId = skillId,
+                    Level = level,
+                };
+
+                foreach (KeyValuePair<string, JsonValue> pair in row["modifiers"].Members)
+                {
+                    if (Enum.TryParse(pair.Key, false, out ESkillParamKey key) == false || key == ESkillParamKey.None)
                     {
-                        def.Meta.MaxLevel = lv.Level;
+                        Debug.LogWarning($"[SkillRegistry] skill {skillId} level {level}: 알 수 없는 modifier '{pair.Key}'");
+                        continue;
                     }
-                }
-            }
-        }
-
-        private static void BuildNodes(DataTable t)
-        {
-            if (t == null)
-                return;
-            for (int r = 0; r < t.RowCount; r++)
-            {
-                int skillId = t.GetInt(r, "skill_id");
-                if (skillId <= 0)
-                    continue;
-                SkillDefinition def = Get(skillId);
-                if (def == null)
-                    continue;
-
-                string typeRaw = t.GetString(r, "node_type");
-                if (string.IsNullOrEmpty(typeRaw))
-                    continue;
-                if (Enum.TryParse(typeRaw, true, out ESkillNodeType nodeType) == false)
-                {
-                    Debug.LogWarning($"[SkillRegistry] unknown node_type '{typeRaw}' on skill {skillId} row {r}");
-                    nodeType = ESkillNodeType.None;
+                    data.Modifiers[key] = pair.Value.AsFloat();
                 }
 
-                SkillNodeData node = new SkillNodeData
+                def.Levels[level] = data;
+                if (level > def.Meta.MaxLevel)
                 {
-                    SkillId = skillId,
-                    NodeId = t.GetInt(r, "node_id"),
-                    ParentId = t.GetInt(r, "parent_id"),
-                    Order = t.GetInt(r, "order"),
-                    NodeType = nodeType,
-                };
-
-                for (int slot = 0; ; slot++)
-                {
-                    string keyCol = "param" + slot.ToString(CultureInfo.InvariantCulture);
-                    string valCol = "value" + slot.ToString(CultureInfo.InvariantCulture);
-                    if (t.TryGetColumnIndex(keyCol, out _) == false)
-                        break;
-
-                    string keyRaw = t.GetString(r, keyCol);
-                    if (string.IsNullOrEmpty(keyRaw))
-                        continue;
-                    if (Enum.TryParse(keyRaw, true, out ESkillParamKey key) == false)
-                        continue;
-                    if (key == ESkillParamKey.None)
-                        continue;
-
-                    node.Params[key] = t.GetString(r, valCol) ?? string.Empty;
+                    def.Meta.MaxLevel = level;
                 }
-
-                def.Nodes.Add(node);
-            }
-        }
-
-        private static void SortNodes()
-        {
-            foreach (SkillDefinition def in _byId.Values)
-            {
-                def.Nodes.Sort((a, b) => a.Order.CompareTo(b.Order));
             }
         }
 
@@ -237,21 +244,29 @@ namespace Jinhyeong_SkillSystem
         {
             if (buffer == null)
                 return;
+
             foreach (SkillDefinition def in _byId.Values)
             {
                 if (def == null)
                     continue;
+                CollectVisualKeys(def.Root, buffer);
+            }
+        }
 
-                for (int i = 0; i < def.Nodes.Count; i++)
-                {
-                    SkillNodeData node = def.Nodes[i];
-                    if (node == null)
-                        continue;
-                    string visual = node.GetString(ESkillParamKey.Visual);
-                    if (string.IsNullOrEmpty(visual))
-                        continue;
-                    buffer.Add(visual);
-                }
+        private static void CollectVisualKeys(SkillNodeData node, ICollection<string> buffer)
+        {
+            if (node == null)
+                return;
+
+            string visual = node.GetString(ESkillParamKey.Visual);
+            if (string.IsNullOrEmpty(visual) == false)
+            {
+                buffer.Add(visual);
+            }
+
+            for (int i = 0; i < node.Children.Count; i++)
+            {
+                CollectVisualKeys(node.Children[i], buffer);
             }
         }
 
@@ -259,8 +274,13 @@ namespace Jinhyeong_SkillSystem
         {
             HashSet<string> keys = new HashSet<string>();
             CollectVisualKeys(keys);
-            if (keys.Count == 0)
-                return;
+
+            // 아트가 하나도 없어도 루트 프리팹은 있어야 스킬이 나간다
+            keys.Add(CommonConfig.Skill.RootPrefabKey);
+            keys.Add(CommonConfig.Skill.HitFxKey);
+            keys.Add(CommonConfig.Skill.ChainFxKey);
+            keys.Add(CommonConfig.Skill.XpGemKey);
+            keys.Add(CommonConfig.Skill.DamageTextKey);
 
             AddressableManager am = AddressableManager.Ensure();
             await am.LoadAllAsync(keys);

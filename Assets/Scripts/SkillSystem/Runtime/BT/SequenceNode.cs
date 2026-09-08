@@ -1,6 +1,9 @@
+using Jinhyeong_GameData;
+
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.Sequence)]
     public sealed class SequenceNode : BTNode
     {
         public SequenceNode(SkillNodeData data) : base(data) { }

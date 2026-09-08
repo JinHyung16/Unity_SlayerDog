@@ -1,9 +1,10 @@
 using UnityEngine;
-using Jinhyeong_GeneratedEnums;
+using Jinhyeong_GameData;
 
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.Cooldown)]
     public sealed class CooldownDecoratorNode : BTNode
     {
         private float _nextReady;
@@ -18,7 +19,7 @@ namespace Jinhyeong_SkillSystem.BT
             EBTStatus r = RunChildrenAsSequence(ctx);
             if (r == EBTStatus.Success)
             {
-                float cd = Data != null ? Data.GetFloat(ESkillParamKey.Cooldown, ctx.LevelData, 0f) : 0f;
+                float cd = Data != null ? Data.GetFloat(ESkillParamKey.Cooldown, ctx.LevelData, 0f, ctx.Modifier) : 0f;
                 _nextReady = Time.time + cd;
             }
             return r;

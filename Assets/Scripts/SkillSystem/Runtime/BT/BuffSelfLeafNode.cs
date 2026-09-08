@@ -1,9 +1,10 @@
 using UnityEngine;
-using Jinhyeong_GeneratedEnums;
+using Jinhyeong_GameData;
 
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.BuffSelf)]
     public sealed class BuffSelfLeafNode : BTNode
     {
         public BuffSelfLeafNode(SkillNodeData data) : base(data) { }
@@ -23,7 +24,14 @@ namespace Jinhyeong_SkillSystem.BT
                 Debug.LogWarning($"[BuffSelfLeafNode] BuffId={buffId} not in registry");
                 return EBTStatus.Failure;
             }
-            ActiveStatusEffect.ApplyBuff(ctx.Caster.gameObject, data, ctx.Caster);
+            Damageable self = ctx.Caster.GetComponent<Damageable>();
+            if (self == null)
+            {
+                Debug.LogWarning("[BuffSelfLeafNode] 캐스터에 Damageable 이 없어 버프를 걸 수 없습니다");
+                return EBTStatus.Failure;
+            }
+
+            self.Status.ApplyBuff(data, ctx.Caster);
             return EBTStatus.Success;
         }
     }

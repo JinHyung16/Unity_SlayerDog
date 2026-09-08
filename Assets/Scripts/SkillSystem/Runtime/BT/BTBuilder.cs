@@ -1,109 +1,46 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using Jinhyeong_GeneratedEnums;
 
 namespace Jinhyeong_SkillSystem.BT
 {
 
     public static class BTBuilder
     {
-        public static BTNode Build(List<SkillNodeData> nodes)
+        /// <summary>
+        /// DB가 이미 중첩 트리로 주므로 그대로 따라 내려가며 실행 노드를 만든다.
+        /// (예전 parent_id/order 재조립 단계는 없어졌다)
+        /// </summary>
+        public static BTNode Build(SkillNodeData root)
         {
-            if (nodes == null || nodes.Count == 0)
+            if (root == null)
                 return null;
 
-            Dictionary<int, BTNode> byId = new Dictionary<int, BTNode>(nodes.Count);
-            for (int i = 0; i < nodes.Count; i++)
+            BTNode self = Create(root);
+            if (self == null)
+                return null;
+
+            for (int i = 0; i < root.Children.Count; i++)
             {
-                SkillNodeData n = nodes[i];
-                if (byId.ContainsKey(n.NodeId))
-                {
-                    Debug.LogWarning($"[BTBuilder] skill {n.SkillId} 노드 id 중복 {n.NodeId} — 무시");
+                BTNode child = Build(root.Children[i]);
+                if (child == null)
                     continue;
-                }
-                byId[n.NodeId] = Create(n);
+                self.Children.Add(child);
             }
-
-            List<BTNode> roots = new List<BTNode>(2);
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                SkillNodeData n = nodes[i];
-                BTNode self = byId[n.NodeId];
-                if (self == null)
-                    continue;
-
-                if (n.ParentId != 0 && byId.TryGetValue(n.ParentId, out BTNode parent) && parent != null)
-                    parent.Children.Add(self);
-                else
-                    roots.Add(self);
-            }
-
-            if (roots.Count == 1)
-                return roots[0];
-
-            SequenceNode wrap = new SequenceNode(null);
-            for (int i = 0; i < roots.Count; i++)
-            {
-                wrap.Children.Add(roots[i]);
-            }
-            return wrap;
+            return self;
         }
 
+        /// <summary>
+        /// 어느 클래스가 이 타입을 맡는지는 <see cref="BTNodeRegistry"/> 가 안다.
+        /// 예전 switch 는 노드를 늘릴 때마다 같이 늘어나야 했고, 안 늘려도 컴파일은 통과했다.
+        /// </summary>
         private static BTNode Create(SkillNodeData n)
         {
-            switch (n.NodeType)
-            {
-                case ESkillNodeType.Sequence: return new SequenceNode(n);
-                case ESkillNodeType.Selector: return new SelectorNode(n);
-                case ESkillNodeType.Parallel: return new ParallelNode(n);
-                case ESkillNodeType.Inverter: return new InverterNode(n);
+            Func<SkillNodeData, BTNode> factory = BTNodeRegistry.Find(n.NodeType);
+            if (factory != null)
+                return factory(n);
 
-                case ESkillNodeType.Cooldown: return new CooldownDecoratorNode(n);
-                case ESkillNodeType.Chance: return new ChanceDecoratorNode(n);
-
-                case ESkillNodeType.TriggerOnTick:
-                case ESkillNodeType.TriggerOnAttack:
-                case ESkillNodeType.TriggerOnOreBreak:
-                    return new TriggerNode(n);
-
-                case ESkillNodeType.TargetSelf:
-                case ESkillNodeType.TargetNearest:
-                case ESkillNodeType.TargetFarthest:
-                case ESkillNodeType.TargetRandom:
-                case ESkillNodeType.TargetAll:
-                case ESkillNodeType.TargetNearestForward:
-                case ESkillNodeType.TargetCone:
-                    return new TargetingLeafNode(n);
-
-                case ESkillNodeType.HitSingle:
-                case ESkillNodeType.HitArea:
-                case ESkillNodeType.HitBeam:
-                case ESkillNodeType.HitChain:
-                case ESkillNodeType.HitDeathBurst:
-                    return new HitLeafNode(n);
-
-                case ESkillNodeType.DespawnAfterTime:
-                case ESkillNodeType.DespawnAfterHits:
-                case ESkillNodeType.DespawnAfterBounces:
-                case ESkillNodeType.DespawnOnWall:
-                    return new DespawnLeafNode(n);
-
-                case ESkillNodeType.LaunchInstant:
-                case ESkillNodeType.LaunchStraight:
-                case ESkillNodeType.LaunchArc:
-                case ESkillNodeType.LaunchCurve:
-                    return new LaunchLeafNode(n);
-
-                case ESkillNodeType.BuffSelf:
-                    return new BuffSelfLeafNode(n);
-
-                case ESkillNodeType.DebuffOnHit:
-                    return new DebuffLeafNode(n);
-
-                default:
-                    Debug.LogWarning($"[BTBuilder] 미지원 node_type '{n.NodeType}' (skill {n.SkillId}) — 빈 노드로 통과 처리");
-                    return new SequenceNode(n);
-            }
+            Debug.LogWarning($"[BTBuilder] 미지원 node_type '{n.NodeType}' (node {n.NodeId}) — 빈 노드로 통과 처리");
+            return new SequenceNode(n);
         }
     }
 }

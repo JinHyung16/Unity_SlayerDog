@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Jinhyeong_Common;
+using Jinhyeong_Managers;
 
 namespace Jinhyeong_SkillSystem
 {
@@ -9,10 +10,9 @@ namespace Jinhyeong_SkillSystem
         private const int SubPerSegment = 4;
         private const float JagFactor = 0.15f;
 
-        private static Material _sharedMat;
         private static readonly List<Vector3> _pathBuf = new List<Vector3>(64);
 
-        private LineRenderer _lr;
+        [SerializeField] private LineRenderer _lr;
         private float _life;
         private float _age;
         private Color _color;
@@ -22,27 +22,32 @@ namespace Jinhyeong_SkillSystem
             if (nodes == null || nodes.Count < 2)
                 return;
 
-            GameObject go = new GameObject("ChainLightningFx");
+            if (PoolManager.Instance == null)
+                return;
 
-            LineRenderer lr = go.AddComponent<LineRenderer>();
-            lr.sharedMaterial = SharedMat();
-            lr.useWorldSpace = true;
-            lr.alignment = LineAlignment.View;
-            lr.textureMode = LineTextureMode.Stretch;
-            lr.numCapVertices = 2;
-            lr.numCornerVertices = 2;
-            lr.widthMultiplier = width;
-            lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            lr.receiveShadows = false;
+            GameObject go = PoolManager.Instance.Pool_Fx_Get(CommonConfig.Skill.ChainFxKey);
+            if (go == null)
+                return;
+
+            ChainLightningEffect fx = go.GetComponent<ChainLightningEffect>();
+            if (fx == null)
+            {
+                Debug.LogWarning($"[ChainLightningEffect] '{CommonConfig.Skill.ChainFxKey}' 프리팹에 컴포넌트가 없습니다");
+                return;
+            }
+
+            if (fx._lr == null)
+                fx._lr = go.GetComponent<LineRenderer>();
+
+            fx._lr.widthMultiplier = width;
 
             BuildJaggedPath(nodes);
-            lr.positionCount = _pathBuf.Count;
+            fx._lr.positionCount = _pathBuf.Count;
             for (int i = 0; i < _pathBuf.Count; i++)
-                lr.SetPosition(i, _pathBuf[i]);
+                fx._lr.SetPosition(i, _pathBuf[i]);
 
-            ChainLightningEffect fx = go.AddComponent<ChainLightningEffect>();
-            fx._lr = lr;
             fx._life = life > 0f ? life : 0.18f;
+            fx._age = 0f;
             fx._color = color;
             fx.ApplyAlpha(1f);
         }
@@ -89,7 +94,10 @@ namespace Jinhyeong_SkillSystem
             float t = _age / _life;
             if (t >= 1f)
             {
-                Destroy(gameObject);
+                if (PoolManager.Instance != null)
+                    PoolManager.Instance.Pool_Fx_Return(CommonConfig.Skill.ChainFxKey, gameObject);
+                else
+                    Destroy(gameObject);
                 return;
             }
             ApplyAlpha(1f - t);
@@ -105,16 +113,5 @@ namespace Jinhyeong_SkillSystem
             _lr.endColor = c;
         }
 
-        private static Material SharedMat()
-        {
-            if (_sharedMat == null)
-            {
-                Shader sh = Shader.Find("Sprites/Default");
-                if (sh == null)
-                    sh = Shader.Find("Unlit/Color");
-                _sharedMat = new Material(sh);
-            }
-            return _sharedMat;
-        }
     }
 }

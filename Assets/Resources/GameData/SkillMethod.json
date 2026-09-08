@@ -1,0 +1,275 @@
+[
+    {
+        "path": "Skill/Method/beam",
+        "desc": "지속 빔 — 전방 직선을 일정 시간 계속 태운다",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterTime",
+                "params": {
+                    "Value": "@stat.Duration"
+                }
+            },
+            {
+                "type": "LaunchStraight",
+                "params": {
+                    "Speed": 0,
+                    "MaxDistance": 999,
+                    "Visual": "@visual.Projectile",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
+        "path": "Skill/Method/ground_field",
+        "desc": "지속 장판 — 발밑에 남아 주기적으로 때린다",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "slot": "onCast",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterTime",
+                "params": {
+                    "Value": "@stat.Duration"
+                }
+            },
+            {
+                "type": "LaunchInstant",
+                "params": {
+                    "Visual": "@visual.Cast",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
+        "path": "Skill/Method/instant",
+        "desc": "즉발 — 선정된 대상 위치에 바로 생성. 대상이 없으면 실패",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "slot": "onCast",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterHits",
+                "params": {
+                    "Value": 1
+                }
+            },
+            {
+                "type": "LaunchInstant",
+                "params": {
+                    "Visual": "@visual.Impact",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
+        "path": "Skill/Method/projectile/arc",
+        "desc": "포물선 낙하 — 발사 시점의 목표 지점에 떨어진다 (착탄지 고정)",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterHits",
+                "params": {
+                    "Value": 1
+                }
+            },
+            {
+                "type": "LaunchArc",
+                "params": {
+                    "Speed": "@stat.Speed",
+                    "ArcHeight": "@stat.ArcHeight",
+                    "Visual": "@visual.Projectile",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
+        "path": "Skill/Method/projectile/homing",
+        "desc": "유도 투사체 — 대상을 계속 추적",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterHits",
+                "params": {
+                    "Value": 1
+                }
+            },
+            {
+                "type": "LaunchHoming",
+                "params": {
+                    "Speed": "@stat.Speed",
+                    "MaxDistance": "@stat.MaxDistance",
+                    "TurnRate": "@stat.TurnRate",
+                    "Visual": "@visual.Projectile",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
+        "path": "Skill/Method/projectile/piercing",
+        "desc": "관통 투사체 — 여러 명을 뚫고 지나간다 (Value 만큼 타격 후 소멸)",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterHits",
+                "params": {
+                    "Value": "@stat.MaxPerTarget"
+                }
+            },
+            {
+                "type": "LaunchStraight",
+                "params": {
+                    "Speed": "@stat.Speed",
+                    "MaxDistance": "@stat.MaxDistance",
+                    "Visual": "@visual.Projectile",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
+        "path": "Skill/Method/projectile/straight",
+        "desc": "직선 투사체 — 최대 사거리까지 직진",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterHits",
+                "params": {
+                    "Value": 1
+                }
+            },
+            {
+                "type": "LaunchStraight",
+                "params": {
+                    "Speed": "@stat.Speed",
+                    "MaxDistance": "@stat.MaxDistance",
+                    "Visual": "@visual.Projectile",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
+        "path": "Skill/Method/projectile/wave",
+        "desc": "사행 투사체 — 좌우로 흔들리며 목표 지점으로 (ArcHeight = 흔들림 폭)",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterHits",
+                "params": {
+                    "Value": "@stat.MaxPerTarget"
+                }
+            },
+            {
+                "type": "LaunchCurve",
+                "params": {
+                    "Speed": "@stat.Speed",
+                    "ArcHeight": "@stat.ArcHeight",
+                    "Visual": "@visual.Projectile",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
+        "path": "Skill/Method/self_cast",
+        "desc": "자기 자신에게 즉시 적용 — 발사체 없음",
+        "slots": [
+            "onCast"
+        ],
+        "nodes": [
+            {
+                "slot": "onCast"
+            }
+        ]
+    }
+]

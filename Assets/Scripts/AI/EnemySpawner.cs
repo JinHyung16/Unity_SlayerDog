@@ -31,8 +31,25 @@ namespace Jinhyeong_AI
         private readonly List<Enemy> _active = new List<Enemy>(16);
 
         private bool _initialSpawnDone;
+        private bool _prewarmDone;
 
         public IReadOnlyList<Enemy> Active { get { return _active; } }
+
+        /// <summary>
+        /// 이번 런에서 등장/처치한 보스 수.
+        /// [사고] 리포트가 「끝난 시점에 살아 있는 보스」만 찾다 보니, 잡고 나면 「미등장」으로 찍혔다.
+        /// 지나간 사건은 살아 있는 오브젝트가 아니라 **카운터**로 남겨야 한다.
+        /// </summary>
+        public int BossSpawnCount { get; private set; }
+        public int BossKillCount { get; private set; }
+
+        public void NotifyBossSpawned()
+        {
+            BossSpawnCount++;
+        }
+
+        /// <summary>이번 런에서 죽인 적 수. HUD 가 그대로 읽는다. Clear 에서 리셋된다.</summary>
+        public int KillCount { get; private set; }
 
         private void Awake()
         {
@@ -73,7 +90,7 @@ namespace Jinhyeong_AI
         {
             if (Instance != this)
                 return;
-            Prewarm();
+            TryPrewarm();
             TryInitialSpawn();
         }
 
@@ -83,7 +100,32 @@ namespace Jinhyeong_AI
                 return;
             if (_spawnAroundTarget == null)
                 _spawnAroundTarget = p.transform;
+            TryPrewarm();
             TryInitialSpawn();
+        }
+
+        /// <summary>
+        /// 풀 예열은 프리팹이 캐시에 오른 **뒤에만** 한다.
+        /// [사고] Start 에서 바로 예열했더니 GameInitializer 가 이 컴포넌트를 세우는 시점(씬 로드 직후)에는
+        /// 아직 아무도 obj_enemy 를 로드하지 않아 매 부팅마다 「캐시에 없음」 에러가 한 번씩 찍혔다.
+        /// 플레이어 스폰(WorldSpawner 가 사전로드를 끝낸 뒤)에서 다시 시도하면 그 자리에서 채워진다.
+        /// </summary>
+        private void TryPrewarm()
+        {
+            if (_prewarmDone)
+                return;
+            if (IsPrefabReady() == false)
+                return;
+            _prewarmDone = true;
+            Prewarm();
+        }
+
+        private bool IsPrefabReady()
+        {
+            if (_prefab != null)
+                return true;
+            AddressableManager am = AddressableManager.Instance;
+            return am != null && am.IsLoaded(_addressableKey);
         }
 
         private void HandlePlayerDespawned(Player p)
@@ -112,6 +154,9 @@ namespace Jinhyeong_AI
                 return;
             if (_spawnAroundTarget == null)
                 return;
+            // 프리팹이 아직 없으면 6번 실패하고 「끝났다」고 표시하던 자리다. 조용히 다음 기회를 기다린다.
+            if (IsPrefabReady() == false)
+                return;
 
             Vector3 center = _spawnAroundTarget.position;
             int count = CommonConfig.Spawner.InitialEnemyCount;
@@ -126,6 +171,11 @@ namespace Jinhyeong_AI
         }
 
         public Enemy Spawn(Vector3 position)
+        {
+            return Spawn(position, null);
+        }
+
+        public Enemy Spawn(Vector3 position, Jinhyeong_SkillSystem.EnemyTypeData type)
         {
             Enemy e;
             if (_pool.Count > 0)
@@ -145,7 +195,24 @@ namespace Jinhyeong_AI
             e.OnDespawnRequested -= HandleEnemyDespawnRequested;
             e.OnDespawnRequested += HandleEnemyDespawnRequested;
 
+            // 킬 집계. 풀 재사용 시 중복 구독을 막으려고 빼고 다시 건다 (OnDespawnRequested 와 같은 패턴)
+            if (e.Damageable != null)
+            {
+                e.Damageable.OnDied -= HandleEnemyDied;
+                e.Damageable.OnDied += HandleEnemyDied;
+            }
+
             e.Init(position);
+            e.ApplyType(type);
+
+            // 라운드 배수. ApplyType 이 기본값을 넣은 **뒤에** 곱해야 한다 —
+            // 순서를 바꾸면 ApplyType 이 배수를 덮어써서 라운드가 아무 효과도 없다.
+            Jinhyeong_SkillSystem.RoundData round =
+                Jinhyeong_SkillSystem.RoundRegistry.At(Jinhyeong_AI.WaveDirector.Instance != null
+                    ? Jinhyeong_AI.WaveDirector.Instance.Elapsed : 0f);
+            if (round != null)
+                e.ApplyRoundScaling(round.HpMul, round.DamageMul);
+
             _active.Add(e);
             return e;
         }
@@ -170,9 +237,15 @@ namespace Jinhyeong_AI
                     Destroy(e.gameObject);
             }
 
+            if (EnemyCullingSystem.Instance != null)
+                EnemyCullingSystem.Instance.Clear();
+
             _initialSpawnDone = false;
             _spawnAroundTarget = null;
             _prefab = null;
+            KillCount = 0;
+            BossSpawnCount = 0;
+            BossKillCount = 0;
         }
 
         public void Despawn(Enemy enemy)
@@ -180,6 +253,9 @@ namespace Jinhyeong_AI
             if (enemy == null)
                 return;
             enemy.OnDespawnRequested -= HandleEnemyDespawnRequested;
+
+            if (EnemyCullingSystem.Instance != null)
+                EnemyCullingSystem.Instance.Forget(enemy);
 
             _active.Remove(enemy);
             enemy.gameObject.SetActive(false);
@@ -190,6 +266,34 @@ namespace Jinhyeong_AI
         private void HandleEnemyDespawnRequested(Enemy e)
         {
             Despawn(e);
+        }
+
+        private void HandleEnemyDied(Jinhyeong_SkillSystem.Damageable victim, Jinhyeong_SkillSystem.SkillObject source)
+        {
+            KillCount++;
+            Jinhyeong_Managers.SfxManager.Play(Jinhyeong_Managers.ESfx.Kill, 0.5f);
+            if (victim == null)
+                return;
+
+            Enemy enemy = victim.GetComponent<Enemy>();
+
+            // 보스 처치 = 클리어. 12라운드까지 버티는 것 자체가 목표라, 여기가 런의 결승선이다.
+            if (enemy != null && enemy.IsBoss)
+            {
+                BossKillCount++;
+                Jinhyeong_UI.GameFlow.ClearGame();
+            }
+
+            float xp = enemy != null ? enemy.XpValue : CommonConfig.Run.XpPerGem;
+            Jinhyeong_SkillSystem.XpGem.Drop(victim.transform.position, xp);
+
+            // 처치 회복. 「많이 죽일수록 산다」 — 공격 성장이 생존으로 이어지는 유일한 통로다.
+            Jinhyeong_Character.Player player = Jinhyeong_Managers.GameEvents.CurrentPlayer;
+            if (player == null)
+                return;
+            Jinhyeong_Parts.PartLoadout parts = player.GetComponent<Jinhyeong_Parts.PartLoadout>();
+            if (parts != null)
+                parts.GrantLifesteal();
         }
 
         private Enemy CreateInstance()

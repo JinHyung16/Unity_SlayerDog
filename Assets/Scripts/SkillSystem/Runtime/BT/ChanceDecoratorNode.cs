@@ -1,9 +1,10 @@
 using UnityEngine;
-using Jinhyeong_GeneratedEnums;
+using Jinhyeong_GameData;
 
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.Chance)]
     public sealed class ChanceDecoratorNode : BTNode
     {
         public ChanceDecoratorNode(SkillNodeData data) : base(data) { }

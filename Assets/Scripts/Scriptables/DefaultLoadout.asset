@@ -12,16 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e1220cbb024ae44a7de643016fcbde, type: 3}
   m_Name: DefaultLoadout
   m_EditorClassIdentifier:
-  Entries:
-  - SkillId: 1001
-    Level: 1
-    SlotKey: 113
-  - SkillId: 1005
-    Level: 1
-    SlotKey: 119
-  - SkillId: 1003
-    Level: 1
-    SlotKey: 101
-  - SkillId: 1004
-    Level: 1
-    SlotKey: 114
+  Entries: []

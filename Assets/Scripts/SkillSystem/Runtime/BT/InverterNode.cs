@@ -1,6 +1,9 @@
+using Jinhyeong_GameData;
+
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.Inverter)]
     public sealed class InverterNode : BTNode
     {
         public InverterNode(SkillNodeData data) : base(data) { }

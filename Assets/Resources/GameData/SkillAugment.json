@@ -1,0 +1,90 @@
+[
+    {
+        "id": 4020,
+        "path": "modules/augment/chain_mastery",
+        "name": "Chain Mastery",
+        "desc": "[번개] 보유 시 — 공격력 +15%",
+        "type": "StatBuff",
+        "buffType": "DamageBoost",
+        "value": 0.15,
+        "skillId": 0,
+        "requiresSkillId": 1004
+    },
+    {
+        "id": 4004,
+        "path": "modules/augment/frenzy",
+        "name": "Frenzy",
+        "desc": "공격속도 +15%",
+        "type": "StatBuff",
+        "buffType": "AttackSpeedBoost",
+        "value": 0.15,
+        "skillId": 0,
+        "requiresSkillId": 0
+    },
+    {
+        "id": 4010,
+        "path": "modules/augment/frost_lance",
+        "name": "Frost Lance",
+        "desc": "얼음창 획득 — 전방 관통",
+        "type": "GrantSkill",
+        "buffType": "DamageBoost",
+        "value": 0,
+        "skillId": 1003,
+        "requiresSkillId": 0
+    },
+    {
+        "id": 4011,
+        "path": "modules/augment/meteor",
+        "name": "Meteor",
+        "desc": "운석 획득 — 주기적 광역 낙하",
+        "type": "GrantSkill",
+        "buffType": "DamageBoost",
+        "value": 0,
+        "skillId": 1005,
+        "requiresSkillId": 0
+    },
+    {
+        "id": 4001,
+        "path": "modules/augment/power",
+        "name": "Power",
+        "desc": "공격력 +20%",
+        "type": "StatBuff",
+        "buffType": "DamageBoost",
+        "value": 0.2,
+        "skillId": 0,
+        "requiresSkillId": 0
+    },
+    {
+        "id": 4012,
+        "path": "modules/augment/seeker",
+        "name": "Seeker",
+        "desc": "유도탄 획득 — 적을 추적",
+        "type": "GrantSkill",
+        "buffType": "DamageBoost",
+        "value": 0,
+        "skillId": 1002,
+        "requiresSkillId": 0
+    },
+    {
+        "id": 4002,
+        "path": "modules/augment/swift",
+        "name": "Swift",
+        "desc": "이동속도 +10%",
+        "type": "StatBuff",
+        "buffType": "MoveSpeedBoost",
+        "value": 0.1,
+        "skillId": 0,
+        "requiresSkillId": 0
+    },
+    {
+        "id": 4003,
+        "path": "modules/augment/vitality",
+        "name": "Vitality",
+        "desc": "최대 체력 +20%",
+        "type": "StatBuff",
+        "buffType": "MaxHpBoost",
+        "value": 0.2,
+        "skillId": 0,
+        "requiresSkillId": 0
+    }
+]

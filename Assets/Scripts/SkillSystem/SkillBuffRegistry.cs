@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
-using Jinhyeong_JsonParsing;
+using Jinhyeong_GameData;
+using Jinhyeong_GameData.Json;
 using UnityEngine;
-using Jinhyeong_GeneratedEnums;
 
 namespace Jinhyeong_SkillSystem
 {
 
     public static class SkillBuffRegistry
     {
-        public const string TableBuff   = "SkillBuff";
-        public const string TableDebuff = "SkillDebuff";
+        public const string ResourceBuff = "GameData/SkillBuff";
+        public const string ResourceDebuff = "GameData/SkillDebuff";
 
-        private static readonly Dictionary<int, SkillBuffData>   _buffs   = new Dictionary<int, SkillBuffData>(16);
+        private static readonly Dictionary<int, SkillBuffData> _buffs = new Dictionary<int, SkillBuffData>(16);
         private static readonly Dictionary<int, SkillDebuffData> _debuffs = new Dictionary<int, SkillDebuffData>(16);
 
-        public static int BuffCount   { get { return _buffs.Count; } }
+        public static int BuffCount { get { return _buffs.Count; } }
         public static int DebuffCount { get { return _debuffs.Count; } }
 
         public static SkillBuffData GetBuff(int id)
@@ -34,72 +34,57 @@ namespace Jinhyeong_SkillSystem
             _debuffs.Clear();
         }
 
-        public static void LoadFromDataManager(DataManager dm)
+        public static void Load()
         {
-            if (dm == null)
-                throw new ArgumentNullException(nameof(dm));
             Clear();
-            BuildBuffs(dm.GetTable(TableBuff));
-            BuildDebuffs(dm.GetTable(TableDebuff));
+            BuildBuffs(LoadTable(ResourceBuff));
+            BuildDebuffs(LoadTable(ResourceDebuff));
         }
 
-        private static void BuildBuffs(DataTable t)
+        private static JsonValue LoadTable(string resourcePath)
         {
-            if (t == null)
-                return;
-            for (int r = 0; r < t.RowCount; r++)
+            TextAsset asset = Resources.Load<TextAsset>(resourcePath);
+            if (asset == null)
             {
-                int id = t.GetInt(r, "id");
-                if (id <= 0)
-                    continue;
+                Debug.LogWarning($"[SkillBuffRegistry] '{resourcePath}' 을 찾을 수 없습니다");
+                return JsonValue.Null;
+            }
 
-                string typeRaw = t.GetString(r, "type");
-                if (Enum.TryParse(typeRaw, true, out EBuffType type) == false)
-                {
-                    Debug.LogWarning($"[SkillBuffRegistry] unknown buff type '{typeRaw}' at row {r}");
-                    continue;
-                }
-                _buffs[id] = new SkillBuffData
-                {
-                    Id = id,
-                    Name = t.GetString(r, "name"),
-                    Description = t.GetString(r, "desc"),
-                    Type = type,
-                    Duration = t.GetFloat(r, "duration"),
-                    TickInterval = t.GetFloat(r, "tick_interval"),
-                    Value0 = t.GetFloat(r, "value0"),
-                    Value1 = t.GetFloat(r, "value1"),
-                };
+            try
+            {
+                return JsonValue.Parse(asset.text);
+            }
+            catch (FormatException e)
+            {
+                Debug.LogError($"[SkillBuffRegistry] {resourcePath}.json 파싱 실패 — {e.Message}");
+                return JsonValue.Null;
+            }
+            finally
+            {
+                Resources.UnloadAsset(asset);
             }
         }
 
-        private static void BuildDebuffs(DataTable t)
-        {
-            if (t == null)
-                return;
-            for (int r = 0; r < t.RowCount; r++)
-            {
-                int id = t.GetInt(r, "id");
-                if (id <= 0)
-                    continue;
 
-                string typeRaw = t.GetString(r, "type");
-                if (Enum.TryParse(typeRaw, true, out EDebuffType type) == false)
-                {
-                    Debug.LogWarning($"[SkillBuffRegistry] unknown debuff type '{typeRaw}' at row {r}");
+        private static void BuildBuffs(JsonValue rows)
+        {
+            for (int i = 0; i < rows.Count; i++)
+            {
+                SkillBuffData data = SkillBuffData.FromJson(rows[i]);
+                if (data.Id <= 0)
                     continue;
-                }
-                _debuffs[id] = new SkillDebuffData
-                {
-                    Id = id,
-                    Name = t.GetString(r, "name"),
-                    Description = t.GetString(r, "desc"),
-                    Type = type,
-                    Duration = t.GetFloat(r, "duration"),
-                    TickInterval = t.GetFloat(r, "tick_interval"),
-                    Value0 = t.GetFloat(r, "value0"),
-                    Value1 = t.GetFloat(r, "value1"),
-                };
+                _buffs[data.Id] = data;
+            }
+        }
+
+        private static void BuildDebuffs(JsonValue rows)
+        {
+            for (int i = 0; i < rows.Count; i++)
+            {
+                SkillDebuffData data = SkillDebuffData.FromJson(rows[i]);
+                if (data.Id <= 0)
+                    continue;
+                _debuffs[data.Id] = data;
             }
         }
     }

@@ -59,6 +59,7 @@ namespace Jinhyeong_Managers
         public void Clear()
         {
             Pool_Skill_Clear();
+            Pool_Fx_Clear();
         }
 
         private GameObject InstantiateFromAddressable(string key)

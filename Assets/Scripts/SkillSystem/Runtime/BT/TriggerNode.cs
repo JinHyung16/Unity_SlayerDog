@@ -1,9 +1,11 @@
 using UnityEngine;
-using Jinhyeong_GeneratedEnums;
+using Jinhyeong_GameData;
 
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.TriggerOnTick, ESkillNodeType.TriggerOnAttack, ESkillNodeType.TriggerOnOreBreak,
+             Inert = new[] { ESkillNodeType.TriggerOnOreBreak })]
     public sealed class TriggerNode : BTNode
     {
         private float _nextReady;

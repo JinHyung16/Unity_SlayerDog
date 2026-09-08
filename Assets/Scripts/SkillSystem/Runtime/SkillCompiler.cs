@@ -17,7 +17,7 @@ namespace Jinhyeong_SkillSystem
             if (def == null)
                 return c;
 
-            c.Root = BTBuilder.Build(def.Nodes);
+            c.Root = BTBuilder.Build(def.Root);
             return c;
         }
     }

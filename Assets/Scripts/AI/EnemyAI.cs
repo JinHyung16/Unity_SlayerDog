@@ -142,7 +142,7 @@ namespace Jinhyeong_AI
 
         private bool ShouldFlee()
         {
-            bool lowHp = (_self.Hp / CommonConfig.Enemy.Hp) <= CommonConfig.Enemy.FleeHpPercent;
+            bool lowHp = (_self.Hp / Mathf.Max(1f, _self.MaxHp)) <= CommonConfig.Enemy.FleeHpPercent;
             if (lowHp == false)
             {
                 _isFleeing = false;

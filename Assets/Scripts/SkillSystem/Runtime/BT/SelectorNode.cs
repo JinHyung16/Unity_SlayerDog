@@ -1,6 +1,9 @@
+using Jinhyeong_GameData;
+
 namespace Jinhyeong_SkillSystem.BT
 {
 
+    [BTNode(ESkillNodeType.Selector)]
     public sealed class SelectorNode : BTNode
     {
         public SelectorNode(SkillNodeData data) : base(data) { }
