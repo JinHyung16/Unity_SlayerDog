@@ -138,7 +138,11 @@ module.exports = {
         'RequireAll',
         'ModifierKey',
         'BuffId',
-        'DebuffId'
+        'DebuffId',
+        // 연발 — 한 번 발동에 N 발. 간격(초) 0 이면 동시, 각도(도) 0 이면 같은 방향. 개수 증강(CountAdd)이 BurstCount 에 더해진다
+        'BurstCount',
+        'BurstInterval',
+        'BurstSpread'
     ],
 
     // 같은 효과가 다시 걸렸을 때의 처리. 데이터로 정해야 화상=갱신 / 중독=중첩 같은 게
@@ -159,11 +163,6 @@ module.exports = {
     ],
 
     // 레벨업 증강의 종류
-    EAugmentKind: [
-        'StatBuff',     // 영구(런 한정) 스탯 버프
-        'GrantSkill'    // 자동 발동 스킬 획득
-    ],
-
     EDebuffType: [
         'DamageOverTime',
         'SlowReduce',

@@ -4,13 +4,6 @@ using Jinhyeong_GameData;
 namespace Jinhyeong_SkillSystem.Status
 {
 
-    /// <summary>
-    /// 대상 하나가 들고 있는 버프/디버프 목록. Damageable 이 소유하고 매 프레임 Tick 한다.
-    ///
-    /// 컴포넌트가 아니라서 프리팹을 고칠 필요도, 런타임 AddComponent 도 없다.
-    /// 같은 효과가 다시 걸렸을 때의 처리(갱신/중첩/무시)는 DB 의 stackMode 가 정한다 —
-    /// 화상은 갱신, 중독은 3중첩 같은 걸 C# 수정 없이 바꾸기 위한 것.
-    /// </summary>
     public sealed class StatusList
     {
         private readonly List<ActiveStatus> _active = new List<ActiveStatus>(8);
@@ -37,10 +30,6 @@ namespace Jinhyeong_SkillSystem.Status
             return count;
         }
 
-        /// <summary>
-        /// 이 종류의 디버프가 지금 걸려 있는지. 상태이상 연계 시너지가 매 타격마다 묻는다 —
-        /// id 가 아니라 **종류**로 물어야 「둔화면 무엇이든」 같은 조건이 데이터로 표현된다.
-        /// </summary>
         public bool HasDebuffKind(Jinhyeong_GameData.EDebuffType kind)
         {
             if (kind == Jinhyeong_GameData.EDebuffType.None)
@@ -78,7 +67,6 @@ namespace Jinhyeong_SkillSystem.Status
             _active.Add(status);
         }
 
-        /// <summary>새 인스턴스를 추가해야 하면 true. 갱신·무시로 처리했으면 false.</summary>
         private bool TryStack(int effectId, EStatusStackMode mode, int maxStacks)
         {
             int existing = CountOf(effectId);
@@ -90,7 +78,6 @@ namespace Jinhyeong_SkillSystem.Status
                 case EStatusStackMode.Stack:
                     if (existing >= UnityEngine.Mathf.Max(1, maxStacks))
                     {
-                        // 상한에 걸렸으면 가장 오래된 것의 시간만 되감는다
                         RefreshOldest(effectId);
                         return false;
                     }

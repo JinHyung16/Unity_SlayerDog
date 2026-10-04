@@ -1,7 +1,7 @@
 module.exports = {
     id: 4203,
     name: 'static_fur_critchance',
-    desc: '정전기 털 — 치명타 확률 +10%p',
+    desc: '일렉 스파크 — 치명타 확률 +10%p',
     displayName: '찌릿',
     partId: 2010,
     trait: 'CritChance',

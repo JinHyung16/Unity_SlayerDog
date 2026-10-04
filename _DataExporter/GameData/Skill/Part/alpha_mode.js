@@ -3,7 +3,7 @@ module.exports = {
     id: 2018,
     name: 'Alpha Mode',
     desc: '8초간 공격속도 +40%. 16초마다',
-    displayName: '개쌘놈 모드',
+    displayName: '클라이맥스 모드',
     slot: 'Neck',
     family: 'Aura',
     appliesDebuff: 'None',

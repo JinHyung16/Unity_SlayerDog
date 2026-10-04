@@ -1,7 +1,7 @@
 module.exports = {
     id: 4123,
     name: 'claw_volley_critchance',
-    desc: '발톱 세례 — 치명타 확률 +10%p',
+    desc: '기타 피크 연사 — 치명타 확률 +10%p',
     displayName: '갈고리 발톱',
     partId: 2006,
     trait: 'CritChance',

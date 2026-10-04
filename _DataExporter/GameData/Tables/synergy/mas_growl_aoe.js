@@ -1,9 +1,9 @@
-/** 으르렁 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
+/** 베이스 그로울 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
 module.exports = {
     id: 8024,
     name: 'mas_growl_aoe',
-    desc: '으르렁 증강 4개 — 피해 +80%',
-    displayName: '으르렁 통달',
+    desc: '베이스 그로울 증강 4개 — 피해 +80%',
+    displayName: '베이스 그로울 통달',
     family: 'None',
     reqFamilyCount: 0,
     reqSkillId: 2003,

@@ -5,10 +5,6 @@ using Jinhyeong_GameData;
 namespace Jinhyeong_SkillSystem.Skill
 {
 
-    /// <summary>
-    /// DB 의 launch 모듈에 대응하는 컴포넌트 — 이동만 책임진다.
-    /// 판정은 SkillHit 이 LateUpdate 에서 처리하므로, 여기(Update)가 항상 먼저 돈다.
-    /// </summary>
     public class SkillMethod : BaseBehaviour
     {
         public enum EMotion
@@ -38,7 +34,6 @@ namespace Jinhyeong_SkillSystem.Skill
 
         public EMotion Motion { get { return _motion; } }
 
-        /// <summary>곡사/사행이 목표 지점에 닿았는지. SkillHit 이 그 프레임에 판정을 끝내고 소멸시킨다.</summary>
         public bool Arrived { get; private set; }
 
         private void Awake()
@@ -145,7 +140,6 @@ namespace Jinhyeong_SkillSystem.Skill
             if (t >= 1f)
             {
                 transform.position = _arcEnd;
-                // 착탄 시점에 비로소 판정을 연다. 같은 프레임의 LateUpdate 에서 SkillHit 이 터뜨린다.
                 _config.Armed = true;
                 Arrived = true;
                 return;
@@ -170,7 +164,6 @@ namespace Jinhyeong_SkillSystem.Skill
 
         protected override void OnDisabled()
         {
-            // 풀 재사용 시 이전 유도 대상이 남아 있으면 엉뚱한 적을 쫓는다
             _homingTarget = null;
             _turnRate = 0f;
             _moveSpeed = 0f;

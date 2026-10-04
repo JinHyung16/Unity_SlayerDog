@@ -3,7 +3,7 @@ module.exports = {
     id: 8013,
     name: 'fam_melee_3',
     desc: '근접 3개 — 처치 시 체력 +1.2',
-    displayName: '피의 맛',
+    displayName: '열창',
     family: 'Melee',
     reqFamilyCount: 3,
     reqSkillId: 0,

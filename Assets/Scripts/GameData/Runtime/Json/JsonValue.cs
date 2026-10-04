@@ -16,11 +16,6 @@ namespace Jinhyeong_GameData.Json
         Object
     }
 
-    /// <summary>
-    /// 로드 타임 전용 경량 JSON DOM.
-    /// JsonUtility 는 중첩 재귀 타입과 값 타입이 섞인 맵(params)을 못 다뤄서 직접 둔다.
-    /// 파싱은 게임 시작 시 한 번뿐이라 속도보다 단순함을 택했다.
-    /// </summary>
     public sealed class JsonValue
     {
         private static readonly List<JsonValue> EmptyArray = new List<JsonValue>(0);
@@ -124,10 +119,6 @@ namespace Jinhyeong_GameData.Json
             return Type == EJsonType.Bool ? _bool : fallback;
         }
 
-        /// <summary>
-        /// 값 타입이 섞인 필드(노드 params 등)를 문자열 하나로 눕힌다.
-        /// 숫자는 InvariantCulture 로 — 지역 설정이 소수점을 ',' 로 바꾸면 파싱이 통째로 깨진다.
-        /// </summary>
         public string ToRawString()
         {
             switch (Type)
@@ -180,7 +171,6 @@ namespace Jinhyeong_GameData.Json
             {
                 _text = text;
                 _index = 0;
-                // UTF-8 BOM — 윈도우 툴이 뱉은 파일이 자주 물고 온다
                 if (_text.Length > 0 && _text[0] == '﻿')
                 {
                     _index = 1;
@@ -240,7 +230,7 @@ namespace Jinhyeong_GameData.Json
 
             private JsonValue ParseObject()
             {
-                _index++; // '{'
+                _index++;
                 JsonValue value = new JsonValue
                 {
                     Type = EJsonType.Object,
@@ -294,7 +284,7 @@ namespace Jinhyeong_GameData.Json
 
             private JsonValue ParseArray()
             {
-                _index++; // '['
+                _index++;
                 JsonValue value = new JsonValue
                 {
                     Type = EJsonType.Array,
@@ -333,7 +323,7 @@ namespace Jinhyeong_GameData.Json
 
             private string ParseString()
             {
-                _index++; // 여는 따옴표
+                _index++;
                 StringBuilder builder = new StringBuilder(32);
 
                 while (true)

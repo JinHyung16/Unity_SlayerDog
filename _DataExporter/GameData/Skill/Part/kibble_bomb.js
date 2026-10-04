@@ -2,8 +2,8 @@
 module.exports = {
     id: 2021,
     name: 'Kibble Bomb',
-    desc: '사료를 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다',
-    displayName: 'God-사료 폭탄',
+    desc: '심벌을 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다',
+    displayName: '심벌 크래시',
     slot: 'Back',
     family: 'Throw',
     appliesDebuff: 'DamageOverTime',

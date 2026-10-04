@@ -3,7 +3,7 @@ module.exports = {
     id: 8020,
     name: 'link_burn',
     desc: '화상·중독 걸린 적에게 피해 +30%',
-    displayName: '불붙은 사료',
+    displayName: '뜨거운 무대',
     family: 'None',
     reqFamilyCount: 0,
     reqSkillId: 0,

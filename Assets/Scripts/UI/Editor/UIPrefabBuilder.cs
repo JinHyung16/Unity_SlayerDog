@@ -14,24 +14,33 @@ using Jinhyeong_UI.Lobby;
 namespace Jinhyeong_UI.Editor
 {
 
-    /// <summary>
-    /// 로비의 골격 프리팹을 굽는다 — Window 1 · Panel 4 · Component 4.
-    ///
-    /// 확정표 7행 = **하이브리드**: 정적 골격(배치 · 라벨 · 컨테이너)은 프리팹, 동적 값과 반복 요소는 코드 + 풀.
-    /// 그래서 여기서 굽는 것은 「빈 자리가 있는 골격」이다. 카드 · 칩 · 버튼 N개를 박지 않는다.
-    ///
-    /// - 같은 경로에 덮어써 **GUID 를 유지**한다. 지우고 새로 만들면 씬 · 어드레서블 참조가 전부 끊긴다
-    /// - **멱등**이다. 두 번 돌려도 결과가 같다
-    /// - YAML 손편집 대신 공식 API(PrefabUtility · SerializedObject)로만 만진다
-    /// - 어드레서블 "UI" 그룹에 주소 = 클래스의 PrefabPath 로 등록한다
-    /// - 구운 뒤 육안 확인은 면제되지 않는다 — 하네스 스크린샷으로 본다
-    /// </summary>
     public static class UIPrefabBuilder
     {
         private const string PrefabRoot = "Assets/_Art/Prefabs/";
         private const string GroupName = "UI";
         private const string ScenePath = "Assets/Scenes/Main.unity";
         private const string UIRootName = "UIRoot";
+
+        private const string LobbyPrefabPath = "Assets/_Art/Prefabs/UI/LobbyWindow.prefab";
+        private const string StartPanelPrefabPath = "Assets/_Art/Prefabs/UI/Lobby/StartPanel.prefab";
+
+        // 메인 화면(로비)을 씬에 미리 배치한다 — 플레이 전에도 씬 · 게임 뷰에서 보이게 (10-04 사용자 지시).
+        // 프리팹 인스턴스로 두므로 ui 태스크로 다시 구워도 씬이 따라온다. 런타임에는 WindowFactory 가 이것을 그대로 쓴다
+        public static string PlaceLobbyInScene()
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            if (scene.path != ScenePath)
+            {
+                return $"[UIPrefabBuilder] 활성 씬이 {ScenePath} 가 아니다 ({scene.path}) — 배치하지 않았다";
+            }
+            if (scene.isDirty)
+            {
+                return "[UIPrefabBuilder] 씬에 저장 안 한 변경이 있다 — 사람 작업을 덮지 않으려고 배치하지 않았다";
+            }
+
+            string log = EnsureLobbyInScene(scene);
+            return log ?? "[UIPrefabBuilder] 로비가 이미 씬에 있다 (프리팹 인스턴스 1개)";
+        }
 
         [MenuItem("Jinhyeong/UI/로비 프리팹 굽기", false, 20)]
         public static void Build()
@@ -54,11 +63,6 @@ namespace Jinhyeong_UI.Editor
             Debug.Log(SkinReport());
         }
 
-        /// <summary>
-        /// 스킨 스프라이트가 «지금 어떤 경계로 임포트돼 있는지» 찍는다.
-        /// meta 를 고쳤다고 반영된 것이 아니다 — 리임포트가 돌아야 값이 바뀐다.
-        /// 굽을 때마다 실제 값을 보면 「고쳤는데 왜 그대로냐」를 추측하지 않아도 된다.
-        /// </summary>
         private static string SkinReport()
         {
             string[] names =
@@ -79,33 +83,13 @@ namespace Jinhyeong_UI.Editor
             return sb.ToString();
         }
 
-        // ───────────────────────── Window ─────────────────────────
-
         private static int BuildLobbyWindow()
         {
-            GameObject root = new GameObject("LobbyWindow", typeof(RectTransform));
-            RectTransform rootRt = (RectTransform)root.transform;
-            UIBuild.Stretch(rootRt);
+            GameObject root;
+            Canvas canvas;
+            CanvasScaler scaler;
+            RectTransform safe = MakeWindowRoot("LobbyWindow", SafeAreaUtil.ApplySideType.All, out root, out canvas, out scaler);
 
-            Canvas canvas = root.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            CanvasScaler scaler = root.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = Jinhyeong_Common.CommonConfig.UI.ReferenceResolution;
-            scaler.matchWidthOrHeight = Jinhyeong_Common.CommonConfig.UI.MatchWidthOrHeight;
-            root.AddComponent<GraphicRaycaster>();
-
-            // 배경은 SafeArea 밖 — 노치 영역이 게임 화면으로 비치면 안 된다
-            Image bg = UIBuild.MakeImage(root.transform, "Background", UIBuild.ColorBg);
-            UIBuild.Stretch(bg.rectTransform);
-
-            RectTransform safe = UIBuild.MakeRect("SafeArea", root.transform);
-            UIBuild.Stretch(safe);
-            SafeArea safeArea = safe.gameObject.AddComponent<SafeArea>();
-            Bind(safeArea, "_rectTF", safe);
-            BindInt(safeArea, "_applySide", (int)SafeAreaUtil.ApplySideType.All);   // 가로 화면은 좌우도 피한다
-
-            // 좌측 내비 — 탭 버튼 4개. 개수가 고정이라 골격에 둔다
             RectTransform rail = UIBuild.MakeRect("NavRail", safe);
             rail.anchorMin = new Vector2(0f, 0f);
             rail.anchorMax = new Vector2(0f, 1f);
@@ -130,7 +114,6 @@ namespace Jinhyeong_UI.Editor
                 tabImages[i] = b.image;
             }
 
-            // 패널이 로드되는 빈 자리
             RectTransform container = UIBuild.MakeRect("Container", safe);
             container.anchorMin = Vector2.zero;
             container.anchorMax = Vector2.one;
@@ -150,7 +133,61 @@ namespace Jinhyeong_UI.Editor
             return Save(root, LobbyWindow.PrefabPath);
         }
 
-        // ───────────────────────── Panels ─────────────────────────
+        public static RectTransform MakeWindowRoot(string name, SafeAreaUtil.ApplySideType applySide,
+            out GameObject root, out Canvas canvas, out CanvasScaler scaler)
+        {
+            root = MakeCanvasRoot(name, out canvas, out scaler);
+
+            Image bg = UIBuild.MakeImage(root.transform, "Background", UIBuild.ColorBg);
+            UIBuild.Stretch(bg.rectTransform);
+
+            return MakeSafeArea(root.transform, applySide);
+        }
+
+        public static RectTransform MakePopupRoot(string name, SafeAreaUtil.ApplySideType applySide, float dimAlpha, Vector2 bodySize,
+            out GameObject root, out Canvas canvas, out CanvasScaler scaler)
+        {
+            root = MakeCanvasRoot(name, out canvas, out scaler);
+
+            Image dim = UIBuild.MakeImage(root.transform, "Dim", new Color(0f, 0f, 0f, dimAlpha));
+            UIBuild.Stretch(dim.rectTransform);
+            dim.raycastTarget = true;
+
+            RectTransform safe = MakeSafeArea(root.transform, applySide);
+
+            RectTransform body = UIBuild.MakeRect("Body", safe);
+            body.anchorMin = new Vector2(0.5f, 0.5f);
+            body.anchorMax = new Vector2(0.5f, 0.5f);
+            body.pivot = new Vector2(0.5f, 0.5f);
+            body.sizeDelta = bodySize;
+            body.anchoredPosition = Vector2.zero;
+            return body;
+        }
+
+        private static GameObject MakeCanvasRoot(string name, out Canvas canvas, out CanvasScaler scaler)
+        {
+            GameObject root = new GameObject(name, typeof(RectTransform));
+            UIBuild.Stretch((RectTransform)root.transform);
+
+            canvas = root.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            scaler = root.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = Jinhyeong_Common.CommonConfig.UI.ReferenceResolution;
+            scaler.matchWidthOrHeight = Jinhyeong_Common.CommonConfig.UI.MatchWidthOrHeight;
+            root.AddComponent<GraphicRaycaster>();
+            return root;
+        }
+
+        private static RectTransform MakeSafeArea(Transform parent, SafeAreaUtil.ApplySideType applySide)
+        {
+            RectTransform safe = UIBuild.MakeRect("SafeArea", parent);
+            UIBuild.Stretch(safe);
+            SafeArea safeArea = safe.gameObject.AddComponent<SafeArea>();
+            Bind(safeArea, "_rectTF", safe);
+            BindInt(safeArea, "_applySide", (int)applySide);
+            return safe;
+        }
 
         private static RectTransform NewPanelRoot(string name)
         {
@@ -164,7 +201,6 @@ namespace Jinhyeong_UI.Editor
         {
             RectTransform page = NewPanelRoot("StartPanel");
 
-            // 가로 화면은 좌우로 나눠 쓴다 — 왼쪽 주인공 · 오른쪽 글과 버튼
             Image sky = UIBuild.MakeImage(page, "Sky", UIBuild.ColorSky);
             UIBuild.Stretch(sky.rectTransform);
 
@@ -176,7 +212,9 @@ namespace Jinhyeong_UI.Editor
 
             Image portrait = UIBuild.MakeImage(left, "Portrait", Color.white);
             portrait.preserveAspect = true;
-            portrait.enabled = false;
+            // 씬에 미리 배치된 메인 화면이 플레이 전에도 비어 보이지 않게 첫 주인공을 기본값으로 굽는다. 열리면 Open() 이 고른 주인공으로 바꾼다
+            portrait.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Resources/" + Jinhyeong_Common.RunSelection.HeroOf(1).PortraitPath + ".png");
+            portrait.enabled = portrait.sprite != null;
             UIBuild.Stretch(portrait.rectTransform);
 
             RectTransform right = UIBuild.MakeRect("Right", page);
@@ -236,12 +274,9 @@ namespace Jinhyeong_UI.Editor
             hint.color = UIBuild.ColorMuted;
             UIBuild.Band(hint.rectTransform, 0.79f, 0.86f, 0f);
 
-            // 카드가 쌓이는 자리. 아래 1/4 는 강화 줄 몫 — 카드는 0.25 위에서 끝난다
             RectTransform cardRoot = UIBuild.MakeRect("CardRoot", page);
             cardRoot.anchorMin = new Vector2(0f, 0.25f);
             cardRoot.anchorMax = new Vector2(1f, 0.76f);
-            // [사고] 여백을 0 으로 뒀더니 카드 테두리가 화면 오른쪽 끝에서 잘렸다.
-            // 단색이던 시절엔 안 보였다 — 모양이 생기면 «가장자리»가 보이기 시작한다.
             cardRoot.offsetMin = new Vector2(24f, 0f);
             cardRoot.offsetMax = new Vector2(-24f, 0f);
             UIBuild.Vertical(cardRoot, 10f, false);
@@ -265,18 +300,6 @@ namespace Jinhyeong_UI.Editor
             return Save(page.gameObject, LobbyCharacterPanel.PrefabPath);
         }
 
-        /// <summary>
-        /// 성좌 화면. 골격은 셋뿐이다 — 창(Viewport) · 통째로 움직이는 판(Content) · 아래 정보줄.
-        /// 별 220개와 선 250개는 골격에 없다. 열 때 만들어 풀에 돌려준다 (확정표 7행: 하이브리드).
-        /// </summary>
-        /// <summary>
-        /// 성좌 화면. 골격은 셋뿐이다 — 창(Viewport) · 통째로 움직이는 판(Content) · 떠 있는 설명 패널.
-        /// 별 200개와 선 240개는 골격에 없다. 열 때 만들어 풀에 돌려준다 (확정표 7행: 하이브리드).
-        ///
-        /// [사고] 설명을 화면 «아래 고정 줄»에 뒀더니, 보고 있는 별과 글자가 화면 양 끝으로 갈라져
-        /// 눈이 왕복했다. 설명은 누른 별 옆에 있어야 한다 — 그리고 그 자리를 성좌에 돌려주면
-        /// 창이 세로로 130px 넓어진다.
-        /// </summary>
         private static int BuildSkillPanel()
         {
             RectTransform page = NewPanelRoot("SkillPanel");
@@ -285,7 +308,6 @@ namespace Jinhyeong_UI.Editor
             hint.color = UIBuild.ColorMuted;
             UIBuild.Band(hint.rectTransform, 0.93f, 0.995f, 0f);
 
-            // 창. 여기서 잘라야 성좌가 내비 레일 위로 넘치지 않는다.
             RectTransform viewport = UIBuild.MakeRect("Viewport", page);
             viewport.anchorMin = new Vector2(0f, 0.02f);
             viewport.anchorMax = new Vector2(1f, 0.92f);
@@ -293,7 +315,6 @@ namespace Jinhyeong_UI.Editor
             viewport.offsetMax = new Vector2(-8f, 0f);
             viewport.gameObject.AddComponent<RectMask2D>();
 
-            // 드래그를 받으려면 투명하더라도 그래픽이 있어야 한다. 완전 투명이면 레이캐스트가 통과한다.
             Image catcher = viewport.gameObject.AddComponent<Image>();
             catcher.color = new Color(0.055f, 0.06f, 0.09f, 1f);
             UISkin.ApplySliced(catcher, UISkin.PanelBg, UIBuild.PanelCorner);
@@ -306,9 +327,6 @@ namespace Jinhyeong_UI.Editor
             content.sizeDelta = new Vector2(3000f, 3000f);
             content.anchoredPosition = Vector2.zero;
 
-            // [사고] CanvasRenderer 없이 Graphic 을 붙였다가 MissingComponentException 이 났다.
-            // RequireComponent 는 «인스펙터에서 붙일 때» 도와주는 것이지, 코드로 AddComponent 하는
-            // 이 경로를 대신해 주지 않는다. 렌더러를 먼저 세운다.
             GameObject edgeGo = new GameObject("Edges", typeof(RectTransform), typeof(CanvasRenderer));
             edgeGo.transform.SetParent(content, false);
             RectTransform edgeRt = (RectTransform)edgeGo.transform;
@@ -323,7 +341,6 @@ namespace Jinhyeong_UI.Editor
             ConstellationView view = viewport.gameObject.AddComponent<ConstellationView>();
             Bind(view, "_content", content);
 
-            // 설명 패널 — 창 «밖»에 둔다. 창 안에 두면 잘라내기에 걸려 가장자리 별에서 반쯤 잘린다.
             RectTransform tip = UIBuild.MakeRect("Tooltip", page);
             tip.anchorMin = new Vector2(0.5f, 0.5f);
             tip.anchorMax = new Vector2(0.5f, 0.5f);
@@ -383,7 +400,6 @@ namespace Jinhyeong_UI.Editor
             moveLabel.color = UIBuild.ColorSubHead;
             UIBuild.Band(moveLabel.rectTransform, 0.585f, 0.655f, 0f);
 
-            // 프리셋이 둘뿐이라 해상도 줄보다 좁다. 같은 폭으로 두면 버튼 하나가 과하게 커진다.
             RectTransform moveRow = UIBuild.MakeRect("MoveRow", page);
             moveRow.anchorMin = new Vector2(0.5f, 0.475f);
             moveRow.anchorMax = new Vector2(0.5f, 0.575f);
@@ -429,8 +445,6 @@ namespace Jinhyeong_UI.Editor
             return Save(page.gameObject, LobbySettingsPanel.PrefabPath);
         }
 
-        // ───────────────────────── Components ─────────────────────────
-
         private static int BuildHeroCard()
         {
             GameObject go = new GameObject("HeroCard", typeof(RectTransform));
@@ -438,7 +452,6 @@ namespace Jinhyeong_UI.Editor
             UIBuild.PreferredHeight(rt, 100f);
             Image bg = go.AddComponent<Image>();
             bg.color = UIBuild.ColorCard;
-            // 카드가 100px 로 크다. 버튼과 같은 10px 로 두면 각져 보인다 — 모서리는 크기에 비례해야 같아 보인다.
             UISkin.ApplySliced(bg, UISkin.CardBg, UIBuild.BigCardCorner);
             Button button = go.AddComponent<Button>();
             button.targetGraphic = bg;
@@ -468,15 +481,6 @@ namespace Jinhyeong_UI.Editor
             return Save(go, HeroCardComponent.PrefabPath);
         }
 
-        /// <summary>
-        /// 성좌의 별 하나. 이름표는 «별 아래»에 둔다 — 별 안에 넣으면 22유닛짜리 잔가지에서 글자가 삐져나온다.
-        /// 이름표는 레이캐스트를 끈다. 켜 두면 옆 별의 이름이 클릭을 가로챈다.
-        /// </summary>
-        /// <summary>
-        /// 성좌의 별 — 바탕 · 아이콘 · 테두리 세 겹.
-        /// 셋이 서로 다른 것을 말한다: 계열(색) · 무슨 스킬(그림) · 살 수 있나(테두리 밝기).
-        /// 이름표는 없다 — 누르면 그 위에 설명 패널이 뜬다.
-        /// </summary>
         private static int BuildConstellationNode()
         {
             GameObject go = new GameObject("ConstellationNode", typeof(RectTransform));
@@ -489,7 +493,6 @@ namespace Jinhyeong_UI.Editor
             Button button = go.AddComponent<Button>();
             button.targetGraphic = bg;
 
-            // 아이콘은 별보다 작다. 테두리에 닿으면 무슨 그림인지 안 읽힌다.
             Image icon = UIBuild.MakeImage(rt, "Icon", Color.white);
             icon.raycastTarget = false;
             icon.enabled = false;
@@ -500,7 +503,6 @@ namespace Jinhyeong_UI.Editor
             ir.offsetMin = new Vector2(IconInset, IconInset);
             ir.offsetMax = new Vector2(-IconInset, -IconInset);
 
-            // 테두리가 «맨 위»다. 아이콘 뒤에 두면 아이콘이 테두리를 덮어 상태가 안 보인다.
             Image frame = UIBuild.MakeImage(rt, "Frame", ConstellationPalette.FrameLocked);
             frame.raycastTarget = false;
             UIBuild.Stretch(frame.rectTransform);
@@ -515,7 +517,6 @@ namespace Jinhyeong_UI.Editor
             return Save(go, ConstellationNodeComponent.PrefabPath);
         }
 
-        /// <summary>별 안쪽 여백(그래프 유닛). 34유닛짜리 잔가지 기준이라 비율로 두면 큰 별에서 과해진다.</summary>
         private const float IconInset = 7f;
 
         private static int BuildLabelButton()
@@ -541,12 +542,8 @@ namespace Jinhyeong_UI.Editor
             return Save(go, LabelButtonComponent.PrefabPath);
         }
 
-        // ───────────────────────── 씬 이전 ─────────────────────────
-
-        /// <summary>
-        /// 씬에 박혀 있던 옛 LobbyWindow 인스턴스를 걷어낸다. 창은 이제 키로 로드된다.
-        /// UIRoot 는 남긴다 — 런타임 창이 세워지는 자리다.
-        /// </summary>
+        // 씬의 로비 = 프리팹 인스턴스 정확히 하나 (10-04 사용자: "미리 씬에 배치되어 있는게 맞다").
+        // 예전에는 여기서 씬 인스턴스를 전부 지우고 키로만 로드했다 — 이제는 프리팹과 끊긴 옛 사본만 지우고 없으면 배치한다
         private static void MigrateScene()
         {
             Scene scene = SceneManager.GetActiveScene();
@@ -554,33 +551,75 @@ namespace Jinhyeong_UI.Editor
             {
                 scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
             }
-
-            int removed = 0;
-            LobbyWindow[] old = Object.FindObjectsByType<LobbyWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            for (int i = 0; i < old.Length; i++)
+            string log = EnsureLobbyInScene(scene);
+            if (string.IsNullOrEmpty(log) == false)
             {
-                if (old[i] == null)
-                {
-                    continue;
-                }
-                Object.DestroyImmediate(old[i].gameObject);
-                removed++;
-            }
-
-            if (GameObject.Find(UIRootName) == null)
-            {
-                new GameObject(UIRootName);
-            }
-
-            if (removed > 0)
-            {
-                EditorSceneManager.MarkSceneDirty(scene);
-                EditorSceneManager.SaveScene(scene);
-                Debug.Log($"[UIPrefabBuilder] 씬에서 옛 LobbyWindow 인스턴스 {removed}개 제거 — 이제 키로 로드된다");
+                Debug.Log(log);
             }
         }
 
-        // ───────────────────────── 공통 ─────────────────────────
+        private static string EnsureLobbyInScene(Scene scene)
+        {
+            GameObject root = GameObject.Find(UIRootName);
+            if (root == null)
+            {
+                root = new GameObject(UIRootName);
+            }
+
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(LobbyPrefabPath);
+            int removed = 0;
+            int kept = 0;
+            LobbyWindow[] found = Object.FindObjectsByType<LobbyWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            for (int i = 0; i < found.Length; i++)
+            {
+                if (found[i] == null)
+                {
+                    continue;
+                }
+                GameObject source = PrefabUtility.GetCorrespondingObjectFromSource(found[i].gameObject);
+                bool linked = prefab != null && source == prefab && kept == 0;
+                if (linked)
+                {
+                    kept++;
+                    continue;
+                }
+                Object.DestroyImmediate(found[i].gameObject);
+                removed++;
+            }
+
+            bool placed = false;
+            if (kept == 0 && prefab != null)
+            {
+                GameObject inst = (GameObject)PrefabUtility.InstantiatePrefab(prefab, root.transform);
+                inst.SetActive(true);
+                placed = true;
+            }
+
+            // 시작 탭 패널도 Container 밑에 미리 둔다 — 로비 창만 있으면 레일만 보이고 본문이 비어 있다
+            LobbyWindow lobby = root.GetComponentInChildren<LobbyWindow>(true);
+            Transform container = lobby != null ? lobby.transform.Find("SafeArea/Container") : null;
+            GameObject startPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(StartPanelPrefabPath);
+            if (container != null && startPrefab != null && container.GetComponentInChildren<LobbyStartPanel>(true) == null)
+            {
+                GameObject panel = (GameObject)PrefabUtility.InstantiatePrefab(startPrefab, container);
+                RectTransform rt = panel.transform as RectTransform;
+                if (rt != null)
+                {
+                    rt.anchoredPosition3D = Vector3.zero;
+                    rt.localScale = Vector3.one;
+                }
+                panel.SetActive(true);
+                placed = true;
+            }
+
+            if (removed == 0 && placed == false)
+            {
+                return null;
+            }
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            return $"[UIPrefabBuilder] 씬 로비 정리 — 옛 사본 {removed}개 제거 · 프리팹 배치 {(placed ? 1 : 0)}개";
+        }
 
         private static string AssetPathOf(string address)
         {
@@ -597,7 +636,6 @@ namespace Jinhyeong_UI.Editor
                 AssetDatabase.Refresh();
             }
 
-            // 같은 경로에 덮어쓴다 — GUID 가 유지된다
             PrefabUtility.SaveAsPrefabAsset(go, path);
             Object.DestroyImmediate(go);
             RegisterAddressable(path, address);

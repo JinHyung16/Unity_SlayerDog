@@ -6,9 +6,6 @@ using UnityEngine;
 namespace Jinhyeong_SkillSystem
 {
 
-    /// <summary>
-    /// 적 타입 테이블. 경과 시간에 따라 등장 가능한 타입을 가중치로 뽑는다.
-    /// </summary>
     public static class EnemyTypeRegistry
     {
         public const string ResourceEnemy = "GameData/EnemyType";
@@ -67,9 +64,6 @@ namespace Jinhyeong_SkillSystem
             }
         }
 
-        /// <summary>
-        /// 경과 시간에 등장 가능한(minTime 이하) 타입 중 가중치 추첨. 후보가 없으면 null.
-        /// </summary>
         public static EnemyTypeData PickWeighted(float elapsedSeconds)
         {
             _scratch.Clear();

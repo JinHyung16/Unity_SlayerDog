@@ -2,8 +2,8 @@
 module.exports = {
     id: 2017,
     name: 'Pack Howl',
-    desc: '울음이 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다',
-    displayName: '무리 울음',
+    desc: '아르페지오가 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다',
+    displayName: '아르페지오 연쇄',
     slot: 'Neck',
     family: 'Wave',
     appliesDebuff: 'None',

@@ -6,17 +6,6 @@ using Jinhyeong_Common;
 namespace Jinhyeong_AI
 {
 
-    /// <summary>
-    /// 화면 밖 적의 비용을 죽인다. 몬스터가 수백 마리 깔리는 게임이라 이게 없으면 프레임이 안 나온다.
-    ///
-    /// Unity 는 렌더러를 알아서 프러스텀 컬링하지만, **Update·AI·Animator 는 계속 돈다.**
-    /// 진짜 비용은 거기 있으므로 직접 끈다:
-    ///   1. 화면 밖  → Animator 정지 + AI 틱 간격 늘림 (완전히 멈추면 적이 다가오질 않는다)
-    ///   2. 너무 멀리 → 풀로 회수 (뒤에 처진 적을 계속 굴릴 이유가 없다)
-    ///
-    /// 적마다 컴포넌트를 붙이지 않고 스포너의 활성 목록을 한 곳에서 훑는다.
-    /// 컴포넌트 수백 개의 Update 를 도는 것보다 루프 하나가 싸다.
-    /// </summary>
     public class EnemyCullingSystem : BaseBehaviour
     {
         public static EnemyCullingSystem Instance { get; private set; }
@@ -92,7 +81,6 @@ namespace Jinhyeong_AI
             if (_scratch.Count == 0)
                 return;
 
-            // 전부 매 프레임 검사하지 않고 커서를 굴리며 나눠 본다
             int budget = Mathf.Min(_checkPerFrame, _scratch.Count);
             for (int n = 0; n < budget; n++)
             {
@@ -107,11 +95,6 @@ namespace Jinhyeong_AI
 
                 bool visible = IsVisible(cam, pos);
 
-                // 회수는 "화면 밖 + 너무 멂" 두 조건이 모두 맞을 때만 한다.
-                // 거리만 보면 쿼터뷰의 먼 쪽(화면 위)에 보이는 적을 눈앞에서 지워버린다.
-                // [사고] 보스가 플레이어보다 느려 뒤처지면 화면 밖으로 밀려 **풀로 회수**됐다.
-                // 등장은 했는데 죽지도 살아 있지도 않아, 12라운드 클리어가 원천적으로 불가능했다.
-                // 하나뿐인 개체는 비용을 아낄 대상이 아니다.
                 if (visible == false && e.IsBoss == false && PlanarDistSq(pos, center) > despawnSq)
                 {
                     Forget(e);
@@ -133,10 +116,6 @@ namespace Jinhyeong_AI
             state.SetVisible(visible, _offscreenTickInterval);
         }
 
-        /// <summary>
-        /// 뷰포트 좌표로 판정한다. 여유(margin)를 두는 이유는 화면 경계에서 켜졌다 꺼졌다 하면
-        /// 가장자리 적이 눈에 띄게 버벅이기 때문이다.
-        /// </summary>
         private static bool IsVisible(Camera cam, Vector3 worldPos)
         {
             Vector3 vp = cam.WorldToViewportPoint(worldPos);

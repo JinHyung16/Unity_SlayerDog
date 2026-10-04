@@ -9,12 +9,6 @@ using Jinhyeong_UI.Framework;
 namespace Jinhyeong_UI.Lobby
 {
 
-    /// <summary>
-    /// 시작 탭 — 첫 화면. 왼쪽 주인공 · 오른쪽 제목/한 줄/시작 스킬/기록/상태/시작 버튼.
-    /// 정적 배치는 프리팹, 동적 값(초상화 · 시작 스킬 · 기록 · 상태)만 여기서 채운다.
-    ///
-    /// 상태는 창의 이벤트로 받는다. 매 프레임 폴링하면 값이 안 바뀌어도 캔버스가 리빌드된다.
-    /// </summary>
     public class LobbyStartPanel : BasePanel
     {
         public static readonly PrefabAuto<LobbyStartPanel> PrefabAuto = new PrefabAuto<LobbyStartPanel>(PrefabPath);
@@ -83,7 +77,6 @@ namespace Jinhyeong_UI.Lobby
             _portrait.enabled = s != null;
         }
 
-        /// <summary>저장된 기록. 이게 화면에 없으면 「저장이 되는지」를 확인할 방법이 없다.</summary>
         private void RefreshRecord()
         {
             if (_record == null)
@@ -118,10 +111,6 @@ namespace Jinhyeong_UI.Lobby
             }
         }
 
-        /// <summary>
-        /// 이번 판을 무엇으로 시작하나. 시작 스킬은 **캐릭터의 고유 파츠 하나**뿐이고 나머지는 필드에서 줍는다.
-        /// 고를 것이 없다는 사실 자체가 이 게임의 규칙이라, 화면도 그렇게 말해야 한다.
-        /// </summary>
         private static string BuildLoadoutText()
         {
             PartData unique = PartRegistry.GetUniqueFor(RunSelection.CharacterIndex);

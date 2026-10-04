@@ -3,7 +3,7 @@ module.exports = {
     id: 8003,
     name: 'fam_throw_2',
     desc: '투척 2개 — 투척 스킬 쿨타임 -15%',
-    displayName: '연습 투구',
+    displayName: '연습 무대',
     family: 'Throw',
     reqFamilyCount: 2,
     reqSkillId: 0,

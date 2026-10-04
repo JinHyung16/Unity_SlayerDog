@@ -1,9 +1,9 @@
-/** 꼬리 흔들기 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
+/** 현 가르기 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
 module.exports = {
     id: 8030,
     name: 'mas_tail_pierce',
-    desc: '꼬리 흔들기 증강 4개 — 피해 +80%',
-    displayName: '꼬리 흔들기 통달',
+    desc: '현 가르기 증강 4개 — 피해 +80%',
+    displayName: '현 가르기 통달',
     family: 'None',
     reqFamilyCount: 0,
     reqSkillId: 2009,

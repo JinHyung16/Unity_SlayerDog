@@ -3,7 +3,7 @@ module.exports = {
     id: 2015,
     name: 'Ear Sonar',
     desc: '반경 4m 원형 음파로 공격력 60% 피해. 2.5초마다',
-    displayName: '귀 쫑긋',
+    displayName: '서브우퍼 펄스',
     slot: 'Head',
     family: 'Wave',
     appliesDebuff: 'None',

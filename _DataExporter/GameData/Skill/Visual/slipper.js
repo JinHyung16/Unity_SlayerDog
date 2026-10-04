@@ -1,13 +1,13 @@
-/** 슬리퍼 투척 — 슬리퍼를 던져 공격력 300% 피해. 5초마다 */
+/** 슬리퍼 투척 — 캐스터네츠를 튕겨 공격력 300% 피해. 5초마다 */
 module.exports = {
-    color: '#FFD08A',
-    desc: "슬리퍼 투척 — 슬리퍼를 던져 공격력 300% 피해. 5초마다",
+    color: '#9BFF3C',
+    desc: "슬리퍼 투척 — 캐스터네츠를 튕겨 공격력 300% 피해. 5초마다",
     values: {
         "Projectile": "Fx_Slipper",
         "Impact": "Fx_Paw",
         "Cast": "Fx_Slipper",
         "Orient": "Billboard",
-        "Color": "#FFD08A",
+        "Color": "#9BFF3C",
         "Cooldown": 5,
         "Range": 10,
         "Damage": 300,

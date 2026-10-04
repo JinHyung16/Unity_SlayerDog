@@ -6,11 +6,6 @@ using UnityEngine;
 
 namespace Jinhyeong_SkillSystem
 {
-    /// <summary>
-    /// 파츠 옵션 테이블. 옵션 1개 = 특성 1개만 올린다 (복합 효과는 데이터로 만들 수 없다).
-    ///
-    /// 파츠를 주울 때 그 파츠에 존재하는 특성 중에서만 뽑아야 하므로 partId 로 묶어 둔다.
-    /// </summary>
     public static class PartOptionRegistry
     {
         public const string ResourceOption = "GameData/PartOption";

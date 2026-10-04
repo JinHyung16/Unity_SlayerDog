@@ -1,18 +1,10 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Jinhyeong_Common;
 using Jinhyeong_Managers;
 
 namespace Jinhyeong_Character
 {
-    /// <summary>
-    /// 2D 뱀서류 카메라. 오쏘그래픽 고정 쿼터뷰로 플레이어를 따라간다.
-    ///
-    /// 궤도 조작은 없다 — 뱀서류는 카메라를 돌릴 일이 없고, 돌리면 스프라이트 빌보드가
-    /// 같이 돌아 픽셀이 뭉개진다. Yaw 를 0 으로 고정해야 조이스틱 입력이 화면과 1:1 로 맞는다.
-    ///
-    /// 월드는 XZ 평면이고 카메라만 눕혀서 2D 처럼 보이게 한다. 이 덕에 충돌/타겟팅/발사 로직이
-    /// 3D 시절 그대로 살아 있다.
-    /// </summary>
     public class CameraFollow : BaseBehaviour
     {
         [Header("Follow")]
@@ -37,7 +29,6 @@ namespace Jinhyeong_Character
         private Camera _gameCamera;
         private Camera _uiCamera;
 
-        /// <summary>Yaw 는 항상 0. PlayerController 가 카메라 기준 이동을 계산할 때 쓴다.</summary>
         public float Yaw { get { return 0f; } }
         public float Pitch { get { return _pitch; } }
         public float Distance { get { return _distance; } }
@@ -51,7 +42,6 @@ namespace Jinhyeong_Character
 
         public static Camera UICamera { get { return Active != null ? Active._uiCamera : null; } }
 
-        /// <summary>스프라이트 빌보드가 매 프레임 카메라를 조회하지 않도록 회전을 캐시해 둔다.</summary>
         public static Quaternion ViewRotation { get; private set; } = Quaternion.Euler(50f, 0f, 0f);
 
         private void Awake()
@@ -130,7 +120,6 @@ namespace Jinhyeong_Character
             _velocity = Vector3.zero;
         }
 
-        /// <summary>오쏘그래픽 전환. 원근이 없어야 픽셀아트가 화면 어디서나 같은 크기로 보인다.</summary>
         private void ApplyProjection()
         {
             if (_gameCamera == null)
@@ -143,6 +132,11 @@ namespace Jinhyeong_Character
             _gameCamera.nearClipPlane = 0.05f;
             _gameCamera.farClipPlane = _distance * 4f;
             _gameCamera.transparencySortMode = TransparencySortMode.Orthographic;
+
+            // 비네트는 바닥 프리팹의 전역 볼륨이 준다. 후처리를 켜야 게임 카메라에 걸린다
+            UniversalAdditionalCameraData data = _gameCamera.GetUniversalAdditionalCameraData();
+            if (data != null)
+                data.renderPostProcessing = true;
             ViewRotation = Quaternion.Euler(_pitch, 0f, 0f);
         }
 

@@ -1,9 +1,9 @@
-/** 테니스공 물어와 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
+/** 탬버린 부메랑 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
 module.exports = {
     id: 8044,
     name: 'mas_tennis_ball',
-    desc: '테니스공 물어와 증강 4개 — 피해 +80%',
-    displayName: '테니스공 물어와 통달',
+    desc: '탬버린 부메랑 증강 4개 — 피해 +80%',
+    displayName: '탬버린 부메랑 통달',
     family: 'None',
     reqFamilyCount: 0,
     reqSkillId: 2023,

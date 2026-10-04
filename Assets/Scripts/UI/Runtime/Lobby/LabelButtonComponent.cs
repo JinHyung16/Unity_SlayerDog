@@ -6,10 +6,6 @@ using Jinhyeong_UI.Framework;
 namespace Jinhyeong_UI.Lobby
 {
 
-    /// <summary>
-    /// 글자 하나짜리 버튼. 해상도 프리셋 · 강화 칸처럼 「같은 모양이 N개」인 자리에 쓴다.
-    /// 어느 칸이 눌렸는지는 index 로만 말한다 — 의미는 부모가 안다.
-    /// </summary>
     public class LabelButtonComponent : BaseComponent
     {
         public static readonly PrefabAuto<LabelButtonComponent> PrefabAuto = new PrefabAuto<LabelButtonComponent>(PrefabPath);
@@ -50,7 +46,6 @@ namespace Jinhyeong_UI.Lobby
             }
         }
 
-        /// <summary>선택 안 됐을 때의 바탕색. 강화 칸처럼 기본색이 다른 자리용.</summary>
         public void SetColor(Color baseColor)
         {
             _baseColor = baseColor;

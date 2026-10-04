@@ -1,7 +1,7 @@
 module.exports = {
     id: 4107,
     name: 'dig_roll_duration',
-    desc: '뒹굴기 — 지속시간 +25%',
+    desc: '브레이크 댄스 — 지속시간 +25%',
     displayName: '더 뒹굴기',
     partId: 2005,
     trait: 'Duration',

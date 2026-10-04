@@ -31,12 +31,6 @@ namespace Jinhyeong_Managers
 
         private static Player SpawnPlayer(SkillLoadout loadout, Vector3 spawnPosition)
         {
-            // [사고] 플레이어가 **두 마리** 스폰돼 있었다. 하네스가 직접 하나를 세우고,
-            // LobbyWindow 의 비동기 흐름이 나중에 또 하나를 세운다. 화면엔 개가 둘,
-            // 스킬은 두 벌이 나가 그동안의 밸런스 실측이 통째로 부풀려져 있었다.
-            //
-            // 「누가 먼저 부르나」를 조율하는 대신 스폰 자체를 한 번만 되게 막는다 —
-            // 호출 순서에 기대는 규칙은 경로가 늘 때마다 다시 깨진다.
             Player existing = Object.FindFirstObjectByType<Player>();
             if (existing != null)
             {
@@ -66,8 +60,6 @@ namespace Jinhyeong_Managers
                 player.Skills.EquipAll();
             }
 
-            // 파츠 착용 시작. 알몸 + 고유 파츠 1개로 출발한다 — 성장은 전부 여기서 시작된다.
-            // 어떤 슈퍼독인지는 로비가 정한다. 이걸 안 넘기면 프리팹 기본값(시바)으로 고정된다.
             PartLoadout parts = go.GetComponent<PartLoadout>();
             if (parts != null)
             {
@@ -78,10 +70,6 @@ namespace Jinhyeong_Managers
             return player;
         }
 
-        /// <summary>
-        /// 바닥은 한 판에 하나면 된다. 씬에 미리 두지 않고 런 시작 때 만든다 —
-        /// 씬 파일을 건드리지 않아야 다른 씬에서도 그대로 돈다.
-        /// </summary>
         private static void EnsureGround()
         {
             if (Object.FindFirstObjectByType<TilemapStreamer>() != null)
@@ -97,10 +85,6 @@ namespace Jinhyeong_Managers
             Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
         }
 
-        /// <summary>
-        /// 연출 풀을 미리 채운다. 에셋 로드가 끝난 **뒤에** 불러야 한다 —
-        /// 프리팹이 아직 없으면 조용히 건너뛰고, 결국 전투 중에 만들게 된다.
-        /// </summary>
         private static void PrewarmFx()
         {
             PoolManager pm = PoolManager.Instance;
@@ -110,9 +94,10 @@ namespace Jinhyeong_Managers
             pm.Pool_Fx_Prewarm(CommonConfig.Skill.DamageTextKey, CommonConfig.Spawner.PrewarmDamageText);
             pm.Pool_Fx_Prewarm(CommonConfig.Skill.XpGemKey, CommonConfig.Spawner.PrewarmXpGem);
             pm.Pool_Fx_Prewarm(PartDropper.PickupKey, CommonConfig.Spawner.PrewarmPickup);
+            pm.Pool_Fx_Prewarm(CommonConfig.Skill.HitBurstKey, CommonConfig.Spawner.PrewarmHitBurst);
+            pm.Pool_Fx_Prewarm(CommonConfig.Skill.GhostKey, CommonConfig.Spawner.PrewarmGhost);
         }
 
-        /// <summary>파츠 상자를 떨어뜨리는 관리자. 에셋이 필요 없어 컴포넌트만 붙인다.</summary>
         private static void EnsurePartDropper()
         {
             if (PartDropper.Instance != null)

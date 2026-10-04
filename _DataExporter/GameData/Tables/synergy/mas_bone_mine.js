@@ -1,9 +1,9 @@
-/** 뼈다귀 매설 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
+/** 베이스 드럼 매설 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
 module.exports = {
     id: 8029,
     name: 'mas_bone_mine',
-    desc: '뼈다귀 매설 증강 4개 — 피해 +80%',
-    displayName: '뼈다귀 매설 통달',
+    desc: '베이스 드럼 매설 증강 4개 — 피해 +80%',
+    displayName: '베이스 드럼 매설 통달',
     family: 'None',
     reqFamilyCount: 0,
     reqSkillId: 2008,

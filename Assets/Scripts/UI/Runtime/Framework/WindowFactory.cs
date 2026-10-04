@@ -8,12 +8,6 @@ using Jinhyeong_Managers;
 namespace Jinhyeong_UI.Framework
 {
 
-    /// <summary>
-    /// 키로 창 프리팹을 올리고 인스턴스를 만든다. 열지는 않는다 — 여는 것은 창의 <c>Open(...)</c> 이다.
-    ///
-    /// 캔버스 설정은 **프리팹에 저장된 값을 믿지 않는다.** 창을 여는 코드가 정한다 (PrefabRule.md).
-    /// CanvasScaler 값은 프로젝트당 하나(<see cref="CommonConfig.UI"/>) — 창마다 다르게 두면 같은 UI 가 기기마다 다르게 밀린다.
-    /// </summary>
     public static class WindowFactory
     {
         public static async UniTask<T> LoadAsync<T>(WindowKey<T> key, Transform parent) where T : BaseWindow
@@ -25,6 +19,22 @@ namespace Jinhyeong_UI.Framework
             }
 
             AddressableManager am = AddressableManager.Ensure();
+
+            // 씬에 미리 배치된 창이 있으면 그것을 쓴다 (에디터에서 처음부터 보이게 — 10-04 사용자 지시).
+            // 이미 열려 있는 것은 건드리지 않는다. 없으면 예전처럼 어드레서블에서 만든다
+            T placed = FindPlaced<T>();
+            if (placed != null)
+            {
+                placed.gameObject.SetActive(false);
+                IReadOnlyList<string> placedPreload = placed.PreloadPaths;
+                if (placedPreload != null && placedPreload.Count > 0)
+                {
+                    await am.LoadAllAsync(placedPreload);
+                }
+                ConfigureCanvas(placed);
+                return placed;
+            }
+
             GameObject prefab = await am.LoadAsync(key.Path);
             if (prefab == null)
             {
@@ -32,7 +42,6 @@ namespace Jinhyeong_UI.Framework
                 return null;
             }
 
-            // 비활성으로 세운다. 열기 전에 Awake 가 돌아도 부품 배선만 하지 데이터는 안 읽는다.
             GameObject go = Object.Instantiate(prefab, parent, false);
             go.name = prefab.name;
             go.SetActive(false);
@@ -45,7 +54,6 @@ namespace Jinhyeong_UI.Framework
                 return null;
             }
 
-            // 창이 쓰는 조각을 먼저 다 올린다. 이후 UILoader.Get 은 동기다.
             IReadOnlyList<string> preload = window.PreloadPaths;
             if (preload != null && preload.Count > 0)
             {
@@ -54,6 +62,30 @@ namespace Jinhyeong_UI.Framework
 
             ConfigureCanvas(window);
             return window;
+        }
+
+        private static T FindPlaced<T>() where T : BaseWindow
+        {
+            T[] found = Object.FindObjectsByType<T>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            UIManagement ui = UIManagement.Instance;
+            for (int i = 0; i < found.Length; i++)
+            {
+                T w = found[i];
+                if (w == null || w.gameObject.scene.IsValid() == false)
+                {
+                    continue;
+                }
+                if (ui != null && ui.PoolRoot != null && w.transform.IsChildOf(ui.PoolRoot))
+                {
+                    continue;
+                }
+                if (w.WindowState != EWindowState.Closed)
+                {
+                    continue;
+                }
+                return w;
+            }
+            return null;
         }
 
         private static void ConfigureCanvas(BaseWindow window)

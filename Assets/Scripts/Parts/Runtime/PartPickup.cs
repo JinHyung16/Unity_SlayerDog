@@ -6,16 +6,11 @@ using Jinhyeong_SkillSystem;
 
 namespace Jinhyeong_Parts
 {
-    /// <summary>
-    /// 필드에 떨어진 파츠 상자. 밟으면 그 자리에서 착용한다.
-    ///
-    /// 뱀서류 템포에서 「교체할까요?」 팝업으로 멈춰 세우면 흐름이 끊긴다.
-    /// 그래서 빈 부위면 무조건 착용, 찬 부위면 옵션이 더 많을 때만 자동 교체한다.
-    /// 판단 기준은 PartLoadout.IsUpgrade 한 곳에만 있다.
-    /// </summary>
     public class PartPickup : BaseBehaviour
     {
         [SerializeField] private SpriteRenderer _renderer;
+        // 스피커 테두리 빛 — 등급색으로 틴트하고 맥박처럼 깜빡인다. 몸(_renderer)은 제 색 그대로
+        [SerializeField] private SpriteRenderer _glow;
 
         [Tooltip("이 반경에 들어오면 획득. 상자는 자석으로 끌려오지 않는다 — 찾아가는 맛이 있어야 한다.")]
         [SerializeField] private float _pickupRadius = 0.9f;
@@ -26,12 +21,14 @@ namespace Jinhyeong_Parts
         private PartInstance _payload;
         private float _spawnTime;
 
-        /// <summary>등급별 상자 색. 굳이 아이콘을 나눌 필요 없이 색만으로 읽힌다.</summary>
+        private static readonly Color AmpColor = new Color(1f, 0.30f, 0.72f, 1f);
+        private Color _glowColor = Color.white;
+
         private static readonly Color[] GradeColors =
         {
-            new Color(1f, 1f, 1f, 1f),               // Common
-            new Color(0.55f, 0.85f, 1f, 1f),         // Rare
-            new Color(1f, 0.82f, 0.35f, 1f)          // Legendary
+            new Color(1f, 1f, 1f, 1f),
+            new Color(0.18f, 0.90f, 1f, 1f),
+            new Color(1f, 0.93f, 0.32f, 1f)
         };
 
         public PartInstance Payload { get { return _payload; } }
@@ -41,12 +38,12 @@ namespace Jinhyeong_Parts
             _payload = inst;
             _spawnTime = Time.time;
 
-            if (_renderer == null)
-                _renderer = GetComponentInChildren<SpriteRenderer>(true);
-            if (_renderer != null && inst != null)
+            if (_glow != null && inst != null)
             {
                 int gi = Mathf.Clamp((int)inst.Grade - 1, 0, GradeColors.Length - 1);
-                _renderer.color = GradeColors[gi];
+                // 기본 공격 앰프(고유 파츠)는 마젠타 — 무기와 한눈에 갈린다
+                _glowColor = inst.Data != null && inst.Data.Owner > 0 ? AmpColor : GradeColors[gi];
+                _glow.color = _glowColor;
             }
         }
 
@@ -54,6 +51,13 @@ namespace Jinhyeong_Parts
         {
             if (_payload == null)
                 return;
+
+            if (_glow != null)
+            {
+                Color c = _glowColor;
+                c.a = 0.65f + 0.35f * Mathf.Sin((Time.time - _spawnTime) * 6f);
+                _glow.color = c;
+            }
 
             if (_lifetime > 0f && Time.time - _spawnTime > _lifetime)
             {

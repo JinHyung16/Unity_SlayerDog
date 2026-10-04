@@ -6,15 +6,6 @@ using Jinhyeong_GameData;
 namespace Jinhyeong_SkillSystem.Skill
 {
 
-    /// <summary>
-    /// DB 트리의 Hit 노드에 대응하는 컴포넌트 — 판정·피해·소멸 조건만 책임진다.
-    ///
-    /// LateUpdate 에서 도는 이유: SkillMethod 가 Update 에서 이동을 끝낸 뒤여야
-    /// 이번 프레임의 이동 구간(PrevPos → 현재 위치)으로 스윕 판정을 할 수 있다.
-    ///
-    /// 거리 판정은 전부 XZ 평면이다. 이 프로젝트의 충돌 모델이 XZ 2D 라서,
-    /// 총구 높이(1.0) 때문에 지면의 적을 놓치는 일이 없어야 한다.
-    /// </summary>
     public class SkillHit : BaseBehaviour
     {
         private SkillConfig _config;
@@ -26,6 +17,16 @@ namespace Jinhyeong_SkillSystem.Skill
         private static readonly List<Damageable> _scanBuf = new List<Damageable>(64);
         private static readonly List<Vector3> _chainPts = new List<Vector3>(8);
 
+        // 하네스 계측: 이번 판에 적을 맞힌 스킬 / 버스트를 낸 스킬
+        public static readonly HashSet<string> HitKeys = new HashSet<string>();
+        public static readonly HashSet<string> BurstKeys = new HashSet<string>();
+
+        public static void ResetBurstWatch()
+        {
+            HitKeys.Clear();
+            BurstKeys.Clear();
+        }
+
         private void Awake()
         {
             _config = GetComponent<SkillConfig>();
@@ -33,7 +34,6 @@ namespace Jinhyeong_SkillSystem.Skill
             _visual = GetComponent<SkillVisual>();
         }
 
-        /// <summary>즉발(LaunchInstant)처럼 스폰과 동시에 때려야 하는 경우 LaunchExecutor 가 부른다.</summary>
         public void ImmediateHit(IList<Damageable> seedTargets)
         {
             ProcessHit(immediate: true, seedTargets: seedTargets);
@@ -49,7 +49,6 @@ namespace Jinhyeong_SkillSystem.Skill
 
             _config.PrevPos = transform.position;
 
-            // 곡사/사행은 도착 프레임에 판정을 마치고 사라진다
             if (_config.Despawning == false && _method != null && _method.Arrived)
             {
                 _config.Despawn();
@@ -60,27 +59,10 @@ namespace Jinhyeong_SkillSystem.Skill
             CheckSafetyDespawn();
         }
 
-        /// <summary>
-        /// 「N번 맞히면 사라진다」 스킬이 **한 번도 못 맞혔을 때** 기다려 주는 시간.
-        /// 연출이 다 재생될 만큼은 되고, 다음 발사와 겹치지 않을 만큼은 짧아야 한다.
-        /// </summary>
         private const float NoHitGrace = 0.6f;
 
-        /// <summary>
-        /// 어떤 스킬 오브젝트도 이 시간을 넘겨 살아 있지 않는다. 마지막 안전망이다.
-        /// 가장 긴 지속형 스킬보다 넉넉해야 정상 동작을 자르지 않는다.
-        /// </summary>
         private const float MaxLifetime = 12f;
 
-        /// <summary>
-        /// [사고] 즉발 스킬은 `DespawnAfterHits: 1` 로 사라지는데, **맞춘 게 있어야** 펄스가 돈다.
-        /// 사거리에 적이 없으면 펄스가 영영 안 돌아 연출이 화면에 그대로 남았고,
-        /// 으르렁(3초 쿨)이 빈 벌판에서 쌓여 화면 위쪽을 이펙트로 뒤덮었다.
-        /// 세로 화면비로 바꾸기 전까지는 이게 화면 밖이라 보이지도 않았다.
-        ///
-        /// 발사 방식마다 조건을 하나씩 막으면 같은 사고가 다른 방식에서 또 난다.
-        /// 「못 맞혔으면 곧 사라진다」와 「무슨 일이 있어도 이 시간이면 사라진다」 두 겹으로 둔다.
-        /// </summary>
         private void CheckSafetyDespawn()
         {
             if (_config.Despawning)
@@ -133,7 +115,6 @@ namespace Jinhyeong_SkillSystem.Skill
             float radius = _config.GetHitFloat(ESkillParamKey.Radius, 0.5f);
             float damage = _config.GetHitFloat(ESkillParamKey.Damage, 1f);
 
-            // 미리 받은 대상이 유효하지 않으면(시전자 자신 등) 주변에서 다시 찾는다.
             Damageable d = seedTargets != null && seedTargets.Count > 0 ? seedTargets[0] : null;
             if (IsEnemyAlive(d) == false)
                 d = FindNearestEnemy(radius);
@@ -327,10 +308,6 @@ namespace Jinhyeong_SkillSystem.Skill
             if (d == null || d.IsAlive == false)
                 return false;
 
-            // [사고] 팀 검사가 「직접 훑어 모은」 경로에만 있고 **미리 받은 대상 목록**에는 없었다.
-            // TargetSelf 는 시전 위치를 정하려고 시전자를 목록에 넣는데, 그게 그대로 피해 대상이 되어
-            // 광역 스킬이 자기를 때렸다. 수치가 작던 동안은 묻혀 있다가 계수를 제대로 맞추자 즉사로 드러났다.
-            // 검사는 여기 한 곳에만 둔다 — 경로마다 따로 두면 또 어느 하나가 빠진다.
             if (IsEnemyAlive(d) == false)
                 return false;
             if (_config.LastHitTime.ContainsKey(d))
@@ -342,22 +319,13 @@ namespace Jinhyeong_SkillSystem.Skill
 
         private bool DealDamageTo(Damageable d, float rawDamage)
         {
-            // [사고] 아군 오사. 호출처마다 팀 검사를 흩어 뒀더니 연쇄·폭발 경로가 시드 대상
-            // (seedTargets[0])을 검사 없이 그대로 때렸고, 시전자가 시드에 섞이면
-            // **자기 스킬 전량을 자기가 맞았다** — 라운드1 에서 한 방에 85 피해로 즉사.
-            // 피해는 여기 한 곳으로만 나가므로, 검사도 여기 한 곳에 둔다.
             if (IsEnemyAlive(d) == false)
                 return false;
 
-            // rawDamage 는 절대 피해가 아니라 **계수(%)** 다. 공격력과 곱하고 100 으로 나눈다.
-            // [사고] 이 곱을 빼먹어 데이터가 기획서의 1/10 로 동작했고, 라운드1 에서 적 한 마리를
-            // 20초 걸려 잡았다. 「스킬이 약하다」로 보이지만 실제로는 공식이 빠진 것이었다.
             float power = _config.Caster != null ? _config.Caster.AttackPower : 100f;
             float outMul = _config.Caster != null ? _config.Caster.OutgoingDamageMultiplier : 1f;
             float scaled = rawDamage * 0.01f * power * outMul;
 
-            // 대상 조건부 연계. 「둔화된 적에게 +35%」처럼 **맞는 쪽 상태**로 갈리므로
-            // 파라미터 조회가 아니라 여기서 곱한다.
             SkillModifier mod = _config.Modifier;
             if (mod != null && mod.VsDebuffDamageMul > 0f && d.Status != null
                 && d.Status.HasDebuffKind(mod.VsDebuff))
@@ -365,6 +333,13 @@ namespace Jinhyeong_SkillSystem.Skill
                 scaled *= 1f + mod.VsDebuffDamageMul;
             }
             bool died = d.TakeDamage(scaled, _config.Caster);
+
+            // 적중 버스트 — 스킬 색 파편. 플레이어 쪽 피격 스파크는 Damageable 이 낸다
+            string key = _config.PoolKey;
+            HitKeys.Add(key);
+            Color tint = _visual != null ? _visual.TintColor : Color.white;
+            if (HitEffect.SpawnBurst(d.transform.position + Vector3.up * CommonConfig.Skill.MuzzleHeight, tint))
+                BurstKeys.Add(key);
 
             for (int i = 0; i < _config.DebuffNodes.Count; i++)
             {

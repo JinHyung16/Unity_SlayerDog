@@ -1,7 +1,7 @@
 module.exports = {
     id: 4484,
     name: 'slipper_critdamage',
-    desc: '슬리퍼 투척 — 치명타 피해량 +25%p',
+    desc: '캐스터네츠 딱! — 치명타 피해량 +25%p',
     displayName: '정통으로',
     partId: 2024,
     trait: 'CritDamage',

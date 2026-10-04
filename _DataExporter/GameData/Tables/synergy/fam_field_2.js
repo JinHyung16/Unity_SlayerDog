@@ -3,7 +3,7 @@ module.exports = {
     id: 8005,
     name: 'fam_field_2',
     desc: '장판 2개 — 장판 스킬 지속 +30%',
-    displayName: '끈적한 흙',
+    displayName: '서스테인',
     family: 'Field',
     reqFamilyCount: 2,
     reqSkillId: 0,

@@ -5,18 +5,24 @@
 # - 외곽선은 그리지 않는다. 색만 칠하고 실루엣을 팽창시켜 만든다 -> 두께가 항상 일정하다
 # - 부위를 레이어로 나눠 각각 외곽선을 씌우고 겹친다 -> 팔/다리 분리선이 생겨 걷는게 읽힌다
 # - 단순 도형(원/둥근사각)만 쓴다. 디테일을 넣지 않는게 이 톤에 맞다
-# - 캔버스 64x64, 발끝 y=61. 걷기 4장 + 대기 1장
+# - 캔버스 64x64 좌표, 발끝 y=61. 걷기 4장 + 대기 1장
+# - 원본은 64*OUT 해상도의 깨끗한 그림으로 낸다. 도트 룩은 게임에서 캐릭터 셰이더(Jinhyeong/PixelSprite)가
+#   밉 한 단계를 한 칸으로 찍어 만든다 — 원본이 도트면 확대 배율마다 뭉개지고, UI(로비 초상화)에서도 계단이 보인다
+# - 그래서 알파를 이진화하지 않는다. 테두리는 슈퍼샘플이 만든 안티에일리어싱을 그대로 둔다
 
 from PIL import Image, ImageDraw, ImageFilter
-import os, sys
+import os, sys, json
+import numpy as np
 sys.stdout.reconfigure(encoding="utf-8")
 
 DST = r"C:\jinhyeong_project\Unity_SkillSystem_Module\Assets\_Art\Sprites"
 # 로비 초상화는 Resources 로 따로 낸다. UI(Image)는 Sprite 참조가 필요한데
 # 어드레서블에 스프라이트를 따로 등록하는 것보다 이쪽이 훨씬 짧다.
 LOBBY = r"C:\jinhyeong_project\Unity_SkillSystem_Module\Assets\Resources\Lobby"
-S = 4
-W = H = 64
+SS = 4             # 슈퍼샘플
+OUT = 4            # 출력 배율. 셰이더의 _PixelSize(도트 한 칸 = 텍셀 OUT 개)와 짝이다
+S = SS * OUT
+W = H = 64         # 좌표계
 OUTLINE = (36, 26, 22, 255)
 
 # [측정] 2px 로 두었더니 시바 스프라이트의 **픽셀 43%가 외곽선**이었다(649 / 전체).
@@ -46,23 +52,24 @@ def tri(d, pts, color):
     d.polygon([(x * S, y * S) for x, y in pts], fill=color)
 
 
+def shrink(src, w=W, h=H):
+    """슈퍼샘플을 출력 해상도로 줄인다. 알파는 이진화하지 않는다."""
+    return src.resize((w * OUT, h * OUT), Image.BOX)
+
+
 def fin(src, w=W, h=H):
-    # 다운샘플 -> 알파 이진화 -> 실루엣 팽창으로 균일 외곽선 합성
-    small = src.resize((w, h), Image.BOX)
-    px = small.load()
-    for y in range(h):
-        for x in range(w):
-            r, g, b, a = px[x, y]
-            px[x, y] = (r, g, b, 255 if a >= 110 else 0)
-    grown = small.split()[3].filter(ImageFilter.MaxFilter(OUTLINE_PX * 2 + 1))
-    out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    out.paste(Image.new("RGBA", (w, h), OUTLINE), (0, 0), grown)
+    # 다운샘플 -> 실루엣 팽창으로 균일 외곽선 합성. 두께는 64 기준 OUTLINE_PX
+    small = shrink(src, w, h)
+    size = (w * OUT, h * OUT)
+    grown = small.split()[3].filter(ImageFilter.MaxFilter(OUTLINE_PX * OUT * 2 + 1))
+    out = Image.new("RGBA", size, (0, 0, 0, 0))
+    out.paste(Image.new("RGBA", size, OUTLINE), (0, 0), grown)
     out.alpha_composite(small)
     return out
 
 
 def stack(layers, w=W, h=H):
-    out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    out = Image.new("RGBA", (w * OUT, h * OUT), (0, 0, 0, 0))
     for lay in layers:
         out.alpha_composite(fin(lay, w, h))
     return out
@@ -85,23 +92,22 @@ def lit(img):
     레퍼런스 도트는 한 부위에 3~4단이 들어가 있어 입체가 산다.
     외곽선은 건드리지 않는다 — 선까지 밝히면 형태가 흐려진다.
     """
-    px = img.load()
-    ow, oh = img.size
+    arr = np.asarray(img).astype(np.float32)
+    rgb = arr[..., :3]
+    visible = arr[..., 3] > 0
+    ink = (np.abs(rgb - np.array(OUTLINE[:3], np.float32)) < 10).all(-1)
     for y0, y1, k in LIT_BANDS:
         if k == 1.0:
             continue
-        for y in range(y0, min(y1, oh)):
-            for x in range(ow):
-                r, g, b, a = px[x, y]
-                if a == 0:
-                    continue
-                if abs(r - OUTLINE[0]) < 10 and abs(g - OUTLINE[1]) < 10 and abs(b - OUTLINE[2]) < 10:
-                    continue
-                px[x, y] = (min(255, int(r * k)), min(255, int(g * k)), min(255, int(b * k)), a)
-    return img
+        band = np.zeros(visible.shape, bool)
+        band[y0 * OUT:y1 * OUT] = True
+        m = band & visible & ~ink
+        rgb[m] = np.minimum(255, np.floor(rgb[m] * k))
+    arr[..., :3] = rgb
+    return Image.fromarray(arr.astype(np.uint8), "RGBA")
 
 
-def ground(rx=12.0, ry=3.6, y=60.0, a=110):
+def ground(rx=12.0, ry=3.6, y=60.0, a=110, w=W, h=H):
     """
     발밑 접지 그림자.
 
@@ -111,10 +117,10 @@ def ground(rx=12.0, ry=3.6, y=60.0, a=110):
 
     외곽선을 씌우지 않는다. 선이 들어가면 그림자가 아니라 접시로 보인다.
     """
-    im = Image.new("RGBA", (W * S, H * S), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    d.ellipse([(32 - rx) * S, (y - ry) * S, (32 + rx) * S, (y + ry) * S], fill=(22, 18, 30, a))
-    return im.resize((W, H), Image.BOX)
+    im, d = layer(w, h)
+    cx = w / 2.0
+    d.ellipse([(cx - rx) * S, (y - ry) * S, (cx + rx) * S, (y + ry) * S], fill=(22, 18, 30, a))
+    return shrink(im, w, h)
 
 
 DOGS = {
@@ -145,21 +151,16 @@ def face_paint(img, cx, hy, hr, belly, side=False):
         ell(d, cx - 11, hy + 4, 2.6, 1.8, BLUSH)
         ell(d, cx + 11, hy + 4, 2.6, 1.8, BLUSH)
 
-    small = lay.resize((W, H), Image.BOX)
-    px = small.load()
-    for y in range(H):
-        for x in range(W):
-            r, g, b, a = px[x, y]
-            px[x, y] = (r, g, b, 255 if a >= 110 else 0)
-    img.alpha_composite(small)
+    img.alpha_composite(shrink(lay))
 
-    # 눈에 점 하나. 이것만으로 살아 있는 눈이 된다
+    # 눈에 점 하나. 이것만으로 살아 있는 눈이 된다 (64 좌표 1칸 크기)
     p = img.load()
+    d = ImageDraw.Draw(img)
     yy = int(round(hy)) - 3
     spots = [(int(cx) + 2, yy)] if side else [(int(cx) - 7, yy), (int(cx) + 5, yy)]
     for ex, ey in spots:
-        if 0 <= ey < H and 0 <= ex < W and p[ex, ey][3] > 0:
-            p[ex, ey] = (255, 255, 255, 255)
+        if 0 <= ey < H and 0 <= ex < W and p[int((ex + 0.5) * OUT), int((ey + 0.5) * OUT)][3] > 0:
+            d.ellipse([ex * OUT, ey * OUT, (ex + 1) * OUT - 1, (ey + 1) * OUT - 1], fill=(255, 255, 255, 255))
     return img
 
 
@@ -414,13 +415,7 @@ def draw_alien(cfg, phase, face='down', bob=0):
         er = 4.2 if n == 1 else 3.2
         ell(d, 32 + x, cy - by * 0.15, er, er, (255, 255, 255, 255))
         ell(d, 32 + x, cy - by * 0.15, er * 0.52, er * 0.58, EYE)
-    fs = face_lay.resize((W, H), Image.BOX)
-    px = fs.load()
-    for y in range(H):
-        for x in range(W):
-            r, g, b, a = px[x, y]
-            px[x, y] = (r, g, b, 255 if a >= 110 else 0)
-    img.alpha_composite(fs)
+    img.alpha_composite(shrink(face_lay))
     return img
 
 
@@ -442,13 +437,7 @@ def draw_box():
     d.rectangle([28 * S, 26 * S, 36 * S, 52 * S], fill=tape)
     d.rectangle([16 * S, 33 * S, 48 * S, 38 * S], fill=tape)
     img = fin(back)
-    ls = lid.resize((W, H), Image.BOX)
-    px = ls.load()
-    for y in range(H):
-        for x in range(W):
-            r, g, b, a = px[x, y]
-            px[x, y] = (r, g, b, 255 if a >= 110 else 0)
-    img.alpha_composite(ls)
+    img.alpha_composite(shrink(lid))
     return img
 
 
@@ -479,13 +468,7 @@ def draw_ufo(phase=0):
         on = (i != phase % 5)
         c = (255, 226, 120, 255) if on else (150, 130, 70, 255)
         ell(d, 48 + x, 55 + bob, 4, 4, c)
-    ls = lights.resize((96, 96), Image.BOX)
-    px = ls.load()
-    for y in range(96):
-        for x in range(96):
-            r, g, b, a = px[x, y]
-            px[x, y] = (r, g, b, 255 if a >= 110 else 0)
-    img.alpha_composite(ls)
+    img.alpha_composite(shrink(lights, 96, 96))
     return img
 
 
@@ -504,9 +487,10 @@ WALK = [(-1.0, 1), (-0.35, -2), (1.0, 1), (0.35, -2)]
 # [사고] 처음엔 rx 11 · 알파 110 으로 뒀는데 화면에서 거의 안 보였다.
 # 레퍼런스 시트의 그림자는 발보다 **넓고 진하다** — 캐릭터를 바닥에 못 박는 역할이라
 # 은은하면 아무 일도 안 한 것과 같다.
+# UFO 는 96 캔버스다. 그림자는 캔버스 바닥(발밑 피벗 3/64 와 같은 비율)에 둬서 떠 있는 틈이 보이게 한다.
 GROUND_BY_PREFIX = (
-    ("boss_ufo", (18.0, 5.4, 61.0, 120)),
-    ("alien_ufo", (18.0, 5.4, 61.0, 120)),
+    ("boss_ufo", (18.0, 5.4, 90.0, 120)),
+    ("alien_ufo", (18.0, 5.4, 90.0, 120)),
     ("alien_", (11.0, 3.8, 60.5, 155)),
     ("dog_", (13.0, 4.3, 60.5, 160)),
 )
@@ -530,7 +514,9 @@ def save(img, name):
     g = ground_for(name)
     if g is not None:
         img = lit(img)
-        base = ground(*g)
+        # 바탕을 그림 크기에 맞춘다 — 64 바탕에 96 그림을 얹으면 오른쪽 · 아래가 잘린다
+        units = img.size[0] // OUT
+        base = ground(*g, w=units, h=units)
         base.alpha_composite(img)
         img = base
     img.save(os.path.join(DST, name + ".png"))
@@ -543,35 +529,23 @@ def save_lobby(img, name):
 
 def main():
     n = 0
-    for key, cfg in DOGS.items():
-        # 방향별로 대기 1장 + 걷기 4장. 왼쪽은 side 를 좌우 반전해 쓰므로 굽지 않는다.
-        for face, suffix in (("down", ""), ("up", "up"), ("side", "side")):
-            save(draw_dog(cfg, 0, 0, face), "dog_%s_idle%s" % (key, suffix))
-            n += 1
-            if face == "down":
-                save_lobby(draw_dog(cfg, 0, 0, face), "portrait_%s" % key)
-            for i, (ph, bob) in enumerate(WALK):
-                save(draw_dog(cfg, ph, bob, face), "dog_%s_walk%s%d" % (key, suffix, i))
-                n += 1
-    for key, cfg in ALIENS.items():
-        for face, suffix in (("down", ""), ("up", "up"), ("side", "side")):
-            # 대기 그림이 없어 SpriteAnimator 가 걷기 첫 장을 대기로 쓰고 있었다 —
-            # 멈춰 있어도 한쪽 다리가 나간 자세로 굳는다. 한 장 따로 낸다.
-            save(draw_alien(cfg, 0, face, 0), "alien_%s_idle%s" % (key, suffix))
-            n += 1
-            for i, (ph, bob) in enumerate(WALK):
-                save(draw_alien(cfg, ph, face, bob), "alien_%s_walk%s%d" % (key, suffix, i))
-                n += 1
-    save(draw_kibble(), "pickup_kibble")
-    save(draw_box(), "pickup_box")
-    save(draw_bowl(), "pickup_bowl")
-    save(draw_ufo(), "boss_ufo")
-    # 적 스프라이트 규칙에 맞춘 4프레임. SpriteSetLibrary 가 alien_<키>_walk0..3 을 찾는다.
-    for i in range(4):
-        save(draw_ufo(i), "alien_ufo_walk%d" % i)
-        n += 1
-    n += 4
+    # 이 생성기는 더 굽지 않는다 (10-04). 주인공 = build_heroes.py · 적/보스 = build_enemies.py · 먹는 아이템 = build_pickups.py
+    # 돌리면 새 그림을 옛 그림으로 덮으므로 배율 표만 쓴다
+    write_scale()
     print("스프라이트 %d장" % n)
+
+
+def write_scale():
+    """build_meta.py 가 PPU · 밉맵을 정하는 표. 이 생성기가 쓰는 폴더만 덮는다."""
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "_art_scale.json")
+    table = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fp:
+            table = json.load(fp)
+    table["Assets/_Art/Sprites"] = OUT
+    table["Assets/Resources/Lobby"] = OUT
+    with open(path, "w", encoding="utf-8") as fp:
+        json.dump(table, fp, ensure_ascii=False, indent=1, sort_keys=True)
 
 
 main()

@@ -3,7 +3,7 @@ module.exports = {
     id: 8004,
     name: 'fam_throw_4',
     desc: '투척 4개 — 투척 스킬 피해 +40%',
-    displayName: '강견',
+    displayName: '풀 스윙',
     family: 'Throw',
     reqFamilyCount: 4,
     reqSkillId: 0,

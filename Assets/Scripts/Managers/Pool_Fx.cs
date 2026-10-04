@@ -4,12 +4,6 @@ using UnityEngine;
 namespace Jinhyeong_Managers
 {
 
-    /// <summary>
-    /// 짧게 터지고 사라지는 연출용 풀 (피격 플래시, 연쇄 번개 라인 등).
-    ///
-    /// 스킬 본체(Pool_Skill)와 달리 아트+로직이 한 프리팹에 들어 있어서 조립이 없다.
-    /// 프리팹에 컴포넌트가 이미 박혀 있으므로 런타임 AddComponent 가 없다.
-    /// </summary>
     public partial class PoolManager
     {
         private readonly Dictionary<string, Queue<GameObject>> _fxPool =
@@ -45,13 +39,6 @@ namespace Jinhyeong_Managers
             return made;
         }
 
-        /// <summary>
-        /// 미리 만들어 둔다. 적(Prewarm 200)과 달리 FX 풀은 빈 채로 시작해서,
-        /// 전투가 붙는 순간 피격 이펙트·데미지 텍스트·경험치 젬이 **동시에** Instantiate 된다.
-        /// 물량이 쏟아지는 장르라 그 첫 폭발이 그대로 프레임 끊김으로 보인다.
-        ///
-        /// 이미 들어 있는 만큼은 빼고 채운다 — 씬을 다시 시작해도 두 배가 되지 않는다.
-        /// </summary>
         public void Pool_Fx_Prewarm(string key, int count)
         {
             if (string.IsNullOrEmpty(key) || key == KeyEmpty || count <= 0)

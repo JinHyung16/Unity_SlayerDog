@@ -2,7 +2,7 @@
     {
         "id": 2001,
         "name": "Bite Heal",
-        "desc": "앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다",
+        "desc": "스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/bite_heal",
         "methodPath": "Skill/Method/instant",
@@ -58,7 +58,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Teeth",
-                        "VisualColor": "#FFF3E0",
+                        "VisualColor": "#FF3DA8",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -126,7 +126,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Bark",
-                        "VisualColor": "#7FD8FF",
+                        "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -191,7 +191,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Growl",
-                        "VisualColor": "#FFB86B",
+                        "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -259,7 +259,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Yawn",
-                        "VisualColor": "#C8B6FF",
+                        "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -271,7 +271,7 @@
     {
         "id": 2005,
         "name": "Dig Roll",
-        "desc": "구르는 동안 0.5초마다 반경 1.5m 공격력 30% 피해 (상시 장판)",
+        "desc": "춤추는 동안 0.5초마다 반경 1.5m 공격력 30% 피해 (상시 장판)",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/dig_roll",
         "methodPath": "Skill/Method/ground_field",
@@ -317,7 +317,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_DogDust",
-                        "VisualColor": "#C9A87C",
+                        "VisualColor": "#A66BFF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -329,7 +329,7 @@
     {
         "id": 2006,
         "name": "Claw Volley",
-        "desc": "전방으로 발톱을 날려 각 공격력 60% 피해. 2초마다",
+        "desc": "전방으로 기타 피크를 날려 각 공격력 60% 피해. 2초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/claw_volley",
         "methodPath": "Skill/Method/projectile/straight",
@@ -379,7 +379,7 @@
                         "Speed": 16,
                         "MaxDistance": 9,
                         "Visual": "Fx_DogClaw",
-                        "VisualColor": "#FFFFFF",
+                        "VisualColor": "#FF3DA8",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -429,7 +429,7 @@
     {
         "id": 2008,
         "name": "Bone Mine",
-        "desc": "발밑에 뼈다귀를 묻는다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다",
+        "desc": "발밑에 베이스 드럼을 깐다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/bone_mine",
         "methodPath": "Skill/Method/instant",
@@ -474,7 +474,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Burst",
-                        "VisualColor": "#FFF6E0",
+                        "VisualColor": "#A66BFF",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -486,7 +486,7 @@
     {
         "id": 2009,
         "name": "Tail Swipe",
-        "desc": "반월형 기를 날려 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다",
+        "desc": "현의 파동을 날려 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/tail_pierce",
         "methodPath": "Skill/Method/projectile/piercing",
@@ -536,7 +536,7 @@
                         "Speed": 14,
                         "MaxDistance": 11,
                         "Visual": "Fx_TailSwing",
-                        "VisualColor": "#FFE0B0",
+                        "VisualColor": "#FF3DA8",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -548,7 +548,7 @@
     {
         "id": 2010,
         "name": "Static Fur",
-        "desc": "털에서 정전기가 튀어 모든 적에게 공격력 40% 피해. 6초마다",
+        "desc": "일렉 기타에서 스파크가 튀어 모든 적에게 공격력 40% 피해. 6초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/static_fur",
         "methodPath": "Skill/Method/instant",
@@ -595,7 +595,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Static",
-                        "VisualColor": "#9FD8FF",
+                        "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -607,7 +607,7 @@
     {
         "id": 2011,
         "name": "Tail Whip",
-        "desc": "꼬리를 후려쳐 직선상 적에게 공격력 140% 피해. 2초마다",
+        "desc": "지휘봉을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/tail_whip",
         "methodPath": "Skill/Method/projectile/straight",
@@ -656,7 +656,7 @@
                         "Speed": 18,
                         "MaxDistance": 10,
                         "Visual": "Fx_TailSwing",
-                        "VisualColor": "#FFE0B0",
+                        "VisualColor": "#FF3DA8",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -668,7 +668,7 @@
     {
         "id": 2012,
         "name": "Tail Copter",
-        "desc": "꼬리를 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다",
+        "desc": "턴테이블을 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/tail_copter",
         "methodPath": "Skill/Method/ground_field",
@@ -722,7 +722,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_DogDust",
-                        "VisualColor": "#C9A87C",
+                        "VisualColor": "#A66BFF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -734,7 +734,7 @@
     {
         "id": 2013,
         "name": "Eye Beam",
-        "desc": "전방으로 눈빛 빔을 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다",
+        "desc": "전방으로 스포트라이트를 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/eye_beam",
         "methodPath": "Skill/Method/beam",
@@ -786,7 +786,7 @@
                         "Speed": 0,
                         "MaxDistance": 999,
                         "Visual": "Fx_EyeBeam",
-                        "VisualColor": "#FF6A6A",
+                        "VisualColor": "#4D8BFF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -856,7 +856,7 @@
                         "MaxDistance": 16,
                         "TurnRate": 200,
                         "Visual": "Fx_Scent",
-                        "VisualColor": "#A8E86B",
+                        "VisualColor": "#4D8BFF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -913,7 +913,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Sonar",
-                        "VisualColor": "#9FE8FF",
+                        "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -974,7 +974,7 @@
                         "Speed": 22,
                         "MaxDistance": 13,
                         "Visual": "Fx_Gaze",
-                        "VisualColor": "#C89AFF",
+                        "VisualColor": "#4D8BFF",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -986,7 +986,7 @@
     {
         "id": 2017,
         "name": "Pack Howl",
-        "desc": "울음이 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다",
+        "desc": "아르페지오가 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/pack_chain",
         "methodPath": "Skill/Method/instant",
@@ -1034,7 +1034,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Howl",
-                        "VisualColor": "#8FB8FF",
+                        "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
                     "children": []
@@ -1122,7 +1122,7 @@
     {
         "id": 2020,
         "name": "Kibble Rain",
-        "desc": "랜덤한 적 위치로 사료가 낙하해 반경 1.5m 공격력 80% 피해. 5초마다",
+        "desc": "랜덤한 적 위치로 음표가 쏟아져 반경 1.5m 공격력 80% 피해. 5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/kibble_rain",
         "methodPath": "Skill/Method/projectile/arc",
@@ -1172,7 +1172,7 @@
                         "Speed": 12,
                         "ArcHeight": 4,
                         "Visual": "Fx_Kibble",
-                        "VisualColor": "#FFA23C",
+                        "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -1184,7 +1184,7 @@
     {
         "id": 2021,
         "name": "Kibble Bomb",
-        "desc": "사료를 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다",
+        "desc": "심벌을 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/kibble_bomb",
         "methodPath": "Skill/Method/projectile/arc",
@@ -1241,7 +1241,7 @@
                         "Speed": 13,
                         "ArcHeight": 3,
                         "Visual": "Fx_Kibble",
-                        "VisualColor": "#FFA23C",
+                        "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -1253,7 +1253,7 @@
     {
         "id": 2022,
         "name": "Frisbee",
-        "desc": "원반이 흔들리며 날아가 공격력 110% 피해. 2초마다",
+        "desc": "LP 판이 흔들리며 날아가 공격력 110% 피해. 2초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/frisbee",
         "methodPath": "Skill/Method/projectile/wave",
@@ -1302,7 +1302,7 @@
                         "Speed": 12,
                         "ArcHeight": 1.5,
                         "Visual": "Fx_Frisbee",
-                        "VisualColor": "#FF9CD2",
+                        "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -1314,7 +1314,7 @@
     {
         "id": 2023,
         "name": "Tennis Ball",
-        "desc": "가장 가까운 적을 쫓는 테니스공, 공격력 100% 피해. 1.8초마다",
+        "desc": "가장 가까운 적을 쫓는 탬버린, 공격력 100% 피해. 1.8초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/tennis_ball",
         "methodPath": "Skill/Method/projectile/homing",
@@ -1364,7 +1364,7 @@
                         "MaxDistance": 14,
                         "TurnRate": 240,
                         "Visual": "Fx_Ball",
-                        "VisualColor": "#D8FF6B",
+                        "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -1376,7 +1376,7 @@
     {
         "id": 2024,
         "name": "Slipper Throw",
-        "desc": "슬리퍼를 던져 공격력 300% 피해. 5초마다",
+        "desc": "캐스터네츠를 튕겨 공격력 300% 피해. 5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/slipper",
         "methodPath": "Skill/Method/projectile/straight",
@@ -1425,8 +1425,126 @@
                         "Speed": 20,
                         "MaxDistance": 12,
                         "Visual": "Fx_Slipper",
-                        "VisualColor": "#FFD08A",
+                        "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2025,
+        "name": "C Major Chord",
+        "desc": "도 · 미 · 솔 세 음이 무작위 적 3명 위로 떨어져 반경 1.4m 공격력 90% 피해. 3초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/c_major_chord",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetRandom",
+                    "params": {
+                        "Range": 10,
+                        "Index": 3,
+                        "MaxPerTarget": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 90,
+                        "Radius": 1.4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Chord",
+                        "VisualColor": "#A66BFF",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2026,
+        "name": "Metronome",
+        "desc": "1초 박자마다 발밑에서 반경 2.4m 공격력 35% 피해",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/metronome",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 35,
+                        "Radius": 2.4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Sonar",
+                        "VisualColor": "#2DE6FF",
+                        "VisualOrient": "Ground"
                     },
                     "children": []
                 }
@@ -1475,7 +1593,7 @@
     {
         "id": 2102,
         "name": "Bread Slice",
-        "desc": "엉덩이를 흔들어 사방 반경 3m 에 공격력 80% 피해. 2.5초마다",
+        "desc": "건반을 내리쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/bread_slice",
         "methodPath": "Skill/Method/instant",
@@ -1520,7 +1638,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Bread",
-                        "VisualColor": "#FFE9B0",
+                        "VisualColor": "#FF3DA8",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -1586,8 +1704,331 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_DogDust",
-                        "VisualColor": "#C9A87C",
+                        "VisualColor": "#A66BFF",
                         "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2201,
+        "name": "Bass Drop",
+        "desc": "묵직한 저음 음표가 적 2명을 뚫고 공격력 150% 피해. 0.9초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_bass_drop",
+        "methodPath": "Skill/Method/projectile/piercing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 0.9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 150,
+                        "Radius": 0.8
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 11,
+                        "MaxDistance": 11,
+                        "Visual": "Fx_NoteBass",
+                        "VisualColor": "#2DE6FF",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2202,
+        "name": "Drum Roll",
+        "desc": "16분음표 5연타, 각 공격력 80% 피해. 0.9초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_drum_roll",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 0.9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 80,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 15,
+                        "MaxDistance": 11,
+                        "BurstCount": 5,
+                        "BurstInterval": 0.07,
+                        "BurstSpread": 9,
+                        "Visual": "Fx_NoteBeat",
+                        "VisualColor": "#9BFF3C",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2203,
+        "name": "String Beam",
+        "desc": "오선지 레이저를 1초간 켜서 0.15초마다 공격력 34% 피해. 1.3초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_string_beam",
+        "methodPath": "Skill/Method/beam",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearestForward",
+                    "params": {
+                        "Range": 9,
+                        "HalfAngle": 60
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitBeam",
+                    "params": {
+                        "Damage": 34,
+                        "Length": 7,
+                        "Width": 0.9,
+                        "DamageInterval": 0.15
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 0,
+                        "MaxDistance": 999,
+                        "Visual": "Fx_StaffBeam",
+                        "VisualColor": "#4D8BFF",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2204,
+        "name": "Do Re Mi",
+        "desc": "도 · 레 · 미 세 음이 부채꼴로 연달아 날아가 각 공격력 72% 피해. 1.1초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_doremi",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 7
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 72,
+                        "Radius": 0.7
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 12,
+                        "MaxDistance": 8,
+                        "BurstCount": 3,
+                        "BurstInterval": 0.07,
+                        "BurstSpread": 16,
+                        "Visual": "Fx_NoteScale",
+                        "VisualColor": "#FF3DA8",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2205,
+        "name": "Lullaby",
+        "desc": "느린 온음표가 적을 쫓아가 터지며 반경 1.4m 공격력 125% 피해 + 졸음. 1.4초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_lullaby",
+        "methodPath": "Skill/Method/projectile/homing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 125,
+                        "Radius": 1.4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2005
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchHoming",
+                    "params": {
+                        "Speed": 6.5,
+                        "MaxDistance": 13,
+                        "TurnRate": 160,
+                        "Visual": "Fx_NoteWhole",
+                        "VisualColor": "#A66BFF",
+                        "VisualOrient": "Billboard"
                     },
                     "children": []
                 }

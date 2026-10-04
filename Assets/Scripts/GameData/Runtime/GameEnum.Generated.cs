@@ -116,7 +116,10 @@ namespace Jinhyeong_GameData
         RequireAll,
         ModifierKey,
         BuffId,
-        DebuffId
+        DebuffId,
+        BurstCount,
+        BurstInterval,
+        BurstSpread
     }
 
     public enum EStatusStackMode
@@ -136,13 +139,6 @@ namespace Jinhyeong_GameData
         Shield,
         MoveSpeedBoost,
         MaxHpBoost
-    }
-
-    public enum EAugmentKind
-    {
-        None,
-        StatBuff,
-        GrantSkill
     }
 
     public enum EDebuffType

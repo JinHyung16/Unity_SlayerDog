@@ -2,8 +2,8 @@
 module.exports = {
     id: 2011,
     name: 'Tail Whip',
-    desc: '꼬리를 후려쳐 직선상 적에게 공격력 140% 피해. 2초마다',
-    displayName: '꼬리 채찍',
+    desc: '지휘봉을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다',
+    displayName: '지휘봉 채찍',
     slot: 'Tail',
     family: 'Melee',
     appliesDebuff: 'None',

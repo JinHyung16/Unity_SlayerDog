@@ -7,7 +7,7 @@ module.exports = {
     centerAngle: 150,
     span: 50,
     clusterCount: 6,
-    color: '#4DE2C0',
+    color: '#FFB03A',
     traitA: 'MaxHp',
     valueA: 0.025,
     traitB: 'MoveSpeed',

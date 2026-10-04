@@ -20,7 +20,7 @@ import os, sys, json, glob, hashlib
 sys.stdout.reconfigure(encoding="utf-8")
 
 try:
-    from PIL import Image
+    from PIL import Image, ImageFilter
 except ImportError:
     print("[ERROR] Pillow 가 필요하다: pip install pillow")
     raise SystemExit(1)
@@ -35,15 +35,14 @@ OUTDIR = os.path.join(ROOT, "Assets", "Resources", "UI", "Icons")
 #        규칙에서 벗어나는 것만 예외로 적는다 — 예외가 셋뿐이라 표 전체를 옮기지 않는다.
 EXCEPTIONS = {
     "Fx_TailSwing": "fx_tailsw",
-    "Fx_HitSmall": "fx_hit_small",
-    "Fx_BurstBig": "fx_burst_big",
-    "Fx_SlashCross": "fx_slash_cross",
-    "Fx_ArcWave": "fx_arc_wave",
-    "Fx_RingSpike": "fx_ring_spike",
-    "Fx_RingDense": "fx_ring_dense",
     "Fx_DogClaw": "fx_dogclaw",
     "Fx_DogDust": "fx_dogdust",
     "Fx_EyeBeam": "fx_eyebeam",
+    "Fx_NoteBass": "fx_notebass",
+    "Fx_NoteBeat": "fx_notebeat",
+    "Fx_StaffBeam": "fx_staffbeam",
+    "Fx_NoteScale": "fx_notescale",
+    "Fx_NoteWhole": "fx_notewhole",
 }
 
 ALPHA_ON = 40
@@ -62,7 +61,7 @@ def load_json(name):
 
 def coverage(im):
     a = im.split()[3]
-    on = sum(1 for p in a.getdata() if p > ALPHA_ON)
+    on = sum(1 for p in a.tobytes() if p > ALPHA_ON)
     return on * 100.0 / (im.size[0] * im.size[1])
 
 
@@ -77,7 +76,8 @@ def best_frame(folder):
     첫 프레임은 대개 이제 막 시작한 그림이라 비어 있고, 절정 프레임은 화면을 덮는 덩어리다.
     아이콘으로 읽히는 것은 그 사이다.
     """
-    files = sorted(glob.glob(os.path.join(FXDIR, folder, "*.png")))
+    # build_vfx.py 는 core/ · glow/ 두 층으로 낸다. 아이콘은 모양만 필요하니 심지(core)에서 고른다
+    files = sorted(glob.glob(os.path.join(FXDIR, folder, "core", "*.png")))
     files = [f for f in files if os.path.basename(f)[0].isdigit()]
     if not files:
         return None
@@ -101,24 +101,37 @@ def thicken(im, radius=1):
     채우기와 다른 점: 고리는 고리로 남는다. 24px 로 줄었을 때 2px 선은 사라지지만
     4px 선은 남는다 — 그 차이가 「무슨 그림인지 알겠다」와 「점 하나」를 가른다.
     """
+    # radius 는 64px 기준이다. 생성기가 고해상도로 낸 프레임(256px)은 그 배율만큼 넓힌다.
     w, h = im.size
-    src = im.split()[3].load()
-    out = Image.new("RGBA", (w, h), (255, 255, 255, 0))
-    dst = out.load()
+    r = radius * max(1, w // 64)
+    grown = im.split()[3].filter(ImageFilter.MaxFilter(r * 2 + 1))
+    mask = grown.point(lambda v: 255 if v > ALPHA_ON else 0)
 
-    for x in range(w):
-        for y in range(h):
-            a = 0
-            for dx in range(-radius, radius + 1):
-                for dy in range(-radius, radius + 1):
-                    nx, ny = x + dx, y + dy
-                    if 0 <= nx < w and 0 <= ny < h:
-                        v = src[nx, ny]
-                        if v > a:
-                            a = v
-            if a > ALPHA_ON:
-                # 아이콘은 색을 코드가 정한다. 흰색으로 통일해 두면 어느 계열색에도 얹힌다.
-                dst[x, y] = (255, 255, 255, 255)
+    # 아이콘은 색을 코드가 정한다. 흰색으로 통일해 두면 어느 계열색에도 얹힌다.
+    out = Image.new("RGBA", (w, h), (255, 255, 255, 0))
+    out.paste((255, 255, 255, 255), (0, 0), mask)
+    return out
+
+
+# 물건형(build_vfx.py OBJECT)은 제 색으로 칠한 그림이라 흰 실루엣으로 바꾸면 공 · 원반 · 사료가 전부 덩어리가 된다.
+# 외곽선(진보라)과 색 경계를 «틈»으로 남겨 솔기 · 끈 · 낱알이 보이게 한다. 팽창은 하지 않는다 (틈이 닫힌다).
+OBJECT_FOLDERS = {"fx_teeth", "fx_bone", "fx_kibble", "fx_frisbee", "fx_ball", "fx_slipper", "fx_bread"}
+
+
+def object_glyph(im):
+    rgb = im.convert("RGB")
+    lum = rgb.convert("L")
+    a = im.split()[3]
+    solid = a.point(lambda v: 255 if v > ALPHA_ON else 0)
+    not_ink = lum.point(lambda v: 255 if v > 80 else 0)
+    edges = rgb.filter(ImageFilter.FIND_EDGES).convert("L").point(lambda v: 255 if v > 40 else 0)
+    edges = edges.filter(ImageFilter.MaxFilter(3))
+    from PIL import ImageChops
+    body = ImageChops.multiply(solid, not_ink)
+    body = ImageChops.subtract(body, edges)
+    body = body.filter(ImageFilter.MinFilter(3)).filter(ImageFilter.MaxFilter(3))
+    out = Image.new("RGBA", im.size, (255, 255, 255, 0))
+    out.paste((255, 255, 255, 255), (0, 0), body)
     return out
 
 
@@ -132,7 +145,7 @@ def trim_and_pad(im, size=64, margin=4):
     cw, ch = cut.size
     scale = min(inner / cw, inner / ch)
     nw, nh = max(1, int(round(cw * scale))), max(1, int(round(ch * scale)))
-    cut = cut.resize((nw, nh), Image.NEAREST)
+    cut = cut.resize((nw, nh), Image.LANCZOS)
 
     out = Image.new("RGBA", (size, size), (255, 255, 255, 0))
     out.paste(cut, ((size - nw) // 2, (size - nh) // 2))
@@ -165,7 +178,8 @@ def main():
             missing.append((s["id"], f"{key} -> {folder} 폴더 없음"))
             continue
 
-        icon = trim_and_pad(thicken(frame))
+        glyph = object_glyph(frame) if folder in OBJECT_FOLDERS else thicken(frame)
+        icon = trim_and_pad(glyph)
         icon.save(os.path.join(OUTDIR, f"{s['id']}.png"))
         made += 1
 

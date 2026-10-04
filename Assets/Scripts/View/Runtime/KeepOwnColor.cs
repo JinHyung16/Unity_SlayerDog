@@ -2,17 +2,23 @@ using UnityEngine;
 
 namespace Jinhyeong_View
 {
-    /// <summary>
-    /// 이 아트는 제 색을 그대로 쓴다 — 스킬 속성색으로 물들이지 않는다.
-    ///
-    /// 우리가 직접 그린 이펙트는 흰색 한 벌이라 런타임에 색을 입혀 계열을 구분한다.
-    /// 그런데 사 온 팩의 이펙트는 **이미 색과 명암이 들어 있어**, 거기에 또 색을 곱하면
-    /// 그림이 탁해지고 명암이 죽는다. 잘 그려진 그림은 건드리지 않는 편이 낫다.
-    ///
-    /// 표식만 있으면 되는 컴포넌트라 내용이 없다. 색칠 여부를 데이터 열로 만들 만큼
-    /// 경우가 많지 않고, 프리팹을 열면 눈으로 바로 보인다.
-    /// </summary>
+    // 데이터 틴트를 얼마나 받을지. 0 = 제 색 그대로(물건형 이펙트) · 0.25 = 흰 심지에 계열 색이 살짝(기운형 이펙트).
+    // 이 컴포넌트가 없는 렌더러는 틴트를 전부 받는다 (번짐 층).
     public class KeepOwnColor : MonoBehaviour
     {
+        [SerializeField, Range(0f, 1f)] private float _tintWeight;
+
+        public float TintWeight
+        {
+            get { return _tintWeight; }
+        }
+
+        public static Color Resolve(SpriteRenderer renderer, Color tint)
+        {
+            KeepOwnColor keep = renderer.GetComponent<KeepOwnColor>();
+            if (keep == null)
+                return tint;
+            return Color.Lerp(Color.white, tint, keep._tintWeight);
+        }
     }
 }

@@ -4,14 +4,6 @@ using Jinhyeong_Common;
 
 namespace Jinhyeong_View
 {
-    /// <summary>
-    /// 한 프리팹이 여러 비주얼을 갈아 끼울 때 쓰는 스프라이트 묶음.
-    ///
-    /// 적 프리팹은 하나이고 타입(꼬물이/쌩쌩이/…)만 DB 로 바뀐다 — 타입마다 프리팹을 늘리면
-    /// 적 5종이 50종 될 때 프리팹 50개를 관리해야 한다. 키로 골라 끼우는 편이 데이터 주도적이다.
-    ///
-    /// 배열이라 Awake 에서 딕셔너리로 옮긴다. 적 수백 마리가 스폰될 때 선형 탐색은 티가 난다.
-    /// </summary>
     public class SpriteSetLibrary : BaseBehaviour
     {
         [Serializable]
@@ -50,7 +42,6 @@ namespace Jinhyeong_View
             }
         }
 
-        /// <summary>키에 맞는 프레임으로 갈아 끼운다. 없으면 아무것도 안 한다(기존 비주얼 유지).</summary>
         public bool Apply(string key)
         {
             if (_view == null || _map == null || string.IsNullOrEmpty(key))

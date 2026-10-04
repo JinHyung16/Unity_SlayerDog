@@ -1,7 +1,7 @@
 module.exports = {
     id: 6067,
     name: 'afterimage_dash_duration',
-    desc: '잔상 질주 — 지속시간 +25%',
+    desc: '글리산도 대시 — 지속시간 +25%',
     displayName: '긴 잔상',
     partId: 2103,
     trait: 'Duration',

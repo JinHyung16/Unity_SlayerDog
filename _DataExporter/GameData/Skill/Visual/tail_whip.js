@@ -1,13 +1,13 @@
-/** 꼬리 채찍 — 꼬리를 후려쳐 직선상 적에게 공격력 140% 피해. 2초마다 */
+/** 꼬리 채찍 — 지휘봉을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다 */
 module.exports = {
-    color: '#FFE0B0',
-    desc: "꼬리 채찍 — 꼬리를 후려쳐 직선상 적에게 공격력 140% 피해. 2초마다",
+    color: '#FF3DA8',
+    desc: "꼬리 채찍 — 지휘봉을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다",
     values: {
         "Projectile": "Fx_TailSwing",
         "Impact": "Fx_TailSwing",
         "Cast": "Fx_TailSwing",
         "Orient": "Ground",
-        "Color": "#FFE0B0",
+        "Color": "#FF3DA8",
         "Cooldown": 2,
         "Range": 8,
         "Damage": 140,

@@ -2,8 +2,8 @@
 module.exports = {
     id: 2022,
     name: 'Frisbee',
-    desc: '원반이 흔들리며 날아가 공격력 110% 피해. 2초마다',
-    displayName: '원반 물어오기',
+    desc: 'LP 판이 흔들리며 날아가 공격력 110% 피해. 2초마다',
+    displayName: 'LP 판 날리기',
     slot: 'Back',
     family: 'Throw',
     appliesDebuff: 'None',

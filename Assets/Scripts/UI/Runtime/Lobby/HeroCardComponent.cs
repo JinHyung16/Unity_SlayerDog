@@ -6,9 +6,6 @@ using Jinhyeong_UI.Framework;
 namespace Jinhyeong_UI.Lobby
 {
 
-    /// <summary>
-    /// 슈퍼독 카드 한 장. 부모 창의 타입을 모른다 — <see cref="IListener"/> 로만 위로 말한다.
-    /// </summary>
     public class HeroCardComponent : BaseComponent
     {
         public static readonly PrefabAuto<HeroCardComponent> PrefabAuto = new PrefabAuto<HeroCardComponent>(PrefabPath);

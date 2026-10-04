@@ -1,7 +1,7 @@
 module.exports = {
     id: 4222,
     name: 'tail_whip_cooldown',
-    desc: '꼬리 채찍 — 쿨타임 -10%',
+    desc: '지휘봉 채찍 — 쿨타임 -10%',
     displayName: '손목 스냅',
     partId: 2011,
     trait: 'Cooldown',

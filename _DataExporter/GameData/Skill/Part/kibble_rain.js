@@ -2,8 +2,8 @@
 module.exports = {
     id: 2020,
     name: 'Kibble Rain',
-    desc: '랜덤한 적 위치로 사료가 낙하해 반경 1.5m 공격력 80% 피해. 5초마다',
-    displayName: '사료 유성우',
+    desc: '랜덤한 적 위치로 음표가 쏟아져 반경 1.5m 공격력 80% 피해. 5초마다',
+    displayName: '음표 소나기',
     slot: 'Neck',
     family: 'Throw',
     appliesDebuff: 'None',

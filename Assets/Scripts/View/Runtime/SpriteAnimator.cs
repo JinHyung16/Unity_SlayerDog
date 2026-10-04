@@ -3,14 +3,6 @@ using Jinhyeong_Common;
 
 namespace Jinhyeong_View
 {
-    /// <summary>
-    /// 스프라이트 프레임 재생기.
-    ///
-    /// Animator/AnimationClip 을 쓰지 않는 이유: 프레임 3~4장짜리 픽셀 애니에 Animator 를 달면
-    /// 적 수백 마리에서 컨트롤러 평가 비용이 그대로 나온다. 배열 인덱싱이면 공짜다.
-    ///
-    /// 풀에서 재사용되므로 OnEnable 에서 반드시 처음으로 되감는다.
-    /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
     public class SpriteAnimator : BaseBehaviour
     {
@@ -40,7 +32,6 @@ namespace Jinhyeong_View
             Rewind();
         }
 
-        /// <summary>프레임은 그대로 두고 재생 속도만 바꾼다 (프리팹에 박힌 프레임을 지우지 않는다).</summary>
         public void SetFps(float fps, bool loop)
         {
             _fps = fps > 0f ? fps : 10f;

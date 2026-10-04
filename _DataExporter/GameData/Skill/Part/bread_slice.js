@@ -2,12 +2,12 @@
 module.exports = {
     id: 2102,
     name: 'Bread Slice',
-    desc: '엉덩이를 흔들어 사방 반경 3m 에 공격력 80% 피해. 2.5초마다',
-    displayName: '식빵 썰기',
+    desc: '건반을 내리쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다',
+    displayName: '건반 슬램',
     slot: 'Tail',
     family: 'Melee',
     appliesDebuff: 'None',
     skillId: 2102,
-    weight: 0,
-    owner: 2
+    weight: 10,
+    owner: 0
 };

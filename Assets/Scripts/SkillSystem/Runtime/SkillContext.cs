@@ -13,7 +13,6 @@ namespace Jinhyeong_SkillSystem
 
         public SkillLevelData LevelData;
 
-        /// <summary>착용한 파츠 옵션이 만든 이 스킬 전용 보정. 없으면 SkillModifier.None.</summary>
         public SkillModifier Modifier = SkillModifier.None;
 
         public int Depth = 0;
@@ -27,6 +26,24 @@ namespace Jinhyeong_SkillSystem
         public SkillNodeData HitNode;
         public SkillNodeData DespawnNode;
         public readonly List<SkillNodeData> DebuffNodes = new List<SkillNodeData>(2);
+
+        // 연발의 다음 발은 몇 프레임 뒤에 쏜다 — 원본 컨텍스트는 그 사이 다음 발동에 재사용되므로 복사해 둔다
+        public SkillContext CloneForLaunch()
+        {
+            SkillContext c = new SkillContext();
+            c.Caster = Caster;
+            c.OriginPosition = OriginPosition;
+            c.Direction = Direction;
+            c.Level = Level;
+            c.LevelData = LevelData;
+            c.Modifier = Modifier;
+            c.Depth = Depth;
+            c.Targets.AddRange(Targets);
+            c.HitNode = HitNode;
+            c.DespawnNode = DespawnNode;
+            c.DebuffNodes.AddRange(DebuffNodes);
+            return c;
+        }
 
         public void Reset(SkillObject caster, int level, SkillLevelData levelData, int depth = 0)
         {
@@ -42,7 +59,6 @@ namespace Jinhyeong_SkillSystem
             DebuffNodes.Clear();
             AttackPending = false;
             ManualCast = false;
-            // 호출부가 곧바로 덮어쓰지만, 안 덮어쓰는 경로에서 앞 스킬 보정이 새는 걸 막는다.
             Modifier = SkillModifier.None;
         }
     }

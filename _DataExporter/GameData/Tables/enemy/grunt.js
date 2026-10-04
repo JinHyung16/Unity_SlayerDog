@@ -2,7 +2,7 @@
 module.exports = {
     id: 5001,
     name: 'Grunt',
-    desc: '꼬물이 — 기본 — 물량의 기준',
+    desc: '뭉게(찡그린 솜구름) — 기본 — 물량의 기준',
     sprite: 'grunt',
     hp: 50,
     moveSpeed: 3.2,

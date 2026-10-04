@@ -18,11 +18,6 @@ namespace Jinhyeong_SkillSystem
             }
         }
 
-        /// <summary>
-        /// 공격력. 스킬 데이터의 Damage 는 **계수(%)** 라서 이 값과 곱해야 실제 피해가 된다.
-        /// 기획서 공식: 스킬 피해 = 공격력 x 계수(%) x (치명타면 배수).
-        /// 사료 강화·레벨업이 이 값을 올리면 모든 스킬이 같이 세진다 — 그게 성장의 뼈대다.
-        /// </summary>
         public float AttackPower = CommonConfig.Player.AttackPower;
 
         public float OutgoingDamageMultiplier = 1f;
@@ -75,7 +70,6 @@ namespace Jinhyeong_SkillSystem
             _ready = true;
         }
 
-        /// <summary>하네스 진단용 — 지금 자동 발동 중인 스킬 수.</summary>
         public int AutoSkillCount { get { return _autoSkills.Count; } }
 
         public void NotifyAttack()
@@ -93,10 +87,6 @@ namespace Jinhyeong_SkillSystem
             return true;
         }
 
-        /// <summary>
-        /// 런 중 증강으로 얻은 스킬을 자동 발동 목록에 추가한다.
-        /// EquipAll 을 다시 부르면 기존 스킬들의 쿨다운 상태가 통째로 리셋되므로 추가 전용 경로를 둔다.
-        /// </summary>
         public bool AddAutoSkill(int skillId, int level)
         {
             SkillDefinition def = SkillRegistry.Get(skillId);
@@ -111,9 +101,6 @@ namespace Jinhyeong_SkillSystem
             return true;
         }
 
-        /// <summary>
-        /// 파츠가 준 스킬을 보정과 함께 붙인다. 파츠 교체 시 기존 것을 떼고 다시 부른다.
-        /// </summary>
         public bool AddPartSkill(int skillId, SkillModifier modifier)
         {
             if (AddAutoSkill(skillId, 1) == false)
@@ -124,10 +111,6 @@ namespace Jinhyeong_SkillSystem
             return true;
         }
 
-        /// <summary>
-        /// 이미 붙어 있는 파츠 스킬의 보정을 갈아 끼운다. 시너지 조건이 바뀔 때마다 불린다 —
-        /// 스킬을 떼었다 다시 붙이면 쿨다운이 초기화돼 시너지가 켜질 때마다 공백이 생긴다.
-        /// </summary>
         public bool SetPartModifier(int skillId, SkillModifier modifier)
         {
             for (int i = 0; i < _autoSkills.Count; i++)
@@ -141,7 +124,6 @@ namespace Jinhyeong_SkillSystem
             return false;
         }
 
-        /// <summary>파츠를 벗을 때. 해당 스킬을 자동 목록에서 제거한다.</summary>
         public bool RemoveAutoSkill(int skillId)
         {
             for (int i = _autoSkills.Count - 1; i >= 0; i--)
@@ -156,7 +138,6 @@ namespace Jinhyeong_SkillSystem
             return false;
         }
 
-        /// <summary>이미 자동/슬롯에 장착된 스킬인지. 중복 획득을 거르는 용도.</summary>
         public bool HasSkill(int skillId)
         {
             for (int i = 0; i < _autoSkills.Count; i++)
@@ -175,8 +156,6 @@ namespace Jinhyeong_SkillSystem
 
         public void EquipAll()
         {
-            // 파츠가 준 스킬은 남긴다. Start 가 비동기라 파츠 착용 뒤에 도는 경우가 있고,
-            // 통째로 비우면 그 판은 스킬이 하나도 없는 채로 시작한다.
             for (int i = _autoSkills.Count - 1; i >= 0; i--)
             {
                 if (_autoSkills[i] != null && _autoSkills[i].FromPart)

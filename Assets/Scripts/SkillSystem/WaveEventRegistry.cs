@@ -6,7 +6,6 @@ using UnityEngine;
 namespace Jinhyeong_SkillSystem
 {
 
-    /// <summary>정예/보스 웨이브 이벤트 테이블.</summary>
     public static class WaveEventRegistry
     {
         public const string ResourceWave = "GameData/WaveEvent";

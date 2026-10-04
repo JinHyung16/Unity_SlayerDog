@@ -9,7 +9,7 @@ module.exports = {
     damageMul: 1.5,
     scaleMul: 1.3,
     xpMul: 5,
-    banner: '개쎈 외계인이 몰려옵니다!',
+    banner: '파스텔 군단이 몰려옵니다!',
     boss: false,
     enemyTypeId: 0,
     speedMul: 1

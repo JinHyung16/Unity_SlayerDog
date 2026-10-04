@@ -1,7 +1,7 @@
 module.exports = {
     id: 4302,
     name: 'ear_sonar_cooldown',
-    desc: '귀 쫑긋 — 쿨타임 -10%',
+    desc: '서브우퍼 펄스 — 쿨타임 -10%',
     displayName: '예민한 귀',
     partId: 2015,
     trait: 'Cooldown',

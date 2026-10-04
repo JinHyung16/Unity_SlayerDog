@@ -5,13 +5,6 @@ using Jinhyeong_Managers;
 namespace Jinhyeong_UI.Framework
 {
 
-    /// <summary>
-    /// UI 조각의 풀. Get 으로 꺼내고 Restore 로 돌려준다 — UI 코드는 <c>Instantiate</c>/<c>Destroy</c> 를 직접 부르지 않는다.
-    /// (레퍼런스 ProjectSample 의 Loader.Get / Loader.Restore 와 같은 계약)
-    ///
-    /// 풀은 **경로(주소) 단위**로 나뉜다. 종류가 다른 것을 한 풀에 담으면 리셋 규칙이 섞인다.
-    /// 프리팹은 <see cref="AddressableManager"/> 에 미리 올라와 있어야 한다 — 창이 <c>PreloadPaths</c> 로 선언한다.
-    /// </summary>
     public static class UILoader
     {
         private static readonly Dictionary<string, Stack<BaseComponent>> _pools =
@@ -31,7 +24,6 @@ namespace Jinhyeong_UI.Framework
                 while (pool.Count > 0)
                 {
                     BaseComponent pooled = pool.Pop();
-                    // 씬 리로드로 죽은 참조는 버린다. 풀은 static 이라 씬을 넘어 살지만 안의 인스턴스는 아니다.
                     if (pooled == null)
                     {
                         continue;
@@ -74,10 +66,6 @@ namespace Jinhyeong_UI.Framework
             return comp;
         }
 
-        /// <summary>
-        /// 풀로 돌려준다. 반납 시점에 조각이 자기 상태를 전부 리셋한다(<see cref="BaseComponent.Clear"/>) —
-        /// listener · 구독 · 참조. 부모는 풀 루트로, 비활성으로.
-        /// </summary>
         public static void Restore(BaseComponent comp)
         {
             if (comp == null)
@@ -88,7 +76,6 @@ namespace Jinhyeong_UI.Framework
             comp.Clear();
             comp.gameObject.SetActive(false);
 
-            // 로더가 만든 것이 아니면 돌아갈 풀이 없다. 그냥 지운다.
             if (string.IsNullOrEmpty(comp.Path))
             {
                 Object.Destroy(comp.gameObject);
@@ -106,7 +93,6 @@ namespace Jinhyeong_UI.Framework
             pool.Push(comp);
         }
 
-        /// <summary>참조를 먼저 끊고 반납한다. 반납 뒤에 옛 참조를 쓰는 사고를 막는다.</summary>
         public static void RestoreSafe<T>(ref T comp) where T : BaseComponent
         {
             T local = comp;
@@ -129,7 +115,6 @@ namespace Jinhyeong_UI.Framework
 
             Transform root = UIManagement.Instance != null ? UIManagement.Instance.PoolRoot : null;
 
-            // 이미 들어 있는 만큼은 빼고 채운다 — 창을 다시 열어도 두 배가 되지 않는다.
             for (int i = pool.Count; i < count; i++)
             {
                 T comp = Make<T>(path);
@@ -143,7 +128,6 @@ namespace Jinhyeong_UI.Framework
             }
         }
 
-        /// <summary>씬을 떠날 때 비운다. 정적 풀이 이전 씬의 인스턴스를 물고 있으면 누수다.</summary>
         public static void ClearAll()
         {
             foreach (Stack<BaseComponent> pool in _pools.Values)

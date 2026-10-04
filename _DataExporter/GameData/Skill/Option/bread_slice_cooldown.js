@@ -1,7 +1,7 @@
 module.exports = {
     id: 6042,
     name: 'bread_slice_cooldown',
-    desc: '식빵 썰기 — 쿨타임 -10%',
+    desc: '건반 슬램 — 쿨타임 -10%',
     displayName: '빵칼 갈기',
     partId: 2102,
     trait: 'Cooldown',

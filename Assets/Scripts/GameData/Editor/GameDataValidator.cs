@@ -9,10 +9,6 @@ using UnityEngine;
 namespace Jinhyeong_GameData.Editor
 {
 
-    /// <summary>
-    /// _DataExporter 산출물을 플레이 없이 확인한다.
-    /// 익스포터가 빌드 타임 검증을 하긴 하지만, C# 로더가 실제로 그걸 먹는지는 별개 문제라 여기서 한 번 더 본다.
-    /// </summary>
     public static class GameDataValidator
     {
         [MenuItem("Jinhyeong/GameData/DB 검증", false, 10)]
@@ -61,10 +57,6 @@ namespace Jinhyeong_GameData.Editor
             }
         }
 
-        /// <summary>
-        /// DB가 참조하는 비주얼 키가 전부 Addressable 주소로 등록돼 있는지 본다.
-        /// 빠지면 런타임에 흰 구체 폴백으로 조용히 대체돼서 눈치채기 어렵다.
-        /// </summary>
         private static int CheckAddressables(ICollection<string> keys, StringBuilder report)
         {
             AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.Settings;
@@ -111,9 +103,6 @@ namespace Jinhyeong_GameData.Editor
             return total;
         }
 
-        /// <summary>
-        /// BuffId/DebuffId 는 익스포터가 경로로 검증하지만, 손으로 숫자를 박은 경우까지는 못 막는다.
-        /// </summary>
         private static int CountDanglingStatusRefs(SkillNodeData node, int skillId)
         {
             if (node == null)

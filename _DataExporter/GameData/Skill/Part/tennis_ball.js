@@ -2,8 +2,8 @@
 module.exports = {
     id: 2023,
     name: 'Tennis Ball',
-    desc: '가장 가까운 적을 쫓는 테니스공, 공격력 100% 피해. 1.8초마다',
-    displayName: '테니스공 물어와',
+    desc: '가장 가까운 적을 쫓는 탬버린, 공격력 100% 피해. 1.8초마다',
+    displayName: '탬버린 부메랑',
     slot: 'Back',
     family: 'Throw',
     appliesDebuff: 'None',

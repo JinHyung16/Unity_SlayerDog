@@ -1,7 +1,7 @@
 module.exports = {
     id: 4147,
     name: 'zoomies_duration',
-    desc: '우다다 모드 — 지속시간 +25%',
+    desc: '업템포 — 지속시간 +25%',
     displayName: '오래 우다다',
     partId: 2007,
     trait: 'Duration',

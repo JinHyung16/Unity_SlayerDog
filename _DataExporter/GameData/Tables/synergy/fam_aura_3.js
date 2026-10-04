@@ -3,7 +3,7 @@ module.exports = {
     id: 8015,
     name: 'fam_aura_3',
     desc: '각성 3개 — 처치 시 체력 +1.2',
-    displayName: '두꺼운 가죽',
+    displayName: '무대 체력',
     family: 'Aura',
     reqFamilyCount: 3,
     reqSkillId: 0,

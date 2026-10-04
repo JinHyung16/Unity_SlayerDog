@@ -2,8 +2,8 @@
 module.exports = {
     id: 2012,
     name: 'Tail Copter',
-    desc: '꼬리를 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다',
-    displayName: '꼬리 프로펠러',
+    desc: '턴테이블을 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다',
+    displayName: '턴테이블 스핀',
     slot: 'Tail',
     family: 'Field',
     appliesDebuff: 'None',

@@ -11,11 +11,6 @@ using UnityEngine;
 namespace Jinhyeong_SkillSystem
 {
 
-    /// <summary>
-    /// 스킬 DB 레지스트리.
-    /// 원본은 _DataExporter/GameData (경로 기반 모듈 트리)이고, 여기서 읽는 건 그 빌드 산출물이다.
-    /// 슬롯·토큰은 빌드 타임에 이미 해석돼 있어서 런타임이 할 일은 트리를 그대로 옮겨 담는 것뿐이다.
-    /// </summary>
     public static class SkillRegistry
     {
         public const string ResourceSkill = "GameData/Skill";
@@ -58,8 +53,6 @@ namespace Jinhyeong_SkillSystem
             {
                 return Task.CompletedTask;
             }
-            // 이미 메인스레드면 LoadInternalAsync 가 동기로 끝나 finally 가 대입보다 먼저 돈다.
-            // 그러면 완료된 태스크가 필드에 남아 다음 로드(씬 리로드)를 영원히 건너뛴다 — 완료 여부로 거른다.
             if (_loadingTask != null && _loadingTask.IsCompleted == false)
             {
                 return _loadingTask;
@@ -82,9 +75,6 @@ namespace Jinhyeong_SkillSystem
             }
         }
 
-        /// <summary>
-        /// Resources 에서 동기 로드. 에디터 툴이나 테스트에서 직접 부를 수 있게 public 으로 둔다.
-        /// </summary>
         public static void Load()
         {
             Clear();
@@ -275,12 +265,13 @@ namespace Jinhyeong_SkillSystem
             HashSet<string> keys = new HashSet<string>();
             CollectVisualKeys(keys);
 
-            // 아트가 하나도 없어도 루트 프리팹은 있어야 스킬이 나간다
             keys.Add(CommonConfig.Skill.RootPrefabKey);
             keys.Add(CommonConfig.Skill.HitFxKey);
             keys.Add(CommonConfig.Skill.ChainFxKey);
             keys.Add(CommonConfig.Skill.XpGemKey);
             keys.Add(CommonConfig.Skill.DamageTextKey);
+            keys.Add(CommonConfig.Skill.HitBurstKey);
+            keys.Add(CommonConfig.Skill.GhostKey);
 
             AddressableManager am = AddressableManager.Ensure();
             await am.LoadAllAsync(keys);

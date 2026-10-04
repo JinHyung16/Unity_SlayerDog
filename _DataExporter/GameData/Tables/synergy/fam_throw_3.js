@@ -3,7 +3,7 @@ module.exports = {
     id: 8018,
     name: 'fam_throw_3',
     desc: '투척 3개 — 처치 시 체력 +1.2',
-    displayName: '가벼운 발놀림',
+    displayName: '가벼운 스텝',
     family: 'Throw',
     reqFamilyCount: 3,
     reqSkillId: 0,

@@ -132,6 +132,41 @@
         ]
     },
     {
+        "path": "Skill/Method/projectile/burst",
+        "desc": "연발 투사체 — N 발을 간격 · 각도로 나눠 쏜다",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterHits",
+                "params": {
+                    "Value": 1
+                }
+            },
+            {
+                "type": "LaunchStraight",
+                "params": {
+                    "Speed": "@stat.Speed",
+                    "MaxDistance": "@stat.MaxDistance",
+                    "BurstCount": "@stat.BurstCount",
+                    "BurstInterval": "@stat.BurstInterval",
+                    "BurstSpread": "@stat.BurstSpread",
+                    "Visual": "@visual.Projectile",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
         "path": "Skill/Method/projectile/homing",
         "desc": "유도 투사체 — 대상을 계속 추적",
         "slots": [

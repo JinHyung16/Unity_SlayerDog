@@ -2,18 +2,22 @@
 # PNG -> Unity .meta 생성기 (에디터 없이 import 설정을 확정한다)
 #
 # - GUID 는 경로 md5 로 고정한다. 재실행해도 같은 GUID -> 프리팹 참조가 안 끊긴다
-# - 픽셀아트라 Point 필터 + 무압축 + 밉맵 없음
-# - PPU 32 (64px = 2유닛). 기존 휴머노이드 스케일(캐릭터 ~1.8유닛)에 맞춘 값
+# - 전부 Bilinear + 무압축. 원본은 깨끗한 고해상도이고 도트 룩은 쓰지 않는다 (아트 리부트 2026-10-03, 캐릭터 도트 셰이더 폐기)
+#   Point 는 쓰지 않는다 — 정수 배율을 보장할 수 없는 카메라에서 텍셀이 1px/2px 로 들쭉날쭉 찍혀 뭉개진다
+# - PPU 는 논리 캔버스 64px = 2유닛. 생성기가 고해상도로 낸 폴더는 _art_scale.json 배율만큼 PPU 를 곱한다
+#   (크기가 그대로여야 프리팹 · 판정 반경이 안 어긋난다). 고해상도는 화면에서 축소되므로 밉맵을 켠다
 # - 캐릭터/적은 피벗을 발밑으로 내려 지면 정렬이 자동으로 맞게 한다
 
-import os, sys, hashlib
+import os, sys, hashlib, json
 sys.stdout.reconfigure(encoding="utf-8")
 
 ROOT = r"C:\jinhyeong_project\Unity_SkillSystem_Module"
+# 생성기가 쓰는 출력 배율 표. {"Assets/_Art/FX/fx_paw": 4, ...}. 없으면 전부 1
+SCALE_FILE = os.path.join(ROOT, "_DataExporter", "_art_scale.json")
 # [주의] 이 스크립트는 .meta 를 «통째로 덮어쓴다» — spriteBorder 도 0 으로 밀린다.
 #        그래서 9슬라이스를 쓰는 Assets\Resources\UI 는 «대상이 아니다».
 #        아이콘 폴더(Icons)만 콕 집어 넣는다. 부모 폴더를 넣으면 UI 스킨의 경계가 전부 날아간다.
-TARGETS = [r"Assets\_Art\FX", r"Assets\_Art\Sprites", r"Assets\_Art\Tiles",
+TARGETS = [r"Assets\_Art\FX", r"Assets\_Art\Sprites", r"Assets\_Art\Stage",
            r"Assets\Resources\Lobby", r"Assets\Resources\UI\Icons"]
 PPU = 32
 
@@ -24,6 +28,13 @@ FOOT_PIVOT_Y = 3.0 / 64.0
 
 def guid_for(rel):
     return hashlib.md5(("jinhyeong::" + rel.replace("\\", "/")).encode("utf-8")).hexdigest()
+
+
+def load_scales():
+    if not os.path.exists(SCALE_FILE):
+        return {}
+    with open(SCALE_FILE, encoding="utf-8") as fp:
+        return json.load(fp)
 
 
 def platform_block(name):
@@ -44,7 +55,7 @@ def platform_block(name):
     )
 
 
-def make_meta(rel, is_sprite, wrap, alignment, pivot):
+def make_meta(rel, is_sprite, wrap, alignment, pivot, filter_mode=1, mips=0, ppu=PPU):
     g = guid_for(rel)
     plats = "".join(platform_block(n) for n in ("DefaultTexturePlatform", "Standalone", "Android"))
     return """fileFormatVersion: 2
@@ -55,7 +66,7 @@ TextureImporter:
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: {mips}
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -83,7 +94,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: {filter}
     aniso: 1
     mipBias: 0
     wrapU: {wrap}
@@ -139,13 +150,16 @@ TextureImporter:
   assetBundleName:
   assetBundleVariant:
 """.format(guid=g, wrap=wrap, spritemode=1 if is_sprite else 0,
-           alignment=alignment, px=pivot[0], py=pivot[1], ppu=PPU,
+           alignment=alignment, px=pivot[0], py=pivot[1], ppu=ppu,
+           filter=filter_mode, mips=mips,
            ttype=8 if is_sprite else 0, plats=plats)
 
 
 def main():
     written = 0
+    hires = 0
     index = {}
+    scales = load_scales()
     for t in TARGETS:
         base = os.path.join(ROOT, t)
         for dirpath, _, files in os.walk(base):
@@ -156,25 +170,30 @@ def main():
                 rel = os.path.relpath(full, ROOT)
                 name = os.path.splitext(f)[0]
 
-                if name == "ground_grass":
-                    # 바닥은 머티리얼로 타일링한다 -> 스프라이트가 아니라 Default + Repeat
-                    meta = make_meta(rel, False, 0, 0, (0.5, 0.5))
-                elif name.startswith(FOOT_PIVOT_PREFIX):
-                    meta = make_meta(rel, True, 1, 9, (0.5, round(FOOT_PIVOT_Y, 4)))
+                rel_dir = os.path.dirname(rel).replace("\\", "/")
+                scale = int(scales.get(rel_dir, 1))
+                opts = dict(
+                    mips=1 if scale > 1 else 0,
+                    ppu=PPU * scale,
+                )
+
+                if name.startswith(FOOT_PIVOT_PREFIX):
+                    meta = make_meta(rel, True, 1, 9, (0.5, round(FOOT_PIVOT_Y, 4)), **opts)
                 else:
-                    meta = make_meta(rel, True, 1, 0, (0.5, 0.5))
+                    meta = make_meta(rel, True, 1, 0, (0.5, 0.5), **opts)
 
                 with open(full + ".meta", "w", encoding="utf-8", newline="\n") as fp:
                     fp.write(meta)
                 index[rel.replace("\\", "/")] = guid_for(rel)
                 written += 1
+                if scale > 1:
+                    hires += 1
 
     # 프리팹/씬 작성 때 쓸 GUID 색인
     out = os.path.join(ROOT, "_DataExporter", "_art_guids.json")
-    import json
     with open(out, "w", encoding="utf-8") as fp:
         json.dump(index, fp, ensure_ascii=False, indent=1, sort_keys=True)
-    print("meta %d개 작성, GUID 색인 -> %s" % (written, out))
+    print("meta %d개 작성 (고해상도 %d), GUID 색인 -> %s" % (written, hires, out))
 
 
 main()

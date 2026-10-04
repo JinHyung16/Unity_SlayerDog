@@ -1,7 +1,7 @@
 module.exports = {
     id: 4166,
     name: 'bone_mine_count',
-    desc: '뼈다귀 매설 — 개수 +1',
+    desc: '베이스 드럼 매설 — 개수 +1',
     displayName: '다다익뼈',
     partId: 2008,
     trait: 'Count',

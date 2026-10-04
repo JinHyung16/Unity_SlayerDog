@@ -1,7 +1,7 @@
 module.exports = {
     id: 4041,
     name: 'bark_cone_damage',
-    desc: '왈왈 — 피해량 +30%',
+    desc: '포르테 샤우트 — 피해량 +30%',
     displayName: '데시벨 업',
     partId: 2002,
     trait: 'Damage',

@@ -1,7 +1,7 @@
 module.exports = {
     id: 4387,
     name: 'fur_barrier_duration',
-    desc: '털뭉치 보호막 — 지속시간 +25%',
+    desc: '앰프 보호막 — 지속시간 +25%',
     displayName: '질긴 털',
     partId: 2019,
     trait: 'Duration',

@@ -7,21 +7,8 @@ using UnityEngine;
 namespace Jinhyeong_Constellation
 {
 
-    /// <summary>
-    /// 계열 표 + 상수 + 시드 하나로 성좌를 통째로 만든다.
-    ///
-    /// 「좌표를 손으로 찍는 트리」와 「절차 생성 성좌」의 갈림길에서 후자를 골랐다.
-    /// 손으로 찍으면 노드 200개의 좌표가 데이터가 되고, 「갈래를 조금 벌려 보자」가
-    /// 200줄 수정이 된다. 여기서는 상수 한 줄이다.
-    ///
-    /// 대가는 **결정성에 대한 의존**이다. 시드·순서·난수 소비 지점이 바뀌면 모양이 통째로 바뀌고,
-    /// 세이브는 노드 id 로 걸려 있어 산 노드가 옮겨간다. 그래서 난수는 아래 세 곳에서만 쓴다 —
-    ///   ① 잔가지 특성 A/B 선택  ② 레벨 노드 승격  ③ 같은 링 이웃 연결
-    /// 이 순서를 바꾸지 않는다.
-    /// </summary>
     public static class ConstellationGenerator
     {
-        /// <summary>한 성단이 만들어 내는 것들 — 길을 깔 때 접속구로 쓴다.</summary>
         private class Cluster
         {
             public int Ring;
@@ -66,13 +53,6 @@ namespace Jinhyeong_Constellation
             Flatten(graph);
         }
 
-        /// <summary>
-        /// 다 만든 «뒤에» 세로만 누른다.
-        ///
-        /// 만드는 도중에 누르지 않는 이유는, 성단 회전·길 쪼개기·키스톤 가지가 전부
-        /// «원형 좌표»를 전제로 각도와 거리를 재기 때문이다. 중간에 누르면 그 계산들이
-        /// 두 번 눌린 값을 다시 눌러 모양이 무너진다. 눌린 좌표는 그리기에만 쓴다.
-        /// </summary>
         private static void Flatten(ConstellationGraph graph)
         {
             float k = CommonConfig.Constellation.AspectY;
@@ -82,8 +62,6 @@ namespace Jinhyeong_Constellation
             }
         }
 
-        // ───────────────────────── 갈래 ─────────────────────────
-
         private static void BuildRegion(ConstellationGraph graph, ConstellationRegionData region, int coreId)
         {
             List<Cluster> clusters = PlaceClusters(region);
@@ -91,7 +69,6 @@ namespace Jinhyeong_Constellation
 
             for (int i = 0; i < clusters.Count; i++)
             {
-                // 성단의 중심은 그 계열 스킬을 하나씩 문다. 스킬보다 성단이 많으면 남는 자리는 계열 보너스가 된다.
                 PartData skill = i < skills.Count ? skills[i] : null;
                 BuildCluster(graph, region, clusters[i], i, skill);
             }
@@ -100,13 +77,6 @@ namespace Jinhyeong_Constellation
             BuildKeystone(graph, region, clusters);
         }
 
-        /// <summary>
-        /// 성단을 링에 배분하고 부채꼴 안에 균등하게 편다.
-        ///
-        /// [사고] 원본 공식은 링별 «비율»로 나눈 뒤 남는 개수를 고정 순서로 메웠다. 성단이 40개일 땐
-        /// 잘 돌지만 우리처럼 5~6개면 내림 때문에 **중간 링이 통째로 비어** 갈래가 끊겨 보였다.
-        /// 개수가 적을 땐 비율이 아니라 「고르게 훑기」가 맞다.
-        /// </summary>
         private static List<Cluster> PlaceClusters(ConstellationRegionData region)
         {
             float[] radius = CommonConfig.Constellation.RingRadius;
@@ -131,7 +101,6 @@ namespace Jinhyeong_Constellation
                 int count = perRing[c.Ring];
                 int idx = seen[c.Ring]++;
 
-                // 바깥 링일수록 넓게 편다. 같은 폭이면 바깥이 성기게 보여 갈래가 가늘어진다.
                 float width = region.Span * (0.60f + 0.09f * c.Ring);
                 float f = count == 1 ? 0.5f : idx / (float)(count - 1);
                 float deg = region.CenterAngle + (f - 0.5f) * width;
@@ -144,8 +113,6 @@ namespace Jinhyeong_Constellation
             return list;
         }
 
-        // ───────────────────────── 성단 ─────────────────────────
-
         private static void BuildCluster(ConstellationGraph graph, ConstellationRegionData region,
                                          Cluster cluster, int clusterIndex, PartData skill)
         {
@@ -153,9 +120,6 @@ namespace Jinhyeong_Constellation
                 ? CommonConfig.Constellation.InnerLeafCount
                 : CommonConfig.Constellation.OuterLeafCount;
 
-            // [사고] 성단 «중심»만 자리 검사를 안 해서, 옆 계열이 먼저 깔아 둔 잔가지 위에
-            // 스킬 노드가 25유닛 거리로 앉았다. 중심은 스킬을 물고 있어 합칠 수 없으므로 비켜 세운다.
-            // 잎·포트·길이 전부 중심을 기준으로 잡히므로 «중심을 먼저» 옮기고 나머지를 만든다.
             float cx = cluster.X;
             float cy = cluster.Y;
             Nudge(graph, ref cx, ref cy, Mathf.Cos(cluster.Angle), Mathf.Sin(cluster.Angle), 1f);
@@ -168,7 +132,6 @@ namespace Jinhyeong_Constellation
             graph.Add(center);
             cluster.CenterId = center.Id;
 
-            // 성단마다 모양을 돌린다. 전부 같은 모양이면 성좌가 아니라 격자로 보인다.
             int pattern = cluster.Ring == 0 ? 0 : (clusterIndex + cluster.Ring * 2) % 5;
 
             float orb = CommonConfig.Constellation.OrbitRadius;
@@ -180,13 +143,11 @@ namespace Jinhyeong_Constellation
                 Vector2 uv = PatternPoint(pattern, i, leaf, orb);
                 local.Add(uv);
 
-                // 로컬 → 월드. 성단의 «바깥 방향»으로 돌린다. 성좌가 방사형으로 뻗어 보이는 이유가 이것이다.
                 float cu = Mathf.Cos(cluster.Angle);
                 float su = Mathf.Sin(cluster.Angle);
                 float wx = cluster.X + cu * uv.x - su * uv.y;
                 float wy = cluster.Y + su * uv.x + cu * uv.y;
 
-                // 이미 노드가 있는 자리면 새로 만들지 않고 그 노드를 쓴다 — 겹쳐 찍히면 무엇을 누르는지 알 수 없다.
                 ConstellationNode near = FindNear(graph, wx, wy);
                 if (near != null)
                 {
@@ -203,24 +164,18 @@ namespace Jinhyeong_Constellation
             ResolvePorts(cluster, local, leafIds);
         }
 
-        /// <summary>
-        /// 성단 안의 로컬 좌표. 원본의 고정 좌표표 대신 «개수를 받는 식»으로 바꿨다 —
-        /// 잔가지 수를 링마다 다르게 두려면 고정표는 매번 다시 적어야 한다.
-        /// </summary>
         private static Vector2 PatternPoint(int pattern, int i, int count, float orb)
         {
             switch (pattern)
             {
                 case 0:
                 {
-                    // 원환
                     float a = Mathf.PI * 2f * i / count;
                     return new Vector2(Mathf.Cos(a) * orb, Mathf.Sin(a) * orb);
                 }
 
                 case 1:
                 {
-                    // 마름모 + 바깥 가시
                     if (i < 4)
                     {
                         float a = Mathf.PI * 0.5f * i;
@@ -231,7 +186,6 @@ namespace Jinhyeong_Constellation
 
                 case 2:
                 {
-                    // 갈퀴 — 두 줄이 바깥으로 나란히
                     int step = i / 2;
                     float side = (i % 2 == 0) ? -1f : 1f;
                     return new Vector2(orb * (0.70f + 0.62f * step), side * orb * 0.60f);
@@ -239,7 +193,6 @@ namespace Jinhyeong_Constellation
 
                 case 3:
                 {
-                    // 호
                     float t = count == 1 ? 0.5f : i / (float)(count - 1);
                     float a = -1.5f + t * 3.0f;
                     return new Vector2(Mathf.Cos(a) * orb, Mathf.Sin(a) * orb);
@@ -247,7 +200,6 @@ namespace Jinhyeong_Constellation
 
                 default:
                 {
-                    // 십자
                     if (i < 4)
                     {
                         float a = Mathf.PI * 0.5f * i;
@@ -258,7 +210,6 @@ namespace Jinhyeong_Constellation
             }
         }
 
-        /// <summary>패턴마다 결선이 다르다. 전부 「중심에서 방사」로 이으면 성단이 죄다 별표가 된다.</summary>
         private static void LinkPattern(ConstellationGraph graph, int pattern, int centerId, List<int> leafIds)
         {
             if (leafIds.Count == 0)
@@ -269,7 +220,6 @@ namespace Jinhyeong_Constellation
             switch (pattern)
             {
                 case 0:
-                    // 고리로 닫고 중심과는 한 곳만 — 순환이 생겨 「돌아가는 길」이 된다
                     for (int i = 0; i < leafIds.Count; i++)
                     {
                         graph.Link(leafIds[i], leafIds[(i + 1) % leafIds.Count]);
@@ -278,7 +228,6 @@ namespace Jinhyeong_Constellation
                     break;
 
                 case 2:
-                    // 두 줄 사슬. 짝수 인덱스가 아래줄, 홀수가 윗줄
                     for (int i = 0; i < leafIds.Count; i++)
                     {
                         int prev = i - 2;
@@ -287,7 +236,6 @@ namespace Jinhyeong_Constellation
                     break;
 
                 case 3:
-                    // 호 — 사슬로 잇고 가운데를 중심에 붙인다
                     for (int i = 1; i < leafIds.Count; i++)
                     {
                         graph.Link(leafIds[i - 1], leafIds[i]);
@@ -304,10 +252,6 @@ namespace Jinhyeong_Constellation
             }
         }
 
-        /// <summary>
-        /// 접속구. 성단끼리는 아무 노드나 잇지 않는다 — 안쪽 끝과 바깥 끝을 정해 두면
-        /// 길이 성단을 «관통»하지 않고 가장자리에서 갈아탄다.
-        /// </summary>
         private static void ResolvePorts(Cluster cluster, List<Vector2> local, List<int> leafIds)
         {
             cluster.PortInId = cluster.CenterId;
@@ -350,8 +294,6 @@ namespace Jinhyeong_Constellation
             }
         }
 
-        // ───────────────────────── 길 ─────────────────────────
-
         private static void BuildRoads(ConstellationGraph graph, ConstellationRegionData region,
                                        List<Cluster> clusters, int coreId)
         {
@@ -370,12 +312,10 @@ namespace Jinhyeong_Constellation
                 Cluster parent = NearestInner(clusters, c);
                 if (parent == null)
                 {
-                    // 안쪽 링에 성단이 없으면 코어로 직접 붙인다. 갈래가 끊긴 채 떠 있는 것보다 낫다.
                     Road(graph, region, coreId, c.PortInId, c.Ring, false);
                     continue;
                 }
 
-                // 관문은 갈래마다 하나. 가장 바깥으로 나가는 길목에 세워야 실제로 벽이 된다.
                 bool gate = gatePlaced == false && c.Ring >= outerRing;
                 Road(graph, region, parent.PortOutId, c.PortInId, c.Ring, gate);
                 if (gate)
@@ -384,7 +324,6 @@ namespace Jinhyeong_Constellation
                 }
             }
 
-            // 같은 링 이웃끼리. 이 확률 하나가 성좌에 «순환»을 만든다.
             for (int i = 0; i < clusters.Count; i++)
             {
                 for (int k = i + 1; k < clusters.Count; k++)
@@ -425,10 +364,6 @@ namespace Jinhyeong_Constellation
             return best;
         }
 
-        /// <summary>
-        /// 두 노드 사이를 <c>SegmentLength</c> 간격으로 쪼개 잔가지를 심는다.
-        /// 길이가 짧으면 노드 없이 그냥 잇는다 — 노드가 겹쳐 찍히는 것보다 낫다.
-        /// </summary>
         private static void Road(ConstellationGraph graph, ConstellationRegionData region,
                                  int fromId, int toId, int ring, bool gate)
         {
@@ -461,7 +396,6 @@ namespace Jinhyeong_Constellation
                     ConstellationNode near = FindNear(graph, x, y);
                     if (near != null)
                     {
-                        // 길이 다른 길·성단과 만났다. 합치면 그 자리가 교차로가 되어 「돌아가는 길」이 하나 는다.
                         graph.Link(prev, near.Id);
                         prev = near.Id;
                         continue;
@@ -474,8 +408,6 @@ namespace Jinhyeong_Constellation
                     continue;
                 }
 
-                // 관문은 «합칠 수 없다» — 다른 노드에 흡수되면 벽이 사라진다.
-                // 자리가 찼으면 길에 수직으로 비켜 세운다.
                 Nudge(graph, ref x, ref y, dx, dy, dist);
                 ConstellationNode gateNode = NewGateNode(region, ring, x, y);
                 placedGate = true;
@@ -484,15 +416,8 @@ namespace Jinhyeong_Constellation
                 prev = gateNode.Id;
             }
 
-            // 길이 너무 짧아 중간 노드가 하나도 안 생겼는데 관문을 세워야 한다면, 관문만 따로 끼운다.
-            //
-            // [사고] 이 가지가 없어서 관문이 계열마다 하나씩 서야 하는데 **통틀어 하나만** 섰다.
-            // 성단 접속구 사이 거리가 링 간격보다 짧아 n = 0 이 되는 갈래가 대부분이었다.
             if (gate && placedGate == false)
             {
-                // [사고] 그냥 중점에 놓았더니 이미 있던 잔가지와 «거리 0» 으로 겹쳤다.
-                // 길이 짧아 중간 노드가 안 생기는 자리는, 애초에 양 끝이 가까운 자리다.
-                // 자리가 찼으면 길에 수직으로 비켜 세운다 — 관문은 반드시 길 위에 서야 하므로 지우지는 않는다.
                 float gx = (a.X + b.X) * 0.5f;
                 float gy = (a.Y + b.Y) * 0.5f;
                 Nudge(graph, ref gx, ref gy, dx, dy, dist);
@@ -506,12 +431,6 @@ namespace Jinhyeong_Constellation
             graph.Link(prev, toId);
         }
 
-        // ───────────────────────── 키스톤 ─────────────────────────
-
-        /// <summary>
-        /// 갈래 끝. 가장 바깥 성단에서 바깥으로 두 마디 뻗고 그 끝에 계열을 규정하는 한 방을 둔다.
-        /// 「여기까지 가면 이 갈래가 무엇인지 알 수 있다」가 있어야 갈래를 타는 이유가 생긴다.
-        /// </summary>
         private static void BuildKeystone(ConstellationGraph graph, ConstellationRegionData region, List<Cluster> clusters)
         {
             Cluster outer = null;
@@ -543,9 +462,6 @@ namespace Jinhyeong_Constellation
                 float x = port.X + cu * step * i;
                 float y = port.Y + su * step * i;
 
-                // [사고] 이 가지만 자리 검사를 빠뜨려서, 앞서 세운 관문 위에 «거리 0» 으로 겹쳤다.
-                // 노드를 만드는 자리가 세 군데(성단·길·이 가지)인데 두 군데만 검사하면
-                // 남은 한 군데가 반드시 사고를 낸다.
                 ConstellationNode near = FindNear(graph, x, y);
                 if (near != null)
                 {
@@ -575,8 +491,6 @@ namespace Jinhyeong_Constellation
             graph.Link(prev, keystone.Id);
         }
 
-        // ───────────────────────── 노드 만들기 ─────────────────────────
-
         private static ConstellationNode NewNode(EConstellationNodeType type, ESkillFamily family,
                                                  float x, float y, int ring)
         {
@@ -591,7 +505,6 @@ namespace Jinhyeong_Constellation
             return n;
         }
 
-        /// <summary>잔가지 — 작은 «전역» 특성. 계열 한정으로 두면 드랍이 어긋났을 때 성좌가 통째로 헛돈다.</summary>
         private static ConstellationNode NewLeafNode(ConstellationRegionData region, int index, float x, float y, int ring)
         {
             bool useA = _rng.Next() < 0.5f;
@@ -625,7 +538,6 @@ namespace Jinhyeong_Constellation
             return n;
         }
 
-        /// <summary>성단 중심 — 계열 한정 큰 특성. 갈래를 타는 보상이 여기 있다.</summary>
         private static ConstellationNode NewNotableNode(ConstellationRegionData region, Cluster cluster)
         {
             float value = Round3(region.ValueA * 4f * (1f + CommonConfig.Constellation.ValueRingGain * cluster.Ring));
@@ -660,19 +572,12 @@ namespace Jinhyeong_Constellation
             return n;
         }
 
-        // ───────────────────────── 셈 ─────────────────────────
-
-        /// <summary>링이 오를수록 비싸진다. 반올림은 half-up 이다 — 은행가 반올림을 쓰면 값이 계단에서 어긋난다.</summary>
         public static int CostOf(int baseCost, int ring)
         {
             float raw = baseCost * Mathf.Pow(CommonConfig.Constellation.CostGrowth, ring);
             return Mathf.Max(1, Mathf.FloorToInt(raw + 0.5f));
         }
 
-        /// <summary>
-        /// 자리가 찼으면 길에 «수직으로» 비켜 세운다. 합칠 수 없는 노드(관문)를 위한 것이다.
-        /// 한 번 비켜서 또 겹치면 반대쪽으로 한 번 더 본다 — 그래도 안 되면 그대로 둔다.
-        /// </summary>
         private static void Nudge(ConstellationGraph graph, ref float x, ref float y,
                                   float dx, float dy, float dist)
         {
@@ -683,9 +588,6 @@ namespace Jinhyeong_Constellation
 
             float offset = CommonConfig.Constellation.MergeDistance * 1.4f;
 
-            // [사고] 길이가 0 인 길에서는 그냥 빠져나가게 해 뒀더니, 관문이 기존 노드 «위에» 그대로 앉았다.
-            // 성단 두 개의 접속구가 이미 하나로 합쳐진 자리라 양 끝이 같은 노드였던 것이다.
-            // 방향을 못 구하는 것과 비켜설 필요가 없는 것은 다르다 — 방향이 없으면 아무 쪽으로나 비킨다.
             float px;
             float py;
             if (dist > 0.001f)
@@ -712,7 +614,6 @@ namespace Jinhyeong_Constellation
             }
         }
 
-        /// <summary>이 자리에 이미 노드가 있나. 200개 남짓이라 선형 탐색으로 충분하다.</summary>
         private static ConstellationNode FindNear(ConstellationGraph graph, float x, float y)
         {
             float sqr = CommonConfig.Constellation.MergeDistance * CommonConfig.Constellation.MergeDistance;
@@ -745,7 +646,6 @@ namespace Jinhyeong_Constellation
                     list.Add(all[i]);
                 }
             }
-            // 파일 나열 순서에 기대지 않는다 — 순서가 흔들리면 스킬이 다른 성단으로 옮겨간다.
             list.Sort(CompareSkillId);
             return list;
         }

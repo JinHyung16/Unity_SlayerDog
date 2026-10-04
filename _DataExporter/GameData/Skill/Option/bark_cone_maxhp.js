@@ -1,7 +1,7 @@
 module.exports = {
     id: 4049,
     name: 'bark_cone_maxhp',
-    desc: '왈왈 — 최대 체력 +15%',
+    desc: '포르테 샤우트 — 최대 체력 +15%',
     displayName: '왈왈 · 튼튼',
     partId: 2002,
     trait: 'MaxHp',

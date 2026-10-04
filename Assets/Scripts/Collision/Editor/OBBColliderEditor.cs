@@ -66,7 +66,6 @@ namespace Jinhyeong_Collision.Editor
             EditorUtility.SetDirty(col);
         }
 
-        /// <summary>child 로컬 바운즈의 8코너를 root(콜라이더) 로컬 공간으로 변환해 누적한다.</summary>
         private static void Accumulate(Transform root, Transform child, Bounds childLocal, ref Bounds acc, ref bool has)
         {
             Vector3 c = childLocal.center;

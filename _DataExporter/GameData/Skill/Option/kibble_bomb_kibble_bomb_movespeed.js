@@ -1,7 +1,7 @@
 module.exports = {
     id: 4431,
     name: 'kibble_bomb_movespeed',
-    desc: 'God-사료 폭탄 — 이동속도 +6%',
+    desc: '심벌 크래시 — 이동속도 +6%',
     displayName: 'God-사료 폭탄 · 날쌘',
     partId: 2021,
     trait: 'MoveSpeed',

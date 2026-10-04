@@ -2,8 +2,8 @@
 module.exports = {
     id: 2008,
     name: 'Bone Mine',
-    desc: '발밑에 뼈다귀를 묻는다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다',
-    displayName: '뼈다귀 매설',
+    desc: '발밑에 베이스 드럼을 깐다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다',
+    displayName: '베이스 드럼 매설',
     slot: 'Feet',
     family: 'Field',
     appliesDebuff: 'None',

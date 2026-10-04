@@ -1,7 +1,7 @@
 module.exports = {
     id: 4182,
     name: 'tail_pierce_cooldown',
-    desc: '꼬리 흔들기 — 쿨타임 -10%',
+    desc: '현 가르기 — 쿨타임 -10%',
     displayName: '살랑살랑',
     partId: 2009,
     trait: 'Cooldown',

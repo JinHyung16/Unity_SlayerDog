@@ -97,7 +97,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: 9d450447ce87b5c4185e8ac1b742c4fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,6 +127,55 @@ TilemapRenderer:
   m_SortOrder: 0
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
+--- !u!1 &2192381431710300530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5868591202554748044}
+  - component: {fileID: 8173457663188785542}
+  m_Layer: 0
+  m_Name: Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5868591202554748044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2192381431710300530}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1640235246782985820}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8173457663188785542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2192381431710300530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: c0aa28d5d4833224cac67fbec85f42e8, type: 2}
 --- !u!1 &3289972049403134464
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +253,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7602126365422418762}
+  - {fileID: 5868591202554748044}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6590968007819046990
@@ -241,20 +291,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Jinhyeong_View.TilemapStreamer
   _ground: {fileID: 1678432452898089494}
   _grassTiles:
-  - {fileID: 11400000, guid: f82a0640ffa3c9c4c98184a18b03b42f, type: 2}
-  - {fileID: 11400000, guid: 8bb8042e5312fee45b46a364aff37618, type: 2}
-  - {fileID: 11400000, guid: c2889f0445bed2042a3882b6771fd3bd, type: 2}
-  - {fileID: 11400000, guid: 261f96aaef8f6ae40bc58f875183ac02, type: 2}
-  - {fileID: 11400000, guid: b6127fc4e46bbd34592a77d525adfeae, type: 2}
-  - {fileID: 11400000, guid: 3ef3f84c9a5c12a4e9a8ca0e47165705, type: 2}
+  - {fileID: 11400000, guid: 56c29ef25b4b7e546b2769c26808e46b, type: 2}
+  - {fileID: 11400000, guid: 79815ac281ed2924ea5ff6cb782381db, type: 2}
+  - {fileID: 11400000, guid: 1b184812b56cc6d478abdb7990af16ac, type: 2}
+  - {fileID: 11400000, guid: 6fb12c28e2870f54685748b3e5e0a29c, type: 2}
+  _patchCells: 4
   _cellSize: 2
   _radius: 16
   _decoSprites:
-  - {fileID: 21300000, guid: 048139cb9b682a0f020db9d7f2cd91c3, type: 3}
-  - {fileID: 21300000, guid: 8ca61dafb5468b87dac64f146241dbe7, type: 3}
-  - {fileID: 21300000, guid: e68493870c222545bf50ea05f9fd9995, type: 3}
-  - {fileID: 21300000, guid: 4a0c520fadc60c019be3ff21459d60e9, type: 3}
-  - {fileID: 21300000, guid: c0fbfbb6a60b013d98310d211704685d, type: 3}
-  - {fileID: 21300000, guid: 6df513cf034568114ed189ae5f80238e, type: 3}
+  - {fileID: 21300000, guid: f17c699c8355f74fe6dfcf8ba1169b3d, type: 3}
+  - {fileID: 21300000, guid: d5e334ade5b2d2131cd68576189bcd4f, type: 3}
+  - {fileID: 21300000, guid: 2dba2536551c5ec4b29fd8bcf5a2e66c, type: 3}
   _decoChance: 0.035
   _decoSortingOrder: 8
+  _decoMaterial: {fileID: 2100000, guid: 610e66088f080974e91fd47fb2befc18, type: 2}

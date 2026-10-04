@@ -65,12 +65,9 @@ namespace Jinhyeong_Character
 
         public void Init()
         {
-            // 피격 무적은 플레이어에게만 준다. 적에게 주면 광역 스킬이 통째로 무력해진다.
             if (_damageable != null)
                 _damageable.InvulnerabilitySeconds = CommonConfig.Player.HitInvulnerability;
 
-            // 상점에서 산 영구 강화. [주의] 스폰 경로가 둘(WorldSpawner · 하네스)이라
-            // 스폰하는 쪽에 얹으면 한쪽만 적용된다. 기본값을 세우는 여기가 유일한 길목이다.
             float metaHp = CommonConfig.Player.Hp * SaveData.StatMultiplier(SaveData.EStat.Hp);
             _damageable.MaxHp = metaHp;
             _damageable.Hp = metaHp;

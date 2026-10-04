@@ -28,7 +28,7 @@ GameData/
   _enums.js                        enum SSOT ('_' 접두사 = 스캔 제외, 익스포터가 직접 집는다)
 
   Skill/                           ── 스킬에 관한 것은 전부 여기 ──
-    Master/    bark_cone.js        「이 스킬 = Method + Visual」 조합 + 트리거 + 슬롯
+    Master/    bark_cone.js        "이 스킬 = Method + Visual" 조합 + 트리거 + 슬롯
     Method/    instant.js          발사 방식 (공용, 9종)
                beam.js  ground_field.js  self_cast.js
                projectile/{straight,arc,homing,piercing,wave}.js
@@ -46,7 +46,7 @@ GameData/
 
 ### 새 스킬 하나 = 파일 넷 복붙
 
-이 구조의 목적은 **Ctrl+C / Ctrl+V 로 스킬 하나가 뚝딱** 나오는 것이다.
+이 구조의 목적은 Ctrl+C / Ctrl+V 로 스킬 하나가 뚝딱 나오는 것이다.
 
 ```
 Skill/Master/bark_cone.js   →  Skill/Master/새이름.js     id 와 name 만 바꾼다
@@ -55,17 +55,17 @@ Skill/Part/bark_cone.js     →  Skill/Part/새이름.js       skillId 를 새 i
 Skill/Option/bark_cone_*.js →  Skill/Option/새이름_*.js   partId 를 새 id 로
 ```
 
-**Master 는 Visual 을 이름으로 가리키지 않는다.** 파일 이름이 곧 연결이다 —
+Master 는 Visual 을 이름으로 가리키지 않는다. 파일 이름이 곧 연결이다 —
 `Skill/Master/<이름>.js` 는 언제나 `Skill/Visual/<이름>.js` 를 본다.
 적게 두면 이름과 참조가 어긋날 수 있고, 어긋나면 조용히 남의 그림이 나간다.
 
-Method 만 이름으로 가리킨다(`method: 'instant'`). 발사 방식은 **재사용이 본질**이라
-9종을 27개 스킬이 나눠 쓴다 — 여기까지 복제하면 「투사체 속도를 고치려면 27군데」가 된다.
+Method 만 이름으로 가리킨다(`method: 'instant'`). 발사 방식은 재사용이 본질이라
+9종을 27개 스킬이 나눠 쓴다 — 여기까지 복제하면 "투사체 속도를 고치려면 27군데"가 된다.
 
 ### `@stat` 과 `@visual` 은 같은 파일을 본다
 
 옛날에는 수치(`stat`)와 그림(`visual`)이 다른 파일이었다. 지금은 `Skill/Visual/` 하나로 합쳤고,
-토큰 이름만 둘로 남겨 두었다 — **수치와 그림은 읽는 사람에게 다른 것**이기 때문이다.
+토큰 이름만 둘로 남겨 두었다 — 수치와 그림은 읽는 사람에게 다른 것이기 때문이다.
 
 ```js
 triggerParams: { Cooldown: '@stat.Cooldown' }      // 둘 다
@@ -73,7 +73,7 @@ params:        { Visual:   '@visual.Impact' }      // Skill/Visual/<이름>.js �
 ```
 
 합친 이유: 공유하던 그림 3종(dust · tail · kibble)이 7개 스킬에 걸쳐 있었는데,
-공유는 **남의 스킬을 건드릴까 봐 못 고치게 만든다.** 복붙이 목적이면 공유보다 복제가 맞다.
+공유는 남의 스킬을 건드릴까 봐 못 고치게 만든다. 복붙이 목적이면 공유보다 복제가 맞다.
 
 ### 파일 경로(확장자 제외) = 모듈 ID
 
@@ -86,24 +86,24 @@ params:        { Visual:   '@visual.Impact' }      // Skill/Visual/<이름>.js �
 클래스에 `[BTNode(ESkillNodeType.Xxx)]` 를 붙이면 `BTNodeRegistry` 가 리플렉션으로 집으므로
 등록표를 손댈 것이 없다. 받기는 하지만 아직 효과가 없으면 `Inert = new[]{ ... }` 로 신고한다.
 
-유니티에서 **Jinhyeong/GameData/스킬 노드 어휘 검사** 를 돌리면 구현 현황을 찍고
+유니티에서 Jinhyeong/GameData/스킬 노드 어휘 검사 를 돌리면 구현 현황을 찍고
 `config.json` 의 `UnimplementedNodes` 를 실제 상태로 갱신한다. 손으로 맞출 것이 없다.
 
 ## 조립 규칙
 
 ### 왜 트리가 아니라 형제 나열인가 (제일 중요)
 
-런타임 BT 리프는 대부분 **SkillContext 에 값을 써두는 역할**이다.
+런타임 BT 리프는 대부분 SkillContext 에 값을 써두는 역할이다.
 
 ```
 Targeting -> ctx.Targets      Hit     -> ctx.HitNode
 Debuff    -> ctx.DebuffNodes  Despawn -> ctx.DespawnNode
 ```
 
-맨 마지막에 **Launch 리프가 그 ctx 를 읽어서** 이펙트를 스폰한다. 그리고 **Launch 와 Trigger 는 자식을
-실행하지 않는다.** 그래서 Hit 을 Launch 의 자식으로 매달면 영영 실행되지 않고, 스킬은 나가는데 피해가 0이 된다.
+맨 마지막에 Launch 리프가 그 ctx 를 읽어서 이펙트를 스폰한다. 그리고 Launch 와 Trigger 는 자식을
+실행하지 않는다. 그래서 Hit 을 Launch 의 자식으로 매달면 영영 실행되지 않고, 스킬은 나가는데 피해가 0이 된다.
 
-→ 전부 **형제로 나열**하고 **Launch 를 맨 뒤에** 둔다. 조립기가 `Sequence` 하나로 감싼다.
+→ 전부 형제로 나열하고 Launch 를 맨 뒤에 둔다. 조립기가 `Sequence` 하나로 감싼다.
 (`Cooldown`/`Chance`/`Selector`/`Inverter`/`Parallel` 은 자식을 실행하므로 중첩 가능)
 
 ```
@@ -193,7 +193,7 @@ module.exports = {
 };
 ```
 
-같은 DB 트리 안에서 포맷을 섞어 쓸 수 있고, **확장자만 바꿔도 모듈 ID 가 같아서 참조가 그대로 물린다**
+같은 DB 트리 안에서 포맷을 섞어 쓸 수 있고, 확장자만 바꿔도 모듈 ID 가 같아서 참조가 그대로 물린다
 (`lightning.js` → `lightning.json` 으로 교체해도 출력물 동일). 단 같은 ID 가 두 확장자로 동시에 존재하면 빌드 실패 —
 어느 쪽이 이겼는지 모르는 상태가 제일 위험하다.
 
@@ -218,7 +218,7 @@ module.exports = {
 | `SkillVisual.json` / `SkillLaunch.json` / `SkillStat.json` | 모듈 원본 (툴링·디버그용. 런타임이 읽지 않는다) |
 | `GameEnum.Generated.cs` | `_enums.js` → C# enum (`namespace Jinhyeong_GameData`) |
 
-검증 에러가 하나라도 있으면 **아무 파일도 쓰지 않는다.** 반쯤 갱신된 출력이 제일 나쁘다.
+검증 에러가 하나라도 있으면 아무 파일도 쓰지 않는다. 반쯤 갱신된 출력이 제일 나쁘다.
 내용이 같으면 파일을 건드리지 않아 Unity 가 불필요하게 리임포트하지 않는다.
 
 ## 런타임 (C#)
@@ -230,7 +230,7 @@ module.exports = {
 | `SkillBuffRegistry.Load()` | `SkillBuff.json` / `SkillDebuff.json` |
 | `BTBuilder.Build(SkillNodeData root)` | 중첩 트리를 따라 내려가며 실행 노드 생성 |
 
-**레벨 수치가 params 보다 우선한다.** `params` 에는 빌드 타임에 1레벨 기준값이 박혀 있어서,
+레벨 수치가 params 보다 우선한다. `params` 에는 빌드 타임에 1레벨 기준값이 박혀 있어서,
 `SkillNodeData.GetFloat` 가 레벨을 먼저 보지 않으면 성장이 통째로 무시된다.
 단 레벨 modifier 는 ParamKey 단위라 같은 키를 쓰는 트리 내 모든 노드에 적용된다 —
 한 스킬 안에서 노드별로 다르게 성장시켜야 하면 그때 노드 단위 modifier 를 추가해야 한다.
@@ -269,11 +269,11 @@ Skill_Root.prefab       코드 산출물 1개 (Addressable "Skill_Root")
 DB 축과 1:1이다 — `stat`→SkillConfig, `launch`→SkillMethod, Hit 노드→SkillHit, `visual`→SkillVisual.
 스킬을 하나 더 찍는 데 C# 을 건드리면 그 순간 이 설계가 깨진 것이다.
 
-**`Update`/`LateUpdate` 로 순서를 고정한 이유**: 이동이 끝난 뒤에 판정이 돌아야
+`Update`/`LateUpdate` 로 순서를 고정한 이유: 이동이 끝난 뒤에 판정이 돌아야
 이번 프레임의 이동 구간(`PrevPos` → 현재 위치)으로 스윕 판정을 할 수 있다.
 스크립트 실행 순서 설정 같은 취약한 장치를 쓰지 않는다.
 
-**아트 프리팹에는 스크립트를 넣지 않는다.** 아티스트가 만든 프리팹이나 에셋 스토어 것을
+아트 프리팹에는 스크립트를 넣지 않는다. 아티스트가 만든 프리팹이나 에셋 스토어 것을
 그대로 꽂을 수 있어야 하기 때문이다. 로직은 전부 `Skill_Root` 에 있다.
 
 짧은 연출(`Fx_Hit`, `Fx_Chain`)도 같은 원칙 — 프리팹에 컴포넌트가 박혀 있고 `Pool_Fx` 로 재사용된다.
@@ -281,11 +281,11 @@ DB 축과 1:1이다 — `stat`→SkillConfig, `launch`→SkillMethod, Hit 노드
 
 ## 도구가 만드는 데이터 — `_raw/`
 
-사람이 표에 적는 것이 아니라 **도구로 그리는** 데이터가 있다 (성좌 그래프).
+사람이 표에 적는 것이 아니라 도구로 그리는 데이터가 있다 (성좌 그래프).
 도구는 `GameData/_raw/*.json` 에만 쓰고, 그것을 `Assets/Resources/GameData/` 로 옮기는 것은
 `config.json` 의 `RawTables` 가 한다. 폴더 이름이 `_` 로 시작해 모듈 스캔에서는 빠진다.
 
-도구가 최종 위치에 직접 쓰지 않는 이유는, 그러면 「도구로 만든 것」과 「손으로 고친 것」이
+도구가 최종 위치에 직접 쓰지 않는 이유는, 그러면 "도구로 만든 것"과 "손으로 고친 것"이
 서로 다른 경로로 들어가 결과가 갈리기 때문이다. 굽는 곳은 여기 한 곳이다.
 
 | 테이블 | 원본 | 만드는 것 |

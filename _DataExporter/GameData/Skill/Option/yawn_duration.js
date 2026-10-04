@@ -1,7 +1,7 @@
 module.exports = {
     id: 4087,
     name: 'yawn_duration',
-    desc: '하품 — 지속시간 +25%',
+    desc: '자장가 하품 — 지속시간 +25%',
     displayName: '늘어지는 하품',
     partId: 2004,
     trait: 'Duration',

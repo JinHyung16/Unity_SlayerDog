@@ -2,7 +2,7 @@
 module.exports = {
     id: 5002,
     name: 'Runner',
-    desc: '쌩쌩이 — 빠르고 약함 — 뒤를 잡는다',
+    desc: '스르륵(고스트) — 빠르고 약함 — 뒤를 잡는다',
     sprite: 'runner',
     hp: 30,
     moveSpeed: 5.2,

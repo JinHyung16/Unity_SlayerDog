@@ -2,7 +2,7 @@
 module.exports = {
     id: 5005,
     name: 'Swarm',
-    desc: '바글이 — 다수 — 광역 없으면 파묻힌다',
+    desc: '말랑이(민트 슬라임) — 다수 — 광역 없으면 파묻힌다',
     sprite: 'swarm',
     hp: 20,
     moveSpeed: 4,

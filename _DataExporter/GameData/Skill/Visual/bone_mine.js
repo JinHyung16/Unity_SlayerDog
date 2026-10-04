@@ -1,13 +1,13 @@
-/** 뼈다귀 매설 — 발밑에 뼈다귀를 묻는다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다 */
+/** 뼈다귀 매설 — 발밑에 베이스 드럼을 깐다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다 */
 module.exports = {
-    color: '#FFF6E0',
-    desc: "뼈다귀 매설 — 발밑에 뼈다귀를 묻는다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다",
+    color: '#A66BFF',
+    desc: "뼈다귀 매설 — 발밑에 베이스 드럼을 깐다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다",
     values: {
         "Projectile": "Fx_Bone",
         "Impact": "Fx_Burst",
         "Cast": "Fx_Bone",
         "Orient": "Billboard",
-        "Color": "#FFF6E0",
+        "Color": "#A66BFF",
         "Cooldown": 4,
         "Range": 2,
         "Damage": 200,

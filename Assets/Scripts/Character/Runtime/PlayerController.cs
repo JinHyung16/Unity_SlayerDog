@@ -58,8 +58,6 @@ namespace Jinhyeong_Character
             Vector3 worldMove = ComputeCameraRelativeMove(axis);
             _motor.MoveAxis = new Vector2(worldMove.x, worldMove.z);
 
-            // 정면은 AutoAim 이 소유한다 — 여기서도 쓰면 매 프레임 「걷는 방향」과
-            // 「조준 방향」이 서로를 덮어써 스킬이 떨린다. AutoAim 이 없을 때만 이동 방향을 본다.
             if (worldMove.sqrMagnitude > 0.0001f && _autoAim == null)
             {
                 _facing.ForwardWorld = worldMove;

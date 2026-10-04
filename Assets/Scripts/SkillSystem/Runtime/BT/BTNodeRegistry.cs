@@ -8,21 +8,10 @@ using Jinhyeong_GameData;
 namespace Jinhyeong_SkillSystem.BT
 {
 
-    /// <summary>
-    /// 노드 타입 -> 실행 클래스 표. <see cref="BTNodeAttribute"/> 를 붙인 클래스를 리플렉션으로 모은다.
-    ///
-    /// 스캔은 처음 한 번만 돈다. 어셈블리 하나(게임 코드)만 훑으므로 비용은 무시할 만하다.
-    /// 모듈 폴더에 C# 을 같이 넣어도 같은 어셈블리라 그대로 잡힌다 — 등록표를 고칠 일이 없다.
-    /// </summary>
     public static class BTNodeRegistry
     {
         private static Dictionary<ESkillNodeType, Func<SkillNodeData, BTNode>> _factories;
 
-        /// <summary>
-        /// 데이터로 써도 아무 일도 안 하는 타입. 두 가지가 여기 모인다 —
-        /// 받아 줄 클래스가 아예 없는 것과, 클래스는 있지만 <see cref="BTNodeAttribute.Inert"/> 로
-        /// 「아직 효과 없음」을 스스로 신고한 것.
-        /// </summary>
         private static List<ESkillNodeType> _unimplemented;
 
         public static Func<SkillNodeData, BTNode> Find(ESkillNodeType type)
@@ -40,7 +29,6 @@ namespace Jinhyeong_SkillSystem.BT
             }
         }
 
-        /// <summary>구현 현황을 사람이 읽을 표로 뽑는다. 에디터 검사와 리포트가 쓴다.</summary>
         public static string Report()
         {
             EnsureScanned();
@@ -103,8 +91,6 @@ namespace Jinhyeong_SkillSystem.BT
                     ESkillNodeType type = attr.Types[k];
                     if (_factories.TryGetValue(type, out Func<SkillNodeData, BTNode> already))
                     {
-                        // 같은 타입을 두 클래스가 가져가면 어느 쪽이 이길지 스캔 순서에 달린다.
-                        // 순서에 의존하는 동작은 다음 사람이 못 고친다. 먼저 것을 지키고 알린다.
                         Debug.LogError($"[BTNodeRegistry] '{type}' 을 {t.Name} 이 중복 신고했다 — 먼저 등록된 쪽을 쓴다");
                         continue;
                     }

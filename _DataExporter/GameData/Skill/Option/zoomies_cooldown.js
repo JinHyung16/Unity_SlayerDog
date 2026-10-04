@@ -1,7 +1,7 @@
 module.exports = {
     id: 4142,
     name: 'zoomies_cooldown',
-    desc: '우다다 모드 — 쿨타임 -10%',
+    desc: '업템포 — 쿨타임 -10%',
     displayName: '짧은 휴식',
     partId: 2007,
     trait: 'Cooldown',

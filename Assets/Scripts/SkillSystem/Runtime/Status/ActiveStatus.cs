@@ -4,12 +4,6 @@ using Jinhyeong_GameData;
 namespace Jinhyeong_SkillSystem.Status
 {
 
-    /// <summary>
-    /// 대상에게 걸린 버프/디버프 한 개.
-    ///
-    /// MonoBehaviour 가 아니다. 예전엔 적용할 때마다 AddComponent 를 해서, 빔처럼 틱이 잦은 스킬이
-    /// 한 번 시전에 컴포넌트를 40개씩 붙였다. 순수 클래스로 두면 StatusList 가 개수를 통제한다.
-    /// </summary>
     public sealed class ActiveStatus
     {
         public enum Kind { Buff, Debuff }
@@ -76,7 +70,6 @@ namespace Jinhyeong_SkillSystem.Status
             _entered = true;
         }
 
-        /// <summary>같은 효과가 다시 걸렸을 때(Refresh). 진입 효과는 이미 적용돼 있으므로 시간만 되감는다.</summary>
         public void RefreshDuration()
         {
             _startTime = Time.time;
@@ -138,7 +131,6 @@ namespace Jinhyeong_SkillSystem.Status
                             _motor.StatusSpeedMultiplier *= (1f + Value0);
                         break;
                     case EBuffType.MaxHpBoost:
-                        // 최대치를 늘리면서 현재 체력도 같은 비율로 올린다 — 안 그러면 체감이 없다
                         if (_damageable != null)
                         {
                             _damageable.MaxHp *= (1f + Value0);
@@ -152,8 +144,6 @@ namespace Jinhyeong_SkillSystem.Status
             switch (DebuffKind)
             {
                 case EDebuffType.SlowReduce:
-                    // Damageable.SpeedMultiplier 는 아무도 소비하지 않는 죽은 채널이었다 (둔화 무동작 버그).
-                    // 이동은 모터가 하므로 모터의 상태이상 배수에 건다.
                     if (_motor != null)
                         _motor.StatusSpeedMultiplier *= (1f - Value0);
                     break;

@@ -15,7 +15,6 @@ namespace Jinhyeong_Collision
                 if (b == null || b == ignore)
                     continue;
 
-                // 원(pos, radius) vs OBB: 원 중심을 박스 로컬 축으로 투영해 clamp → 최근접점 거리 비교.
                 b.GetOBBXZ(out Vector2 c, out Vector2 axisX, out float halfX, out Vector2 axisZ, out float halfZ);
                 float dx = pos.x - c.x;
                 float dz = pos.z - c.y;

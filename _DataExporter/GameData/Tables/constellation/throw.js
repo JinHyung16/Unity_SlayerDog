@@ -7,7 +7,7 @@ module.exports = {
     centerAngle: -30,
     span: 50,
     clusterCount: 7,
-    color: '#9BE24D',
+    color: '#9BFF3C',
     traitA: 'Damage',
     valueA: 0.02,
     traitB: 'CritChance',

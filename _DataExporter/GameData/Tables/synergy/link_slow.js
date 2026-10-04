@@ -3,7 +3,7 @@ module.exports = {
     id: 8019,
     name: 'link_slow',
     desc: '둔화된 적에게 피해 +35%',
-    displayName: '사냥 본능',
+    displayName: '슬로우 템포',
     family: 'None',
     reqFamilyCount: 0,
     reqSkillId: 0,

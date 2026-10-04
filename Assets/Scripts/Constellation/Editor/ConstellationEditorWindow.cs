@@ -9,19 +9,6 @@ using UnityEngine;
 namespace Jinhyeong_Constellation.Editor
 {
 
-    /// <summary>
-    /// 성좌를 손으로 만드는 도구.
-    ///
-    /// 트리는 «방향 없는 그래프»다 — 노드를 놓고 노드끼리 잇는 것이 전부이고,
-    /// 그 간선이 곧 「살 수 있는 순서」다. 그래서 이 창이 하는 일도 셋뿐이다:
-    /// 노드를 놓는다 · 노드를 잇는다 · 노드의 값을 적는다.
-    ///
-    /// 절차 생성기는 «초안»으로 남는다. 처음부터 200개를 손으로 찍는 것은 하루짜리 일이라,
-    /// 생성기로 뼈대를 깔고 여기서 손보는 흐름이 제일 빠르다.
-    ///
-    /// [주의] 저장하면 그 순간부터 **손으로 만든 성좌가 시드 생성보다 우선한다.**
-    /// 「초안 굽기」를 다시 누르면 손댄 것이 전부 날아간다 — 그래서 되묻는다.
-    /// </summary>
     public class ConstellationEditorWindow : EditorWindow
     {
         private enum EDragMode
@@ -91,8 +78,6 @@ namespace Jinhyeong_Constellation.Editor
             FitView();
         }
 
-        // ───────────────────────── 그리기 ─────────────────────────
-
         private void OnGUI()
         {
             EnsureLoaded();
@@ -114,7 +99,6 @@ namespace Jinhyeong_Constellation.Editor
 
             if (GUILayout.Button("초안 굽기", EditorStyles.toolbarButton, GUILayout.Width(70f)))
             {
-                // 손댄 것을 통째로 버리는 조작이다. 되묻지 않으면 한 번은 반드시 사고가 난다.
                 if (EditorUtility.DisplayDialog("초안 굽기",
                         "지금 편집 중인 성좌를 버리고 시드에서 새로 만듭니다.\n손댄 것은 되돌릴 수 없습니다.",
                         "새로 만든다", "그만둔다"))
@@ -153,8 +137,6 @@ namespace Jinhyeong_Constellation.Editor
             _snapToGrid = GUILayout.Toggle(_snapToGrid, "격자", EditorStyles.toolbarButton, GUILayout.Width(40f));
             _gridSize = Mathf.Max(1, EditorGUILayout.IntField(_gridSize, EditorStyles.toolbarTextField, GUILayout.Width(36f)));
 
-            // [주의] 격자 값을 바꿔도 이미 놓인 노드는 안 움직인다. 이 버튼이 없으면
-            // 「값을 바꿨는데 왜 그대로냐」는 질문이 반드시 나온다.
             if (GUILayout.Button("전부 정렬", EditorStyles.toolbarButton, GUILayout.Width(64f)))
             {
                 for (int i = 0; i < _graph.Nodes.Count; i++)
@@ -185,7 +167,6 @@ namespace Jinhyeong_Constellation.Editor
 
             Handles.BeginGUI();
 
-            // 간선 먼저. 노드가 위에 와야 클릭이 노드에 잡힌다.
             for (int i = 0; i < _graph.EdgeCount; i++)
             {
                 ConstellationNode a = _graph.Get(_graph.EdgeA[i]);
@@ -199,7 +180,6 @@ namespace Jinhyeong_Constellation.Editor
                 Handles.DrawAAPolyLine(touched ? 3f : 1.5f, GraphToScreen(a), GraphToScreen(b));
             }
 
-            // 잇는 중이면 커서까지 실선을 끌고 간다. 안 그리면 무엇을 하는 중인지 알 수 없다.
             if (_drag == EDragMode.Linking)
             {
                 ConstellationNode from = _graph.Get(_linkFrom);
@@ -233,7 +213,6 @@ namespace Jinhyeong_Constellation.Editor
                     Handles.EndGUI();
                 }
 
-                // 글자가 가장 비싸다. 작을 때는 아예 안 그린다 — 읽히지도 않으면서 겹치기만 한다.
                 if (_zoom >= 0.45f && ConstellationPaletteEditor.HasLabel(n.Type))
                 {
                     Rect label = new Rect(box.xMin - 60f, box.yMax + 1f, box.width + 120f, 14f);
@@ -249,15 +228,6 @@ namespace Jinhyeong_Constellation.Editor
                 EditorStyles.miniLabel);
         }
 
-        // ───────────────────────── 입력 ─────────────────────────
-
-        /// <summary>
-        /// 동시에 켜지면 안 되는 상태가 셋이다 — 화면 이동 · 노드 끌기 · 선 잇기.
-        /// 셋을 한 자리에서 갈라 두면 나머지가 따라온다.
-        ///
-        /// 화면 이동은 가운데 버튼에 둔다. 왼쪽 버튼을 빈 곳 드래그로 쓰면
-        /// 나중에 범위 선택을 넣을 자리가 없어진다.
-        /// </summary>
         private void HandleCanvasInput(Rect canvas)
         {
             Event e = Event.current;
@@ -331,7 +301,6 @@ namespace Jinhyeong_Constellation.Editor
                 }
                 if (_drag == EDragMode.MovingNodes && _selected != 0)
                 {
-                    // 기준 좌표를 «매번» 갱신한다. 안 하면 오차가 쌓여 노드가 커서에서 점점 멀어진다.
                     Vector2 now = ScreenToGraph(localMouse);
                     Vector2 delta = now - _dragOriginGraph;
                     _dragOriginGraph = now;
@@ -351,7 +320,6 @@ namespace Jinhyeong_Constellation.Editor
             {
                 if (_drag == EDragMode.MovingNodes && _snapToGrid)
                 {
-                    // 격자 맞춤은 «손 뗄 때 한 번만». 끄는 동안 칸마다 튀면 조작감이 나쁘다.
                     Snap(_graph.Get(_selected));
                     for (int i = 0; i < _movingWith.Count; i++)
                     {
@@ -374,7 +342,6 @@ namespace Jinhyeong_Constellation.Editor
             }
         }
 
-        /// <summary>Shift+클릭 — 잇기의 시작과 끝. 이미 이어져 있으면 끊는다(토글).</summary>
         private void HandleShiftClick(ConstellationNode hit)
         {
             if (hit == null)
@@ -427,10 +394,6 @@ namespace Jinhyeong_Constellation.Editor
             n.Y = Mathf.Round(n.Y / _gridSize) * _gridSize;
         }
 
-        /// <summary>
-        /// 이 노드에서 뻗어 나간 것들을 너비 우선으로 모은다.
-        /// 그래프에는 순환이 있으므로 방문 표시가 필수다 — 「아래」가 무한히 돌 수 있다.
-        /// </summary>
         private void CollectSubtree(int rootId, List<int> target)
         {
             HashSet<int> seen = new HashSet<int> { rootId };
@@ -454,8 +417,6 @@ namespace Jinhyeong_Constellation.Editor
             }
         }
 
-        // ───────────────────────── 그래프 편집 ─────────────────────────
-
         private void CreateNodeAt(Vector2 graphPos)
         {
             ConstellationNode n = new ConstellationNode();
@@ -471,8 +432,6 @@ namespace Jinhyeong_Constellation.Editor
             ConstellationNaming.Apply(n);
             _graph.Add(n);
 
-            // 새 노드는 «고른 노드에 이어서» 난다. 안 이어 주면 고아 노드가 쌓이고,
-            // 검증이 그걸 잡아 줄 때쯤엔 어디에 이으려던 것인지 잊는다.
             if (_selected != 0)
             {
                 _graph.Link(_selected, n.Id);
@@ -502,7 +461,6 @@ namespace Jinhyeong_Constellation.Editor
             ConstellationNode n = _graph.Get(id);
             if (n == null || n.Type == EConstellationNodeType.Core)
             {
-                // 코어는 못 지운다. 지우면 아무것도 살 수 없는 성좌가 된다.
                 return;
             }
             Rebuild(id, -1, -1);
@@ -520,13 +478,6 @@ namespace Jinhyeong_Constellation.Editor
             Rebuild(0, a, b);
         }
 
-        /// <summary>
-        /// 그래프를 통째로 다시 세운다 — 노드 하나를 빼거나 간선 하나를 끊을 때 쓴다.
-        ///
-        /// <see cref="ConstellationGraph"/> 는 «잇기»만 있고 «끊기»가 없다. 런타임에는 끊을 일이
-        /// 없기 때문인데, 도구에는 있다. 끊기를 그쪽에 넣으면 이웃 목록·간선 목록·중복 방지 집합
-        /// 셋을 동시에 맞춰야 하고 하나만 어긋나도 조용히 깨진다 — 200개를 다시 세우는 편이 안전하고 충분히 싸다.
-        /// </summary>
         private void Rebuild(int dropNodeId, int cutA, int cutB)
         {
             List<ConstellationNode> nodes = new List<ConstellationNode>(_graph.Nodes);
@@ -557,8 +508,6 @@ namespace Jinhyeong_Constellation.Editor
             }
         }
 
-        // ───────────────────────── 좌표 ─────────────────────────
-
         private Vector2 GraphToScreen(ConstellationNode n)
         {
             return GraphToScreen(new Vector2(n.X, n.Y));
@@ -566,7 +515,6 @@ namespace Jinhyeong_Constellation.Editor
 
         private Vector2 GraphToScreen(Vector2 g)
         {
-            // 그래프는 위가 +Y, 화면은 아래가 +Y. 여기 한 곳에서만 뒤집는다.
             return new Vector2((g.x + _pan.x) * _zoom, (-g.y + _pan.y) * _zoom);
         }
 
@@ -575,7 +523,6 @@ namespace Jinhyeong_Constellation.Editor
             return new Vector2(s.x / _zoom - _pan.x, -(s.y / _zoom - _pan.y));
         }
 
-        /// <summary>그리기와 클릭이 «같은 상자»를 쓴다. 다른 도형을 쓰면 「보이는데 안 잡히는」 버그가 난다.</summary>
         private Rect NodeBox(ConstellationNode n)
         {
             float size = Mathf.Max(8f, ConstellationPaletteEditor.SizeOf(n.Type) * _zoom);
@@ -585,7 +532,6 @@ namespace Jinhyeong_Constellation.Editor
 
         private ConstellationNode Pick(Vector2 localMouse)
         {
-            // 뒤에서부터. 위에 그린 것이 먼저 잡혀야 한다.
             for (int i = _graph.Nodes.Count - 1; i >= 0; i--)
             {
                 if (NodeBox(_graph.Nodes[i]).Contains(localMouse))
@@ -604,7 +550,6 @@ namespace Jinhyeong_Constellation.Editor
             {
                 return;
             }
-            // 커서 밑에 있던 좌표가 커서 밑에 그대로 남게 이동값을 다시 푼다.
             Vector2 underCursor = new Vector2(localMouse.x / before - _pan.x, localMouse.y / before - _pan.y);
             _pan = new Vector2(localMouse.x / _zoom - underCursor.x, localMouse.y / _zoom - underCursor.y);
         }
@@ -638,8 +583,6 @@ namespace Jinhyeong_Constellation.Editor
                                ch * 0.5f / _zoom + (minY + maxY) * 0.5f);
             Repaint();
         }
-
-        // ───────────────────────── 인스펙터 ─────────────────────────
 
         private void DrawInspector(Rect area)
         {
@@ -705,8 +648,6 @@ namespace Jinhyeong_Constellation.Editor
 
             if (EditorGUI.EndChangeCheck())
             {
-                // 이름은 특성에서 나온다. 값을 고친 자리에서 바로 다시 만들지 않으면
-                // 화면에는 옛 이름이 남아 「고쳤는데 안 바뀐다」로 보인다.
                 ConstellationNaming.Apply(n);
             }
 
@@ -765,8 +706,6 @@ namespace Jinhyeong_Constellation.Editor
             }
         }
 
-        // ───────────────────────── 저장 ─────────────────────────
-
         private static string SourceFullPath()
         {
             string projectRoot = Directory.GetParent(Application.dataPath).FullName;
@@ -783,10 +722,6 @@ namespace Jinhyeong_Constellation.Editor
             return ConstellationGraphIO.TryParse(File.ReadAllText(path), _graph);
         }
 
-        /// <summary>
-        /// 중간 형식만 뱉는다. Resources 로 굽는 것은 export.js 한 곳에서 한다 —
-        /// 도구가 최종 형식을 직접 쓰면 사람이 손으로 고친 경로와 결과가 달라진다.
-        /// </summary>
         private void Save()
         {
             ConstellationValidator.Result result = ConstellationValidator.Validate(_graph);

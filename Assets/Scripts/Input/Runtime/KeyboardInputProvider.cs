@@ -16,7 +16,6 @@ namespace Jinhyeong_Input
             if (Bindings == null)
                 return;
 
-            // 이동키만 설정에서 읽는다. 공격·스킬 슬롯은 아직 고를 수 있는 대상이 아니라 에셋 값 그대로다.
             InputSettings.Scheme move = InputSettings.Current;
 
             float x = 0f;

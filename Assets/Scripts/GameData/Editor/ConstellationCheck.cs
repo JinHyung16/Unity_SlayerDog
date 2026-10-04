@@ -10,22 +10,8 @@ using UnityEngine;
 namespace Jinhyeong_GameData.Editor
 {
 
-    /// <summary>
-    /// 성좌를 «재는» 자리. 그리기 전에 숫자로 먼저 본다 —
-    /// 화면을 만들고 나서 「노드가 너무 많다」를 알면 화면을 두 번 만든다.
-    ///
-    /// 재는 것은 넷이다.
-    ///   ① 모양   — 노드/간선 수, 계열별 분포
-    ///   ② 값     — 전부 사는 데 드는 슈퍼 DNA 총합 → 판당 수급으로 나눈 «완주 판수»
-    ///   ③ 성립성 — <see cref="ConstellationValidator"/> (도달성 · 고아 · 중복 · 겹침)
-    ///   ④ 왕복   — 저장했다 읽으면 같은 그래프가 나오는가
-    ///
-    /// ④가 있는 이유: 편집기는 사람이 클릭해야 도는데, 저장 형식이 깨진 것은 «다음에 열 때»
-    /// 알게 된다. 그때는 이미 한나절 작업이 사라진 뒤다. 형식은 클릭 없이 재야 한다.
-    /// </summary>
     public static class ConstellationCheck
     {
-        /// <summary>런 하나가 주는 슈퍼 DNA 의 대략치. 완주 판수를 뽑는 분모다.</summary>
         private const float DnaPerRunEarly = 6f;
         private const float DnaPerRunLate = 30f;
 
@@ -57,10 +43,6 @@ namespace Jinhyeong_GameData.Editor
             return sb.ToString();
         }
 
-        /// <summary>
-        /// 지금 그래프를 편집기가 읽는 자리(SSOT)에 쓴다. 사람이 창을 열지 않아도
-        /// 「데이터로 만든 성좌」 흐름을 처음 한 번 깔 수 있다.
-        /// </summary>
         public static string SaveDraft()
         {
             PartRegistry.Load();
@@ -90,8 +72,6 @@ namespace Jinhyeong_GameData.Editor
             return $"[성좌] 초안을 SSOT 에 저장 — 노드 {graph.Nodes.Count} · 간선 {graph.EdgeCount}\n"
                    + $"  {path}\n  굽기: cd _DataExporter && node export.js";
         }
-
-        // ───────────────────────── 항목 ─────────────────────────
 
         private static void AppendShape(StringBuilder sb, ConstellationGraph graph)
         {
@@ -177,7 +157,6 @@ namespace Jinhyeong_GameData.Editor
             }
         }
 
-        /// <summary>저장했다 다시 읽으면 같은 그래프인가. 편집기를 열지 않고 저장 형식을 잰다.</summary>
         private static void AppendRoundTrip(StringBuilder sb, ConstellationGraph graph)
         {
             string text = ConstellationGraphIO.Serialize(graph);

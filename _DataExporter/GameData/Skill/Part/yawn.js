@@ -3,7 +3,7 @@ module.exports = {
     id: 2004,
     name: 'Yawn',
     desc: '전방 90° 적을 3초간 크게 느리게 만든다 (피해 없음). 6초마다',
-    displayName: '하품',
+    displayName: '자장가 하품',
     slot: 'Mouth',
     family: 'Wave',
     appliesDebuff: 'SlowReduce',

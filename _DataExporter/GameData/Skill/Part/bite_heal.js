@@ -2,8 +2,8 @@
 module.exports = {
     id: 2001,
     name: 'Bite Heal',
-    desc: '앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다',
-    displayName: '개튼튼 치아',
+    desc: '스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다',
+    displayName: '스타카토 바이트',
     slot: 'Mouth',
     family: 'Melee',
     appliesDebuff: 'None',

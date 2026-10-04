@@ -7,16 +7,8 @@ using UnityEngine;
 namespace Jinhyeong_Constellation
 {
 
-    /// <summary>
-    /// 그래프가 «말이 되는가»를 본다. 로드는 어긋나도 통과하기 때문에 이 검사가 필요하다 —
-    /// 간선이 없는 노드도, 코어가 둘인 성좌도 조용히 읽힌다.
-    ///
-    /// **첫 오류에서 멈추지 않고 전부 모아서 돌려준다.** 하나 고치고 다시 돌리기를 반복하게 만들면
-    /// 도구를 쓰는 사람이 검증을 아예 안 누르게 된다.
-    /// </summary>
     public static class ConstellationValidator
     {
-        /// <summary>이보다 가까우면 화면에서 겹쳐 보인다.</summary>
         public const float OverlapDistance = 26f;
 
         public class Result
@@ -149,7 +141,6 @@ namespace Jinhyeong_Constellation
             }
         }
 
-        /// <summary>코어에서 인접만 따라 닿는가. 관문은 열린 것으로 친다 — 모양의 문제와 진행의 문제를 섞지 않는다.</summary>
         private static void CheckReach(ConstellationGraph graph, Result r)
         {
             int coreId = 0;
@@ -231,7 +222,6 @@ namespace Jinhyeong_Constellation
             }
         }
 
-        /// <summary>전부 사는 데 드는 값. 레벨 노드는 최대 레벨까지 센다.</summary>
         public static long TotalCost(ConstellationGraph graph)
         {
             long total = 0;

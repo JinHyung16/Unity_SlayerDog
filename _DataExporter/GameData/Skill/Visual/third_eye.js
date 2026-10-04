@@ -1,13 +1,13 @@
 /** 제3의 눈 — 가장 가까운 적을 관통하는 시선으로 공격력 180% 피해. 3초마다 */
 module.exports = {
-    color: '#C89AFF',
+    color: '#4D8BFF',
     desc: "제3의 눈 — 가장 가까운 적을 관통하는 시선으로 공격력 180% 피해. 3초마다",
     values: {
         "Projectile": "Fx_Gaze",
         "Impact": "Fx_Gaze",
         "Cast": "Fx_Gaze",
         "Orient": "Billboard",
-        "Color": "#C89AFF",
+        "Color": "#4D8BFF",
         "Cooldown": 3,
         "Range": 11,
         "Damage": 180,

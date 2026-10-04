@@ -1,7 +1,7 @@
 module.exports = {
     id: 6028,
     name: 'ignore_taunt_unique',
-    desc: '개무시 — 보호막량 +10%p',
+    desc: '스테이지 장악 — 보호막량 +10%p',
     displayName: '완벽한 무시',
     partId: 2101,
     trait: 'Unique',

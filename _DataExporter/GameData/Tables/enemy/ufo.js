@@ -2,7 +2,7 @@
 module.exports = {
     id: 5006,
     name: 'MotherShip',
-    desc: '납치선 — 보스 — 라운드12 납치선',
+    desc: '납치선(솜구름 조종사) — 보스 — 라운드12 납치선',
     sprite: 'ufo',
     hp: 240,
     moveSpeed: 2.6,

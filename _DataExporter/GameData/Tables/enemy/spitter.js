@@ -2,7 +2,7 @@
 module.exports = {
     id: 5004,
     name: 'Spitter',
-    desc: '침뱉이 — 거리를 둔다 — 근접 빌드 견제',
+    desc: '방울 화백(베레모 물방울) — 거리를 둔다 — 근접 빌드 견제',
     sprite: 'spitter',
     hp: 80,
     moveSpeed: 2.5,

@@ -9,12 +9,6 @@ using Jinhyeong_UI.Framework;
 namespace Jinhyeong_UI.Lobby
 {
 
-    /// <summary>
-    /// 캐릭터 탭 — 슈퍼독을 고르고, 사료로 영구 강화한다.
-    /// 카드와 강화 칸은 Component 로 풀에서 꺼낸다 — 프리팹에 N개 박아 두지 않는다.
-    ///
-    /// 고유 스킬의 계열이 곧 이번 판의 선호 계열이라, **캐릭터 선택이 빌드 방향 선택**이다.
-    /// </summary>
     public class LobbyCharacterPanel : BasePanel
         , HeroCardComponent.IListener
         , LabelButtonComponent.IListener
@@ -62,7 +56,6 @@ namespace Jinhyeong_UI.Lobby
                 _statButtons.Add(b);
             }
 
-            // 파츠 테이블은 비동기로 늦게 로드된다. 상태가 바뀔 때 카드 설명을 다시 그린다.
             if (_lobby != null)
             {
                 _lobby.OnStatusChanged -= RefreshCards;
@@ -98,7 +91,6 @@ namespace Jinhyeong_UI.Lobby
             _lobby = null;
         }
 
-        /// <summary>선택 표시와 설명. 파츠 테이블이 늦게 로드되므로 문구는 매번 만든다.</summary>
         private void RefreshCards()
         {
             for (int i = 0; i < _cards.Count; i++)
@@ -113,7 +105,6 @@ namespace Jinhyeong_UI.Lobby
             }
         }
 
-        /// <summary>강화 칸 셋. 재화가 바뀌면 살 수 있는 것도 바뀐다.</summary>
         private void RefreshShop()
         {
             if (_shopHint != null)
@@ -145,7 +136,6 @@ namespace Jinhyeong_UI.Lobby
             {
                 return;
             }
-            // 「살 수 있나」의 판정은 SaveData(시스템)가 하고, 여기는 결과만 그린다.
             if (SaveData.BuyStat(Stats[index]) == false)
             {
                 return;

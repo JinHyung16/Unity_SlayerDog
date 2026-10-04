@@ -11,14 +11,6 @@ using Jinhyeong_SkillSystem;
 namespace Jinhyeong_GameData.Editor
 {
 
-    /// <summary>
-    /// HUD 를 실제 플레이 화면으로 찍는다. SkillPlayTest 와 같은 요청 파일 방식.
-    ///
-    /// SkillPlayTest 는 측정 오염을 막으려고 캔버스를 전부 끄기 때문에 HUD 확인에 못 쓴다.
-    /// 여기는 반대로 정상 플레이 상태(HUD 켜짐)를 만들어 스크린샷만 뜬다.
-    ///
-    /// 사용: Temp/hud_shot.request 생성 → 플레이 진입 → 몇 초 뒤 Temp/hud_shot.png + report.
-    /// </summary>
     [InitializeOnLoad]
     public static class HudShotCheck
     {
@@ -88,7 +80,6 @@ namespace Jinhyeong_GameData.Editor
                 return;
             }
 
-            // 스크린샷이 파일로 떨어질 시간을 준 뒤 마무리한다
             if (_shotRequested && Time.time - _startTime >= WarmupSeconds + 2f)
                 Finish(null);
         }
@@ -105,7 +96,6 @@ namespace Jinhyeong_GameData.Editor
                 return;
             }
 
-            // 적 캐시도 채워야 EnemySpawner 가 스폰할 수 있다
             Cysharp.Threading.Tasks.UniTaskExtensions.Forget(
                 AddressableManager.Ensure().LoadAsync("obj_enemy"));
 

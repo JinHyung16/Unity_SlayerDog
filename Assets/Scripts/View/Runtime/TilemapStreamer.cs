@@ -6,24 +6,15 @@ using Jinhyeong_Character;
 
 namespace Jinhyeong_View
 {
-    /// <summary>
-    /// 플레이어 주변만 타일을 채우는 무한 바닥.
-    ///
-    /// 왜 이렇게 하나: 뱀서류는 12분 동안 한 방향으로만 수천 유닛을 갈 수 있다.
-    /// 그만한 타일맵을 미리 깔면 메모리·컬링 비용만 나가고, 반대로 반복 텍스처 한 장으로 때우면
-    /// 격자 패턴이 그대로 눈에 띈다. **보이는 창만 채우고 따라 움직이는** 게 답이다.
-    ///
-    /// 핵심은 **결정적 해시**다. 칸마다 (x,z) 해시로 타일 종류를 정하면, 창이 지나갔다가
-    /// 돌아와도 같은 그림이 나온다. 난수로 채우면 되돌아올 때마다 바닥이 바뀌어 어지럽다.
-    ///
-    /// 장식(바위·나무)은 타일로 깔지 않는다 — 원본 아트가 측면 뷰라 바닥에 눕히면 뭉개진다.
-    /// 캐릭터와 같이 세워서(빌보드) 배치한다.
-    /// </summary>
     public class TilemapStreamer : BaseBehaviour
     {
         [Header("Tilemap")]
         [SerializeField] private Tilemap _ground;
+        [Tooltip("앞 절반은 서로 다른 색, 뒤 절반은 같은 순서의 좌우 반전. 색은 패치 단위, 반전은 칸 단위로 고른다.")]
         [SerializeField] private TileBase[] _grassTiles;
+
+        [Tooltip("색이 바뀌는 패치 한 변(칸). 칸마다 색을 바꾸면 체커 무늬가 되어 화면에서 가장 시끄러운 요소가 된다.")]
+        [SerializeField] private int _patchCells = 4;
 
         [Tooltip("칸 하나의 월드 크기. 타일 스프라이트 크기(64px)/PPU(32) 와 반드시 같아야 이음매가 안 생긴다.")]
         [SerializeField] private float _cellSize = 2f;
@@ -40,6 +31,9 @@ namespace Jinhyeong_View
 
         [SerializeField] private int _decoSortingOrder = 8;
 
+        [Tooltip("소품 톤 머티리얼. 캐릭터 · 이펙트보다 채도 · 밝기를 낮춰 시선을 뺏지 않게 한다.")]
+        [SerializeField] private Material _decoMaterial;
+
         private Transform _target;
         private bool _hasCell;
         private int _cellX;
@@ -54,11 +48,8 @@ namespace Jinhyeong_View
             return ((long)x << 32) ^ (uint)z;
         }
 
-        /// <summary>칸 좌표로만 결정되는 해시. 같은 칸은 언제 와도 같은 값이라 그림이 안 흔들린다.</summary>
         private static int Hash(int x, int z, int salt)
         {
-            // [사고] 곱하고 XOR 한 뒤 한 번만 섞었더니 하위 비트가 x 변화에 둔감해,
-            // 타일 선택이 가로 띠로 뭉쳤다. 눈에 아주 잘 띈다. 제대로 뒤섞어야 한다.
             unchecked
             {
                 uint h = (uint)(x * 0x27d4eb2d) ^ (uint)(z * 0x165667b1) ^ (uint)(salt * 0x9e3779b1);
@@ -115,8 +106,6 @@ namespace Jinhyeong_View
             }
             else
             {
-                // 창이 한 칸 움직이면 들어온 줄만 채우고 나간 줄만 지운다.
-                // 매번 전부 다시 깔면 초당 수천 번 SetTile 이 돌아 프레임이 끊긴다.
                 ShiftWindow(_cellX, _cellZ, cx, cz);
             }
 
@@ -132,7 +121,6 @@ namespace Jinhyeong_View
             int newMinX = newX - _radius, newMaxX = newX + _radius;
             int newMinZ = newZ - _radius, newMaxZ = newZ + _radius;
 
-            // 멀리 순간이동했으면 겹치는 부분이 없다 — 통째로 다시 깐다.
             if (newMinX > oldMaxX || newMaxX < oldMinX || newMinZ > oldMaxZ || newMaxZ < oldMinZ)
             {
                 ClearRect(oldMinX, oldMinZ, oldMaxX, oldMaxZ);
@@ -181,9 +169,7 @@ namespace Jinhyeong_View
 
         private void SetCell(int x, int z)
         {
-            // Grid 를 -90° 눕혔으므로 셀의 +y 는 월드 -z 로 간다. 부호를 맞춰야
-            // 타일 위치와 장식 위치가 어긋나지 않는다.
-            _ground.SetTile(new Vector3Int(x, -z, 0), _grassTiles[Hash(x, z, 1) % _grassTiles.Length]);
+            _ground.SetTile(new Vector3Int(x, -z, 0), PickGrass(x, z));
 
             if (_decoSprites == null || _decoSprites.Length == 0)
                 return;
@@ -198,13 +184,23 @@ namespace Jinhyeong_View
             SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
             sr.sprite = _decoSprites[Hash(x, z, 3) % _decoSprites.Length];
 
-            // 칸 안에서 살짝 흩어 놓는다. 격자에 정확히 맞으면 인공적으로 보인다.
             float ox = (Hash(x, z, 4) % 100) / 100f - 0.5f;
             float oz = (Hash(x, z, 5) % 100) / 100f - 0.5f;
             go.transform.position = new Vector3(
                 (x + 0.5f + ox * 0.6f) * _cellSize, 0f, (z + 0.5f + oz * 0.6f) * _cellSize);
             go.SetActive(true);
             _decos[key] = go;
+        }
+
+        private TileBase PickGrass(int x, int z)
+        {
+            int colors = Mathf.Max(1, _grassTiles.Length / 2);
+            int patch = Mathf.Max(1, _patchCells);
+            int px = Mathf.FloorToInt((float)x / patch);
+            int pz = Mathf.FloorToInt((float)z / patch);
+            int color = Hash(px, pz, 1) % colors;
+            int flip = _grassTiles.Length >= colors * 2 ? Hash(x, z, 6) % 2 : 0;
+            return _grassTiles[color + colors * flip];
         }
 
         private void ClearCell(int x, int z)
@@ -227,6 +223,8 @@ namespace Jinhyeong_View
             go.transform.SetParent(_decoRoot, false);
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
             sr.sortingOrder = _decoSortingOrder;
+            if (_decoMaterial != null)
+                sr.sharedMaterial = _decoMaterial;
             go.AddComponent<Jinhyeong_UI.Billboard>();
             return go;
         }

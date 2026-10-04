@@ -3,7 +3,7 @@ module.exports = {
     id: 2002,
     name: 'Bark Cone',
     desc: '전방 부채꼴 적에게 공격력 100% 피해 + 둔화. 2.5초마다',
-    displayName: '왈왈',
+    displayName: '포르테 샤우트',
     slot: 'Mouth',
     family: 'Wave',
     appliesDebuff: 'SlowReduce',

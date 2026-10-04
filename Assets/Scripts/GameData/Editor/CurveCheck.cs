@@ -12,16 +12,6 @@ using Jinhyeong_SkillSystem;
 namespace Jinhyeong_GameData.Editor
 {
 
-    /// <summary>
-    /// 성장/스폰 곡선 실측 하네스. 5분 게임시간을 돌며 30초마다 표본을 찍는다.
-    ///
-    /// - 플레이어는 무적(매 프레임 HP 복구) — 사망으로 곡선이 끊기면 후반 표본이 안 나온다
-    /// - 시작 로드아웃은 LobbyWindow 기본(1001~1004)과 같게 둔다
-    /// - 레벨업 패널은 즉시 첫 카드를 누른다 (표본은 게임시간 Time.time 기준이라 패널 대기는 제외된다)
-    /// - 표본: 게임시간 / 레벨 / 누적XP / 킬 / 생존 적 / 정예 / 직전 구간 평균 FPS / 젬 수
-    ///
-    /// 결과는 Temp/curve.report 에 표로 남긴다.
-    /// </summary>
     [InitializeOnLoad]
     public static class CurveCheck
     {
@@ -36,7 +26,6 @@ namespace Jinhyeong_GameData.Editor
         private static bool _spawned;
         private static float _startGame;
         private static float _nextSample;
-        private static bool _panelOpen;
         private static Player _player;
         private static Damageable _hp;
         private static int _picks;
@@ -48,10 +37,6 @@ namespace Jinhyeong_GameData.Editor
         private static readonly List<string> _rows = new List<string>(16);
         private static readonly List<string> _pickedNames = new List<string>(16);
 
-        /// <summary>
-        /// 하네스 이동 입력. PlayerController 를 끄면 자동공격(OnAttack 트리거의 원천)까지 죽으므로
-        /// 컨트롤러는 살려두고 입력원만 바꿔 끼운다.
-        /// </summary>
         private sealed class HarnessInput : IInputProvider
         {
             public Vector2 Axis;
@@ -113,7 +98,6 @@ namespace Jinhyeong_GameData.Editor
             }
 
             DriveMoveTowardGems();
-            HandleAugmentPanel();
 
             if (Time.timeScale > 0f)
             {
@@ -176,19 +160,11 @@ namespace Jinhyeong_GameData.Editor
 
             Jinhyeong_UI.GameFlow.StartGame();
 
-            if (RunProgress.Instance != null)
-                RunProgress.Instance.OnLevelUp += HandleLevelUp;
-
             _startGame = Time.time;
             _nextSample = SampleInterval;
             _rows.Add("t(s) | Lv | 누적XP | 킬 | 생존 | 정예 | 젬 | FPS");
             _rows.Add("---|---|---|---|---|---|---|---");
             _spawned = true;
-        }
-
-        private static void HandleLevelUp(int level)
-        {
-            _panelOpen = true;
         }
 
         private static void Sample(float elapsed)
@@ -215,7 +191,6 @@ namespace Jinhyeong_GameData.Editor
                     gems++;
             }
 
-            // 누적 XP = 지난 레벨들의 XpToNext 합 + 현재 잔여
             float total = 0f;
             int lv = progress != null ? progress.Level : 1;
             for (int l = 1; l < lv; l++)
@@ -256,26 +231,14 @@ namespace Jinhyeong_GameData.Editor
                 return;
             }
 
-            // 카메라 yaw 0 이므로 월드 XZ 가 곧 입력 축이다
             Vector3 dir = nearest.transform.position - pos;
             Vector2 axis = new Vector2(dir.x, dir.z);
             _input.Axis = axis.sqrMagnitude > 0.01f ? axis.normalized : Vector2.zero;
         }
 
-        /// <summary>
-        /// 레벨업 3택1 이 사라져서 더 이상 클릭할 패널이 없다.
-        /// 성장은 파츠 획득으로만 일어나므로 하네스는 그냥 지나간다.
-        /// </summary>
-        private static void HandleAugmentPanel()
-        {
-            _panelOpen = false;
-        }
-
         private static void Finish(string error)
         {
             EditorApplication.update -= Drive;
-            if (RunProgress.Instance != null)
-                RunProgress.Instance.OnLevelUp -= HandleLevelUp;
 
             StringBuilder report = new StringBuilder(2048);
             if (string.IsNullOrEmpty(error) == false)

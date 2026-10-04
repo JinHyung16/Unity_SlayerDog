@@ -2,8 +2,8 @@
 module.exports = {
     id: 2006,
     name: 'Claw Volley',
-    desc: '전방으로 발톱을 날려 각 공격력 60% 피해. 2초마다',
-    displayName: '발톱 세례',
+    desc: '전방으로 기타 피크를 날려 각 공격력 60% 피해. 2초마다',
+    displayName: '기타 피크 연사',
     slot: 'Feet',
     family: 'Melee',
     appliesDebuff: 'None',

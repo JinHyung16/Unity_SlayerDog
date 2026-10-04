@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 using Jinhyeong_GameData;
 using Jinhyeong_Managers;
 using Jinhyeong_Common;
@@ -7,12 +8,6 @@ using Jinhyeong_SkillSystem.Skill;
 namespace Jinhyeong_SkillSystem
 {
 
-    /// <summary>
-    /// Launch 노드를 실제 스폰으로 옮기는 곳.
-    ///
-    /// 풀에서 나오는 오브젝트는 Skill_Root 프리팹이고 SkillConfig/SkillMethod/SkillHit/SkillVisual 이
-    /// 이미 붙어 있다. 런타임 AddComponent 도, 프리미티브+new Material 폴백도 없다.
-    /// </summary>
     public static class LaunchExecutor
     {
         public static bool Execute(SkillNodeData launchNode, SkillContext ctx)
@@ -20,6 +15,49 @@ namespace Jinhyeong_SkillSystem
             if (launchNode == null)
                 return false;
 
+            // 연발 — BurstCount 가 있는 노드만. 없는 노드에 개수 증강이 새어 들어가지 않게 키 유무로 가른다
+            if (launchNode.Params.ContainsKey(ESkillParamKey.BurstCount) == false)
+                return ExecuteOne(launchNode, ctx);
+
+            int count = launchNode.GetInt(ESkillParamKey.BurstCount, ctx.LevelData, 1, ctx.Modifier);
+            if (count <= 1)
+                return ExecuteOne(launchNode, ctx);
+
+            float interval = launchNode.GetFloat(ESkillParamKey.BurstInterval, ctx.LevelData, 0f, null);
+            float spread = launchNode.GetFloat(ESkillParamKey.BurstSpread, ctx.LevelData, 0f, null);
+            Vector3 baseDir = ResolveDirection(ctx);
+
+            bool any = false;
+            for (int i = 0; i < count; i++)
+            {
+                float angle = spread > 0f ? (i - (count - 1) * 0.5f) * spread : 0f;
+                Vector3 dir = Quaternion.Euler(0f, angle, 0f) * baseDir;
+                if (interval <= 0f || i == 0)
+                {
+                    ctx.Direction = dir;
+                    any |= ExecuteOne(launchNode, ctx);
+                    continue;
+                }
+                SkillContext later = ctx.CloneForLaunch();
+                later.Direction = dir;
+                FireLater(launchNode, later, interval * i).Forget();
+                any = true;
+            }
+            return any;
+        }
+
+        private static async UniTaskVoid FireLater(SkillNodeData launchNode, SkillContext ctx, float delay)
+        {
+            await UniTask.Delay(System.TimeSpan.FromSeconds(delay));
+            // 쏘는 사이 시전자가 죽거나 판이 끝났으면 버린다
+            if (ctx.Caster == null || ctx.Caster.isActiveAndEnabled == false)
+                return;
+            ctx.OriginPosition = ctx.Caster.transform.position;
+            ExecuteOne(launchNode, ctx);
+        }
+
+        private static bool ExecuteOne(SkillNodeData launchNode, SkillContext ctx)
+        {
             switch (launchNode.NodeType)
             {
                 case ESkillNodeType.LaunchInstant:
@@ -90,7 +128,6 @@ namespace Jinhyeong_SkillSystem
             Vector3 origin = OriginPos(ctx);
             Vector3 endPos = EndPos(ctx, origin);
 
-            // 곡사는 착탄해야 터진다. armed:false 로 띄워서 비행 중에 스친 적에게 폭발하지 않게 한다.
             SkillConfig config = Spawn(launchNode, ctx, origin, LookTo(endPos - origin), armed: false);
             if (config == null)
                 return false;
@@ -142,12 +179,6 @@ namespace Jinhyeong_SkillSystem
 
             SkillVisual visual = go.GetComponent<SkillVisual>();
 
-            // 눕힐지 세울지는 **그림이 안다**. 데이터(visual 모듈)가 들고 온 값을 그대로 쓴다.
-            //
-            // [사고] 예전엔 「자기버프면 세우고 나머지는 눕힌다」로 여기서 추측했다.
-            // 그래서 정면에서 본 그림(발바닥 · 뼈 · 이빨 · 원반)이 전부 눕혀져 원근으로 찌그러졌고,
-            // 화면에서 무엇이 나갔는지 읽히지 않았다. 스킬의 종류와 그림의 성질은 다른 축이다 —
-            // 자기버프가 아니어도 세워야 읽히는 그림이 있고, 그 반대도 있다.
             visual.SetOrient(ParseOrient(launchNode.GetString(ESkillParamKey.VisualOrient)));
 
             visual.ApplyTint(launchNode.GetString(ESkillParamKey.VisualColor));
@@ -157,10 +188,6 @@ namespace Jinhyeong_SkillSystem
             return config;
         }
 
-        /// <summary>
-        /// 데이터의 방향 표기를 런타임 모드로 옮긴다.
-        /// 값이 비었거나 모르는 문자열이면 Ground — 예전 기본값이라 바뀌어도 놀랄 일이 없다.
-        /// </summary>
         private static Jinhyeong_View.SkillArtOrient.EMode ParseOrient(string raw)
         {
             if (string.IsNullOrEmpty(raw))

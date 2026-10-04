@@ -44,7 +44,6 @@ namespace Jinhyeong_Managers
             PoolManager.Ensure();
             EnemySpawner.Ensure();
 
-            // 대량 스폰용. 컬링이 없으면 화면 밖 적의 AI·애니메이터가 그대로 돌아 프레임이 죽는다.
             EnemyCullingSystem.Ensure();
             WaveDirector.Ensure();
             Jinhyeong_UI.SurvivorHud.Ensure();
