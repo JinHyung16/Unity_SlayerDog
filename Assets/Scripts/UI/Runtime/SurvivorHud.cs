@@ -176,7 +176,7 @@ namespace Jinhyeong_UI
             _root.SetActive(false);
         }
 
-        // 아트 리부트 (_Ref/ArtReboot/기획서.md UI 방향) — XP 는 화면 위 가로 전체, HP 는 하단 중앙 하트 바
+        // 아트 리부트 (볼트 개많이잡아/개많이잡아 아트 방향 UI 방향) — XP 는 화면 위 가로 전체, HP 는 하단 중앙 하트 바
         private static readonly Color HpColor = new Color(1f, 0.25f, 0.62f, 1f);
         private static readonly Color XpColor = new Color(0.20f, 0.90f, 1f, 1f);
         private static readonly Color BarBack = new Color(0.10f, 0.05f, 0.18f, 0.88f);

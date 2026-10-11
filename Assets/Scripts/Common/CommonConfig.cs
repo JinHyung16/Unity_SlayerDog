@@ -108,9 +108,9 @@ namespace Jinhyeong_Common
 
         public static class Run
         {
-            // 스피커가 기본 공격 앰프(고유 파츠 옵션)를 줄 확률 — .claude/design.md 3절
+            // 스피커가 기본 공격 앰프(고유 파츠 옵션)를 줄 확률 — 볼트 개많이잡아/개많이잡아 음악 전투 기획서 3절
             public const float AmpChance = 0.3f;
-            // 스피커 간격 = 기본 + 장착 파츠 수 × 가산 (초). 목표: 6칸 완성이 4~5분 (.claude/design.md 6절)
+            // 스피커 간격 = 기본 + 장착 파츠 수 × 가산 (초). 목표: 6칸 완성이 4~5분 (볼트 개많이잡아/개많이잡아 음악 전투 기획서 6절)
             public const float DropIntervalBase = 14f;
             public const float DropIntervalPerPart = 6f;
             // 6칸이 다 찬 뒤 — 간격을 줄이고 앰프 비중을 올린다. QA1: 다 찬 뒤 56초 간격이라 성장이 멈춰 전원 라운드 8~10 사망

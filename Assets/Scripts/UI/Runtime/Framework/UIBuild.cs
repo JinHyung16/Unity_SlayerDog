@@ -7,7 +7,7 @@ namespace Jinhyeong_UI.Framework
 
     public static class UIBuild
     {
-        // 팔레트: 진보라 밤 바탕 · 마젠타 테두리 · 시안 선택 · 레몬 보상 · 레드오렌지 위험 (_Ref/ArtReboot/기획서.md)
+        // 팔레트: 진보라 밤 바탕 · 마젠타 테두리 · 시안 선택 · 레몬 보상 · 레드오렌지 위험 (볼트 개많이잡아/개많이잡아 아트 방향)
         public static readonly Color ColorBg = new Color(0.09f, 0.05f, 0.16f, 1f);
         public static readonly Color ColorRail = new Color(0.14f, 0.07f, 0.25f, 1f);
         public static readonly Color ColorSky = new Color(0.20f, 0.09f, 0.34f, 1f);
