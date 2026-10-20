@@ -3,7 +3,7 @@ module.exports = {
     id: 8011,
     name: 'fam_aura_2',
     desc: '각성 2개 — 각성 스킬 지속 +30%',
-    displayName: '롱 톤',
+    displayName: '투지',
     family: 'Aura',
     reqFamilyCount: 2,
     reqSkillId: 0,

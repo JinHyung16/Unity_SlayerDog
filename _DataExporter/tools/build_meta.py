@@ -2,10 +2,11 @@
 # PNG -> Unity .meta 생성기 (에디터 없이 import 설정을 확정한다)
 #
 # - GUID 는 경로 md5 로 고정한다. 재실행해도 같은 GUID -> 프리팹 참조가 안 끊긴다
-# - 전부 Bilinear + 무압축. 원본은 깨끗한 고해상도이고 도트 룩은 쓰지 않는다 (아트 리부트 2026-10-03, 캐릭터 도트 셰이더 폐기)
+# - 전부 Bilinear + 무압축. 도트 그림은 생성기가 최근접 ×4 로 키워 내므로(pixkit.big) 확대본 + 밉맵으로 선명함을 지킨다
 #   Point 는 쓰지 않는다 — 정수 배율을 보장할 수 없는 카메라에서 텍셀이 1px/2px 로 들쭉날쭉 찍혀 뭉개진다
 # - PPU 는 논리 캔버스 64px = 2유닛. 생성기가 고해상도로 낸 폴더는 _art_scale.json 배율만큼 PPU 를 곱한다
 #   (크기가 그대로여야 프리팹 · 판정 반경이 안 어긋난다). 고해상도는 화면에서 축소되므로 밉맵을 켠다
+#   밉맵 편향 -0.75 · 덮개 보존: 한 단계 날카로운 밉을 골라 외곽선 1도트가 흐려지거나 얇아지지 않게
 # - 캐릭터/적은 피벗을 발밑으로 내려 지면 정렬이 자동으로 맞게 한다
 
 import os, sys, hashlib, json
@@ -22,8 +23,7 @@ TARGETS = [r"Assets\_Art\FX", r"Assets\_Art\Sprites", r"Assets\_Art\Stage",
 PPU = 32
 
 # 발밑 피벗을 쓸 접두어 (64px 캔버스에서 발끝 y=61 -> 아래에서 3px -> 3/64)
-FOOT_PIVOT_PREFIX = ("dog_", "alien_")
-FOOT_PIVOT_Y = 3.0 / 64.0
+FOOT_PIVOT_PREFIX = ("dog_", "mob_")
 
 
 def guid_for(rel):
@@ -57,6 +57,7 @@ def platform_block(name):
 
 def make_meta(rel, is_sprite, wrap, alignment, pivot, filter_mode=1, mips=0, ppu=PPU):
     g = guid_for(rel)
+    bias = -0.75 if mips else 0
     plats = "".join(platform_block(n) for n in ("DefaultTexturePlatform", "Standalone", "Android"))
     return """fileFormatVersion: 2
 guid: {guid}
@@ -71,7 +72,7 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
-    mipMapsPreserveCoverage: 0
+    mipMapsPreserveCoverage: {mips}
     alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
@@ -96,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: {filter}
     aniso: 1
-    mipBias: 0
+    mipBias: {bias}
     wrapU: {wrap}
     wrapV: {wrap}
     wrapW: {wrap}
@@ -149,7 +150,7 @@ TextureImporter:
   userData:
   assetBundleName:
   assetBundleVariant:
-""".format(guid=g, wrap=wrap, spritemode=1 if is_sprite else 0,
+""".format(guid=g, bias=bias, wrap=wrap, spritemode=1 if is_sprite else 0,
            alignment=alignment, px=pivot[0], py=pivot[1], ppu=ppu,
            filter=filter_mode, mips=mips,
            ttype=8 if is_sprite else 0, plats=plats)
@@ -177,8 +178,11 @@ def main():
                     ppu=PPU * scale,
                 )
 
-                if name.startswith(FOOT_PIVOT_PREFIX):
-                    meta = make_meta(rel, True, 1, 9, (0.5, round(FOOT_PIVOT_Y, 4)), **opts)
+                if name.startswith(FOOT_PIVOT_PREFIX) or name.startswith("deco_"):
+                    # 캐릭터 · 적 · 보스 · 소품: 캔버스가 역할 · 소품 배율마다 달라 바닥선(아래에서 3 도트 × 출력 배율)으로 피벗을 잡는다
+                    from PIL import Image as _Img
+                    hgt = _Img.open(full).height
+                    meta = make_meta(rel, True, 1, 9, (0.5, round(3.0 * scale / hgt, 4)), **opts)
                 else:
                     meta = make_meta(rel, True, 1, 0, (0.5, 0.5), **opts)
 

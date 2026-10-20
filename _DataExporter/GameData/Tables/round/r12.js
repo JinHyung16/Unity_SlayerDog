@@ -11,5 +11,5 @@ module.exports = {
     maxAlive: 30,
     hpMul: 3.6,
     damageMul: 2.88,
-    banner: '납치선 강림!'
+    banner: '최후의 라운드!'
 };

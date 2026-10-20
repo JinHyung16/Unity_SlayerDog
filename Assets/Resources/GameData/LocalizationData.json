@@ -1,0 +1,454 @@
+[
+ {
+  "Key": "Char_Hint",
+  "Korean": "고유 스킬의 계열이 이번 판에 더 자주 나옵니다"
+ },
+ {
+  "Key": "Char_JoinsOnClear",
+  "Korean": "<size=75%>{0} 클리어</size>"
+ },
+ {
+  "Key": "Char_Locked",
+  "Korean": "<size=75%>잠김</size>"
+ },
+ {
+  "Key": "Char_NoUniqueSkill",
+  "Korean": "<size=75%>고유 스킬 없음</size>"
+ },
+ {
+  "Key": "Char_ShopHint",
+  "Korean": "사료 {0} · 눌러서 영구 강화"
+ },
+ {
+  "Key": "Char_StatAttack",
+  "Korean": "공격력"
+ },
+ {
+  "Key": "Char_StatCost",
+  "Korean": "사료 {0}"
+ },
+ {
+  "Key": "Char_StatHp",
+  "Korean": "체력"
+ },
+ {
+  "Key": "Char_StatMax",
+  "Korean": "최대"
+ },
+ {
+  "Key": "Char_StatSpeed",
+  "Korean": "이동속도"
+ },
+ {
+  "Key": "Char_Title",
+  "Korean": "캐릭터 목록"
+ },
+ {
+  "Key": "Hero_1",
+  "Korean": "시바 무사"
+ },
+ {
+  "Key": "Hero_10",
+  "Korean": "닥스훈트 포수"
+ },
+ {
+  "Key": "Hero_2",
+  "Korean": "진돗개 무관"
+ },
+ {
+  "Key": "Hero_3",
+  "Korean": "아키타 닌자"
+ },
+ {
+  "Key": "Hero_4",
+  "Korean": "차우차우 무승"
+ },
+ {
+  "Key": "Hero_5",
+  "Korean": "퍼그 도사"
+ },
+ {
+  "Key": "Hero_6",
+  "Korean": "셰퍼드 성기사"
+ },
+ {
+  "Key": "Hero_7",
+  "Korean": "푸들 대마법사"
+ },
+ {
+  "Key": "Hero_8",
+  "Korean": "허스키 광전사"
+ },
+ {
+  "Key": "Hero_9",
+  "Korean": "비글 레인저"
+ },
+ {
+  "Key": "Hud_Boss",
+  "Korean": "보스"
+ },
+ {
+  "Key": "Hud_BossDefeated",
+  "Korean": "{0} 격파!"
+ },
+ {
+  "Key": "Hud_BossDefeatedDefault",
+  "Korean": "보스 격파!"
+ },
+ {
+  "Key": "Hud_CardAmp",
+  "Korean": "고유 공격 강화"
+ },
+ {
+  "Key": "Hud_CardNewWeapon",
+  "Korean": "새 무기"
+ },
+ {
+  "Key": "Hud_CardStat",
+  "Korean": "능력"
+ },
+ {
+  "Key": "Hud_CardUpgrade",
+  "Korean": "무기 강화"
+ },
+ {
+  "Key": "Hud_Kills",
+  "Korean": "처치 {0}"
+ },
+ {
+  "Key": "Hud_LevelUpHint",
+  "Korean": "하나를 고르세요  ·  클릭 또는 1 · 2 · 3"
+ },
+ {
+  "Key": "Hud_PauseGiveUp",
+  "Korean": "포기하고 결과 보기"
+ },
+ {
+  "Key": "Hud_PauseResume",
+  "Korean": "계속하기 (ESC)"
+ },
+ {
+  "Key": "Hud_PauseTitle",
+  "Korean": "일시정지"
+ },
+ {
+  "Key": "Hud_Restart",
+  "Korean": "다시 하기"
+ },
+ {
+  "Key": "Hud_ResultNewHero",
+  "Korean": "{0} 합류!"
+ },
+ {
+  "Key": "Hud_ResultNewMap",
+  "Korean": "새 맵 열림 — {0}"
+ },
+ {
+  "Key": "Hud_ResultReward",
+  "Korean": "사료 +{0}  ·  슈퍼 DNA +{1}"
+ },
+ {
+  "Key": "Hud_ResultStats",
+  "Korean": "생존 시간  {0:00}:{1:00}\n처치  {2}\n레벨  {3}"
+ },
+ {
+  "Key": "Hud_StatDamageDesc",
+  "Korean": "공격력 +{0}%"
+ },
+ {
+  "Key": "Hud_StatDamageName",
+  "Korean": "날 벼리기"
+ },
+ {
+  "Key": "Hud_StatHealOnKillDesc",
+  "Korean": "처치 시 체력 +{0:0.#}"
+ },
+ {
+  "Key": "Hud_StatHealOnKillName",
+  "Korean": "전장의 함성"
+ },
+ {
+  "Key": "Hud_StatMaxHpDesc",
+  "Korean": "최대 체력 +{0}%"
+ },
+ {
+  "Key": "Hud_StatMaxHpName",
+  "Korean": "강철 갑옷"
+ },
+ {
+  "Key": "Hud_StatMoveSpeedDesc",
+  "Korean": "이동속도 +{0}%"
+ },
+ {
+  "Key": "Hud_StatMoveSpeedName",
+  "Korean": "바람 발걸음"
+ },
+ {
+  "Key": "Hud_Tip",
+  "Korean": "WASD · 방향키로 이동  ·  공격은 자동  ·  보물상자를 주워 무기를 늘리세요"
+ },
+ {
+  "Key": "Input_Arrow",
+  "Korean": "방향키"
+ },
+ {
+  "Key": "Lobby_FamilyAura",
+  "Korean": "각성"
+ },
+ {
+  "Key": "Lobby_FamilyField",
+  "Korean": "장판"
+ },
+ {
+  "Key": "Lobby_FamilyGaze",
+  "Korean": "시선"
+ },
+ {
+  "Key": "Lobby_FamilyMelee",
+  "Korean": "근접"
+ },
+ {
+  "Key": "Lobby_FamilyThrow",
+  "Korean": "투척"
+ },
+ {
+  "Key": "Lobby_FamilyWave",
+  "Korean": "파동"
+ },
+ {
+  "Key": "Lobby_StatusLoadingEffects",
+  "Korean": "스킬 이펙트 로딩 중..."
+ },
+ {
+  "Key": "Lobby_StatusLoadingSkills",
+  "Korean": "스킬 데이터 로딩 중..."
+ },
+ {
+  "Key": "Lobby_StatusLoadingWorld",
+  "Korean": "월드 로딩 중..."
+ },
+ {
+  "Key": "Lobby_StatusNoSkills",
+  "Korean": "사용 가능 스킬 없음 (Resources/GameData 확인)"
+ },
+ {
+  "Key": "Lobby_StatusSkillCount",
+  "Korean": "사용 가능 스킬 {0}개"
+ },
+ {
+  "Key": "Lobby_StatusSkillLoadFailed",
+  "Korean": "스킬 로드 실패: {0}"
+ },
+ {
+  "Key": "Lobby_StatusSpawnFailed",
+  "Korean": "스폰 실패: {0}"
+ },
+ {
+  "Key": "Lobby_TabCharacter",
+  "Korean": "캐릭터"
+ },
+ {
+  "Key": "Lobby_TabSettings",
+  "Korean": "설정"
+ },
+ {
+  "Key": "Lobby_TabSkill",
+  "Korean": "스킬 트리"
+ },
+ {
+  "Key": "Lobby_TabStart",
+  "Korean": "시작"
+ },
+ {
+  "Key": "Lobby_Tagline",
+  "Korean": "열 세계의 개 영웅, 12분 동안 침공군을 벤다."
+ },
+ {
+  "Key": "Settings_EditorResNote",
+  "Korean": "에디터에서는 해상도 변경이 Game 뷰에 반영되지 않는다"
+ },
+ {
+  "Key": "Settings_FullscreenOff",
+  "Korean": "전체화면: 끔"
+ },
+ {
+  "Key": "Settings_FullscreenOn",
+  "Korean": "전체화면: 켬"
+ },
+ {
+  "Key": "Settings_MoveKeys",
+  "Korean": "이동키"
+ },
+ {
+  "Key": "Settings_Resolution",
+  "Korean": "해상도"
+ },
+ {
+  "Key": "Settings_Title",
+  "Korean": "설정"
+ },
+ {
+  "Key": "Settings_Volume",
+  "Korean": "음량"
+ },
+ {
+  "Key": "Settings_Wipe",
+  "Korean": "데이터 초기화"
+ },
+ {
+  "Key": "Settings_WipeConfirm",
+  "Korean": "정말 지울까요?"
+ },
+ {
+  "Key": "Settings_WipeNote",
+  "Korean": "기록 · 재화 · 해금 · 강화가 모두 사라집니다"
+ },
+ {
+  "Key": "Skill_AlreadyOwned",
+  "Korean": "이미 열었다"
+ },
+ {
+  "Key": "Skill_CostAfford",
+  "Korean": "별 {0}개 · DNA {1} — 한 번 더 누르면 산다"
+ },
+ {
+  "Key": "Skill_CostShort",
+  "Korean": "별 {0}개 · DNA {1} — {2} 부족합니다"
+ },
+ {
+  "Key": "Skill_Hint",
+  "Korean": "슈퍼 DNA {0} · 별 {1}/{2} · 끌어서 이동 · 휠로 확대"
+ },
+ {
+  "Key": "Skill_Unreachable",
+  "Korean": "아직 길이 닿지 않습니다"
+ },
+ {
+  "Key": "Star_GateDesc",
+  "Korean": "클리어 {0}회 이상이어야 지나갈 수 있습니다"
+ },
+ {
+  "Key": "Star_GateName",
+  "Korean": "관문"
+ },
+ {
+  "Key": "Star_SkillFallbackName",
+  "Korean": "스킬 {0}"
+ },
+ {
+  "Key": "Star_SkillUnlockDesc",
+  "Korean": "해금 — 필드에서 이 파츠가 나오기 시작합니다"
+ },
+ {
+  "Key": "Start_FirstRun",
+  "Korean": "첫 판입니다"
+ },
+ {
+  "Key": "Start_MapInfo",
+  "Korean": "<size=15>보스 {0} · 난이도 {1}</size>"
+ },
+ {
+  "Key": "Start_MapLocked",
+  "Korean": "맵 {0} · 잠김"
+ },
+ {
+  "Key": "Start_MapName",
+  "Korean": "맵 {0} · {1}"
+ },
+ {
+  "Key": "Start_MapUnlockHint",
+  "Korean": "<size=15>맵 {0}을(를) 클리어하면 열립니다</size>"
+ },
+ {
+  "Key": "Start_NoMap",
+  "Korean": "맵 없음"
+ },
+ {
+  "Key": "Start_NoStartSkill",
+  "Korean": "시작 스킬 없음"
+ },
+ {
+  "Key": "Start_RecordBest",
+  "Korean": "최고 {0}분 {1}초 · 라운드 {2} · 처치 {3}"
+ },
+ {
+  "Key": "Start_RecordTotals",
+  "Korean": "클리어 {0}회 / {1}판   ·   사료 {2}  ·  슈퍼 DNA {3}"
+ },
+ {
+  "Key": "Start_StartButton",
+  "Korean": "게임 시작"
+ },
+ {
+  "Key": "Start_StartSkillFooter",
+  "Korean": "<size=17>나머지는 필드에서 줍습니다</size>"
+ },
+ {
+  "Key": "Start_StartSkillHeader",
+  "Korean": "시작 스킬"
+ },
+ {
+  "Key": "Start_StartSkillLine",
+  "Korean": "· {0}  ({1} 계열)"
+ },
+ {
+  "Key": "Trait_Area",
+  "Korean": "범위"
+ },
+ {
+  "Key": "Trait_Cooldown",
+  "Korean": "재사용 단축"
+ },
+ {
+  "Key": "Trait_Count",
+  "Korean": "발사체"
+ },
+ {
+  "Key": "Trait_CritChance",
+  "Korean": "치명타 확률"
+ },
+ {
+  "Key": "Trait_CritDamage",
+  "Korean": "치명타 피해"
+ },
+ {
+  "Key": "Trait_Damage",
+  "Korean": "피해"
+ },
+ {
+  "Key": "Trait_Default",
+  "Korean": "특성"
+ },
+ {
+  "Key": "Trait_Duration",
+  "Korean": "지속"
+ },
+ {
+  "Key": "Trait_Lifesteal",
+  "Korean": "처치 회복"
+ },
+ {
+  "Key": "Trait_LongAll",
+  "Korean": "모든 스킬 {0} {1}"
+ },
+ {
+  "Key": "Trait_LongFamily",
+  "Korean": "{0} 계열 {1} {2}"
+ },
+ {
+  "Key": "Trait_MaxHp",
+  "Korean": "최대 체력"
+ },
+ {
+  "Key": "Trait_MoveSpeed",
+  "Korean": "이동 속도"
+ },
+ {
+  "Key": "Wave_BossAppears",
+  "Korean": "{0} 출현!"
+ },
+ {
+  "Key": "Wave_Round",
+  "Korean": "라운드 {0}"
+ }
+]

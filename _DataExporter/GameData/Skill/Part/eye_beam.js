@@ -2,8 +2,8 @@
 module.exports = {
     id: 2013,
     name: 'Eye Beam',
-    desc: '전방으로 스포트라이트를 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다',
-    displayName: '스포트라이트 빔',
+    desc: '전방으로 빛의 창을 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다',
+    displayName: '빛의 창',
     slot: 'Head',
     family: 'Gaze',
     appliesDebuff: 'None',

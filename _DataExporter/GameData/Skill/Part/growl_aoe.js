@@ -3,7 +3,7 @@ module.exports = {
     id: 2003,
     name: 'Growl',
     desc: '반경 3m 적에게 공격력 80% 피해 + 2초간 둔화. 3초마다',
-    displayName: '베이스 그로울',
+    displayName: '사자후',
     slot: 'Mouth',
     family: 'Wave',
     appliesDebuff: 'SlowReduce',

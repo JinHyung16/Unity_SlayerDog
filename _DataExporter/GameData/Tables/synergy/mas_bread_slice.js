@@ -1,9 +1,9 @@
-/** 건반 슬램 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
+/** 대검 내려치기 통달 — 이 스킬의 증강을 4개 이상 모으면 자동 발동. 전설(3개)을 주운 것만으로는 안 뜬다. */
 module.exports = {
     id: 8047,
     name: 'mas_bread_slice',
-    desc: '건반 슬램 증강 4개 — 피해 +80%',
-    displayName: '건반 슬램 통달',
+    desc: '대검 내려치기 증강 4개 — 피해 +80%',
+    displayName: '대검 내려치기 통달',
     family: 'None',
     reqFamilyCount: 0,
     reqSkillId: 2102,

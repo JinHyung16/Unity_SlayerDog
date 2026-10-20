@@ -1,8 +1,8 @@
 module.exports = {
     id: 4425,
     name: 'kibble_bomb_area',
-    desc: '심벌 크래시 — 범위 +20%',
-    displayName: '곱빼기',
+    desc: '화염 단지 — 범위 +20%',
+    displayName: '큰 단지',
     partId: 2021,
     trait: 'Area',
     value: 0.2,

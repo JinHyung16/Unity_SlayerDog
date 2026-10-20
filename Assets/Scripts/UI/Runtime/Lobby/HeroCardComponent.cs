@@ -22,6 +22,7 @@ namespace Jinhyeong_UI.Lobby
         [SerializeField] private Button _button;
 
         public int Index { get; private set; }
+        public bool Locked { get; private set; }
 
         private IListener _listener;
         private string _name = string.Empty;
@@ -52,7 +53,21 @@ namespace Jinhyeong_UI.Lobby
         {
             if (_bg != null)
             {
-                _bg.color = on ? UIBuild.ColorCardOn : UIBuild.ColorCard;
+                _bg.color = Locked ? UIBuild.ColorLocked : (on ? UIBuild.ColorCardOn : UIBuild.ColorCard);
+            }
+        }
+
+        // 잠긴 카드는 초상화를 어둡게, 눌러도 고르지 않는다
+        public void SetLocked(bool locked)
+        {
+            Locked = locked;
+            if (_face != null)
+            {
+                _face.color = locked ? new Color(0.15f, 0.15f, 0.2f, 1f) : Color.white;
+            }
+            if (_label != null)
+            {
+                _label.color = locked ? UIBuild.ColorTextLocked : UIBuild.ColorText;
             }
         }
 

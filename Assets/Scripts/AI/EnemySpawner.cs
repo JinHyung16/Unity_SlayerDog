@@ -194,8 +194,12 @@ namespace Jinhyeong_AI
             Jinhyeong_SkillSystem.RoundData round =
                 Jinhyeong_SkillSystem.RoundRegistry.At(Jinhyeong_AI.WaveDirector.Instance != null
                     ? Jinhyeong_AI.WaveDirector.Instance.Elapsed : 0f);
+            // 맵 난이도는 라운드 배율 위에 곱한다 (Tables/map)
+            Jinhyeong_SkillSystem.MapData map = Jinhyeong_SkillSystem.MapRegistry.Current;
+            float mapHp = map != null && map.HpMul > 0f ? map.HpMul : 1f;
+            float mapDmg = map != null && map.DamageMul > 0f ? map.DamageMul : 1f;
             if (round != null)
-                e.ApplyRoundScaling(round.HpMul, round.DamageMul);
+                e.ApplyRoundScaling(round.HpMul * mapHp, round.DamageMul * mapDmg);
 
             _active.Add(e);
             return e;
@@ -269,6 +273,12 @@ namespace Jinhyeong_AI
 
             float xp = enemy != null ? enemy.XpValue : CommonConfig.Run.XpPerGem;
             Jinhyeong_SkillSystem.XpGem.Drop(victim.transform.position, xp);
+
+            float roll = Random.value;
+            if (roll < CommonConfig.Run.MagnetDropChance)
+                Jinhyeong_SkillSystem.FieldPickup.Drop(CommonConfig.Skill.MagnetKey, victim.transform.position);
+            else if (roll < CommonConfig.Run.MagnetDropChance + CommonConfig.Run.MeatDropChance)
+                Jinhyeong_SkillSystem.FieldPickup.Drop(CommonConfig.Skill.MeatKey, victim.transform.position);
 
             Jinhyeong_Character.Player player = Jinhyeong_Managers.GameEvents.CurrentPlayer;
             if (player == null)

@@ -1,12 +1,12 @@
-/** 냄새 추적 — 가장 먼 적을 유도 추적해 공격력 130% 피해 + 받는 피해 증가. 2초마다 */
+/** 추적 마탄 — 가장 먼 적을 유도 추적해 공격력 130% 피해 + 받는 피해 증가. 2초마다 */
 module.exports = {
-    color: '#4D8BFF',
-    desc: "냄새 추적 — 가장 먼 적을 유도 추적해 공격력 130% 피해 + 받는 피해 증가. 2초마다",
+    color: '#669BFF',
+    desc: "추적 마탄 — 가장 먼 적을 유도 추적해 공격력 130% 피해 + 받는 피해 증가. 2초마다",
     values: {
-        "Projectile": "Fx_Scent",
-        "Impact": "Fx_Scent",
-        "Cast": "Fx_Scent",
-        "Orient": "Ground",
+        "Projectile": "Fx_MagicShot",
+        "Impact": "Fx_HitBurst",
+        "Cast": "Fx_MagicShot",
+        "Orient": "Billboard",
         "Color": "#4D8BFF",
         "Cooldown": 2,
         "Range": 13,

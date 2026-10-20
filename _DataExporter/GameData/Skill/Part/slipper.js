@@ -2,8 +2,8 @@
 module.exports = {
     id: 2024,
     name: 'Slipper Throw',
-    desc: '캐스터네츠를 튕겨 공격력 300% 피해. 5초마다',
-    displayName: '캐스터네츠 딱!',
+    desc: '쿠나이를 던져 공격력 300% 피해. 5초마다',
+    displayName: '쿠나이',
     slot: 'Back',
     family: 'Throw',
     appliesDebuff: 'None',

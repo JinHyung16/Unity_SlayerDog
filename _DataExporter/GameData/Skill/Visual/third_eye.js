@@ -1,12 +1,12 @@
-/** 제3의 눈 — 가장 가까운 적을 관통하는 시선으로 공격력 180% 피해. 3초마다 */
+/** 심안 관통 — 가장 가까운 적을 꿰뚫는 기로 공격력 180% 피해. 3초마다 */
 module.exports = {
-    color: '#4D8BFF',
-    desc: "제3의 눈 — 가장 가까운 적을 관통하는 시선으로 공격력 180% 피해. 3초마다",
+    color: '#669BFF',
+    desc: "심안 관통 — 가장 가까운 적을 꿰뚫는 기로 공격력 180% 피해. 3초마다",
     values: {
-        "Projectile": "Fx_Gaze",
-        "Impact": "Fx_Gaze",
-        "Cast": "Fx_Gaze",
-        "Orient": "Billboard",
+        "Projectile": "Fx_QiBolt",
+        "Impact": "Fx_Hit",
+        "Cast": "Fx_QiBolt",
+        "Orient": "Ground",
         "Color": "#4D8BFF",
         "Cooldown": 3,
         "Range": 11,

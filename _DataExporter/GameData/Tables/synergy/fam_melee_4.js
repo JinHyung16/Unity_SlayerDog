@@ -3,7 +3,7 @@ module.exports = {
     id: 8008,
     name: 'fam_melee_4',
     desc: '근접 4개 — 근접 스킬 치명타 확률 +15%p',
-    displayName: '헤드뱅잉',
+    displayName: '무쌍',
     family: 'Melee',
     reqFamilyCount: 4,
     reqSkillId: 0,

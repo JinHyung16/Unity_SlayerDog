@@ -3,7 +3,7 @@ module.exports = {
     id: 8017,
     name: 'fam_field_3',
     desc: '장판 3개 — 처치 시 체력 +1.2',
-    displayName: '스텝 댄스',
+    displayName: '진법',
     family: 'Field',
     reqFamilyCount: 3,
     reqSkillId: 0,

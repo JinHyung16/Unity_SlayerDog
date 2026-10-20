@@ -1,11 +1,11 @@
-/** 꼬리 흔들기 — 현의 파동을 날려 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다 */
+/** 창 찌르기 — 창을 내질러 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다 */
 module.exports = {
-    color: '#FF3DA8',
-    desc: "꼬리 흔들기 — 현의 파동을 날려 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다",
+    color: '#FF66BA',
+    desc: "창 찌르기 — 창을 내질러 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다",
     values: {
-        "Projectile": "Fx_TailSwing",
-        "Impact": "Fx_TailSwing",
-        "Cast": "Fx_TailSwing",
+        "Projectile": "Fx_Spear",
+        "Impact": "Fx_Hit",
+        "Cast": "Fx_Spear",
         "Orient": "Ground",
         "Color": "#FF3DA8",
         "Cooldown": 1.5,

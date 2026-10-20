@@ -1,11 +1,11 @@
-/** 꼬리 채찍 — 지휘봉을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다 */
+/** 쇠사슬 채찍 — 쇠사슬을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다 */
 module.exports = {
-    color: '#FF3DA8',
-    desc: "꼬리 채찍 — 지휘봉을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다",
+    color: '#FF66BA',
+    desc: "쇠사슬 채찍 — 쇠사슬을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다",
     values: {
-        "Projectile": "Fx_TailSwing",
-        "Impact": "Fx_TailSwing",
-        "Cast": "Fx_TailSwing",
+        "Projectile": "Fx_ChainWhip",
+        "Impact": "Fx_Hit",
+        "Cast": "Fx_ChainWhip",
         "Orient": "Ground",
         "Color": "#FF3DA8",
         "Cooldown": 2,

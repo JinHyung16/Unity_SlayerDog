@@ -1,11 +1,11 @@
-/** 식빵 썰기 — 건반을 내리쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다 */
+/** 대검 내려치기 — 대검을 내려쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다 */
 module.exports = {
-    color: '#FF3DA8',
-    desc: "식빵 썰기 — 건반을 내리쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다",
+    color: '#FF66BA',
+    desc: "대검 내려치기 — 대검을 내려쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다",
     values: {
-        "Projectile": "Fx_Bread",
-        "Impact": "Fx_Bread",
-        "Cast": "Fx_Bread",
+        "Projectile": "Fx_Greatsword",
+        "Impact": "Fx_Greatsword",
+        "Cast": "Fx_Greatsword",
         "Orient": "Billboard",
         "Color": "#FF3DA8",
         "Cooldown": 2.5,

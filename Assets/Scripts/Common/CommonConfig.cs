@@ -73,6 +73,9 @@ namespace Jinhyeong_Common
             // 스킬 적중 버스트(스킬 색 파편) · 이동형 스킬 잔상
             public const string HitBurstKey = "Fx_HitBurst";
             public const string GhostKey = "Fx_Ghost";
+            // 필드 아이템 (FieldPickup)
+            public const string MeatKey = "Fx_Meat";
+            public const string MagnetKey = "Fx_Magnet";
             public const int MaxBurstsPerFrame = 8;
             public const float GhostInterval = 0.045f;
             public const float GhostMinStep = 0.25f;
@@ -95,12 +98,13 @@ namespace Jinhyeong_Common
             public const int PrewarmPickup = 8;
             public const int PrewarmHitBurst = 60;
             public const int PrewarmGhost = 80;
+            public const int PrewarmFieldPickup = 6;
         }
 
         public static class Combat
         {
             public const float KnockbackSpeed = 6f;
-            public const float KnockbackDecay = 28f;
+            public const float KnockbackDecay = 18f;
 
             public const float DamageTextLife = 0.6f;
             public const float DamageTextRise = 1.2f;
@@ -122,6 +126,13 @@ namespace Jinhyeong_Common
             public const float MagnetRadius = 2.5f;
             public const float MagnetAccel = 40f;
             public const float PickupDistance = 0.5f;
+
+            // 필드 아이템: 고기 = 최대 체력 30% 회복, 자석 = 쉬는 경험치 전부 끌어오기
+            // 확률은 처치 1회당. 판당 처치 약 2,000 → 고기 약 12개 · 자석 약 3개
+            public const float MeatDropChance = 0.006f;
+            public const float MagnetDropChance = 0.0015f;
+            public const float MeatHealRatio = 0.3f;
+            public const float FieldPickupRadius = 1.2f;
         }
 
         public static class Constellation
@@ -144,7 +155,8 @@ namespace Jinhyeong_Common
             public const int CostGate = 4;
             public const int CostKeystone = 20;
 
-            public const float CostGrowth = 1.4f;
+            // 고리마다 비용 ×1.7 — 판당 DNA 31 에서 트리가 65판에 약 92% 차도록 고르게 (sim_tree.py)
+            public const float CostGrowth = 1.7f;
 
             public const float LevelCostGrowth = 1.25f;
 

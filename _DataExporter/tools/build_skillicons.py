@@ -30,28 +30,31 @@ GAMEDATA = os.path.join(ROOT, "Assets", "Resources", "GameData")
 FXDIR = os.path.join(ROOT, "Assets", "_Art", "FX")
 OUTDIR = os.path.join(ROOT, "Assets", "Resources", "UI", "Icons")
 
-# 아트키(SkillVisual 이 쓰는 이름) -> FX 폴더. Art2DBuilder.FxAddress 의 역방향이다.
-# [주의] 두 곳에 같은 표가 있으면 어긋난다. 여기서는 «폴더 이름을 규칙으로 만들고»
-#        규칙에서 벗어나는 것만 예외로 적는다 — 예외가 셋뿐이라 표 전체를 옮기지 않는다.
-EXCEPTIONS = {
-    "Fx_TailSwing": "fx_tailsw",
-    "Fx_DogClaw": "fx_dogclaw",
-    "Fx_DogDust": "fx_dogdust",
-    "Fx_EyeBeam": "fx_eyebeam",
-    "Fx_NoteBass": "fx_notebass",
-    "Fx_NoteBeat": "fx_notebeat",
-    "Fx_StaffBeam": "fx_staffbeam",
-    "Fx_NoteScale": "fx_notescale",
-    "Fx_NoteWhole": "fx_notewhole",
-}
+# 아트키(SkillVisual 이 쓰는 이름) -> FX 폴더 · 종류. build_vfx.py 가 쓰는 표(_fx_table.tsv) 한 곳에서 읽는다
+FX_TABLE = os.path.join(ROOT, "_DataExporter", "_fx_table.tsv")
+
+
+def load_fx_table():
+    folders, objects = {}, set()
+    with open(FX_TABLE, encoding="utf-8") as fp:
+        for line in fp:
+            line = line.rstrip("\n")
+            if not line or line.startswith("#"):
+                continue
+            folder, addr, kind = line.split("\t")[:3]
+            folders[addr] = folder
+            if kind == "object":
+                objects.add(folder)
+    return folders, objects
+
+
+FOLDERS, OBJECT_FOLDERS = load_fx_table()
 
 ALPHA_ON = 40
 
 
 def folder_for(key):
-    if key in EXCEPTIONS:
-        return EXCEPTIONS[key]
-    return key.lower()
+    return FOLDERS.get(key, key.lower())
 
 
 def load_json(name):
@@ -115,7 +118,6 @@ def thicken(im, radius=1):
 
 # 물건형(build_vfx.py OBJECT)은 제 색으로 칠한 그림이라 흰 실루엣으로 바꾸면 공 · 원반 · 사료가 전부 덩어리가 된다.
 # 외곽선(진보라)과 색 경계를 «틈»으로 남겨 솔기 · 끈 · 낱알이 보이게 한다. 팽창은 하지 않는다 (틈이 닫힌다).
-OBJECT_FOLDERS = {"fx_teeth", "fx_bone", "fx_kibble", "fx_frisbee", "fx_ball", "fx_slipper", "fx_bread"}
 
 
 def object_glyph(im):
@@ -145,11 +147,57 @@ def trim_and_pad(im, size=64, margin=4):
     cw, ch = cut.size
     scale = min(inner / cw, inner / ch)
     nw, nh = max(1, int(round(cw * scale))), max(1, int(round(ch * scale)))
-    cut = cut.resize((nw, nh), Image.LANCZOS)
+    # 도트 아이콘: 면적 평균으로 줄인 뒤 알파를 반에서 끊는다 — 반투명 경계(흐린 가장자리)를 남기지 않는다
+    cut = cut.resize((nw, nh), Image.BOX)
+    cut.putalpha(cut.split()[3].point(lambda v: 255 if v >= 110 else 0))
 
     out = Image.new("RGBA", (size, size), (255, 255, 255, 0))
     out.paste(cut, ((size - nw) // 2, (size - nh) // 2))
     return out
+
+
+# 레벨업 능력 카드 아이콘 (SurvivorHud.FillCard: Icons/stat_<이름>). 흰 실루엣 — 색은 카드 강조색으로 틴트
+def stat_icons():
+    from PIL import ImageDraw
+    shapes = {}
+
+    def canvas():
+        im = Image.new("RGBA", (64, 64), (255, 255, 255, 0))
+        return im, ImageDraw.Draw(im)
+
+    # 날 벼리기 (공격력): 비스듬한 칼
+    im, d = canvas()
+    d.polygon([(44, 8), (56, 8), (56, 20), (26, 50), (14, 38)], fill=(255, 255, 255, 255))
+    d.rectangle([10, 40, 14, 56], fill=(255, 255, 255, 255))
+    d.polygon([(6, 36), (12, 30), (34, 52), (28, 58)], fill=(255, 255, 255, 255))
+    d.rectangle([4, 52, 12, 60], fill=(255, 255, 255, 255))
+    shapes["damage"] = im
+    # 강철 갑옷 (최대 체력): 방패
+    im, d = canvas()
+    d.polygon([(32, 6), (56, 14), (54, 36), (32, 58), (10, 36), (8, 14)], fill=(255, 255, 255, 255))
+    d.polygon([(32, 16), (44, 20), (43, 34), (32, 46), (21, 34), (20, 20)], fill=(255, 255, 255, 0))
+    d.rectangle([30, 18, 34, 44], fill=(255, 255, 255, 255))
+    d.rectangle([22, 26, 42, 30], fill=(255, 255, 255, 255))
+    shapes["maxhp"] = im
+    # 바람 발걸음 (이동속도): 날개 달린 신발
+    im, d = canvas()
+    d.polygon([(20, 18), (34, 18), (34, 38), (54, 42), (56, 52), (14, 52), (14, 40), (20, 36)], fill=(255, 255, 255, 255))
+    for i, y in enumerate((14, 22, 30)):
+        d.polygon([(34, y + 4), (52 - i * 4, y - 2), (48 - i * 4, y + 6)], fill=(255, 255, 255, 255))
+    d.rectangle([6, 56, 58, 59], fill=(255, 255, 255, 255))
+    shapes["movespeed"] = im
+    # 전장의 함성 (처치 시 체력): 발바닥 + 십자
+    im, d = canvas()
+    d.ellipse([14, 30, 42, 56], fill=(255, 255, 255, 255))
+    for x, y in ((10, 20), (20, 12), (32, 12), (42, 20)):
+        d.ellipse([x - 5, y - 6, x + 5, y + 6], fill=(255, 255, 255, 255))
+    d.rectangle([48, 30, 52, 50], fill=(255, 255, 255, 255))
+    d.rectangle([40, 38, 60, 42], fill=(255, 255, 255, 255))
+    shapes["healonkill"] = im
+
+    for name, im in shapes.items():
+        trim_and_pad(im).save(os.path.join(OUTDIR, "stat_%s.png" % name))
+    return len(shapes)
 
 
 def main():
@@ -179,10 +227,14 @@ def main():
             continue
 
         glyph = object_glyph(frame) if folder in OBJECT_FOLDERS else thicken(frame)
+        # 화살 · 칼날처럼 가는 물건은 외곽선을 빼면 몸통이 사라진다 — 남는 면적이 작으면 실루엣을 굵힌다
+        if folder in OBJECT_FOLDERS and coverage(glyph) < 2.0:
+            glyph = thicken(frame)
         icon = trim_and_pad(glyph)
         icon.save(os.path.join(OUTDIR, f"{s['id']}.png"))
         made += 1
 
+    made += stat_icons()
     print(f"[OK] 스킬 아이콘 {made}개 -> {OUTDIR}")
     for mid, why in missing:
         print(f"[WARN] {mid}: {why}")

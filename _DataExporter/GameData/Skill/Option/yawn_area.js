@@ -1,8 +1,8 @@
 module.exports = {
     id: 4085,
     name: 'yawn_area',
-    desc: '자장가 하품 — 범위 +20%',
-    displayName: '크게 하품',
+    desc: '잠의 주문 — 범위 +20%',
+    displayName: '넓은 주문',
     partId: 2004,
     trait: 'Area',
     value: 0.2,

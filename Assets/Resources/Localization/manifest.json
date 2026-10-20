@@ -1,0 +1,39 @@
+{
+  "formatVersion": 1,
+  "bundleVersion": "20261020-084435",
+  "createdUtc": "2026-10-20T08:44:35Z",
+  "sourceLabel": "csv:C:\\jinhyeong_project\\Unity_SkillSystem_Module\\Assets\\Localize",
+  "sourceLanguage": "Korean",
+  "fallbackBaked": true,
+  "languages": [
+    {
+      "id": "Korean",
+      "displayName": "한국어",
+      "bcp47": "ko",
+      "fallbackId": null,
+      "fontAddress": null,
+      "file": "Korean.json",
+      "entryCount": 785,
+      "hash": "250c08b71833cbd4197dfd9dda4c09b60b1e48abd945f467c3a6804eb371b802"
+    },
+    {
+      "id": "English",
+      "displayName": "English",
+      "bcp47": "en",
+      "fallbackId": "Korean",
+      "fontAddress": null,
+      "file": "English.json",
+      "entryCount": 785,
+      "hash": "34dc6b34d8adb6def7b56a09a6cb1f5e63c97d59dbd020177bbb263562c39c92"
+    }
+  ],
+  "tables": [
+    "ConstellationText",
+    "Map",
+    "Part",
+    "PartOption",
+    "Round",
+    "Synergy",
+    "WaveEvent"
+  ]
+}

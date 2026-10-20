@@ -35,9 +35,12 @@ namespace Jinhyeong_UI
             Jinhyeong_Managers.GameEvents.OnPlayerDespawned += UnhookPlayer;
 
             Jinhyeong_Common.DisplaySettings.LoadAndApply();
+            Jinhyeong_Common.VolumeSettings.LoadAndApply();
+            Jinhyeong_Common.SteamService.Init();
 
             Jinhyeong_Input.InputSettings.Load();
 
+            Jinhyeong_Common.Loc.Boot();
             Jinhyeong_Common.SaveData.Load();
 
             Jinhyeong_Managers.SfxManager.Ensure();
@@ -66,6 +69,7 @@ namespace Jinhyeong_UI
 
         private static async UniTaskVoid OpenLobbyAsync()
         {
+            Jinhyeong_Managers.MusicManager.Play("lobby");
             LobbyWindow lobby = await UIManagement.Ensure().OpenAsync(LobbyWindow.Key);
             if (lobby == null)
             {
@@ -84,6 +88,9 @@ namespace Jinhyeong_UI
             IsCleared = false;
             IsRunning = true;
             Time.timeScale = 1f;
+
+            Jinhyeong_SkillSystem.MapData map = Jinhyeong_SkillSystem.MapRegistry.Current;
+            Jinhyeong_Managers.MusicManager.Play(map != null ? map.Name : "snow_sakura");
 
             if (Jinhyeong_AI.WaveDirector.Instance != null)
                 Jinhyeong_AI.WaveDirector.Instance.BeginRun();

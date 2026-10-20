@@ -13,23 +13,37 @@ namespace Jinhyeong_Input
 
         public struct Scheme
         {
-            public string Label;
+            public EMoveScheme Id;
             public KeyCode Up;
             public KeyCode Down;
             public KeyCode Left;
             public KeyCode Right;
+
+            public string Label
+            {
+                get { return LabelOf(Id); }
+            }
+        }
+
+        public static string LabelOf(EMoveScheme scheme)
+        {
+            switch (scheme)
+            {
+                case EMoveScheme.Arrow: return Jinhyeong_Common.Loc.T("Input_Arrow", "방향키");
+                default: return "WASD";
+            }
         }
 
         public static readonly Scheme[] Schemes =
         {
             new Scheme
             {
-                Label = "WASD",
+                Id = EMoveScheme.Wasd,
                 Up = KeyCode.W, Down = KeyCode.S, Left = KeyCode.A, Right = KeyCode.D
             },
             new Scheme
             {
-                Label = "방향키",
+                Id = EMoveScheme.Arrow,
                 Up = KeyCode.UpArrow, Down = KeyCode.DownArrow,
                 Left = KeyCode.LeftArrow, Right = KeyCode.RightArrow
             }

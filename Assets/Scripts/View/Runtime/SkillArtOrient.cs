@@ -23,6 +23,8 @@ namespace Jinhyeong_View
         private const int OverOrder = 20;
 
         private SpriteRenderer[] _renderers;
+        private int[] _baseOrders;
+        private int _minBaseOrder;
         private EMode _appliedTo;
         private bool _orderApplied;
 
@@ -32,13 +34,25 @@ namespace Jinhyeong_View
                 return;
 
             if (_renderers == null || _renderers.Length == 0)
+            {
                 _renderers = GetComponentsInChildren<SpriteRenderer>(true);
+                // 프리팹이 정한 층 순서(번짐 아래 · 심지 위)를 기억해 두고 기준 순서 위에 그대로 얹는다
+                // 전부 같은 순서로 덮으면 가산 번짐이 물건 심지 위에 그려져 제 색이 계열 색에 먹힌다
+                _baseOrders = new int[_renderers.Length];
+                _minBaseOrder = int.MaxValue;
+                for (int i = 0; i < _renderers.Length; i++)
+                {
+                    _baseOrders[i] = _renderers[i] != null ? _renderers[i].sortingOrder : 0;
+                    if (_baseOrders[i] < _minBaseOrder)
+                        _minBaseOrder = _baseOrders[i];
+                }
+            }
 
             int order = _mode == EMode.Ground ? GroundOrder : OverOrder;
             for (int i = 0; i < _renderers.Length; i++)
             {
                 if (_renderers[i] != null)
-                    _renderers[i].sortingOrder = order;
+                    _renderers[i].sortingOrder = order + (_baseOrders[i] - _minBaseOrder);
             }
 
             _appliedTo = _mode;

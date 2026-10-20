@@ -1,11 +1,11 @@
-/** 우다다 모드 — 6초간 이동속도 +40%. 12초마다 */
+/** 질풍 — 6초간 이동속도 +40%. 12초마다 */
 module.exports = {
-    color: '#FFB03A',
-    desc: "우다다 모드 — 6초간 이동속도 +40%. 12초마다",
+    color: '#FFC266',
+    desc: "질풍 — 6초간 이동속도 +40%. 12초마다",
     values: {
-        "Projectile": "Fx_Zoom",
-        "Impact": "Fx_Zoom",
-        "Cast": "Fx_Zoom",
+        "Projectile": "Fx_Gale",
+        "Impact": "Fx_Gale",
+        "Cast": "Fx_Gale",
         "Orient": "Billboard",
         "Color": "#FFB03A",
         "Cooldown": 12,

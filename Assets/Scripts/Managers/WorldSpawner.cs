@@ -12,17 +12,26 @@ namespace Jinhyeong_Managers
     {
         public const string KeyPlayer = "obj_player";
         public const string KeyEnemy  = "obj_enemy";
-        public const string KeyGround = "obj_ground";
+        // 맵이 없을 때 쓰는 바닥 — 맵 1
+        public const string KeyGroundFallback = "obj_ground_snow_sakura";
 
-        private static readonly string[] PreloadKeys =
-            { KeyPlayer, KeyEnemy, KeyGround, Jinhyeong_Parts.PartDropper.PickupKey };
+        // 고른 맵의 바닥 프리팹 주소 (Art2DBuilder 가 맵마다 obj_ground_<key> 로 굽는다)
+        public static string GroundKey
+        {
+            get
+            {
+                MapData map = MapRegistry.Current;
+                return map != null && string.IsNullOrEmpty(map.GroundKey) == false ? map.GroundKey : KeyGroundFallback;
+            }
+        }
 
         public static async UniTask<Player> SpawnPlayerWorldAsync(SkillLoadout loadout, Vector3 spawnPosition)
         {
             AddressableManager am = AddressableManager.Ensure();
-            await am.LoadAllAsync(PreloadKeys);
+            string ground = GroundKey;
+            await am.LoadAllAsync(new[] { KeyPlayer, KeyEnemy, ground, Jinhyeong_Parts.PartDropper.PickupKey });
 
-            EnsureGround();
+            EnsureGround(ground);
             EnsurePartDropper();
             PrewarmFx();
 
@@ -70,16 +79,16 @@ namespace Jinhyeong_Managers
             return player;
         }
 
-        private static void EnsureGround()
+        private static void EnsureGround(string key)
         {
             if (Object.FindFirstObjectByType<TilemapStreamer>() != null)
                 return;
 
             AddressableManager am = AddressableManager.Instance;
-            GameObject prefab = am != null ? am.Get(KeyGround) : null;
+            GameObject prefab = am != null ? am.Get(key) : null;
             if (prefab == null)
             {
-                Debug.LogWarning("[WorldSpawner] obj_ground 프리팹이 없습니다 — 바닥 없이 진행");
+                Debug.LogWarning($"[WorldSpawner] {key} 프리팹이 없습니다 — 바닥 없이 진행");
                 return;
             }
             Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
@@ -96,6 +105,8 @@ namespace Jinhyeong_Managers
             pm.Pool_Fx_Prewarm(PartDropper.PickupKey, CommonConfig.Spawner.PrewarmPickup);
             pm.Pool_Fx_Prewarm(CommonConfig.Skill.HitBurstKey, CommonConfig.Spawner.PrewarmHitBurst);
             pm.Pool_Fx_Prewarm(CommonConfig.Skill.GhostKey, CommonConfig.Spawner.PrewarmGhost);
+            pm.Pool_Fx_Prewarm(CommonConfig.Skill.MeatKey, CommonConfig.Spawner.PrewarmFieldPickup);
+            pm.Pool_Fx_Prewarm(CommonConfig.Skill.MagnetKey, CommonConfig.Spawner.PrewarmFieldPickup);
         }
 
         private static void EnsurePartDropper()

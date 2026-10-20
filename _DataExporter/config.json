@@ -622,6 +622,69 @@
           "type": "float"
         }
       ]
+    },
+    "map": {
+      "dir": "Tables/map",
+      "table": "Map",
+      "idTable": true,
+      "csClass": "MapData",
+      "columns": [
+        {
+          "name": "Id",
+          "json": "id",
+          "type": "int"
+        },
+        {
+          "name": "Name",
+          "json": "name",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "json": "desc",
+          "type": "string"
+        },
+        {
+          "name": "DisplayName",
+          "json": "displayName",
+          "type": "string"
+        },
+        {
+          "name": "Order",
+          "json": "order",
+          "type": "int"
+        },
+        {
+          "name": "GroundKey",
+          "json": "groundKey",
+          "type": "string"
+        },
+        {
+          "name": "Hero",
+          "json": "hero",
+          "type": "int"
+        },
+        {
+          "name": "HpMul",
+          "json": "hpMul",
+          "type": "float"
+        },
+        {
+          "name": "DamageMul",
+          "json": "damageMul",
+          "type": "float"
+        },
+        {
+          "name": "Boss",
+          "json": "boss",
+          "type": "string"
+        },
+        {
+          "name": "BossSkills",
+          "json": "bossSkills",
+          "type": "string"
+        }
+      ]
     }
   },
   "Entries": {

@@ -1,11 +1,11 @@
-/** 개눈빛 레이저 — 전방으로 스포트라이트를 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다 */
+/** 빛의 창 — 전방으로 빛의 창을 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다 */
 module.exports = {
-    color: '#4D8BFF',
-    desc: "개눈빛 레이저 — 전방으로 스포트라이트를 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다",
+    color: '#669BFF',
+    desc: "빛의 창 — 전방으로 빛의 창을 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다",
     values: {
-        "Projectile": "Fx_EyeBeam",
-        "Impact": "Fx_EyeBeam",
-        "Cast": "Fx_EyeBeam",
+        "Projectile": "Fx_LightRay",
+        "Impact": "Fx_LightRay",
+        "Cast": "Fx_LightRay",
         "Orient": "Ground",
         "Color": "#4D8BFF",
         "Cooldown": 4,

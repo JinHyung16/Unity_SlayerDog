@@ -28,6 +28,9 @@ namespace Jinhyeong_AI
         public BehaviorTreeRunner BTRunner { get { return _btRunner; } }
         public EnemyAI AI { get { return _ai; } }
 
+        // 보스가 장착한 패턴 스킬 (Tables/map bossSkills). 풀로 돌아가 일반 적으로 다시 나올 때 뗀다
+        private readonly System.Collections.Generic.List<int> _bossSkills = new System.Collections.Generic.List<int>(4);
+
         public event Action<Enemy> OnDespawnRequested;
 
         public Jinhyeong_SkillSystem.EnemyTypeData Type { get; private set; }
@@ -87,6 +90,7 @@ namespace Jinhyeong_AI
             _damageable.SpeedMultiplier = 1f;
             IsBoss = false;
             ShowHpBar(false);
+            ClearBossSkills();
             _damageable.IncomingDamageMultiplier = 1f;
             _damageable.DestroyOnDeath = false;
             _damageable.NotifyHealthChanged();
@@ -137,14 +141,21 @@ namespace Jinhyeong_AI
                     _attack.Damage = CommonConfig.Enemy.AttackDamage;
 
                 transform.localScale = _baseScale;
+                SetArtScale(1f);
                 ApplyTint(Color.white, false);
                 return;
             }
 
             if (_spriteSets == null)
                 _spriteSets = GetComponentInChildren<Jinhyeong_View.SpriteSetLibrary>(true);
+            // 맵 스킨("<맵키>:<역할>", build_mobs.py)을 먼저 찾고 없으면 공용 그림
             if (_spriteSets != null)
-                _spriteSets.Apply(type.Sprite);
+            {
+                Jinhyeong_SkillSystem.MapData map = Jinhyeong_SkillSystem.MapRegistry.Current;
+                bool skinned = map != null && _spriteSets.Apply(map.Name + ":" + type.Sprite);
+                if (skinned == false)
+                    _spriteSets.Apply(type.Sprite);
+            }
 
             XpValue = type.Xp;
 
@@ -156,6 +167,7 @@ namespace Jinhyeong_AI
             _attack.Damage = type.AttackDamage;
 
             transform.localScale = _baseScale * Mathf.Max(0.1f, type.Scale);
+            SetArtScale(1f / Mathf.Max(0.1f, type.Scale));
 
             Color tint;
             if (ColorUtility.TryParseHtmlString(type.Color, out tint))
@@ -178,10 +190,58 @@ namespace Jinhyeong_AI
 
         public bool IsBoss { get; private set; }
 
+        // 그림 자식(SpriteRenderer)의 배율. 루트 배율의 역수 — 도트 크기를 캐릭터와 같게 둔다
+        private float _artScale = 1f;
+        private Transform _art;
+
+        private void SetArtScale(float s)
+        {
+            if (_art == null)
+            {
+                SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>(true);
+                if (sr == null)
+                    return;
+                _art = sr.transform;
+            }
+            _artScale = s;
+            _art.localScale = Vector3.one * s;
+        }
+
         public void MarkAsBoss()
         {
             IsBoss = true;
+            Jinhyeong_Character.CameraFollow.Shake(0.5f);
+            // 보스는 이벤트 배율까지 그림에 담았다 (build_bosses.py K = 1.5 × 보스 이벤트 1.7) — 그만큼 더 상쇄
+            SetArtScale(_baseScale.x / Mathf.Max(0.01f, transform.localScale.x));
             ShowHpBar(true);
+            EquipBossSkills();
+        }
+
+        // 맵 보스 패턴 — 보스별 C# 없이 데이터 스킬을 단다. 피해 % 는 이 보스의 공격 수치(배율 반영 후) 기준
+        private void EquipBossSkills()
+        {
+            ClearBossSkills();
+            MapData map = MapRegistry.Current;
+            if (map == null || string.IsNullOrEmpty(map.BossSkills) || _skills == null)
+                return;
+            _skills.AttackPower = _attack != null ? _attack.Damage : _skills.AttackPower;
+            string[] ids = map.BossSkills.Split(',');
+            for (int i = 0; i < ids.Length; i++)
+            {
+                if (int.TryParse(ids[i].Trim(), out int id) == false)
+                    continue;
+                if (_skills.AddAutoSkill(id, 1))
+                    _bossSkills.Add(id);
+            }
+        }
+
+        private void ClearBossSkills()
+        {
+            if (_skills == null)
+                return;
+            for (int i = 0; i < _bossSkills.Count; i++)
+                _skills.RemoveAutoSkill(_bossSkills[i]);
+            _bossSkills.Clear();
         }
 
         private void ShowHpBar(bool on)
@@ -249,8 +309,21 @@ namespace Jinhyeong_AI
             _subscribed = false;
         }
 
+        private static readonly Color DeathPuffColor = new Color(1f, 0.96f, 0.86f, 1f);
+        private static readonly Color BossPuffColor = new Color(1f, 0.84f, 0.38f, 1f);
+
         private void HandleDied(Damageable d, SkillObject src)
         {
+            Vector3 at = transform.position + Vector3.up * 0.6f;
+            if (IsBoss)
+            {
+                HitEffect.SpawnKey(CommonConfig.Skill.HitBurstKey, at, BossPuffColor, 0.6f, 5f);
+                Jinhyeong_Character.CameraFollow.Shake(0.7f);
+            }
+            else
+            {
+                HitEffect.SpawnBurst(at, DeathPuffColor);
+            }
             if (OnDespawnRequested != null)
             {
                 OnDespawnRequested.Invoke(this);

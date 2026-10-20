@@ -11,7 +11,7 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
-    mipMapsPreserveCoverage: 0
+    mipMapsPreserveCoverage: 1
     alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
@@ -36,7 +36,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 1
     aniso: 1
-    mipBias: 0
+    mipBias: -0.75
     wrapU: 1
     wrapV: 1
     wrapW: 1

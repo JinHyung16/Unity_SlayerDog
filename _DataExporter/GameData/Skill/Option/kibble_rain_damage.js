@@ -1,8 +1,8 @@
 module.exports = {
     id: 4401,
     name: 'kibble_rain_damage',
-    desc: '음표 소나기 — 피해량 +30%',
-    displayName: '대용량 사료',
+    desc: '화살비 — 피해량 +30%',
+    displayName: '무거운 화살촉',
     partId: 2020,
     trait: 'Damage',
     value: 0.3,

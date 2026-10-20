@@ -2,7 +2,7 @@
 module.exports = {
     id: 5004,
     name: 'Spitter',
-    desc: '방울 화백(베레모 물방울) — 거리를 둔다 — 근접 빌드 견제',
+    desc: '술사 — 거리를 둔다 — 근접 빌드 견제 (맵마다 요괴 승려 · 사령술사 등)',
     sprite: 'spitter',
     hp: 80,
     moveSpeed: 2.5,

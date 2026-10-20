@@ -1,12 +1,12 @@
-/** 슬리퍼 투척 — 캐스터네츠를 튕겨 공격력 300% 피해. 5초마다 */
+/** 쿠나이 — 쿠나이를 던져 공격력 300% 피해. 5초마다 */
 module.exports = {
-    color: '#9BFF3C',
-    desc: "슬리퍼 투척 — 캐스터네츠를 튕겨 공격력 300% 피해. 5초마다",
+    color: '#B1FF66',
+    desc: "쿠나이 — 쿠나이를 던져 공격력 300% 피해. 5초마다",
     values: {
-        "Projectile": "Fx_Slipper",
-        "Impact": "Fx_Paw",
-        "Cast": "Fx_Slipper",
-        "Orient": "Billboard",
+        "Projectile": "Fx_Kunai",
+        "Impact": "Fx_Hit",
+        "Cast": "Fx_Kunai",
+        "Orient": "Ground",
         "Color": "#9BFF3C",
         "Cooldown": 5,
         "Range": 10,

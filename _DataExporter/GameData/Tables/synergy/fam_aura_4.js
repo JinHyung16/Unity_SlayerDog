@@ -3,7 +3,7 @@ module.exports = {
     id: 8012,
     name: 'fam_aura_4',
     desc: '각성 4개 — 각성 스킬 쿨타임 -25%',
-    displayName: '앙코르',
+    displayName: '영웅의 기개',
     family: 'Aura',
     reqFamilyCount: 4,
     reqSkillId: 0,

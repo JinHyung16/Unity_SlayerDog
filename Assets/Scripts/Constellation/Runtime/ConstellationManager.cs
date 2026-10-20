@@ -67,8 +67,16 @@ namespace Jinhyeong_Constellation
                 ConstellationGenerator.Build(_graph);
             }
 
+            Jinhyeong_Common.Loc.ApplyGraph(_graph.Nodes);
             LoadOwned();
             Recalculate();
+        }
+
+        // 세이브가 바깥에서 바뀌었을 때(하네스 성장 재현 · 복구) 소유 노드를 다시 읽는다
+        public static void Reload()
+        {
+            _built = false;
+            Ensure();
         }
 
         private static void HandleWiped()

@@ -21,6 +21,21 @@ namespace Jinhyeong_Parts
         private PartInstance _payload;
         private float _spawnTime;
 
+        // 필드에 떠 있는 상자 목록 — HUD 가 화면 밖 상자 방향을 가리킬 때 쓴다 (매 프레임 Find 하지 않게)
+        private static readonly System.Collections.Generic.List<PartPickup> _live = new System.Collections.Generic.List<PartPickup>(8);
+        public static System.Collections.Generic.IReadOnlyList<PartPickup> Live { get { return _live; } }
+
+        protected override void OnEnabled()
+        {
+            if (_live.Contains(this) == false)
+                _live.Add(this);
+        }
+
+        protected override void OnDisabled()
+        {
+            _live.Remove(this);
+        }
+
         private static readonly Color AmpColor = new Color(1f, 0.30f, 0.72f, 1f);
         private Color _glowColor = Color.white;
 

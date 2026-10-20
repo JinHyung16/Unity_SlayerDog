@@ -6,7 +6,7 @@ namespace Jinhyeong_Common
 {
     public static class SaveData
     {
-        private const string Key = "save.v1";
+        public const string Key = "save.v1";
 
         public const int UnlockCost = 8;
 
@@ -26,9 +26,14 @@ namespace Jinhyeong_Common
             2103
         };
 
+        // 세이브 형식 버전. 1 = 버전 칸이 없던 세이브(음악 · 개많이잡아 시절), 2 = SlayerDog 맵 · 해금 · 새 경제
+        public const int CurrentVersion = 2;
+        private const string BackupKey = "save.v1.bak";
+
         [Serializable]
         private class Blob
         {
+            public int Version;
             public int BestSeconds;
             public int BestRound;
             public int BestKills;
@@ -40,6 +45,8 @@ namespace Jinhyeong_Common
 
             public int[] UnlockedSkills = new int[0];
             public int Character = 1;
+            public int Map = 1;
+            public int MapCleared;
 
             public int[] StarNodes = new int[0];
             public int[] StarLevels = new int[0];
@@ -59,6 +66,27 @@ namespace Jinhyeong_Common
         public static int PlayCount { get { return Ensure().PlayCount; } }
         public static int Kibble { get { return Ensure().Kibble; } }
         public static int SuperDna { get { return Ensure().SuperDna; } }
+        public static int MapCleared { get { return Ensure().MapCleared; } }
+
+        // 맵은 앞 맵을 클리어하면 열린다. 맵 1 은 처음부터
+        public static bool IsMapUnlocked(int order)
+        {
+            return order <= Ensure().MapCleared + 1;
+        }
+
+        // 캐릭터: 시작 3명(시바 · 셰퍼드 · 푸들), 나머지는 출신 맵(Tables/map hero)을 클리어하면 합류
+        private static readonly int[] StarterHeroes = { 1, 6, 7 };
+
+        public static bool IsHeroUnlocked(int heroIndex)
+        {
+            for (int i = 0; i < StarterHeroes.Length; i++)
+            {
+                if (StarterHeroes[i] == heroIndex)
+                    return true;
+            }
+            int originMap = Jinhyeong_SkillSystem.MapRegistry.OriginMapOf(heroIndex);
+            return originMap > 0 && Ensure().MapCleared >= originMap;
+        }
 
         public static IReadOnlyCollection<int> UnlockedSkills { get { Ensure(); return _unlocked; } }
 
@@ -121,9 +149,11 @@ namespace Jinhyeong_Common
             }
         }
 
+        // 3종 Lv20 까지 사료 약 8.3만 — 판당 약 1,500 으로 약 55판 (10챕터 완주 ≈ 65판에 맞춘다)
         public static int StatCost(EStat s)
         {
-            return 60 + StatLevel(s) * 40;
+            int lv = StatLevel(s);
+            return 100 + lv * 70 + lv * lv * 5;
         }
 
         public static bool BuyStat(EStat s)
@@ -160,6 +190,10 @@ namespace Jinhyeong_Common
                 return _data;
 
             string json = PlayerPrefs.GetString(Key, string.Empty);
+            // 스팀 클라우드에 더 많이 진행한 세이브가 있으면 그쪽을 쓴다 (다른 PC 에서 이어 하기)
+            string cloud = SteamService.ReadCloud();
+            if (string.IsNullOrEmpty(cloud) == false && CloudIsAhead(cloud, json))
+                json = cloud;
             if (string.IsNullOrEmpty(json))
             {
                 _data = new Blob();
@@ -177,6 +211,8 @@ namespace Jinhyeong_Common
                 }
             }
 
+            Migrate(json);
+
             _unlocked.Clear();
             if (_data.UnlockedSkills != null)
             {
@@ -187,8 +223,30 @@ namespace Jinhyeong_Common
             for (int i = 0; i < StarterSkills.Length; i++)
                 _unlocked.Add(StarterSkills[i]);
 
-            RunSelection.CharacterIndex = _data.Character;
+            RunSelection.CharacterIndex = IsHeroUnlocked(_data.Character) ? _data.Character : 1;
+            RunSelection.MapIndex = _data.Map;
             return _data;
+        }
+
+        // 옛 세이브를 지금 형식으로. 고치기 전에 원문을 BackupKey 에 한 번 남긴다
+        private static void Migrate(string rawJson)
+        {
+            if (_data.Version >= CurrentVersion)
+                return;
+            if (_data.Version > 0 || string.IsNullOrEmpty(rawJson) == false)
+            {
+                if (string.IsNullOrEmpty(rawJson) == false && PlayerPrefs.HasKey(BackupKey) == false)
+                    PlayerPrefs.SetString(BackupKey, rawJson);
+            }
+            if (_data.Version < 2)
+            {
+                // 맵은 클리어한 다음 맵까지만, 캐릭터는 1~10 안 (Ensure 가 잠긴 캐릭터를 시바로 돌린다)
+                _data.Map = Mathf.Clamp(_data.Map, 1, _data.MapCleared + 1);
+                _data.Character = Mathf.Clamp(_data.Character, 1, RunSelection.Heroes.Length);
+            }
+            _data.Version = CurrentVersion;
+            if (string.IsNullOrEmpty(rawJson) == false)
+                PlayerPrefs.SetString(Key, JsonUtility.ToJson(_data));
         }
 
         public static void Save()
@@ -199,9 +257,28 @@ namespace Jinhyeong_Common
             _unlocked.CopyTo(arr);
             b.UnlockedSkills = arr;
             b.Character = RunSelection.CharacterIndex;
+            b.Map = RunSelection.MapIndex;
 
-            PlayerPrefs.SetString(Key, JsonUtility.ToJson(b));
+            string json = JsonUtility.ToJson(b);
+            PlayerPrefs.SetString(Key, json);
             PlayerPrefs.Save();
+            SteamService.WriteCloud(json);
+        }
+
+        private static bool CloudIsAhead(string cloud, string local)
+        {
+            if (string.IsNullOrEmpty(local))
+                return true;
+            try
+            {
+                Blob c = JsonUtility.FromJson<Blob>(cloud);
+                Blob l = JsonUtility.FromJson<Blob>(local);
+                return c != null && l != null && c.PlayCount > l.PlayCount;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public static void Load()
@@ -230,9 +307,15 @@ namespace Jinhyeong_Common
             return true;
         }
 
+        // 마지막 판 보상 (결과 화면이 읽는다). 새 맵 = 이번 판에 처음 클리어한 맵 순서, 없으면 0
+        public static int LastKibble { get; private set; }
+        public static int LastDna { get; private set; }
+        public static int LastNewMap { get; private set; }
+
         public static void RecordRun(int seconds, int round, int kills, bool cleared)
         {
             Blob b = Ensure();
+            LastNewMap = 0;
 
             b.PlayCount++;
             if (seconds > b.BestSeconds)
@@ -241,12 +324,52 @@ namespace Jinhyeong_Common
                 b.BestRound = round;
             if (kills > b.BestKills)
                 b.BestKills = kills;
+            bool firstClear = false;
             if (cleared)
+            {
                 b.ClearCount++;
+                if (RunSelection.MapIndex > b.MapCleared)
+                {
+                    b.MapCleared = RunSelection.MapIndex;
+                    firstClear = true;
+                    bool all = true;
+                    for (int i = 1; i <= RunSelection.Heroes.Length; i++)
+                        all &= IsHeroUnlocked(i);
+                    SteamService.OnMapCleared(b.MapCleared, all);
+                }
+            }
 
-            b.Kibble += kills;
-            b.SuperDna += round + kills / 40 + (cleared ? 10 : 0);
+            // 판당 DNA 약 31 + 챕터 첫 클리어 30 — 스킬 트리(1,944) 약 53판
+            LastKibble = kills;
+            LastDna = DnaReward(round, kills, cleared, firstClear);
+            if (firstClear)
+                LastNewMap = RunSelection.MapIndex;
+            b.Kibble += LastKibble;
+            b.SuperDna += LastDna;
 
+            Save();
+        }
+
+        public const int FirstClearDna = 30;
+
+        public static int DnaReward(int round, int kills, bool cleared, bool firstClear)
+        {
+            return round + kills / 120 + (cleared ? 8 : 0) + (firstClear ? FirstClearDna : 0);
+        }
+
+        // 하네스 성장 재현용 (RunLoopCheck 7번째 칸). 기록 · 강화 · 스킬 트리를 비우고 재화 · 클리어만 채운다
+        public static void DebugSetProgress(int kibble, int dna, int clears, int mapCleared)
+        {
+            Blob b = Ensure();
+            b.Kibble = kibble;
+            b.SuperDna = dna;
+            b.ClearCount = clears;
+            b.MapCleared = mapCleared;
+            b.StatHp = 0;
+            b.StatAtk = 0;
+            b.StatSpd = 0;
+            b.StarNodes = new int[0];
+            b.StarLevels = new int[0];
             Save();
         }
 

@@ -2,8 +2,8 @@
 module.exports = {
     id: 2016,
     name: 'Third Eye',
-    desc: '가장 가까운 적을 관통하는 시선으로 공격력 180% 피해. 3초마다',
-    displayName: '하이 C 관통음',
+    desc: '가장 가까운 적을 꿰뚫는 기로 공격력 180% 피해. 3초마다',
+    displayName: '심안 관통',
     slot: 'Head',
     family: 'Gaze',
     appliesDebuff: 'None',

@@ -2,7 +2,7 @@
 module.exports = {
     id: 5003,
     name: 'Brute',
-    desc: '히이잉 보안관(목마 카우보이) — 느리고 튼튼 — 단일 딜 검증용',
+    desc: '거구 — 느리고 튼튼 — 단일 딜 검증용 (맵마다 오니 · 석사자 · 오우거 등)',
     sprite: 'brute',
     hp: 200,
     moveSpeed: 2,

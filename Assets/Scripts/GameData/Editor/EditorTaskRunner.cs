@@ -25,8 +25,18 @@ namespace Jinhyeong_GameData.Editor
             EditorApplication.update += Poll;
         }
 
+        // Play 중에도 보는 신호 파일. 하네스가 걸렸을 때 에디터를 재실행하지 않고 Play 모드만 끈다
+        private const string StopFile = "Temp/editor.stop";
+
         private static void Poll()
         {
+            if (EditorApplication.isPlaying && File.Exists(StopFile))
+            {
+                SafeDelete(StopFile);
+                Debug.Log("[EditorTask] Play 모드 끔 (Temp/editor.stop)");
+                EditorApplication.isPlaying = false;
+                return;
+            }
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
                 return;
@@ -72,6 +82,37 @@ namespace Jinhyeong_GameData.Editor
             {
                 switch (task)
                 {
+                    case "buildwin":
+                        BuildRunner.BuildWindows();
+                        break;
+
+                    case "lang_en":
+                    case "lang_ko":
+                        PlayerPrefs.SetString(Translation.Unity.TranslationRuntime.LanguagePrefKey, task == "lang_en" ? "English" : "Korean");
+                        PlayerPrefs.Save();
+                        Debug.Log("[EditorTask] 다음 Play 의 언어 = " + (task == "lang_en" ? "English" : "Korean"));
+                        break;
+
+                    case "locsync":
+                        AssetDatabase.Refresh();
+                        LocRunner.Sync();
+                        break;
+
+                    case "locexport":
+                        AssetDatabase.Refresh();
+                        LocRunner.Export();
+                        break;
+
+                    case "resolve":
+                        UnityEditor.PackageManager.Client.Resolve();
+                        Debug.Log("[EditorTask] 패키지 해석 요청 (manifest.json)");
+                        break;
+
+                    case "wipe":
+                        Jinhyeong_Common.SaveData.Wipe();
+                        Debug.Log("[EditorTask] 세이브 초기화 (기록 · 재화 · 해금 · 강화 · 스킬 트리)");
+                        break;
+
                     case "refresh":
                         AssetDatabase.Refresh();
                         Debug.Log("[EditorTask] 에셋 새로고침");

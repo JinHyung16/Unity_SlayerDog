@@ -30,6 +30,9 @@ namespace Jinhyeong_UI
         private TMP_Text _killText;
         private TMP_Text _levelText;
         private Image _hpFill;
+        private TMP_Text _hpText;
+        private int _hpShown = -1;
+        private int _hpMaxShown = -1;
         private Image _xpFill;
 
         private TMP_Text _partsText;
@@ -44,6 +47,14 @@ namespace Jinhyeong_UI
         private GameObject _resultPanel;
         private TMP_Text _resultText;
         private TMP_Text _resultTitle;
+        private GameObject _pausePanel;
+        private bool _tipShown;
+
+        // 첫 몇 판은 조작을 알려 준다 (판 기록 3 미만)
+        private const int TipRuns = 3;
+        private static string TipText { get { return Loc.T("Hud_Tip", "WASD · 방향키로 이동  ·  공격은 자동  ·  보물상자를 주워 무기를 늘리세요"); } }
+
+        public bool PauseOpen { get { return _pausePanel != null && _pausePanel.activeSelf; } }
 
         public static string DimNote { get; private set; } = string.Empty;
         private bool _endHooked;
@@ -93,6 +104,9 @@ namespace Jinhyeong_UI
                 return;
             }
 
+            ReadPauseKey();
+            if (PauseOpen)
+                return;
             ReadLevelUpKeys();
 
             WaveDirector wave = WaveDirector.Instance;
@@ -102,17 +116,40 @@ namespace Jinhyeong_UI
                 {
                     wave.OnBanner += ShowBanner;
                     _bannerHooked = true;
+                    if (_tipShown == false && SaveData.PlayCount < TipRuns)
+                    {
+                        _tipShown = true;
+                        ShowBanner(TipText, 6f, Jinhyeong_UI.Framework.UIBuild.ColorGold);
+                    }
                 }
-                if (_bannerRoot.activeSelf && Time.unscaledTime >= _bannerUntil)
+                if (_bannerUntil > Time.unscaledTime)
+                {
+                    if (LevelUpOpen)
+                    {
+                        _bannerUntil += Time.unscaledDeltaTime;
+                        if (_bannerRoot.activeSelf)
+                            _bannerRoot.SetActive(false);
+                    }
+                    else if (_bannerRoot.activeSelf == false)
+                    {
+                        _bannerRoot.SetActive(true);
+                    }
+                }
+                else if (_bannerRoot.activeSelf)
+                {
                     _bannerRoot.SetActive(false);
+                }
 
                 int total = Mathf.FloorToInt(wave.Elapsed);
                 _timeText.text = string.Format("{0:00}:{1:00}", total / 60, total % 60);
             }
 
+            RefreshBossBar();
+            RefreshChestPointer();
+
             EnemySpawner spawner = EnemySpawner.Instance;
             if (spawner != null)
-                _killText.text = spawner.KillCount.ToString();
+                _killText.text = Loc.F("Hud_Kills", "처치 {0}", spawner.KillCount);
 
             RunProgress progress = RunProgress.Instance;
             if (progress != null)
@@ -144,7 +181,18 @@ namespace Jinhyeong_UI
                 _playerHp = p != null ? p.GetComponent<Damageable>() : null;
             }
             if (_playerHp != null)
+            {
                 _hpFill.fillAmount = _playerHp.MaxHp > 0f ? _playerHp.Hp / _playerHp.MaxHp : 0f;
+                // 바뀔 때만 글자를 다시 쓴다 (매 프레임 문자열 할당 안 함)
+                int hp = Mathf.CeilToInt(Mathf.Max(0f, _playerHp.Hp));
+                int max = Mathf.CeilToInt(_playerHp.MaxHp);
+                if (_hpText != null && (hp != _hpShown || max != _hpMaxShown))
+                {
+                    _hpShown = hp;
+                    _hpMaxShown = max;
+                    _hpText.text = hp + " / " + max;
+                }
+            }
         }
 
         private void Build()
@@ -171,20 +219,23 @@ namespace Jinhyeong_UI
             BuildPartsStrip(safe);
             BuildResultPanel(safe);
             BuildBanner(safe);
+            BuildBossBar(safe);
+            BuildChestPointer(safe);
             BuildLevelUpPanel(safe);
+            BuildPausePanel(safe);
 
             _root.SetActive(false);
         }
 
         // 아트 리부트 (볼트 개많이잡아/개많이잡아 아트 방향 UI 방향) — XP 는 화면 위 가로 전체, HP 는 하단 중앙 하트 바
-        private static readonly Color HpColor = new Color(1f, 0.25f, 0.62f, 1f);
-        private static readonly Color XpColor = new Color(0.20f, 0.90f, 1f, 1f);
-        private static readonly Color BarBack = new Color(0.10f, 0.05f, 0.18f, 0.88f);
-        private static readonly Color TextInk = new Color(0.18f, 0.06f, 0.30f, 1f);
+        private static readonly Color HpColor = new Color(0.88f, 0.24f, 0.24f, 1f);
+        private static readonly Color XpColor = new Color(0.40f, 0.80f, 1f, 1f);
+        private static readonly Color BarBack = new Color(0.06f, 0.06f, 0.10f, 0.88f);
+        private static readonly Color TextInk = new Color(0.10f, 0.08f, 0.12f, 1f);
 
         private static void Ink(TMP_Text t, float width)
         {
-            t.fontStyle = FontStyles.Bold;
+            t.fontStyle = FontStyles.Normal;
             t.outlineWidth = width;
             t.outlineColor = TextInk;
         }
@@ -250,7 +301,7 @@ namespace Jinhyeong_UI
 
             _levelText = MakeText(bar, "Level", "Lv.1", 22f, TextAlignmentOptions.Left);
             Ink(_levelText, 0.22f);
-            _levelText.color = XpColor;
+            _levelText.color = Color.white;
             RectTransform lvRt = _levelText.rectTransform;
             lvRt.anchorMin = new Vector2(0f, 1f);
             lvRt.anchorMax = new Vector2(0f, 1f);
@@ -267,6 +318,9 @@ namespace Jinhyeong_UI
             hpBg.anchoredPosition = new Vector2(14f, 58f);
             MakeBar(hpBg, HpColor, out _hpFill);
             _hpFill.fillAmount = 1f;
+            _hpText = MakeText(hpBg, "HpText", "", 15f, TextAlignmentOptions.Center);
+            Ink(_hpText, 0.25f);
+            Stretch(_hpText.rectTransform);
 
             RectTransform heartRt = MakeRect("Heart", hpBg);
             heartRt.anchorMin = new Vector2(0f, 0.5f);
@@ -303,14 +357,44 @@ namespace Jinhyeong_UI
             Jinhyeong_UI.Framework.UISkin.ApplySliced(bg, Jinhyeong_UI.Framework.UISkin.CardBg, Jinhyeong_UI.Framework.UIBuild.CardCorner);
             bg.raycastTarget = false;
 
-            TMP_Text t = MakeText(strip, "Parts", "", 15f, TextAlignmentOptions.Center);
-            t.color = Jinhyeong_UI.Framework.UIBuild.ColorSubHead;
-            Stretch(t.rectTransform);
-            _partsText = t;
+            const float slotW = 190f;
+            for (int i = 0; i < PartLoadout.SlotCount; i++)
+            {
+                RectTransform slot = MakeRect("Slot" + i, strip);
+                slot.anchorMin = slot.anchorMax = new Vector2(0.5f, 0.5f);
+                slot.sizeDelta = new Vector2(slotW - 8f, 34f);
+                slot.anchoredPosition = new Vector2((i - (PartLoadout.SlotCount - 1) * 0.5f) * slotW, 0f);
+
+                RectTransform ic = MakeRect("Icon", slot);
+                ic.anchorMin = ic.anchorMax = new Vector2(0f, 0.5f);
+                ic.pivot = new Vector2(0f, 0.5f);
+                ic.sizeDelta = new Vector2(30f, 30f);
+                ic.anchoredPosition = new Vector2(2f, 0f);
+                _slotIcon[i] = ic.gameObject.AddComponent<Image>();
+                _slotIcon[i].raycastTarget = false;
+                _slotIcon[i].preserveAspect = true;
+
+                TMP_Text name = MakeText(slot, "Name", "", 15f, TextAlignmentOptions.Left);
+                name.enableAutoSizing = true;
+                name.fontSizeMin = 11f;
+                name.fontSizeMax = 15f;
+                name.enableWordWrapping = false;
+                RectTransform nr = name.rectTransform;
+                nr.anchorMin = new Vector2(0f, 0f);
+                nr.anchorMax = new Vector2(1f, 1f);
+                nr.offsetMin = new Vector2(38f, 0f);
+                nr.offsetMax = new Vector2(-2f, 0f);
+                _slotName[i] = name;
+            }
+            _partsText = _slotName[0];
         }
 
+        private readonly Image[] _slotIcon = new Image[PartLoadout.SlotCount];
+        private readonly TMP_Text[] _slotName = new TMP_Text[PartLoadout.SlotCount];
+        private static readonly Color SlotEmpty = new Color(1f, 1f, 1f, 0.18f);
+
         // ── 레벨업 3택1 ─────────────────────────────────────────────────
-        // 레벨업하면 멈추고 카드 3장 중 하나를 고른다 (클릭 · 1/2/3). 한 번에 여러 레벨이 오르면 차례로 연다
+        // 레벨업하면 멈추고 카드 3장 중 하나를 고르세요 (클릭 · 1/2/3). 한 번에 여러 레벨이 오르면 차례로 연다
         private GameObject _levelPanel;
         private TMP_Text _levelTitle;
         private readonly Image[] _cardFrame = new Image[Jinhyeong_Parts.LevelUpDraft.CardCount];
@@ -321,6 +405,7 @@ namespace Jinhyeong_UI
         private readonly GameObject[] _cardRoot = new GameObject[Jinhyeong_Parts.LevelUpDraft.CardCount];
         private System.Collections.Generic.List<Jinhyeong_Parts.LevelUpCard> _cards;
         private int _pendingLevelUps;
+        private TMP_Text _levelHint;
         private int _autoDamagePicks;
         private int _autoHpPicks;
 
@@ -333,7 +418,7 @@ namespace Jinhyeong_UI
             _levelPanel = panel.gameObject;
             Image dim = _levelPanel.AddComponent<Image>();
             dim.sprite = WhiteSprite();
-            dim.color = new Color(0.06f, 0.02f, 0.12f, 0.78f);
+            dim.color = new Color(0.03f, 0.03f, 0.06f, 0.78f);
             dim.raycastTarget = true;
 
             _levelTitle = MakeText(panel, "Title", "LEVEL UP!", 46f, TextAlignmentOptions.Center);
@@ -344,7 +429,8 @@ namespace Jinhyeong_UI
             tr.sizeDelta = new Vector2(700f, 60f);
             tr.anchoredPosition = new Vector2(0f, 230f);
 
-            TMP_Text hint = MakeText(panel, "Hint", "하나를 고른다  ·  클릭 또는 1 · 2 · 3", 18f, TextAlignmentOptions.Center);
+            TMP_Text hint = MakeText(panel, "Hint", "", 18f, TextAlignmentOptions.Center);
+            _levelHint = hint;
             hint.color = Jinhyeong_UI.Framework.UIBuild.ColorSubHead;
             RectTransform hr = hint.rectTransform;
             hr.anchorMin = hr.anchorMax = new Vector2(0.5f, 0.5f);
@@ -393,15 +479,22 @@ namespace Jinhyeong_UI
                 _cardIcon[i].preserveAspect = true;
 
                 _cardName[i] = MakeText(card, "Name", "", 26f, TextAlignmentOptions.Center);
+                _cardName[i].enableAutoSizing = true;
+                _cardName[i].enableWordWrapping = false;
+                _cardName[i].fontSizeMin = 17f;
+                _cardName[i].fontSizeMax = 26f;
                 Ink(_cardName[i], 0.2f);
                 RectTransform nr = _cardName[i].rectTransform;
                 nr.anchorMin = nr.anchorMax = new Vector2(0.5f, 1f);
-                nr.sizeDelta = new Vector2(270f, 40f);
-                nr.anchoredPosition = new Vector2(0f, -196f);
+                nr.sizeDelta = new Vector2(276f, 52f);
+                nr.anchoredPosition = new Vector2(0f, -194f);
 
                 _cardDesc[i] = MakeText(card, "Desc", "", 16f, TextAlignmentOptions.Top);
                 _cardDesc[i].color = Jinhyeong_UI.Framework.UIBuild.ColorSubHead;
                 _cardDesc[i].enableWordWrapping = true;
+                _cardDesc[i].enableAutoSizing = true;
+                _cardDesc[i].fontSizeMin = 12f;
+                _cardDesc[i].fontSizeMax = 16f;
                 RectTransform dr = _cardDesc[i].rectTransform;
                 dr.anchorMin = dr.anchorMax = new Vector2(0.5f, 1f);
                 dr.sizeDelta = new Vector2(250f, 110f);
@@ -430,6 +523,8 @@ namespace Jinhyeong_UI
             }
 
             RunProgress progress = RunProgress.Instance;
+            if (_levelHint != null)
+                _levelHint.text = Loc.T("Hud_LevelUpHint", "하나를 고르세요  ·  클릭 또는 1 · 2 · 3");
             _levelTitle.text = progress != null ? $"LEVEL {progress.Level - _pendingLevelUps + 1}" : "LEVEL UP!";
             for (int i = 0; i < _cardRoot.Length; i++)
             {
@@ -449,16 +544,16 @@ namespace Jinhyeong_UI
             switch (c.Kind)
             {
                 case Jinhyeong_Parts.ELevelUpCardKind.NewWeapon:
-                    _cardKind[i].text = "새 무기";
+                    _cardKind[i].text = Loc.T("Hud_CardNewWeapon", "새 무기");
                     break;
                 case Jinhyeong_Parts.ELevelUpCardKind.Upgrade:
-                    _cardKind[i].text = "무기 강화";
+                    _cardKind[i].text = Loc.T("Hud_CardUpgrade", "무기 강화");
                     break;
                 case Jinhyeong_Parts.ELevelUpCardKind.Amp:
-                    _cardKind[i].text = "기본 공격 앰프";
+                    _cardKind[i].text = Loc.T("Hud_CardAmp", "고유 공격 강화");
                     break;
                 default:
-                    _cardKind[i].text = "능력";
+                    _cardKind[i].text = Loc.T("Hud_CardStat", "능력");
                     break;
             }
             if (c.Part != null)
@@ -476,11 +571,15 @@ namespace Jinhyeong_UI
                     int cut = d.IndexOf('—');
                     sb.Append(cut >= 0 ? d.Substring(cut + 1).Trim() : d);
                 }
-                _cardDesc[i].text = sb.Length > 0 ? sb.ToString() : c.Part.Data.Description;
+                _cardDesc[i].text = c.Kind == Jinhyeong_Parts.ELevelUpCardKind.NewWeapon || sb.Length == 0
+                    ? c.Part.Data.Description
+                    : sb.ToString();
             }
             else
             {
-                icon = Jinhyeong_UI.Framework.UISkin.Get(Jinhyeong_UI.Framework.UISkin.Heart);
+                icon = Jinhyeong_UI.Framework.UISkin.Get(StatIcon(c.StatTrait));
+                if (icon == null)
+                    icon = Jinhyeong_UI.Framework.UISkin.Get(Jinhyeong_UI.Framework.UISkin.Heart);
                 accent = Jinhyeong_UI.Framework.UIBuild.ColorGold;
                 _cardName[i].text = StatName(c.StatTrait);
                 _cardDesc[i].text = StatDesc(c.StatTrait, c.StatValue);
@@ -488,7 +587,7 @@ namespace Jinhyeong_UI
             _cardIcon[i].sprite = icon;
             _cardIcon[i].enabled = icon != null;
             _cardIcon[i].color = accent;
-            _cardKind[i].color = accent;
+            _cardKind[i].color = KindColor(c.Kind);
             _cardFrame[i].color = accent;
         }
 
@@ -506,14 +605,48 @@ namespace Jinhyeong_UI
             }
         }
 
+        // 맵 보스 이름 (Tables/map). 맵이 없으면 일반 문구
+        private static string BossClearTitle()
+        {
+            Jinhyeong_SkillSystem.MapData map = Jinhyeong_SkillSystem.MapRegistry.Current;
+            return map != null && string.IsNullOrEmpty(map.Boss) == false ? Loc.F("Hud_BossDefeated", "{0} 격파!", map.Boss) : Loc.T("Hud_BossDefeatedDefault", "보스 격파!");
+        }
+
+        private static readonly Color KindNew = new Color(1f, 0.82f, 0.30f, 1f);
+        private static readonly Color KindUpgrade = new Color(0.55f, 0.85f, 1f, 1f);
+        private static readonly Color KindAmp = new Color(1f, 0.55f, 0.75f, 1f);
+        private static readonly Color KindStat = new Color(0.80f, 0.95f, 0.70f, 1f);
+
+        private static Color KindColor(Jinhyeong_Parts.ELevelUpCardKind k)
+        {
+            switch (k)
+            {
+                case Jinhyeong_Parts.ELevelUpCardKind.NewWeapon: return KindNew;
+                case Jinhyeong_Parts.ELevelUpCardKind.Upgrade: return KindUpgrade;
+                case Jinhyeong_Parts.ELevelUpCardKind.Amp: return KindAmp;
+                default: return KindStat;
+            }
+        }
+
+        private static string StatIcon(EPartTrait t)
+        {
+            switch (t)
+            {
+                case EPartTrait.Damage: return "Icons/stat_damage";
+                case EPartTrait.MaxHp: return "Icons/stat_maxhp";
+                case EPartTrait.MoveSpeed: return "Icons/stat_movespeed";
+                default: return "Icons/stat_healonkill";
+            }
+        }
+
         private static string StatName(EPartTrait t)
         {
             switch (t)
             {
-                case EPartTrait.Damage: return "볼륨 업";
-                case EPartTrait.MaxHp: return "튼튼한 성대";
-                case EPartTrait.MoveSpeed: return "경쾌한 스텝";
-                default: return "앙코르 함성";
+                case EPartTrait.Damage: return Loc.T("Hud_StatDamageName", "날 벼리기");
+                case EPartTrait.MaxHp: return Loc.T("Hud_StatMaxHpName", "강철 갑옷");
+                case EPartTrait.MoveSpeed: return Loc.T("Hud_StatMoveSpeedName", "바람 발걸음");
+                default: return Loc.T("Hud_StatHealOnKillName", "전장의 함성");
             }
         }
 
@@ -521,10 +654,10 @@ namespace Jinhyeong_UI
         {
             switch (t)
             {
-                case EPartTrait.Damage: return $"공격력 +{Mathf.RoundToInt(v * 100f)}%";
-                case EPartTrait.MaxHp: return $"최대 체력 +{Mathf.RoundToInt(v * 100f)}%";
-                case EPartTrait.MoveSpeed: return $"이동속도 +{Mathf.RoundToInt(v * 100f)}%";
-                default: return $"처치 시 체력 +{v:0.#}";
+                case EPartTrait.Damage: return Loc.F("Hud_StatDamageDesc", "공격력 +{0}%", Mathf.RoundToInt(v * 100f));
+                case EPartTrait.MaxHp: return Loc.F("Hud_StatMaxHpDesc", "최대 체력 +{0}%", Mathf.RoundToInt(v * 100f));
+                case EPartTrait.MoveSpeed: return Loc.F("Hud_StatMoveSpeedDesc", "이동속도 +{0}%", Mathf.RoundToInt(v * 100f));
+                default: return Loc.F("Hud_StatHealOnKillDesc", "처치 시 체력 +{0:0.#}", v);
             }
         }
 
@@ -564,6 +697,75 @@ namespace Jinhyeong_UI
             PickLevelUp(pick);
         }
 
+        // ESC 로 일시정지 · 계속. 레벨업 3택1 이 열려 있을 때는 열지 않는다
+        private void ReadPauseKey()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) == false || GameFlow.IsRunning == false || LevelUpOpen)
+                return;
+            SetPaused(PauseOpen == false);
+        }
+
+        private void SetPaused(bool on)
+        {
+            if (_pausePanel == null)
+                return;
+            _pausePanel.SetActive(on);
+            Time.timeScale = on ? 0f : 1f;
+            SfxManager.Play(ESfx.Click);
+        }
+
+        private void GiveUp()
+        {
+            _pausePanel.SetActive(false);
+            Time.timeScale = 1f;
+            GameFlow.EndGame();
+        }
+
+        private void BuildPausePanel(RectTransform parent)
+        {
+            RectTransform panel = MakeRect("PausePanel", parent);
+            Stretch(panel);
+            _pausePanel = panel.gameObject;
+
+            Image dim = _pausePanel.AddComponent<Image>();
+            dim.sprite = WhiteSprite();
+            dim.color = new Color(0.03f, 0.03f, 0.06f, 0.82f);
+            dim.raycastTarget = true;
+
+            TMP_Text title = MakeText(panel, "Title", Loc.T("Hud_PauseTitle", "일시정지"), 52f, TextAlignmentOptions.Center);
+            Ink(title, 0.25f);
+            title.color = Jinhyeong_UI.Framework.UIBuild.ColorGold;
+            RectTransform titleRt = title.rectTransform;
+            titleRt.anchorMin = new Vector2(0.5f, 0.5f);
+            titleRt.anchorMax = new Vector2(0.5f, 0.5f);
+            titleRt.sizeDelta = new Vector2(520f, 66f);
+            titleRt.anchoredPosition = new Vector2(0f, 120f);
+
+            MakePauseButton(panel, "Resume", Loc.T("Hud_PauseResume", "계속하기 (ESC)"), new Vector2(0f, 10f), Jinhyeong_UI.Framework.UIBuild.ColorCardOn, () => SetPaused(false));
+            MakePauseButton(panel, "GiveUp", Loc.T("Hud_PauseGiveUp", "포기하고 결과 보기"), new Vector2(0f, -76f), Jinhyeong_UI.Framework.UIBuild.ColorDanger, GiveUp);
+
+            _pausePanel.SetActive(false);
+        }
+
+        private void MakePauseButton(RectTransform parent, string name, string label, Vector2 pos, Color color, UnityEngine.Events.UnityAction onClick)
+        {
+            RectTransform btn = MakeRect(name, parent);
+            btn.anchorMin = new Vector2(0.5f, 0.5f);
+            btn.anchorMax = new Vector2(0.5f, 0.5f);
+            btn.sizeDelta = new Vector2(340f, 66f);
+            btn.anchoredPosition = pos;
+            Image bg = btn.gameObject.AddComponent<Image>();
+            bg.color = color;
+            Jinhyeong_UI.Framework.UISkin.ApplySliced(bg, Jinhyeong_UI.Framework.UISkin.CardBg, Jinhyeong_UI.Framework.UIBuild.CardCorner);
+            Jinhyeong_UI.Framework.UIBuild.Outline(btn, Jinhyeong_UI.Framework.UIBuild.ColorOutline, Jinhyeong_UI.Framework.UISkin.CardFrame, Jinhyeong_UI.Framework.UIBuild.CardCorner);
+            Button button = btn.gameObject.AddComponent<Button>();
+            button.targetGraphic = bg;
+            button.onClick.AddListener(onClick);
+            TMP_Text text = MakeText(btn, "Label", label, 22f, TextAlignmentOptions.Center);
+            Ink(text, 0.2f);
+            Stretch(text.rectTransform);
+        }
+
         private void ReadLevelUpKeys()
         {
             if (LevelUpOpen == false)
@@ -586,15 +788,16 @@ namespace Jinhyeong_UI
             if (loadout == null)
                 return;
 
-            System.Text.StringBuilder sb = new System.Text.StringBuilder(96);
             System.Collections.Generic.IReadOnlyList<PartInstance> eq = loadout.Equipped;
             for (int i = 0; i < PartLoadout.SlotCount; i++)
             {
-                if (sb.Length > 0)
-                    sb.Append("   ");
-                sb.Append(i < eq.Count ? eq[i].DisplayName : "—");
+                bool has = i < eq.Count && eq[i] != null;
+                Sprite icon = has ? Jinhyeong_UI.Framework.UISkin.SkillIcon(eq[i].SkillId) : null;
+                _slotIcon[i].sprite = icon != null ? icon : Jinhyeong_UI.Framework.UISkin.Get(Jinhyeong_UI.Framework.UISkin.Heart);
+                _slotIcon[i].color = has ? FamilyAccent(eq[i].Data.Family) : SlotEmpty;
+                _slotName[i].text = has ? eq[i].DisplayName : string.Empty;
+                _slotName[i].color = Jinhyeong_UI.Framework.UIBuild.ColorSubHead;
             }
-            _partsText.text = sb.ToString();
         }
 
         private void BuildResultPanel(RectTransform parent)
@@ -605,7 +808,7 @@ namespace Jinhyeong_UI
 
             Image dim = _resultPanel.AddComponent<Image>();
             dim.sprite = WhiteSprite();
-            dim.color = new Color(0.06f, 0.02f, 0.12f, 0.92f);
+            dim.color = new Color(0.03f, 0.03f, 0.06f, 0.92f);
             dim.raycastTarget = true;
 
             TMP_Text title = MakeText(panel, "Title", "GAME OVER", 56f, TextAlignmentOptions.Center);
@@ -618,18 +821,21 @@ namespace Jinhyeong_UI
             titleRt.sizeDelta = new Vector2(520f, 66f);
             titleRt.anchoredPosition = new Vector2(0f, 130f);
 
-            _resultText = MakeText(panel, "Stats", "", 18f, TextAlignmentOptions.Center);
+            _resultText = MakeText(panel, "Stats", "", 22f, TextAlignmentOptions.Center);
+            _resultText.enableAutoSizing = true;
+            _resultText.fontSizeMin = 14f;
+            _resultText.fontSizeMax = 22f;
             RectTransform statsRt = _resultText.rectTransform;
             statsRt.anchorMin = new Vector2(0.5f, 0.5f);
             statsRt.anchorMax = new Vector2(0.5f, 0.5f);
-            statsRt.sizeDelta = new Vector2(520f, 150f);
-            statsRt.anchoredPosition = new Vector2(0f, 20f);
+            statsRt.sizeDelta = new Vector2(620f, 210f);
+            statsRt.anchoredPosition = new Vector2(0f, 10f);
 
             RectTransform btn = MakeRect("Restart", panel);
             btn.anchorMin = new Vector2(0.5f, 0.5f);
             btn.anchorMax = new Vector2(0.5f, 0.5f);
             btn.sizeDelta = new Vector2(320f, 68f);
-            btn.anchoredPosition = new Vector2(0f, -92f);
+            btn.anchoredPosition = new Vector2(0f, -150f);
             Image btnBg = btn.gameObject.AddComponent<Image>();
             btnBg.color = Jinhyeong_UI.Framework.UIBuild.ColorStart;
             Jinhyeong_UI.Framework.UISkin.ApplySliced(btnBg, Jinhyeong_UI.Framework.UISkin.CardBg, Jinhyeong_UI.Framework.UIBuild.CardCorner);
@@ -638,7 +844,7 @@ namespace Jinhyeong_UI
             button.targetGraphic = btnBg;
             button.onClick.AddListener(Restart);
 
-            TMP_Text btnText = MakeText(btn, "Label", "다시 하기", 24f, TextAlignmentOptions.Center);
+            TMP_Text btnText = MakeText(btn, "Label", Loc.T("Hud_Restart", "다시 하기"), 24f, TextAlignmentOptions.Center);
             Ink(btnText, 0.2f);
             Stretch(btnText.rectTransform);
 
@@ -664,6 +870,10 @@ namespace Jinhyeong_UI
 
             if (_bannerRoot != null)
                 _bannerRoot.SetActive(false);
+            _bannerUntil = 0f;
+            if (LevelUpOpen)
+                _levelPanel.SetActive(false);
+            _pendingLevelUps = 0;
 
             bool cleared = Jinhyeong_UI.GameFlow.IsCleared;
             if (_resultTitle != null)
@@ -679,16 +889,173 @@ namespace Jinhyeong_UI
             RunProgress progress = RunProgress.Instance;
 
             int total = wave != null ? Mathf.FloorToInt(wave.Elapsed) : 0;
-            _resultText.text = string.Format(
+            _resultText.text = Loc.F("Hud_ResultStats",
                 "생존 시간  {0:00}:{1:00}\n처치  {2}\n레벨  {3}",
                 total / 60, total % 60,
                 spawner != null ? spawner.KillCount : 0,
                 progress != null ? progress.Level : 1);
 
             if (cleared)
-                _resultText.text = "납치선 격추!" + System.Environment.NewLine + _resultText.text;
+                _resultText.text = BossClearTitle() + System.Environment.NewLine + _resultText.text;
+
+            _resultText.text += System.Environment.NewLine + System.Environment.NewLine
+                + "<color=#FFD45A>" + Loc.F("Hud_ResultReward", "사료 +{0}  ·  슈퍼 DNA +{1}", SaveData.LastKibble, SaveData.LastDna) + "</color>";
+            if (SaveData.LastNewMap > 0)
+            {
+                Jinhyeong_SkillSystem.MapData cur = Jinhyeong_SkillSystem.MapRegistry.Current;
+                Jinhyeong_SkillSystem.MapData next = Jinhyeong_SkillSystem.MapRegistry.Get(SaveData.LastNewMap + 1);
+                if (next != null)
+                    _resultText.text += System.Environment.NewLine + "<color=#8CE0FF>" + Loc.F("Hud_ResultNewMap", "새 맵 열림 — {0}", next.DisplayName) + "</color>";
+                if (cur != null && cur.Hero > 0)
+                    _resultText.text += System.Environment.NewLine + "<color=#8CE0FF>" + Loc.F("Hud_ResultNewHero", "{0} 합류!", RunSelection.HeroOf(cur.Hero).Name) + "</color>";
+            }
+            if (spawner != null && _killText != null)
+                _killText.text = Loc.F("Hud_Kills", "처치 {0}", spawner.KillCount);
 
             _resultPanel.SetActive(true);
+        }
+
+        private GameObject _bossRoot;
+        private Image _bossFill;
+        private TMP_Text _bossName;
+        private Damageable _bossHp;
+        private float _bossScanAt;
+
+        private void BuildBossBar(RectTransform parent)
+        {
+            RectTransform rt = MakeRect("BossBar", parent);
+            rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 1f);
+            rt.pivot = new Vector2(0.5f, 1f);
+            rt.sizeDelta = new Vector2(560f, 18f);
+            rt.anchoredPosition = new Vector2(0f, -112f);
+            MakeBar(rt, HpColor, out _bossFill);
+            _bossRoot = rt.gameObject;
+
+            _bossName = MakeText(rt, "Name", "", 20f, TextAlignmentOptions.Center);
+            Ink(_bossName, 0.22f);
+            _bossName.color = Jinhyeong_UI.Framework.UIBuild.ColorGold;
+            RectTransform nr = _bossName.rectTransform;
+            nr.anchorMin = nr.anchorMax = new Vector2(0.5f, 1f);
+            nr.pivot = new Vector2(0.5f, 0f);
+            nr.sizeDelta = new Vector2(560f, 26f);
+            nr.anchoredPosition = new Vector2(0f, 2f);
+            _bossRoot.SetActive(false);
+        }
+
+        // 화면 밖 상자 표시 — 가장 가까운 상자가 화면 밖이면 그 방향 가장자리에 금색 마름모 + 거리
+        private RectTransform _chestPtr;
+        private TMP_Text _chestDist;
+        private static readonly Color ChestPtrColor = new Color(1f, 0.82f, 0.30f, 1f);
+        private const float ChestEdge = 0.045f;
+
+        private void BuildChestPointer(RectTransform parent)
+        {
+            RectTransform rt = MakeRect("ChestPointer", parent);
+            rt.sizeDelta = new Vector2(22f, 22f);
+            Image img = rt.gameObject.AddComponent<Image>();
+            img.sprite = WhiteSprite();
+            img.color = ChestPtrColor;
+            img.raycastTarget = false;
+            rt.localRotation = Quaternion.Euler(0f, 0f, 45f);
+            _chestPtr = rt;
+
+            _chestDist = MakeText(parent, "ChestDist", "", 14f, TextAlignmentOptions.Center);
+            Ink(_chestDist, 0.25f);
+            _chestDist.color = ChestPtrColor;
+            _chestDist.rectTransform.sizeDelta = new Vector2(60f, 20f);
+            rt.gameObject.SetActive(false);
+            _chestDist.gameObject.SetActive(false);
+        }
+
+        private void RefreshChestPointer()
+        {
+            if (_chestPtr == null)
+                return;
+            Player p = GameEvents.CurrentPlayer;
+            Camera cam = CameraFollow.GameCamera;
+            Jinhyeong_Parts.PartPickup best = null;
+            float bestSq = float.MaxValue;
+            System.Collections.Generic.IReadOnlyList<Jinhyeong_Parts.PartPickup> live = Jinhyeong_Parts.PartPickup.Live;
+            for (int i = 0; p != null && i < live.Count; i++)
+            {
+                if (live[i] == null)
+                    continue;
+                float sq = (live[i].transform.position - p.transform.position).sqrMagnitude;
+                if (sq < bestSq)
+                {
+                    bestSq = sq;
+                    best = live[i];
+                }
+            }
+
+            bool show = false;
+            Vector3 vp = Vector3.zero;
+            if (best != null && cam != null)
+            {
+                vp = cam.WorldToViewportPoint(best.transform.position);
+                show = vp.z > 0f && (vp.x < 0f || vp.x > 1f || vp.y < 0f || vp.y > 1f);
+            }
+            if (_chestPtr.gameObject.activeSelf != show)
+            {
+                _chestPtr.gameObject.SetActive(show);
+                _chestDist.gameObject.SetActive(show);
+            }
+            if (show == false)
+                return;
+
+            // 화면 중심에서 상자 쪽으로 뻗은 선이 가장자리(여백 ChestEdge)와 만나는 곳
+            Vector2 d = new Vector2(vp.x - 0.5f, vp.y - 0.5f);
+            float half = 0.5f - ChestEdge;
+            float k = half / Mathf.Max(Mathf.Abs(d.x), Mathf.Abs(d.y), 0.0001f);
+            Vector2 at = new Vector2(0.5f, 0.5f) + d * k;
+            _chestPtr.anchorMin = _chestPtr.anchorMax = at;
+            _chestPtr.anchoredPosition = Vector2.zero;
+            float pulse = 1f + 0.15f * Mathf.Sin(Time.unscaledTime * 6f);
+            _chestPtr.localScale = new Vector3(pulse, pulse, 1f);
+
+            RectTransform tr = _chestDist.rectTransform;
+            tr.anchorMin = tr.anchorMax = at;
+            tr.anchoredPosition = new Vector2(0f, at.y > 0.5f ? -24f : 24f);
+            int meters = Mathf.RoundToInt(Mathf.Sqrt(bestSq));
+            if (meters != _chestMeters)
+            {
+                _chestMeters = meters;
+                _chestDist.text = meters + "m";
+            }
+        }
+
+        private int _chestMeters = -1;
+
+        private void RefreshBossBar()
+        {
+            if (_bossRoot == null)
+                return;
+            if (_bossHp == null || _bossHp.IsAlive == false)
+            {
+                _bossHp = null;
+                // 보스는 드물다 — 0.5초마다만 찾는다
+                if (Time.unscaledTime >= _bossScanAt)
+                {
+                    _bossScanAt = Time.unscaledTime + 0.5f;
+                    EnemySpawner sp = EnemySpawner.Instance;
+                    for (int i = 0; sp != null && i < sp.Active.Count; i++)
+                    {
+                        Enemy e = sp.Active[i];
+                        if (e != null && e.IsBoss && e.Damageable != null && e.Damageable.IsAlive)
+                        {
+                            _bossHp = e.Damageable;
+                            Jinhyeong_SkillSystem.MapData map = Jinhyeong_SkillSystem.MapRegistry.Current;
+                            _bossName.text = map != null && string.IsNullOrEmpty(map.Boss) == false ? map.Boss : Loc.T("Hud_Boss", "보스");
+                            break;
+                        }
+                    }
+                }
+            }
+            bool show = _bossHp != null;
+            if (_bossRoot.activeSelf != show)
+                _bossRoot.SetActive(show);
+            if (show)
+                _bossFill.fillAmount = _bossHp.MaxHp > 0f ? Mathf.Clamp01(_bossHp.Hp / _bossHp.MaxHp) : 0f;
         }
 
         private void BuildBanner(RectTransform parent)
@@ -697,8 +1064,8 @@ namespace Jinhyeong_UI
             RectTransform rt = MakeRect("Banner", parent);
             rt.anchorMin = new Vector2(0.5f, 0.5f);
             rt.anchorMax = new Vector2(0.5f, 0.5f);
-            rt.sizeDelta = new Vector2(700f, 64f);
-            rt.anchoredPosition = new Vector2(0f, 150f);
+            rt.sizeDelta = new Vector2(620f, 46f);
+            rt.anchoredPosition = new Vector2(0f, 196f);
             _bannerRoot = rt.gameObject;
 
             Image bgImage = _bannerRoot.AddComponent<Image>();
@@ -708,6 +1075,10 @@ namespace Jinhyeong_UI
             Jinhyeong_UI.Framework.UIBuild.Outline(rt, Jinhyeong_UI.Framework.UIBuild.ColorOutline, Jinhyeong_UI.Framework.UISkin.CardFrame, Jinhyeong_UI.Framework.UIBuild.CardCorner);
 
             _banner = MakeText(rt, "Label", "", 28f, TextAlignmentOptions.Center);
+            _banner.enableAutoSizing = true;
+            _banner.fontSizeMin = 14f;
+            _banner.fontSizeMax = 24f;
+            _banner.margin = new Vector4(16f, 0f, 16f, 0f);
             _banner.color = Jinhyeong_UI.Framework.UIBuild.ColorDangerArmed;
             Ink(_banner, 0.15f);
             Stretch(_banner.rectTransform);
@@ -738,6 +1109,9 @@ namespace Jinhyeong_UI
         private void Restart()
         {
             _resultPanel.SetActive(false);
+            if (_pausePanel != null)
+                _pausePanel.SetActive(false);
+            _tipShown = false;
             if (WaveDirector.Instance != null)
                 WaveDirector.Instance.OnBanner -= ShowBanner;
             _bannerHooked = false;

@@ -3,7 +3,7 @@ module.exports = {
     id: 8010,
     name: 'fam_gaze_4',
     desc: '시선 4개 — 시선 스킬 피해 +50%',
-    displayName: '솔로 파트',
+    displayName: '심안',
     family: 'Gaze',
     reqFamilyCount: 4,
     reqSkillId: 0,

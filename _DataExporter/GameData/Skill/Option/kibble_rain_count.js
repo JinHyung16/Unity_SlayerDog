@@ -1,8 +1,8 @@
 module.exports = {
     id: 4406,
     name: 'kibble_rain_count',
-    desc: '음표 소나기 — 개수 +1',
-    displayName: '사료 샤워',
+    desc: '화살비 — 개수 +1',
+    displayName: '화살 다발',
     partId: 2020,
     trait: 'Count',
     value: 1,

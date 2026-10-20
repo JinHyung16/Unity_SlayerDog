@@ -2,8 +2,8 @@
 module.exports = {
     id: 2020,
     name: 'Kibble Rain',
-    desc: '랜덤한 적 위치로 음표가 쏟아져 반경 1.5m 공격력 80% 피해. 5초마다',
-    displayName: '음표 소나기',
+    desc: '랜덤한 적 위치로 화살이 쏟아져 반경 1.5m 공격력 80% 피해. 5초마다',
+    displayName: '화살비',
     slot: 'Neck',
     family: 'Throw',
     appliesDebuff: 'None',

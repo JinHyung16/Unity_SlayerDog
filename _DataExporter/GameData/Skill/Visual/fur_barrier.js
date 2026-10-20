@@ -1,11 +1,11 @@
-/** 털뭉치 보호막 — 최대체력 15% 보호막을 8초간. 10초마다 */
+/** 수호 결계 — 최대체력 15% 보호막을 8초간. 10초마다 */
 module.exports = {
-    color: '#FFB03A',
-    desc: "털뭉치 보호막 — 최대체력 15% 보호막을 8초간. 10초마다",
+    color: '#FFC266',
+    desc: "수호 결계 — 최대체력 15% 보호막을 8초간. 10초마다",
     values: {
-        "Projectile": "Fx_Shield",
-        "Impact": "Fx_Shield",
-        "Cast": "Fx_Shield",
+        "Projectile": "Fx_Barrier",
+        "Impact": "Fx_Barrier",
+        "Cast": "Fx_Barrier",
         "Orient": "Billboard",
         "Color": "#FFB03A",
         "Cooldown": 10,

@@ -26,6 +26,17 @@ namespace Jinhyeong_Character
 
         private Transform _target;
         private Vector3 _velocity;
+        private Vector3 _followPos;
+
+        // 화면 흔들림 (트라우마 0~1, 제곱으로 세기). 플레이어 피격 · 보스 등장 · 보스 처치에만 쓴다
+        private const float ShakeMax = 0.35f;
+        private const float ShakeDecay = 2.2f;
+        private static float _trauma;
+
+        public static void Shake(float amount)
+        {
+            _trauma = Mathf.Clamp01(Mathf.Max(_trauma, amount));
+        }
         private Camera _gameCamera;
         private Camera _uiCamera;
 
@@ -98,9 +109,20 @@ namespace Jinhyeong_Character
                 return;
 
             Vector3 desired = ComputePosition(_target.position);
-            transform.position = Vector3.SmoothDamp(transform.position, desired, ref _velocity, _smoothTime);
+            _followPos = Vector3.SmoothDamp(_followPos, desired, ref _velocity, _smoothTime);
             transform.rotation = Quaternion.Euler(_pitch, 0f, 0f);
             ViewRotation = transform.rotation;
+
+            Vector3 offset = Vector3.zero;
+            if (_trauma > 0f && Time.timeScale > 0f)
+            {
+                float s = _trauma * _trauma * ShakeMax;
+                float t = Time.unscaledTime * 32f;
+                offset = transform.right * (Mathf.PerlinNoise(t, 0.3f) - 0.5f) * 2f * s
+                         + transform.up * (Mathf.PerlinNoise(0.7f, t) - 0.5f) * 2f * s;
+                _trauma = Mathf.Max(0f, _trauma - Time.unscaledDeltaTime * ShakeDecay);
+            }
+            transform.position = _followPos + offset;
         }
 
         private Vector3 ComputePosition(Vector3 targetPos)
@@ -115,9 +137,11 @@ namespace Jinhyeong_Character
             if (_target == null)
                 return;
             transform.position = ComputePosition(_target.position);
+            _followPos = transform.position;
             transform.rotation = Quaternion.Euler(_pitch, 0f, 0f);
             ViewRotation = transform.rotation;
             _velocity = Vector3.zero;
+            _trauma = 0f;
         }
 
         private void ApplyProjection()

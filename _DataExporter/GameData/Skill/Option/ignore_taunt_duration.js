@@ -1,8 +1,8 @@
 module.exports = {
     id: 6027,
     name: 'ignore_taunt_duration',
-    desc: '스테이지 장악 — 지속시간 +25%',
-    displayName: '시크한 표정',
+    desc: '부동심 — 지속시간 +25%',
+    displayName: '흔들림 없는 마음',
     partId: 2101,
     trait: 'Duration',
     value: 0.25,

@@ -3,7 +3,7 @@ module.exports = {
     id: 8019,
     name: 'link_slow',
     desc: '둔화된 적에게 피해 +35%',
-    displayName: '슬로우 템포',
+    displayName: '빙결 족쇄',
     family: 'None',
     reqFamilyCount: 0,
     reqSkillId: 0,

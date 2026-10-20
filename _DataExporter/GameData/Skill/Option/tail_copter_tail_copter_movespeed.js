@@ -1,8 +1,8 @@
 module.exports = {
     id: 4251,
     name: 'tail_copter_movespeed',
-    desc: '턴테이블 스핀 — 이동속도 +6%',
-    displayName: '꼬리 프로펠러 · 날쌘',
+    desc: '회오리 베기 — 이동속도 +6%',
+    displayName: '회오리 베기 · 날쌘',
     partId: 2012,
     trait: 'MoveSpeed',
     value: 0.06,

@@ -2,7 +2,7 @@
 module.exports = {
     id: 5005,
     name: 'Swarm',
-    desc: '말랑이(민트 슬라임) — 다수 — 광역 없으면 파묻힌다',
+    desc: '떼 — 다수 — 광역 없으면 파묻힌다 (맵마다 도깨비불 · 풀벌레 · 시궁쥐 등)',
     sprite: 'swarm',
     hp: 20,
     moveSpeed: 4,

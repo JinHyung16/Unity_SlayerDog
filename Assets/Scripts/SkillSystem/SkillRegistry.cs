@@ -119,9 +119,11 @@ namespace Jinhyeong_SkillSystem
             PartRegistry.Load();
             PartOptionRegistry.Load();
             RoundRegistry.Load();
+            MapRegistry.Load();
             SynergyRegistry.Load();
             EnemyTypeRegistry.Load();
             WaveEventRegistry.Load();
+            Jinhyeong_Common.Loc.ApplyTables();
 
             IsLoaded = true;
         }
@@ -272,6 +274,8 @@ namespace Jinhyeong_SkillSystem
             keys.Add(CommonConfig.Skill.DamageTextKey);
             keys.Add(CommonConfig.Skill.HitBurstKey);
             keys.Add(CommonConfig.Skill.GhostKey);
+            keys.Add(CommonConfig.Skill.MeatKey);
+            keys.Add(CommonConfig.Skill.MagnetKey);
 
             AddressableManager am = AddressableManager.Ensure();
             await am.LoadAllAsync(keys);

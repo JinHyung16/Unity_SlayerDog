@@ -49,7 +49,7 @@
         "maxAlive": 42,
         "hpMul": 1.35,
         "damageMul": 1.1,
-        "banner": "정예 파스텔 군단 출현!"
+        "banner": "정예 부대 출현!"
     },
     {
         "id": 7005,
@@ -140,7 +140,7 @@
         "maxAlive": 108,
         "hpMul": 3.1,
         "damageMul": 2.52,
-        "banner": "납치선이 다가온다..."
+        "banner": "거대한 기운이 다가온다..."
     },
     {
         "id": 7012,
@@ -153,6 +153,6 @@
         "maxAlive": 30,
         "hpMul": 3.6,
         "damageMul": 2.88,
-        "banner": "납치선 강림!"
+        "banner": "최후의 라운드!"
     }
 ]

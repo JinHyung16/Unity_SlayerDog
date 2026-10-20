@@ -3,7 +3,7 @@ module.exports = {
     id: 8007,
     name: 'fam_melee_2',
     desc: '근접 2개 — 근접 스킬 피해 +25%',
-    displayName: '스타카토',
+    displayName: '연격',
     family: 'Melee',
     reqFamilyCount: 2,
     reqSkillId: 0,

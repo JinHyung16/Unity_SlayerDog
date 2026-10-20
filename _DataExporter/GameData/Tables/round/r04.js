@@ -9,5 +9,5 @@ module.exports = {
     maxAlive: 42,
     hpMul: 1.35,
     damageMul: 1.1,
-    banner: '정예 파스텔 군단 출현!'
+    banner: '정예 부대 출현!'
 };

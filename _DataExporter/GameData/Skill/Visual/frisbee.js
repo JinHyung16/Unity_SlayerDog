@@ -1,11 +1,11 @@
-/** 원반 물어오기 — LP 판이 흔들리며 날아가 공격력 110% 피해. 2초마다 */
+/** 차크람 — 차크람이 흔들리며 날아가 공격력 110% 피해. 2초마다 */
 module.exports = {
-    color: '#9BFF3C',
-    desc: "원반 물어오기 — LP 판이 흔들리며 날아가 공격력 110% 피해. 2초마다",
+    color: '#B1FF66',
+    desc: "차크람 — 차크람이 흔들리며 날아가 공격력 110% 피해. 2초마다",
     values: {
-        "Projectile": "Fx_Frisbee",
-        "Impact": "Fx_Frisbee",
-        "Cast": "Fx_Frisbee",
+        "Projectile": "Fx_Chakram",
+        "Impact": "Fx_HitBurst",
+        "Cast": "Fx_Chakram",
         "Orient": "Billboard",
         "Color": "#9BFF3C",
         "Cooldown": 2,

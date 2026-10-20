@@ -17,6 +17,12 @@ namespace Jinhyeong_GameData.Editor
         private const string OutMedium = "Assets/_Art/Fonts/GmarketSans-Medium SDF.asset";
         private const string OutBold = "Assets/_Art/Fonts/GmarketSans-Bold SDF.asset";
 
+        // 기본 글꼴 = 도스고딕 (https://github.com/hurss/fonts, MIT · 출처 표기). 16도트 비트맵을 외곽선으로 뽑은 글꼴이라
+        // 16의 배수로 샘플링해야 도트 계단이 고르게 찍힌다. 없는 글자는 G마켓 산스로 대신 그린다
+        private const string SourcePixel = "Assets/_Art/Fonts/DOSGothic/DOSGothic.ttf";
+        private const string OutPixel = "Assets/_Art/Fonts/DOSGothic/DOSGothic SDF.asset";
+        private const int PixelSampling = 64;
+
         private static double _nextPoll;
 
         [InitializeOnLoadMethod]
@@ -57,11 +63,20 @@ namespace Jinhyeong_GameData.Editor
         {
             StringBuilder log = new StringBuilder(512);
 
-            TMP_FontAsset medium = CreateDynamic(SourceMedium, OutMedium, log);
-            TMP_FontAsset bold = CreateDynamic(SourceBold, OutBold, log);
+            TMP_FontAsset medium = CreateDynamic(SourceMedium, OutMedium, log, 90, 1024);
+            TMP_FontAsset bold = CreateDynamic(SourceBold, OutBold, log, 90, 1024);
+            TMP_FontAsset pixel = CreateDynamic(SourcePixel, OutPixel, log, PixelSampling, 2048);
 
-            if (medium == null)
-                return log.Append("[실패] Medium 폰트 에셋 생성 실패").ToString();
+            if (pixel == null)
+                return log.Append("[실패] 도스고딕 폰트 에셋 생성 실패").ToString();
+            if (medium != null)
+            {
+                if (pixel.fallbackFontAssetTable == null)
+                    pixel.fallbackFontAssetTable = new System.Collections.Generic.List<TMP_FontAsset>();
+                if (pixel.fallbackFontAssetTable.Contains(medium) == false)
+                    pixel.fallbackFontAssetTable.Add(medium);
+                EditorUtility.SetDirty(pixel);
+            }
 
             TMP_Settings settings = Resources.Load<TMP_Settings>("TMP Settings");
             if (settings == null)
@@ -77,17 +92,17 @@ namespace Jinhyeong_GameData.Editor
                 log.AppendLine("[실패] m_defaultFontAsset 프로퍼티 없음 (TMP 버전 확인 필요)");
                 return log.ToString();
             }
-            prop.objectReferenceValue = medium;
+            prop.objectReferenceValue = pixel;
             so.ApplyModifiedProperties();
             EditorUtility.SetDirty(settings);
             AssetDatabase.SaveAssets();
 
-            log.AppendLine($"기본 폰트 = {medium.name}");
+            log.AppendLine($"기본 폰트 = {pixel.name} (대체 {(medium != null ? medium.name : "없음")})");
             log.AppendLine($"Bold = {(bold != null ? bold.name : "생성 실패")}");
             return log.ToString();
         }
 
-        private static TMP_FontAsset CreateDynamic(string sourcePath, string outPath, StringBuilder log)
+        private static TMP_FontAsset CreateDynamic(string sourcePath, string outPath, StringBuilder log, int sampling, int atlas)
         {
             Font source = AssetDatabase.LoadAssetAtPath<Font>(sourcePath);
             if (source == null)
@@ -104,9 +119,9 @@ namespace Jinhyeong_GameData.Editor
             }
 
             TMP_FontAsset asset = TMP_FontAsset.CreateFontAsset(
-                source, 90, 9,
+                source, sampling, Mathf.Max(6, sampling / 10),
                 UnityEngine.TextCore.LowLevel.GlyphRenderMode.SDFAA,
-                1024, 1024,
+                atlas, atlas,
                 AtlasPopulationMode.Dynamic);
 
             if (asset == null)

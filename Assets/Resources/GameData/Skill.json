@@ -2,7 +2,7 @@
     {
         "id": 2001,
         "name": "Bite Heal",
-        "desc": "스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 스타카토로 앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다",
+        "desc": "앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/bite_heal",
         "methodPath": "Skill/Method/instant",
@@ -57,7 +57,7 @@
                     "id": 7,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Teeth",
+                        "Visual": "Fx_Fang",
                         "VisualColor": "#FF3DA8",
                         "VisualOrient": "Billboard"
                     },
@@ -70,7 +70,7 @@
     {
         "id": 2002,
         "name": "Bark Cone",
-        "desc": "전방 부채꼴 적에게 공격력 100% 피해 + 둔화. 2.5초마다",
+        "desc": "전방 부채꼴 적에게 냉기를 뿜어 공격력 100% 피해 + 둔화. 2.5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/bark_cone",
         "methodPath": "Skill/Method/instant",
@@ -125,7 +125,7 @@
                     "id": 7,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Bark",
+                        "Visual": "Fx_Frost",
                         "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
@@ -190,7 +190,7 @@
                     "id": 7,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Growl",
+                        "Visual": "Fx_Roar",
                         "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
@@ -258,7 +258,7 @@
                     "id": 7,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Yawn",
+                        "Visual": "Fx_Sleep",
                         "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
@@ -271,7 +271,7 @@
     {
         "id": 2005,
         "name": "Dig Roll",
-        "desc": "춤추는 동안 0.5초마다 반경 1.5m 공격력 30% 피해 (상시 장판)",
+        "desc": "검무를 추는 동안 0.5초마다 반경 1.5m 공격력 30% 피해 (상시 장판)",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/dig_roll",
         "methodPath": "Skill/Method/ground_field",
@@ -316,7 +316,7 @@
                     "id": 6,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_DogDust",
+                        "Visual": "Fx_BladeSwirl",
                         "VisualColor": "#A66BFF",
                         "VisualOrient": "Ground"
                     },
@@ -329,7 +329,7 @@
     {
         "id": 2006,
         "name": "Claw Volley",
-        "desc": "전방으로 기타 피크를 날려 각 공격력 60% 피해. 2초마다",
+        "desc": "전방으로 비도를 날려 각 공격력 60% 피해. 2초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/claw_volley",
         "methodPath": "Skill/Method/projectile/straight",
@@ -378,7 +378,7 @@
                     "params": {
                         "Speed": 16,
                         "MaxDistance": 9,
-                        "Visual": "Fx_DogClaw",
+                        "Visual": "Fx_Knife",
                         "VisualColor": "#FF3DA8",
                         "VisualOrient": "Ground"
                     },
@@ -429,7 +429,7 @@
     {
         "id": 2008,
         "name": "Bone Mine",
-        "desc": "발밑에 베이스 드럼을 깐다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다",
+        "desc": "발밑에 폭뢰 부적을 붙인다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/bone_mine",
         "methodPath": "Skill/Method/instant",
@@ -473,7 +473,7 @@
                     "id": 6,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Burst",
+                        "Visual": "Fx_Blast",
                         "VisualColor": "#A66BFF",
                         "VisualOrient": "Billboard"
                     },
@@ -486,7 +486,7 @@
     {
         "id": 2009,
         "name": "Tail Swipe",
-        "desc": "현의 파동을 날려 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다",
+        "desc": "창을 내질러 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/tail_pierce",
         "methodPath": "Skill/Method/projectile/piercing",
@@ -535,7 +535,7 @@
                     "params": {
                         "Speed": 14,
                         "MaxDistance": 11,
-                        "Visual": "Fx_TailSwing",
+                        "Visual": "Fx_Spear",
                         "VisualColor": "#FF3DA8",
                         "VisualOrient": "Ground"
                     },
@@ -548,7 +548,7 @@
     {
         "id": 2010,
         "name": "Static Fur",
-        "desc": "일렉 기타에서 스파크가 튀어 모든 적에게 공격력 40% 피해. 6초마다",
+        "desc": "뇌운에서 번개가 떨어져 모든 적에게 공격력 40% 피해. 6초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/static_fur",
         "methodPath": "Skill/Method/instant",
@@ -594,9 +594,9 @@
                     "id": 6,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Static",
+                        "Visual": "Fx_Thunder",
                         "VisualColor": "#2DE6FF",
-                        "VisualOrient": "Ground"
+                        "VisualOrient": "Billboard"
                     },
                     "children": []
                 }
@@ -607,7 +607,7 @@
     {
         "id": 2011,
         "name": "Tail Whip",
-        "desc": "지휘봉을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다",
+        "desc": "쇠사슬을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/tail_whip",
         "methodPath": "Skill/Method/projectile/straight",
@@ -655,7 +655,7 @@
                     "params": {
                         "Speed": 18,
                         "MaxDistance": 10,
-                        "Visual": "Fx_TailSwing",
+                        "Visual": "Fx_ChainWhip",
                         "VisualColor": "#FF3DA8",
                         "VisualOrient": "Ground"
                     },
@@ -668,7 +668,7 @@
     {
         "id": 2012,
         "name": "Tail Copter",
-        "desc": "턴테이블을 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다",
+        "desc": "칼날을 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/tail_copter",
         "methodPath": "Skill/Method/ground_field",
@@ -721,7 +721,7 @@
                     "id": 7,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_DogDust",
+                        "Visual": "Fx_BladeSwirl",
                         "VisualColor": "#A66BFF",
                         "VisualOrient": "Ground"
                     },
@@ -734,7 +734,7 @@
     {
         "id": 2013,
         "name": "Eye Beam",
-        "desc": "전방으로 스포트라이트를 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다",
+        "desc": "전방으로 빛의 창을 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/eye_beam",
         "methodPath": "Skill/Method/beam",
@@ -785,7 +785,7 @@
                     "params": {
                         "Speed": 0,
                         "MaxDistance": 999,
-                        "Visual": "Fx_EyeBeam",
+                        "Visual": "Fx_LightRay",
                         "VisualColor": "#4D8BFF",
                         "VisualOrient": "Ground"
                     },
@@ -855,9 +855,9 @@
                         "Speed": 11,
                         "MaxDistance": 16,
                         "TurnRate": 200,
-                        "Visual": "Fx_Scent",
+                        "Visual": "Fx_MagicShot",
                         "VisualColor": "#4D8BFF",
-                        "VisualOrient": "Ground"
+                        "VisualOrient": "Billboard"
                     },
                     "children": []
                 }
@@ -868,7 +868,7 @@
     {
         "id": 2015,
         "name": "Ear Sonar",
-        "desc": "반경 4m 원형 음파로 공격력 60% 피해. 2.5초마다",
+        "desc": "반경 4m 원형 기파로 공격력 60% 피해. 2.5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/ear_sonar",
         "methodPath": "Skill/Method/instant",
@@ -912,7 +912,7 @@
                     "id": 6,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Sonar",
+                        "Visual": "Fx_Rune",
                         "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
@@ -925,7 +925,7 @@
     {
         "id": 2016,
         "name": "Third Eye",
-        "desc": "가장 가까운 적을 관통하는 시선으로 공격력 180% 피해. 3초마다",
+        "desc": "가장 가까운 적을 꿰뚫는 기로 공격력 180% 피해. 3초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/third_eye",
         "methodPath": "Skill/Method/projectile/piercing",
@@ -973,9 +973,9 @@
                     "params": {
                         "Speed": 22,
                         "MaxDistance": 13,
-                        "Visual": "Fx_Gaze",
+                        "Visual": "Fx_QiBolt",
                         "VisualColor": "#4D8BFF",
-                        "VisualOrient": "Billboard"
+                        "VisualOrient": "Ground"
                     },
                     "children": []
                 }
@@ -986,7 +986,7 @@
     {
         "id": 2017,
         "name": "Pack Howl",
-        "desc": "아르페지오가 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다",
+        "desc": "번개가 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/pack_chain",
         "methodPath": "Skill/Method/instant",
@@ -1033,7 +1033,7 @@
                     "id": 6,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Howl",
+                        "Visual": "Fx_Hit",
                         "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
@@ -1122,7 +1122,7 @@
     {
         "id": 2020,
         "name": "Kibble Rain",
-        "desc": "랜덤한 적 위치로 음표가 쏟아져 반경 1.5m 공격력 80% 피해. 5초마다",
+        "desc": "랜덤한 적 위치로 화살이 쏟아져 반경 1.5m 공격력 80% 피해. 5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/kibble_rain",
         "methodPath": "Skill/Method/projectile/arc",
@@ -1171,7 +1171,7 @@
                     "params": {
                         "Speed": 12,
                         "ArcHeight": 4,
-                        "Visual": "Fx_Kibble",
+                        "Visual": "Fx_ArrowRain",
                         "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
                     },
@@ -1184,7 +1184,7 @@
     {
         "id": 2021,
         "name": "Kibble Bomb",
-        "desc": "심벌을 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다",
+        "desc": "화염 단지를 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/kibble_bomb",
         "methodPath": "Skill/Method/projectile/arc",
@@ -1240,7 +1240,7 @@
                     "params": {
                         "Speed": 13,
                         "ArcHeight": 3,
-                        "Visual": "Fx_Kibble",
+                        "Visual": "Fx_FireJar",
                         "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
                     },
@@ -1253,7 +1253,7 @@
     {
         "id": 2022,
         "name": "Frisbee",
-        "desc": "LP 판이 흔들리며 날아가 공격력 110% 피해. 2초마다",
+        "desc": "차크람이 흔들리며 날아가 공격력 110% 피해. 2초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/frisbee",
         "methodPath": "Skill/Method/projectile/wave",
@@ -1301,7 +1301,7 @@
                     "params": {
                         "Speed": 12,
                         "ArcHeight": 1.5,
-                        "Visual": "Fx_Frisbee",
+                        "Visual": "Fx_Chakram",
                         "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
                     },
@@ -1314,7 +1314,7 @@
     {
         "id": 2023,
         "name": "Tennis Ball",
-        "desc": "가장 가까운 적을 쫓는 탬버린, 공격력 100% 피해. 1.8초마다",
+        "desc": "가장 가까운 적을 쫓는 부메랑, 공격력 100% 피해. 1.8초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/tennis_ball",
         "methodPath": "Skill/Method/projectile/homing",
@@ -1363,7 +1363,7 @@
                         "Speed": 13,
                         "MaxDistance": 14,
                         "TurnRate": 240,
-                        "Visual": "Fx_Ball",
+                        "Visual": "Fx_Boomerang",
                         "VisualColor": "#9BFF3C",
                         "VisualOrient": "Billboard"
                     },
@@ -1376,7 +1376,7 @@
     {
         "id": 2024,
         "name": "Slipper Throw",
-        "desc": "캐스터네츠를 튕겨 공격력 300% 피해. 5초마다",
+        "desc": "쿠나이를 던져 공격력 300% 피해. 5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/slipper",
         "methodPath": "Skill/Method/projectile/straight",
@@ -1424,9 +1424,9 @@
                     "params": {
                         "Speed": 20,
                         "MaxDistance": 12,
-                        "Visual": "Fx_Slipper",
+                        "Visual": "Fx_Kunai",
                         "VisualColor": "#9BFF3C",
-                        "VisualOrient": "Billboard"
+                        "VisualOrient": "Ground"
                     },
                     "children": []
                 }
@@ -1437,7 +1437,7 @@
     {
         "id": 2025,
         "name": "C Major Chord",
-        "desc": "도 · 미 · 솔 세 음이 무작위 적 3명 위로 떨어져 반경 1.4m 공격력 90% 피해. 3초마다",
+        "desc": "유성 셋이 무작위 적 3명 위로 떨어져 반경 1.4m 공격력 90% 피해. 3초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/c_major_chord",
         "methodPath": "Skill/Method/instant",
@@ -1485,7 +1485,7 @@
                     "id": 6,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Chord",
+                        "Visual": "Fx_Meteor",
                         "VisualColor": "#A66BFF",
                         "VisualOrient": "Billboard"
                     },
@@ -1498,7 +1498,7 @@
     {
         "id": 2026,
         "name": "Metronome",
-        "desc": "1초 박자마다 발밑에서 반경 2.4m 공격력 35% 피해",
+        "desc": "1초마다 발밑 룬이 맥동해 반경 2.4m 공격력 35% 피해",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/metronome",
         "methodPath": "Skill/Method/instant",
@@ -1542,7 +1542,7 @@
                     "id": 6,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Sonar",
+                        "Visual": "Fx_Rune",
                         "VisualColor": "#2DE6FF",
                         "VisualOrient": "Ground"
                     },
@@ -1593,7 +1593,7 @@
     {
         "id": 2102,
         "name": "Bread Slice",
-        "desc": "건반을 내리쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다",
+        "desc": "대검을 내려쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/bread_slice",
         "methodPath": "Skill/Method/instant",
@@ -1637,7 +1637,7 @@
                     "id": 6,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_Bread",
+                        "Visual": "Fx_Greatsword",
                         "VisualColor": "#FF3DA8",
                         "VisualOrient": "Billboard"
                     },
@@ -1650,7 +1650,7 @@
     {
         "id": 2103,
         "name": "Afterimage",
-        "desc": "4초간 빨라지고 지나간 자리에 잔상이 남아 피해를 준다. 10초마다",
+        "desc": "4초간 빨라지고 지나간 자리에 분신이 남아 피해를 준다. 10초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/afterimage_dash",
         "methodPath": "Skill/Method/ground_field",
@@ -1703,7 +1703,7 @@
                     "id": 7,
                     "type": "LaunchInstant",
                     "params": {
-                        "Visual": "Fx_DogDust",
+                        "Visual": "Fx_Gale",
                         "VisualColor": "#A66BFF",
                         "VisualOrient": "Ground"
                     },
@@ -1715,10 +1715,515 @@
     },
     {
         "id": 2201,
-        "name": "Bass Drop",
-        "desc": "묵직한 저음 음표가 적 2명을 뚫고 공격력 150% 피해. 0.9초마다",
+        "name": "Iaido",
+        "desc": "칼을 뽑아 전방 반달 반경 1.9m 에 공격력 200% 피해. 0.9초마다",
         "maxLevel": 1,
-        "visualPath": "Skill/Visual/basic_bass_drop",
+        "visualPath": "Skill/Visual/basic_iaido",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 0.9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetCone",
+                    "params": {
+                        "Range": 3,
+                        "HalfAngle": 60
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 200,
+                        "Radius": 1.9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Hit",
+                        "VisualColor": "#FF8FC8",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2202,
+        "name": "Pyeonjeon",
+        "desc": "짧은 화살 4발을 부채꼴로 쏘아 각 공격력 75% 피해. 1초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_pyeonjeon",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 75,
+                        "Radius": 0.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 18,
+                        "MaxDistance": 11,
+                        "BurstCount": 4,
+                        "BurstInterval": 0.05,
+                        "BurstSpread": 14,
+                        "Visual": "Fx_Arrow",
+                        "VisualColor": "#FF7D66",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2203,
+        "name": "Shuriken",
+        "desc": "흔들리며 날아가는 표창이 적 3명까지 맞혀 공격력 85% 피해. 0.8초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_shuriken",
+        "methodPath": "Skill/Method/projectile/wave",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 0.8
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 85,
+                        "Radius": 0.7
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchCurve",
+                    "params": {
+                        "Speed": 13,
+                        "ArcHeight": 1,
+                        "Visual": "Fx_Shuriken",
+                        "VisualColor": "#B48CFF",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2204,
+        "name": "Palm Wave",
+        "desc": "손바닥에서 기를 내뿜어 반경 2.6m 적에게 공격력 85% 피해 + 둔화. 1.2초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_palm_wave",
+        "methodPath": "Skill/Method/instant",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 85,
+                        "Radius": 2.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2003
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Palm",
+                        "VisualColor": "#FFD466",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2205,
+        "name": "Soul Talisman",
+        "desc": "부적이 적을 쫓아가 터지며 반경 1.2m 공격력 130% 피해 + 받는 피해 증가. 0.9초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_talisman",
+        "methodPath": "Skill/Method/projectile/homing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 0.9
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 11
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 130,
+                        "Radius": 1.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2004
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchHoming",
+                    "params": {
+                        "Speed": 13,
+                        "MaxDistance": 15,
+                        "TurnRate": 260,
+                        "Visual": "Fx_Talisman",
+                        "VisualColor": "#60F0B2",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2206,
+        "name": "Judgement",
+        "desc": "발밑에 성광을 2초간 깔아 반경 2.2m 에 0.4초마다 공격력 40% 피해. 2초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_judgement",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 40,
+                        "Radius": 2.2,
+                        "DamageInterval": 0.4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Holy",
+                        "VisualColor": "#FFE27A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2207,
+        "name": "Fireball",
+        "desc": "화염구가 날아가 터지며 반경 1.5m 공격력 120% 피해 + 화상. 1.1초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_fireball",
+        "methodPath": "Skill/Method/projectile/arc",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 10
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 120,
+                        "Radius": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DebuffOnHit",
+                    "params": {
+                        "DebuffId": 2001
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 7,
+                    "type": "LaunchArc",
+                    "params": {
+                        "Speed": 14,
+                        "ArcHeight": 1.2,
+                        "Visual": "Fx_Fireball",
+                        "VisualColor": "#FF9F66",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2208,
+        "name": "Axe Spin",
+        "desc": "도끼를 1.2초간 휘돌려 반경 1.8m 에 0.3초마다 공격력 38% 피해. 1.6초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_axe_spin",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 38,
+                        "Radius": 1.8,
+                        "DamageInterval": 0.3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 1.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_AxeWhirl",
+                        "VisualColor": "#8AD8FF",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 2209,
+        "name": "Piercing Arrow",
+        "desc": "긴 화살이 일직선으로 적 4명을 꿰뚫어 공격력 120% 피해. 0.9초마다",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/basic_pierce_arrow",
         "methodPath": "Skill/Method/projectile/piercing",
         "tree": {
             "id": 1,
@@ -1737,7 +2242,7 @@
                     "id": 3,
                     "type": "TargetNearest",
                     "params": {
-                        "Range": 9
+                        "Range": 11
                     },
                     "children": []
                 },
@@ -1745,8 +2250,8 @@
                     "id": 4,
                     "type": "HitSingle",
                     "params": {
-                        "Damage": 150,
-                        "Radius": 0.8
+                        "Damage": 120,
+                        "Radius": 0.6
                     },
                     "children": []
                 },
@@ -1754,7 +2259,7 @@
                     "id": 5,
                     "type": "DespawnAfterHits",
                     "params": {
-                        "Value": 2
+                        "Value": 4
                     },
                     "children": []
                 },
@@ -1762,11 +2267,11 @@
                     "id": 6,
                     "type": "LaunchStraight",
                     "params": {
-                        "Speed": 11,
-                        "MaxDistance": 11,
-                        "Visual": "Fx_NoteBass",
-                        "VisualColor": "#2DE6FF",
-                        "VisualOrient": "Billboard"
+                        "Speed": 24,
+                        "MaxDistance": 13,
+                        "Visual": "Fx_LongArrow",
+                        "VisualColor": "#8CFF6E",
+                        "VisualOrient": "Ground"
                     },
                     "children": []
                 }
@@ -1775,11 +2280,11 @@
         "levels": []
     },
     {
-        "id": 2202,
-        "name": "Drum Roll",
-        "desc": "16분음표 5연타, 각 공격력 80% 피해. 0.9초마다",
+        "id": 2210,
+        "name": "Grapeshot",
+        "desc": "산탄 5발을 부채꼴로 뿌려 각 공격력 60% 피해. 1.1초마다",
         "maxLevel": 1,
-        "visualPath": "Skill/Visual/basic_drum_roll",
+        "visualPath": "Skill/Visual/basic_grapeshot",
         "methodPath": "Skill/Method/projectile/burst",
         "tree": {
             "id": 1,
@@ -1790,7 +2295,7 @@
                     "id": 2,
                     "type": "TriggerOnTick",
                     "params": {
-                        "Cooldown": 0.9
+                        "Cooldown": 1.1
                     },
                     "children": []
                 },
@@ -1798,7 +2303,563 @@
                     "id": 3,
                     "type": "TargetNearest",
                     "params": {
-                        "Range": 9
+                        "Range": 8
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 60,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 16,
+                        "MaxDistance": 9,
+                        "BurstCount": 5,
+                        "BurstInterval": 0.02,
+                        "BurstSpread": 28,
+                        "Visual": "Fx_Pellet",
+                        "VisualColor": "#FFC466",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3001,
+        "name": "boss_snow_sakura_3001",
+        "desc": "금쇠몽둥이 내려찍기 — 몽둥이를 던져 반경 2.2m 폭발",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_snow_sakura_3001",
+        "methodPath": "Skill/Method/projectile/arc",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 150,
+                        "Radius": 2.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchArc",
+                    "params": {
+                        "Speed": 7,
+                        "ArcHeight": 4,
+                        "Visual": "Fx_Meteor",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3002,
+        "name": "boss_snow_sakura_3002",
+        "desc": "도깨비 불 — 불덩이 5발 부채꼴",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_snow_sakura_3002",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 60,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 8,
+                        "MaxDistance": 16,
+                        "BurstCount": 5,
+                        "BurstInterval": 0,
+                        "BurstSpread": 14,
+                        "Visual": "Fx_Fireball",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3003,
+        "name": "boss_palace_range_3003",
+        "desc": "여우 구슬 — 느리게 쫓아오는 여우불",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_palace_range_3003",
+        "methodPath": "Skill/Method/projectile/homing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 16
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 70,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchHoming",
+                    "params": {
+                        "Speed": 5,
+                        "MaxDistance": 18,
+                        "TurnRate": 90,
+                        "Visual": "Fx_MagicShot",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3004,
+        "name": "boss_palace_range_3004",
+        "desc": "아홉 꼬리 불꽃 — 사방 12발 원형 탄막",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_palace_range_3004",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 50,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 8,
+                        "MaxDistance": 16,
+                        "BurstCount": 12,
+                        "BurstInterval": 0,
+                        "BurstSpread": 30,
+                        "Visual": "Fx_Fireball",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3005,
+        "name": "boss_moon_roof_3005",
+        "desc": "그림자 쿠나이 — 쿠나이 7발 부채꼴",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_moon_roof_3005",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 50,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 8,
+                        "MaxDistance": 16,
+                        "BurstCount": 7,
+                        "BurstInterval": 0,
+                        "BurstSpread": 10,
+                        "Visual": "Fx_Kunai",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3006,
+        "name": "boss_moon_roof_3006",
+        "desc": "그림자 베기 — 주위 반경 3m 2초 칼바람",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_moon_roof_3006",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 40,
+                        "Radius": 3,
+                        "DamageInterval": 0.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_BladeSwirl",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3007,
+        "name": "boss_bamboo_temple_3007",
+        "desc": "나한 장풍 — 주위 반경 3.5m 1.5초 기운",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_bamboo_temple_3007",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 60,
+                        "Radius": 3.5,
+                        "DamageInterval": 0.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Palm",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3008,
+        "name": "boss_bamboo_temple_3008",
+        "desc": "철곤 내려찍기 — 철곤을 던져 반경 2m 폭발",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_bamboo_temple_3008",
+        "methodPath": "Skill/Method/projectile/arc",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 140,
+                        "Radius": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchArc",
+                    "params": {
+                        "Speed": 7,
+                        "ArcHeight": 4,
+                        "Visual": "Fx_Seal",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3009,
+        "name": "boss_mist_realm_3009",
+        "desc": "추혼 부적 — 쫓아오는 부적",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_mist_realm_3009",
+        "methodPath": "Skill/Method/projectile/homing",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 1.8
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 16
                     },
                     "children": []
                 },
@@ -1821,15 +2882,13 @@
                 },
                 {
                     "id": 6,
-                    "type": "LaunchStraight",
+                    "type": "LaunchHoming",
                     "params": {
-                        "Speed": 15,
-                        "MaxDistance": 11,
-                        "BurstCount": 5,
-                        "BurstInterval": 0.07,
-                        "BurstSpread": 9,
-                        "Visual": "Fx_NoteBeat",
-                        "VisualColor": "#9BFF3C",
+                        "Speed": 5,
+                        "MaxDistance": 18,
+                        "TurnRate": 90,
+                        "Visual": "Fx_Talisman",
+                        "VisualColor": "#FF5A2A",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -1839,75 +2898,11 @@
         "levels": []
     },
     {
-        "id": 2203,
-        "name": "String Beam",
-        "desc": "오선지 레이저를 1초간 켜서 0.15초마다 공격력 34% 피해. 1.3초마다",
+        "id": 3010,
+        "name": "boss_mist_realm_3010",
+        "desc": "부적 회오리 — 사방 10발 원형 부적",
         "maxLevel": 1,
-        "visualPath": "Skill/Visual/basic_string_beam",
-        "methodPath": "Skill/Method/beam",
-        "tree": {
-            "id": 1,
-            "type": "Sequence",
-            "params": {},
-            "children": [
-                {
-                    "id": 2,
-                    "type": "TriggerOnTick",
-                    "params": {
-                        "Cooldown": 1.3
-                    },
-                    "children": []
-                },
-                {
-                    "id": 3,
-                    "type": "TargetNearestForward",
-                    "params": {
-                        "Range": 9,
-                        "HalfAngle": 60
-                    },
-                    "children": []
-                },
-                {
-                    "id": 4,
-                    "type": "HitBeam",
-                    "params": {
-                        "Damage": 34,
-                        "Length": 7,
-                        "Width": 0.9,
-                        "DamageInterval": 0.15
-                    },
-                    "children": []
-                },
-                {
-                    "id": 5,
-                    "type": "DespawnAfterTime",
-                    "params": {
-                        "Value": 1
-                    },
-                    "children": []
-                },
-                {
-                    "id": 6,
-                    "type": "LaunchStraight",
-                    "params": {
-                        "Speed": 0,
-                        "MaxDistance": 999,
-                        "Visual": "Fx_StaffBeam",
-                        "VisualColor": "#4D8BFF",
-                        "VisualOrient": "Ground"
-                    },
-                    "children": []
-                }
-            ]
-        },
-        "levels": []
-    },
-    {
-        "id": 2204,
-        "name": "Do Re Mi",
-        "desc": "도 · 레 · 미 세 음이 부채꼴로 연달아 날아가 각 공격력 72% 피해. 1.1초마다",
-        "maxLevel": 1,
-        "visualPath": "Skill/Visual/basic_doremi",
+        "visualPath": "Skill/Visual/boss_mist_realm_3010",
         "methodPath": "Skill/Method/projectile/burst",
         "tree": {
             "id": 1,
@@ -1918,7 +2913,7 @@
                     "id": 2,
                     "type": "TriggerOnTick",
                     "params": {
-                        "Cooldown": 1.1
+                        "Cooldown": 5
                     },
                     "children": []
                 },
@@ -1926,7 +2921,7 @@
                     "id": 3,
                     "type": "TargetNearest",
                     "params": {
-                        "Range": 7
+                        "Range": 14
                     },
                     "children": []
                 },
@@ -1934,8 +2929,8 @@
                     "id": 4,
                     "type": "HitSingle",
                     "params": {
-                        "Damage": 72,
-                        "Radius": 0.7
+                        "Damage": 50,
+                        "Radius": 0.6
                     },
                     "children": []
                 },
@@ -1951,13 +2946,13 @@
                     "id": 6,
                     "type": "LaunchStraight",
                     "params": {
-                        "Speed": 12,
-                        "MaxDistance": 8,
-                        "BurstCount": 3,
-                        "BurstInterval": 0.07,
-                        "BurstSpread": 16,
-                        "Visual": "Fx_NoteScale",
-                        "VisualColor": "#FF3DA8",
+                        "Speed": 8,
+                        "MaxDistance": 16,
+                        "BurstCount": 10,
+                        "BurstInterval": 0,
+                        "BurstSpread": 36,
+                        "Visual": "Fx_Talisman",
+                        "VisualColor": "#FF5A2A",
                         "VisualOrient": "Billboard"
                     },
                     "children": []
@@ -1967,11 +2962,197 @@
         "levels": []
     },
     {
-        "id": 2205,
-        "name": "Lullaby",
-        "desc": "느린 온음표가 적을 쫓아가 터지며 반경 1.4m 공격력 125% 피해 + 졸음. 1.4초마다",
+        "id": 3011,
+        "name": "boss_castle_square_3011",
+        "desc": "타락의 검기 — 검기 3발 부채꼴",
         "maxLevel": 1,
-        "visualPath": "Skill/Visual/basic_lullaby",
+        "visualPath": "Skill/Visual/boss_castle_square_3011",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 3
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 90,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 8,
+                        "MaxDistance": 16,
+                        "BurstCount": 3,
+                        "BurstInterval": 0,
+                        "BurstSpread": 20,
+                        "Visual": "Fx_QiBolt",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3012,
+        "name": "boss_castle_square_3012",
+        "desc": "검은 회오리 — 주위 반경 3m 1.5초 칼바람",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_castle_square_3012",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 50,
+                        "Radius": 3,
+                        "DamageInterval": 0.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_BladeSwirl",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3013,
+        "name": "boss_mage_library_3013",
+        "desc": "찢긴 책장 — 사방 12발 원형 탄막",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_mage_library_3013",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 50,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 8,
+                        "MaxDistance": 16,
+                        "BurstCount": 12,
+                        "BurstInterval": 0,
+                        "BurstSpread": 30,
+                        "Visual": "Fx_MagicShot",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3014,
+        "name": "boss_mage_library_3014",
+        "desc": "저주 마탄 — 쫓아오는 마탄",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_mage_library_3014",
         "methodPath": "Skill/Method/projectile/homing",
         "tree": {
             "id": 1,
@@ -1982,7 +3163,7 @@
                     "id": 2,
                     "type": "TriggerOnTick",
                     "params": {
-                        "Cooldown": 1.4
+                        "Cooldown": 2
                     },
                     "children": []
                 },
@@ -1990,29 +3171,21 @@
                     "id": 3,
                     "type": "TargetNearest",
                     "params": {
-                        "Range": 10
+                        "Range": 16
                     },
                     "children": []
                 },
                 {
                     "id": 4,
-                    "type": "HitArea",
+                    "type": "HitSingle",
                     "params": {
-                        "Damage": 125,
-                        "Radius": 1.4
+                        "Damage": 80,
+                        "Radius": 0.6
                     },
                     "children": []
                 },
                 {
                     "id": 5,
-                    "type": "DebuffOnHit",
-                    "params": {
-                        "DebuffId": 2005
-                    },
-                    "children": []
-                },
-                {
-                    "id": 6,
                     "type": "DespawnAfterHits",
                     "params": {
                         "Value": 1
@@ -2020,14 +3193,377 @@
                     "children": []
                 },
                 {
-                    "id": 7,
+                    "id": 6,
                     "type": "LaunchHoming",
                     "params": {
-                        "Speed": 6.5,
-                        "MaxDistance": 13,
-                        "TurnRate": 160,
-                        "Visual": "Fx_NoteWhole",
-                        "VisualColor": "#A66BFF",
+                        "Speed": 5,
+                        "MaxDistance": 18,
+                        "TurnRate": 90,
+                        "Visual": "Fx_MagicShot",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3015,
+        "name": "boss_glacier_fjord_3015",
+        "desc": "빙산 투척 — 얼음 덩어리를 던져 반경 2.4m 폭발",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_glacier_fjord_3015",
+        "methodPath": "Skill/Method/projectile/arc",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 150,
+                        "Radius": 2.4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchArc",
+                    "params": {
+                        "Speed": 7,
+                        "ArcHeight": 4,
+                        "Visual": "Fx_Meteor",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3016,
+        "name": "boss_glacier_fjord_3016",
+        "desc": "서리 장막 — 주위 반경 3.5m 2초 냉기",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_glacier_fjord_3016",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 40,
+                        "Radius": 3.5,
+                        "DamageInterval": 0.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Rune",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3017,
+        "name": "boss_giant_forest_3017",
+        "desc": "독 포자 투척 — 포자 덩어리를 던져 반경 2.2m 폭발",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_giant_forest_3017",
+        "methodPath": "Skill/Method/projectile/arc",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 3.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 120,
+                        "Radius": 2.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchArc",
+                    "params": {
+                        "Speed": 7,
+                        "ArcHeight": 4,
+                        "Visual": "Fx_FireJar",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3018,
+        "name": "boss_giant_forest_3018",
+        "desc": "뿌리 휘감기 — 주위 반경 3m 1.5초 가시 뿌리",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_giant_forest_3018",
+        "methodPath": "Skill/Method/ground_field",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetSelf",
+                    "params": {},
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 45,
+                        "Radius": 3,
+                        "DamageInterval": 0.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterTime",
+                    "params": {
+                        "Value": 1.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_BladeSwirl",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Ground"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3019,
+        "name": "boss_skull_deck_3019",
+        "desc": "유령 산탄 — 산탄 7발 부채꼴",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_skull_deck_3019",
+        "methodPath": "Skill/Method/projectile/burst",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 2.5
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitSingle",
+                    "params": {
+                        "Damage": 50,
+                        "Radius": 0.6
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchStraight",
+                    "params": {
+                        "Speed": 8,
+                        "MaxDistance": 16,
+                        "BurstCount": 7,
+                        "BurstInterval": 0,
+                        "BurstSpread": 12,
+                        "Visual": "Fx_Pellet",
+                        "VisualColor": "#FF5A2A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
+                }
+            ]
+        },
+        "levels": []
+    },
+    {
+        "id": 3020,
+        "name": "boss_skull_deck_3020",
+        "desc": "유령 포격 — 포탄을 던져 반경 2.2m 폭발",
+        "maxLevel": 1,
+        "visualPath": "Skill/Visual/boss_skull_deck_3020",
+        "methodPath": "Skill/Method/projectile/arc",
+        "tree": {
+            "id": 1,
+            "type": "Sequence",
+            "params": {},
+            "children": [
+                {
+                    "id": 2,
+                    "type": "TriggerOnTick",
+                    "params": {
+                        "Cooldown": 4
+                    },
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "type": "TargetNearest",
+                    "params": {
+                        "Range": 14
+                    },
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "type": "HitArea",
+                    "params": {
+                        "Damage": 140,
+                        "Radius": 2.2
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "DespawnAfterHits",
+                    "params": {
+                        "Value": 1
+                    },
+                    "children": []
+                },
+                {
+                    "id": 6,
+                    "type": "LaunchArc",
+                    "params": {
+                        "Speed": 7,
+                        "ArcHeight": 4,
+                        "Visual": "Fx_Pellet",
+                        "VisualColor": "#FF5A2A",
                         "VisualOrient": "Billboard"
                     },
                     "children": []

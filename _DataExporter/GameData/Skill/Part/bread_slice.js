@@ -2,8 +2,8 @@
 module.exports = {
     id: 2102,
     name: 'Bread Slice',
-    desc: '건반을 내리쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다',
-    displayName: '건반 슬램',
+    desc: '대검을 내려쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다',
+    displayName: '대검 내려치기',
     slot: 'Tail',
     family: 'Melee',
     appliesDebuff: 'None',

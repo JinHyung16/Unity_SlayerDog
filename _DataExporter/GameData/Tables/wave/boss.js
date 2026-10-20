@@ -1,7 +1,7 @@
 module.exports = {
     id: 6002,
     name: 'Boss',
-    desc: '보스 납치선 — 라운드12 시작',
+    desc: '맵 보스 — 라운드12 시작. 배너는 맵 보스 이름으로 코드가 채운다',
     time: 660,
     repeat: 0,
     count: 1,
@@ -9,7 +9,7 @@ module.exports = {
     damageMul: 1,
     scaleMul: 1.7,
     xpMul: 1,
-    banner: '납치선 강림!',
+    banner: '',
     boss: true,
     enemyTypeId: 5006,
     speedMul: 1.6

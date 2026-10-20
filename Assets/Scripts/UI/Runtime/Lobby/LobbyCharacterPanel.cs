@@ -17,7 +17,6 @@ namespace Jinhyeong_UI.Lobby
         public const string PrefabPath = "UI/Lobby/CharacterPanel";
 
         private static readonly SaveData.EStat[] Stats = { SaveData.EStat.Hp, SaveData.EStat.Attack, SaveData.EStat.Speed };
-        private static readonly string[] StatNames = { "체력", "공격력", "이동속도" };
 
         [SerializeField] private RectTransform _cardRoot;
         [SerializeField] private TMP_Text _shopHint;
@@ -91,17 +90,37 @@ namespace Jinhyeong_UI.Lobby
             _lobby = null;
         }
 
+        private static string StatName(SaveData.EStat st)
+        {
+            switch (st)
+            {
+                case SaveData.EStat.Hp: return Loc.T("Char_StatHp", "체력");
+                case SaveData.EStat.Attack: return Loc.T("Char_StatAttack", "공격력");
+                default: return Loc.T("Char_StatSpeed", "이동속도");
+            }
+        }
+
         private void RefreshCards()
         {
             for (int i = 0; i < _cards.Count; i++)
             {
                 HeroCardComponent card = _cards[i];
+                bool locked = SaveData.IsHeroUnlocked(card.Index) == false;
+                card.SetLocked(locked);
                 card.SetSelected(card.Index == RunSelection.CharacterIndex);
 
+                if (locked)
+                {
+                    MapData origin = MapRegistry.Get(MapRegistry.OriginMapOf(card.Index));
+                    card.SetDetail(origin != null
+                        ? Loc.F("Char_JoinsOnClear", "<size=75%>{0} 클리어</size>", origin.DisplayName)
+                        : Loc.T("Char_Locked", "<size=75%>잠김</size>"));
+                    continue;
+                }
                 PartData unique = PartRegistry.GetUniqueFor(card.Index);
                 card.SetDetail(unique != null
-                    ? "<size=17>고유 · " + unique.DisplayName + "  ·  " + LobbyText.FamilyName(unique.Family) + " 계열</size>"
-                    : "<size=17>고유 스킬 없음</size>");
+                    ? "<size=75%>" + unique.DisplayName + " · " + LobbyText.FamilyName(unique.Family) + "</size>"
+                    : Loc.T("Char_NoUniqueSkill", "<size=75%>고유 스킬 없음</size>"));
             }
         }
 
@@ -109,7 +128,7 @@ namespace Jinhyeong_UI.Lobby
         {
             if (_shopHint != null)
             {
-                _shopHint.text = $"사료 {SaveData.Kibble} · 눌러서 영구 강화";
+                _shopHint.text = Loc.F("Char_ShopHint", "사료 {0} · 눌러서 영구 강화", SaveData.Kibble);
             }
 
             for (int i = 0; i < _statButtons.Count && i < Stats.Length; i++)
@@ -117,8 +136,13 @@ namespace Jinhyeong_UI.Lobby
                 SaveData.EStat st = Stats[i];
                 int lv = SaveData.StatLevel(st);
                 bool max = lv >= SaveData.StatMaxLevel;
-                string detail = max ? "최대" : $"사료 {SaveData.StatCost(st)}";
-                _statButtons[i].SetText($"{StatNames[i]} Lv.{lv}"
+                string detail = max ? Loc.T("Char_StatMax", "최대") : Loc.F("Char_StatCost", "사료 {0}", SaveData.StatCost(st));
+                // 살 수 없으면 비용을 붉게, 최대면 회색 — 누를 수 있는 것과 없는 것이 한눈에 갈리게
+                if (max)
+                    detail = "<color=#8C8C96>" + detail + "</color>";
+                else if (SaveData.Kibble < SaveData.StatCost(st))
+                    detail = "<color=#E0705E>" + detail + "</color>";
+                _statButtons[i].SetText($"{StatName(st)} Lv.{lv}"
                     + $"  <size=14>+{Mathf.RoundToInt(SaveData.StatGain(st) * lv * 100f)}%</size>"
                     + System.Environment.NewLine + $"<size=14>{detail}</size>");
             }
@@ -126,6 +150,10 @@ namespace Jinhyeong_UI.Lobby
 
         void HeroCardComponent.IListener.OnClickHero(int index)
         {
+            if (SaveData.IsHeroUnlocked(index) == false)
+            {
+                return;
+            }
             RunSelection.CharacterIndex = index;
             RefreshCards();
         }

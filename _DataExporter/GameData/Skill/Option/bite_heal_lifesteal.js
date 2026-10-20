@@ -1,8 +1,8 @@
 module.exports = {
     id: 4030,
     name: 'bite_heal_lifesteal',
-    desc: '스타카토 바이트 — 처치 시 체력 +1.4',
-    displayName: '개튼튼 치아 · 흡혈',
+    desc: '흡혈 송곳니 — 처치 시 체력 +1.4',
+    displayName: '흡혈 송곳니 · 흡혈',
     partId: 2001,
     trait: 'Lifesteal',
     value: 1.4,

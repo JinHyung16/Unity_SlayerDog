@@ -3,7 +3,7 @@ module.exports = {
     id: 8002,
     name: 'fam_wave_4',
     desc: '파동 4개 — 파동 스킬 피해 +40%',
-    displayName: '대공명',
+    displayName: '대기공',
     family: 'Wave',
     reqFamilyCount: 4,
     reqSkillId: 0,

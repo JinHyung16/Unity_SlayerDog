@@ -33,9 +33,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightness: 0.8
+    - _Brightness: 1
     - _EnableExternalAlpha: 0
-    - _Saturation: 0.7
+    - _Saturation: 1
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

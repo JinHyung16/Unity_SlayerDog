@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Jinhyeong_Character;
+using Jinhyeong_Common;
 using Jinhyeong_Managers;
 using Jinhyeong_SkillSystem;
 using Jinhyeong_UI.Framework;
@@ -28,8 +29,8 @@ namespace Jinhyeong_UI.Lobby
 
         public static readonly string[] TabNames = { "시작", "캐릭터", "스킬 트리", "설정" };
 
-        public const string GameTitle = "개많이잡아";
-        public const string GameTagline = "12분. 파스텔 군단은 많고, 우리는 밴드다.";
+        public const string GameTitle = "SlayerDog";
+        public const string GameTagline = "열 세계의 개 영웅, 12분 동안 침공군을 벤다.";
 
         private static readonly string[] Preload =
         {
@@ -200,14 +201,14 @@ namespace Jinhyeong_UI.Lobby
         {
             if (SkillRegistry.IsLoaded == false)
             {
-                SetStatus("스킬 데이터 로딩 중...");
+                SetStatus(Loc.T("Lobby_StatusLoadingSkills", "스킬 데이터 로딩 중..."));
                 try
                 {
                     await SkillRegistry.LoadAsync();
                 }
                 catch (Exception e)
                 {
-                    SetStatus($"스킬 로드 실패: {e.Message}");
+                    SetStatus(Loc.F("Lobby_StatusSkillLoadFailed", "스킬 로드 실패: {0}", e.Message));
                     return;
                 }
             }
@@ -217,7 +218,7 @@ namespace Jinhyeong_UI.Lobby
                 return;
             }
 
-            SetStatus("스킬 이펙트 로딩 중...");
+            SetStatus(Loc.T("Lobby_StatusLoadingEffects", "스킬 이펙트 로딩 중..."));
             try
             {
                 await SkillRegistry.PreloadVisualsAsync();
@@ -234,7 +235,9 @@ namespace Jinhyeong_UI.Lobby
 
             int count = PartRegistry.Count;
             IsReady = true;
-            SetStatus(count > 0 ? $"사용 가능 스킬 {count}개" : "사용 가능 스킬 없음 (Resources/GameData 확인)");
+            SetStatus(count > 0
+                ? Loc.F("Lobby_StatusSkillCount", "사용 가능 스킬 {0}개", count)
+                : Loc.T("Lobby_StatusNoSkills", "사용 가능 스킬 없음 (Resources/GameData 확인)"));
         }
 
         public async void StartRun()
@@ -250,14 +253,14 @@ namespace Jinhyeong_UI.Lobby
             Player player = GameEvents.CurrentPlayer;
             if (player == null)
             {
-                SetStatus("월드 로딩 중...");
+                SetStatus(Loc.T("Lobby_StatusLoadingWorld", "월드 로딩 중..."));
                 try
                 {
                     await WorldSpawner.SpawnPlayerWorldAsync(empty, Vector3.zero);
                 }
                 catch (Exception e)
                 {
-                    SetStatus($"스폰 실패: {e.Message}");
+                    SetStatus(Loc.F("Lobby_StatusSpawnFailed", "스폰 실패: {0}", e.Message));
                     return;
                 }
             }

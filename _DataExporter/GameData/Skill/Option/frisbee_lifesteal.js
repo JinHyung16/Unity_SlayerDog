@@ -1,8 +1,8 @@
 module.exports = {
     id: 4450,
     name: 'frisbee_lifesteal',
-    desc: 'LP 판 날리기 — 처치 시 체력 +1.4',
-    displayName: '원반 물어오기 · 흡혈',
+    desc: '차크람 — 처치 시 체력 +1.4',
+    displayName: '차크람 · 흡혈',
     partId: 2022,
     trait: 'Lifesteal',
     value: 1.4,

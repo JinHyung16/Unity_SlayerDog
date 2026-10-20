@@ -11,5 +11,5 @@ module.exports = {
     maxAlive: 108,
     hpMul: 3.1,
     damageMul: 2.52,
-    banner: '납치선이 다가온다...'
+    banner: '거대한 기운이 다가온다...'
 };

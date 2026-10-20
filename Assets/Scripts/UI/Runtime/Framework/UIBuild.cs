@@ -7,32 +7,32 @@ namespace Jinhyeong_UI.Framework
 
     public static class UIBuild
     {
-        // 팔레트: 진보라 밤 바탕 · 마젠타 테두리 · 시안 선택 · 레몬 보상 · 레드오렌지 위험 (볼트 개많이잡아/개많이잡아 아트 방향)
-        public static readonly Color ColorBg = new Color(0.09f, 0.05f, 0.16f, 1f);
-        public static readonly Color ColorRail = new Color(0.14f, 0.07f, 0.25f, 1f);
-        public static readonly Color ColorSky = new Color(0.20f, 0.09f, 0.34f, 1f);
-        public static readonly Color ColorCard = new Color(0.17f, 0.09f, 0.30f, 1f);
-        public static readonly Color ColorCardSoft = new Color(0.26f, 0.14f, 0.42f, 1f);
-        public static readonly Color ColorCardOn = new Color(0.10f, 0.72f, 0.92f, 1f);
-        public static readonly Color ColorTabOff = new Color(0.13f, 0.07f, 0.22f, 1f);
-        public static readonly Color ColorLocked = new Color(0.08f, 0.05f, 0.12f, 1f);
-        public static readonly Color ColorUnique = new Color(0.36f, 0.14f, 0.52f, 1f);
-        public static readonly Color ColorStart = new Color(1f, 0.20f, 0.60f, 1f);
-        public static readonly Color ColorDanger = new Color(0.38f, 0.10f, 0.14f, 1f);
-        public static readonly Color ColorDangerArmed = new Color(1f, 0.32f, 0.22f, 1f);
-        public static readonly Color ColorGold = new Color(1f, 0.93f, 0.32f, 1f);
-        public static readonly Color ColorMuted = new Color(0.80f, 0.72f, 0.95f, 1f);
-        public static readonly Color ColorSubHead = new Color(0.92f, 0.84f, 1f, 1f);
+        // 팔레트: 먹색 남색 바탕 · 바랜 금 테두리 · 금빛 선택 · 양피지 글자 · 진홍 시작 (볼트 SlayerDog 기획서 아트)
+        public static readonly Color ColorBg = new Color(0.07f, 0.07f, 0.11f, 1f);
+        public static readonly Color ColorRail = new Color(0.10f, 0.10f, 0.16f, 1f);
+        public static readonly Color ColorSky = new Color(0.12f, 0.13f, 0.20f, 1f);
+        public static readonly Color ColorCard = new Color(0.14f, 0.15f, 0.23f, 1f);
+        public static readonly Color ColorCardSoft = new Color(0.20f, 0.21f, 0.31f, 1f);
+        public static readonly Color ColorCardOn = new Color(0.55f, 0.38f, 0.14f, 1f);
+        public static readonly Color ColorTabOff = new Color(0.10f, 0.10f, 0.16f, 1f);
+        public static readonly Color ColorLocked = new Color(0.06f, 0.06f, 0.09f, 1f);
+        public static readonly Color ColorUnique = new Color(0.30f, 0.20f, 0.13f, 1f);
+        public static readonly Color ColorStart = new Color(0.78f, 0.24f, 0.18f, 1f);
+        public static readonly Color ColorDanger = new Color(0.36f, 0.10f, 0.10f, 1f);
+        public static readonly Color ColorDangerArmed = new Color(0.95f, 0.30f, 0.20f, 1f);
+        public static readonly Color ColorGold = new Color(1f, 0.84f, 0.40f, 1f);
+        public static readonly Color ColorMuted = new Color(0.78f, 0.75f, 0.68f, 1f);
+        public static readonly Color ColorSubHead = new Color(0.95f, 0.90f, 0.80f, 1f);
         public static readonly Color ColorWarn = new Color(1f, 0.45f, 0.38f, 1f);
 
-        public static readonly Color ColorOutline = new Color(1f, 0.30f, 0.72f, 0.85f);
+        public static readonly Color ColorOutline = new Color(0.86f, 0.66f, 0.30f, 0.9f);
 
         public const float CardCorner = 14f;
         public const float BigCardCorner = 20f;
         public const float PanelCorner = 24f;
-        public static readonly Color ColorDim = new Color(0.64f, 0.55f, 0.80f, 1f);
+        public static readonly Color ColorDim = new Color(0.62f, 0.60f, 0.56f, 1f);
         public static readonly Color ColorText = Color.white;
-        public static readonly Color ColorTextLocked = new Color(0.50f, 0.42f, 0.60f, 1f);
+        public static readonly Color ColorTextLocked = new Color(0.45f, 0.44f, 0.42f, 1f);
 
         public static RectTransform MakeRect(string name, Transform parent)
         {
@@ -134,7 +134,7 @@ namespace Jinhyeong_UI.Framework
             Outline(rt, ColorOutline, UISkin.CardFrame, CardCorner);
 
             text = MakeText(rt, "Label", label, fontSize, TextAlignmentOptions.Center);
-            text.fontStyle = FontStyles.Bold;
+            text.fontStyle = FontStyles.Normal;
             Stretch(text.rectTransform);
             return b;
         }

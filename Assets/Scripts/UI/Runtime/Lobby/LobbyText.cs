@@ -1,3 +1,4 @@
+using Jinhyeong_Common;
 using Jinhyeong_GameData;
 
 namespace Jinhyeong_UI.Lobby
@@ -9,12 +10,12 @@ namespace Jinhyeong_UI.Lobby
         {
             switch (f)
             {
-                case ESkillFamily.Wave: return "파동";
-                case ESkillFamily.Throw: return "투척";
-                case ESkillFamily.Field: return "장판";
-                case ESkillFamily.Melee: return "근접";
-                case ESkillFamily.Gaze: return "시선";
-                case ESkillFamily.Aura: return "각성";
+                case ESkillFamily.Wave: return Loc.T("Lobby_FamilyWave", "파동");
+                case ESkillFamily.Throw: return Loc.T("Lobby_FamilyThrow", "투척");
+                case ESkillFamily.Field: return Loc.T("Lobby_FamilyField", "장판");
+                case ESkillFamily.Melee: return Loc.T("Lobby_FamilyMelee", "근접");
+                case ESkillFamily.Gaze: return Loc.T("Lobby_FamilyGaze", "시선");
+                case ESkillFamily.Aura: return Loc.T("Lobby_FamilyAura", "각성");
                 default: return "-";
             }
         }

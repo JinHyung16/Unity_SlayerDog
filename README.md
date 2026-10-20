@@ -1,77 +1,36 @@
-# 개많이잡아 — Unity Skill System Module
+# SlayerDog
 
-2D 탑다운 서바이버. 스킬은 코드가 아니라 데이터에 적은 모듈 조합(행동 트리)으로 만든다.
+판타지 · 동양풍 직업 옷을 입은 개 영웅 열 마리가 열 개의 세계에서 몰려오는 침공군을 베는 **12분 서바이버(뱀서류)**. 스팀 PC 싱글 게임.
 
-이 저장소의 목표는 게임 하나가 아니라, 기획서를 넣으면 코어 플레이까지 만드는 파이프라인이다. 이 게임은 그 첫 실증 대상이다.
+![플레이 화면](Docs/images/play.gif)
 
-## 개요
+## 게임
 
 | 항목 | 내용 |
 |---|---|
-| 코어 루프 | 적 처치, 파츠 획득, 스킬과 시너지로 강화 |
-| 세션 | 12라운드 × 60초. 보스 처치 시 클리어, 사망 시 종료 |
-| 뷰 | XZ 평면 3D 월드 + 오쏘그래픽 쿼터뷰, 스프라이트 빌보드 |
-| 조작 | 키보드 이동. 스킬 자동 발동, 자동 조준 |
-| 플랫폼 | PC 1280×720 |
+| 장르 | 로그라이트 서바이버 · 불릿 헤븐 (도트 그래픽) |
+| 한 판 | 12라운드 × 60초. 맵 보스를 쓰러뜨리면 클리어 |
+| 조작 | 이동만. 공격은 자동 발동 · 자동 조준. ESC 일시정지 |
+| 성장 | 레벨업마다 카드 3장 중 하나 — 새 무기 · 무기 강화 · 고유 공격 강화 · 능력치. 같은 계열 시너지, 무기 통달 |
+| 영웅 | 10 — 시바 무사 · 진돗개 무관 · 아키타 닌자 · 차우차우 무승 · 퍼그 도사 · 셰퍼드 성기사 · 푸들 대마법사 · 허스키 광전사 · 비글 레인저 · 닥스훈트 포수 |
+| 세계 | 10 — 세계마다 바닥 · 소품 · 적 · 보스가 다르다. 세계를 깨면 그 세계 출신 영웅이 합류 |
+| 필드 | 경험치 뼈, 무기 상자, 회복 고기, 자석 |
+| 영구 성장 | 사료로 능력치 강화, 슈퍼 DNA 로 별자리 스킬 트리 |
+| 언어 | 한국어 · 영어 |
 
-## 기술 스택
+![영웅 10](Docs/images/heroes.png)
 
-| 분류 | 사용 |
-|---|---|
-| 엔진 | Unity 6000.3, URP 17.3 |
-| 비동기 | UniTask |
-| 로드 | Addressables 2.3 |
-| 데이터 | 로컬 JS, Node 익스포터, JSON + 생성 enum |
-| 아트 | Python 절차 생성 + 외부 에셋 팩 |
-| 프레임워크 | `com.jinhyung.gameframework`, `com.translation.unity` (UPM). 이관 예정, `TASKS.md` W-1 |
+![세계 10](Docs/images/maps.png)
 
-## 스킬 데이터 흐름
+![보스 10](Docs/images/bosses.png)
 
-```
-_DataExporter/GameData/*.js
-  node export.js            검증에 실패하면 아무것도 쓰지 않는다
-Assets/Resources/GameData/*.json + *.Generated.cs
-  Registry.LoadAsync
-SkillCompiler -> CompiledSkill      SkillModifier 가 파츠 옵션과 시너지를 곱한다
-SkillObject -> TargetingResolver -> LaunchExecutor -> SkillEffect -> Damageable
-```
+## 만든 도구
 
-콘텐츠를 늘릴 때 C# 을 고치지 않는다. 노드는 `[BTNode]` 어트리뷰트로 자기 타입을 등록한다.
+Unity 6000.3 (URP) · 데이터 주도 스킬 시스템 · Python 절차 생성 도트 그래픽
 
-## 실행
+## 크레딧
 
-1. Unity 6000.3 으로 연다
-2. 데이터를 굽는다: `cd _DataExporter && node export.js`
-3. `Assets/Scenes/Main.unity` 에서 Play. 로비가 열린다
-4. 이동은 WASD 또는 방향키. 스킬은 자동으로 나간다
-
-아트를 다시 구웠으면 `python _DataExporter/tools/build_meta.py` 를 반드시 이어서 돌린다. 안 돌리면 GUID 가 새로 잡혀 참조가 끊긴다.
-
-## 폴더
-
-```
-CLAUDE.md                         작업 규칙 (볼트로 보내는 라우터)
-TASKS.md                          작업 큐 (미완료만)
-.claude/spec.md                   이 게임의 확정값과 실측값
-.claude/history/YYYY-MM-DD.md     완료 기록
-.claude/skills/unitygamedev/      스킬 스텁 (발화용, 본문은 볼트)
-.claude/tools/                    문서 감사 · 코드 감사
-_DataExporter/                    데이터 원본, 익스포터, 아트 생성기
-Assets/Scripts/<시스템>/           namespace Jinhyeong_<시스템>
-```
-
-개발 방법론(게임과 무관)은 저장소 밖 옵시디언 볼트 `C:\jinhyeong_project\Jinhyeong_Obsidian\Dev_Unity\` 에 있다. 시작 노트는 `00 시작/Dev_Unity 지도.md`.
-
-## 문서
-
-| 알고 싶은 것 | 어디 |
-|---|---|
-| 작업 규칙 | [CLAUDE.md](CLAUDE.md) |
-| 다음 할 일 | [TASKS.md](TASKS.md) |
-| 현재 수치 | [.claude/spec.md](.claude/spec.md) |
-| 스킬 데이터 작성 | [_DataExporter/README.md](_DataExporter/README.md) |
-| 코드 컨벤션 | 볼트 `Dev_Unity/40 규약/규약 - 코드 컨벤션.md` |
-| 개발 절차 | 볼트 `Dev_Unity/00 시작/개발 러너.md` |
+- 글꼴: 도스고딕 (이담허 leedheo, MIT) — https://github.com/hurss/fonts
 
 ## 라이선스
 

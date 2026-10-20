@@ -170,8 +170,8 @@ namespace Jinhyeong_UI.Lobby
             {
                 return;
             }
-            _hint.text = $"슈퍼 DNA {SaveData.SuperDna} · 별 {ConstellationManager.OwnedCount}/{ConstellationManager.Graph.Nodes.Count - 1}"
-                         + " · 끌어서 이동 · 휠로 확대";
+            _hint.text = Loc.F("Skill_Hint", "슈퍼 DNA {0} · 별 {1}/{2} · 끌어서 이동 · 휠로 확대",
+                SaveData.SuperDna, ConstellationManager.OwnedCount, ConstellationManager.Graph.Nodes.Count - 1);
         }
 
         private void HandleZoomChanged()
@@ -215,7 +215,7 @@ namespace Jinhyeong_UI.Lobby
 
             if (hasPath == false)
             {
-                string why = ConstellationManager.IsOwned(nodeId) ? "이미 열었다" : "아직 길이 닿지 않는다";
+                string why = ConstellationManager.IsOwned(nodeId) ? Loc.T("Skill_AlreadyOwned", "이미 열었다") : Loc.T("Skill_Unreachable", "아직 길이 닿지 않습니다");
                 SetTip(node.DisplayName, node.Description, why, false);
             }
             else
@@ -223,8 +223,8 @@ namespace Jinhyeong_UI.Lobby
                 int cost = ConstellationManager.PathCost(_path);
                 bool afford = SaveData.SuperDna >= cost;
                 string tail = afford
-                    ? $"별 {_path.Count}개 · DNA {cost} — 한 번 더 누르면 산다"
-                    : $"별 {_path.Count}개 · DNA {cost} — {cost - SaveData.SuperDna} 모자란다";
+                    ? Loc.F("Skill_CostAfford", "별 {0}개 · DNA {1} — 한 번 더 누르면 산다", _path.Count, cost)
+                    : Loc.F("Skill_CostShort", "별 {0}개 · DNA {1} — {2} 부족합니다", _path.Count, cost, cost - SaveData.SuperDna);
                 SetTip(node.DisplayName, node.Description, tail, afford == false);
             }
 

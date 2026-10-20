@@ -33,11 +33,12 @@ namespace Jinhyeong_GameData.Editor
         private const string DecoMaterialPath = MaterialDir + "/Deco_Tone.mat";
         private const float GroundSaturation = 1f;
         private const float GroundBrightness = 1f;
-        private const float DecoSaturation = 0.7f;
-        private const float DecoBrightness = 0.8f;
+        private const float DecoSaturation = 1f;
+        private const float DecoBrightness = 1f;
 
         // 무대 바닥 4종 (build_stage.py). 셀마다 해시로 고른다
-        private static readonly string[] GrassTileNames = { "tile_stage_1", "tile_stage_2", "tile_stage_3", "tile_stage_4" };
+        // build_stage.py TILE_VARIANTS 와 같게 — 8장을 섞어 바닥 반복 무늬를 줄인다
+        private static readonly string[] GrassTileNames = { "tile_stage_1", "tile_stage_2", "tile_stage_3", "tile_stage_4", "tile_stage_5", "tile_stage_6", "tile_stage_7", "tile_stage_8" };
 
         private const string VolumeProfilePath = "Assets/Settings/Game_VolumeProfile.asset";
         private const float VignetteIntensity = 0.25f;
@@ -48,70 +49,73 @@ namespace Jinhyeong_GameData.Editor
         private const int OrderPlayer = 25;
         private const int OrderPickup = 5;
 
-        // build_vfx.py 가 내는 26종. 각 폴더에 core/ · glow/ 두 층
-        private static readonly Dictionary<string, string> FxAddress = new Dictionary<string, string>
+        // 이펙트 표 = build_vfx.py 가 쓰는 _DataExporter/_fx_table.tsv (폴더 · 주소 · 종류). 각 폴더에 core/ · glow/ 두 층
+        // 종류 object(무기 · 투사체)는 제 색을 지키고, energy(기운형)는 흰 심지가 데이터 색을 CoreTintEnergy 만큼만 받는다
+        private const string FxTablePath = "_DataExporter/_fx_table.tsv";
+
+        private static Dictionary<string, string> _fxAddress;
+        private static HashSet<string> _fxObjects;
+
+        private static Dictionary<string, string> FxAddress
         {
-            { "fx_hit", "Fx_Hit" },
-            { "fx_shards", "Fx_HitBurst" },
+            get
+            {
+                LoadFxTable();
+                return _fxAddress;
+            }
+        }
 
-            // 음악 전투 — 주인공 기본 공격 · 다장조 화음
-            { "fx_notebass", "Fx_NoteBass" },
-            { "fx_notebeat", "Fx_NoteBeat" },
-            { "fx_staffbeam", "Fx_StaffBeam" },
-            { "fx_notescale", "Fx_NoteScale" },
-            { "fx_notewhole", "Fx_NoteWhole" },
-            { "fx_chord", "Fx_Chord" },
-
-            { "fx_teeth", "Fx_Teeth" },
-            { "fx_growl", "Fx_Growl" },
-            { "fx_bark", "Fx_Bark" },
-            { "fx_yawn", "Fx_Yawn" },
-            { "fx_dogclaw", "Fx_DogClaw" },
-            { "fx_burst", "Fx_Burst" },
-            { "fx_bone", "Fx_Bone" },
-            { "fx_tailsw", "Fx_TailSwing" },
-            { "fx_scent", "Fx_Scent" },
-            { "fx_sonar", "Fx_Sonar" },
-            { "fx_howl", "Fx_Howl" },
-            { "fx_kibble", "Fx_Kibble" },
-            { "fx_frisbee", "Fx_Frisbee" },
-            { "fx_ball", "Fx_Ball" },
-            { "fx_slipper", "Fx_Slipper" },
-            { "fx_bread", "Fx_Bread" },
-            { "fx_paw", "Fx_Paw" },
-            { "fx_dogdust", "Fx_DogDust" },
-
-            { "fx_shield", "Fx_Shield" },
-            { "fx_awaken", "Fx_Awaken" },
-            { "fx_zoom", "Fx_Zoom" },
-            { "fx_taunt", "Fx_Taunt" },
-            { "fx_eyebeam", "Fx_EyeBeam" },
-            { "fx_gaze", "Fx_Gaze" },
-            { "fx_static", "Fx_Static" }
-        };
-
-        // 제 색을 지키는 물건형. 나머지(기운형)는 흰 심지가 계열 색을 CoreTintEnergy 만큼만 받는다
-        private static readonly HashSet<string> FxObjects = new HashSet<string>
+        private static HashSet<string> FxObjects
         {
-            "fx_teeth", "fx_bone", "fx_kibble", "fx_frisbee", "fx_ball", "fx_slipper", "fx_bread"
-        };
+            get
+            {
+                LoadFxTable();
+                return _fxObjects;
+            }
+        }
+
+        private static void LoadFxTable()
+        {
+            if (_fxAddress != null)
+                return;
+            _fxAddress = new Dictionary<string, string>();
+            _fxObjects = new HashSet<string>();
+            if (File.Exists(FxTablePath) == false)
+            {
+                Debug.LogWarning($"[Art2DBuilder] {FxTablePath} 가 없습니다 — build_vfx.py 를 먼저 돌린다");
+                return;
+            }
+            foreach (string line in File.ReadAllLines(FxTablePath))
+            {
+                if (line.Length == 0 || line[0] == '#')
+                    continue;
+                string[] cols = line.Split('\t');
+                if (cols.Length < 3)
+                    continue;
+                _fxAddress[cols[0]] = cols[1];
+                if (cols[2] == "object")
+                    _fxObjects.Add(cols[0]);
+            }
+        }
+
         private const float CoreTintEnergy = 0.25f;
         private const string GlowShader = "Jinhyeong/SpriteAdditive";
         private const string GlowMaterialPath = MaterialDir + "/Fx_Glow.mat";
 
-        [MenuItem("Tools/개많이잡아/2D 에셋 빌드", priority = 10)]
+        [MenuItem("Tools/SlayerDog/2D 에셋 빌드", priority = 10)]
         public static void BuildAll()
         {
             Directory.CreateDirectory(PrefabDir);
             Directory.CreateDirectory(MaterialDir);
 
+            _fxAddress = null;
             int purged = PurgeStaleFxPrefabs();
             if (purged > 0)
                 Debug.Log($"[Art2DBuilder] 표에 없는 이펙트 프리팹 {purged}개 삭제");
             int fx = BuildFxPrefabs();
             BuildGhostPrefab();
             BuildPickupPrefabs();
-            BuildGroundPrefab();
+            BuildGroundPrefabs();
             BuildCharacterPrefabs();
             CleanLegacyMap();
 
@@ -158,16 +162,43 @@ namespace Jinhyeong_GameData.Editor
             Debug.Log($"[Art2DBuilder] 옛 맵 정리 — {removed}개 제거");
         }
 
-        private static void BuildGroundPrefab()
+        // 맵마다 바닥 프리팹 하나 — Assets/_Art/Stage/<key>/ (build_stage.py) → OBJ_Ground_<key> · 주소 obj_ground_<key>
+        // 주소는 Tables/map 의 groundKey 와 같다. 맵을 고르면 WorldSpawner 가 그 주소를 불러온다
+        private static void BuildGroundPrefabs()
         {
-            TileBase[] grass = BuildGrassTiles();
-            if (grass.Length == 0)
+            if (Directory.Exists(StageDir) == false)
             {
-                Debug.LogWarning("[Art2DBuilder] 잔디 타일이 없습니다 — 바닥을 만들지 않았습니다");
+                Debug.LogWarning($"[Art2DBuilder] {StageDir} 가 없습니다 — 바닥을 만들지 않았습니다");
                 return;
             }
 
-            GameObject root = new GameObject("OBJ_Ground");
+            int made = 0;
+            foreach (string dir in Directory.GetDirectories(StageDir).OrderBy(d => d))
+            {
+                string key = Path.GetFileName(dir);
+                string stageDir = $"{StageDir}/{key}";
+                if (BuildGroundPrefab(stageDir, key))
+                    made++;
+            }
+
+            // 맵 단위로 바뀌기 전의 공용 바닥 (Stage 바로 아래 타일) — 주소째 지운다
+            const string legacy = PrefabDir + "/OBJ_Ground.prefab";
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(legacy) != null)
+                AssetDatabase.DeleteAsset(legacy);
+
+            Debug.Log($"[Art2DBuilder] 맵 바닥 {made}개");
+        }
+
+        private static bool BuildGroundPrefab(string stageDir, string key)
+        {
+            TileBase[] grass = BuildGrassTiles(stageDir, key);
+            if (grass.Length == 0)
+            {
+                Debug.LogWarning($"[Art2DBuilder] {stageDir} 에 바닥 타일이 없습니다 — 건너뜀");
+                return false;
+            }
+
+            GameObject root = new GameObject("OBJ_Ground_" + key);
             BoxCollider floor = root.AddComponent<BoxCollider>();
             floor.size = new Vector3(4000f, 1f, 4000f);
             floor.center = new Vector3(0f, -0.5f, 0f);
@@ -198,14 +229,15 @@ namespace Jinhyeong_GameData.Editor
             volume.isGlobal = true;
             volume.sharedProfile = LoadGameVolumeProfile();
 
-            TilemapStreamerSetup(root, map, grass);
+            TilemapStreamerSetup(root, map, grass, stageDir);
 
-            SavePrefab(root, PrefabDir + "/OBJ_Ground.prefab", "obj_ground");
+            SavePrefab(root, $"{PrefabDir}/OBJ_Ground_{key}.prefab", "obj_ground_" + key);
+            return true;
         }
 
         private const float TileWorldSize = 2f;
 
-        private static void TilemapStreamerSetup(GameObject root, Tilemap map, TileBase[] grass)
+        private static void TilemapStreamerSetup(GameObject root, Tilemap map, TileBase[] grass, string stageDir)
         {
             TilemapStreamer st = root.AddComponent<TilemapStreamer>();
             SetPrivate(st, "_ground", map);
@@ -217,7 +249,7 @@ namespace Jinhyeong_GameData.Editor
             for (int i = 0; i < grass.Length; i++)
                 tiles.GetArrayElementAtIndex(i).objectReferenceValue = grass[i];
 
-            Sprite[] deco = LoadByPrefix(StageDir, "deco_");
+            Sprite[] deco = LoadByPrefix(stageDir, "deco_");
             SerializedProperty decos = so.FindProperty("_decoSprites");
             decos.arraySize = deco.Length;
             for (int i = 0; i < deco.Length; i++)
@@ -227,13 +259,13 @@ namespace Jinhyeong_GameData.Editor
             SetPrivate(st, "_decoMaterial", LoadToneMaterial(DecoMaterialPath, DecoSaturation, DecoBrightness));
         }
 
-        private static TileBase[] BuildGrassTiles()
+        private static TileBase[] BuildGrassTiles(string stageDir, string key)
         {
-            const string tileAssetDir = "Assets/_Art/Tiles/Assets";
+            string tileAssetDir = "Assets/_Art/Tiles/Assets/" + key;
             Directory.CreateDirectory(tileAssetDir);
 
             Sprite[] sprites = GrassTileNames
-                .Select(n => LoadSprite($"{StageDir}/{n}.png"))
+                .Select(n => LoadSprite($"{stageDir}/{n}.png"))
                 .Where(sp => sp != null)
                 .ToArray();
             List<TileBase> made = new List<TileBase>(sprites.Length);
@@ -313,7 +345,7 @@ namespace Jinhyeong_GameData.Editor
         // 표(FxAddress)에서 빠진 Fx_* 프리팹을 지운다. 남겨 두면 지워진 스프라이트를 가리킨 채 어드레서블에 남는다
         private static int PurgeStaleFxPrefabs()
         {
-            HashSet<string> keep = new HashSet<string>(FxAddress.Values) { "Fx_XpGem", "Fx_Ghost", PartDropper.PickupKey };
+            HashSet<string> keep = new HashSet<string>(FxAddress.Values) { "Fx_XpGem", "Fx_Ghost", PartDropper.PickupKey, Jinhyeong_Common.CommonConfig.Skill.MeatKey, Jinhyeong_Common.CommonConfig.Skill.MagnetKey };
             AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.Settings;
             int removed = 0;
             foreach (string path in Directory.GetFiles(PrefabDir, "Fx_*.prefab"))
@@ -419,14 +451,36 @@ namespace Jinhyeong_GameData.Editor
                 AddPickupGlow(go, SpriteDir + "/pickup_kibble_glow.png", new Color(1f, 0.93f, 0.32f, 0.9f));
                 SavePrefab(go, PrefabDir + "/Fx_XpGem.prefab", "Fx_XpGem");
             }
+
+            BuildFieldPickup(Jinhyeong_Common.CommonConfig.Skill.MeatKey, "pickup_meat", FieldPickup.EKind.Meat, new Color(0.55f, 1f, 0.55f, 0.9f));
+            BuildFieldPickup(Jinhyeong_Common.CommonConfig.Skill.MagnetKey, "pickup_magnet", FieldPickup.EKind.Magnet, new Color(1f, 0.85f, 0.35f, 0.9f));
+        }
+
+        // 회복 고기 · 자석 (build_pickups.py). 빛 테두리 색 = 효과 색 (회복 초록 · 보상 금색)
+        private static void BuildFieldPickup(string key, string sprite, FieldPickup.EKind kind, Color glow)
+        {
+            Sprite s = LoadSprite($"{SpriteDir}/{sprite}.png");
+            if (s == null)
+                return;
+            GameObject go = new GameObject(key);
+            SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = s;
+            sr.sortingOrder = OrderPickup;
+            go.AddComponent<Jinhyeong_UI.Billboard>();
+            FieldPickup fp = go.AddComponent<FieldPickup>();
+            SetPrivate(fp, "_kind", (int)kind);
+            AddPickupGlow(go, $"{SpriteDir}/{sprite}_glow.png", glow);
+            SavePrefab(go, $"{PrefabDir}/{key}.prefab", key);
         }
 
         private static void BuildCharacterPrefabs()
         {
             RebuildVisual("Assets/_Art/Prefabs/OBJ_Player.prefab", "dog_shiba", null);
 
-            string[] enemyKeys = { "grunt", "runner", "brute", "spitter", "swarm", "ufo" };
-            RebuildVisual("Assets/_Art/Prefabs/OBJ_Enemy.prefab", "alien_grunt", enemyKeys);
+            // boss 는 맵 스킨만 있다 (build_bosses.py, "<맵키>:boss")
+            string[] enemyKeys = { "grunt", "runner", "brute", "spitter", "swarm", "boss" };
+            // 프리팹 기본 그림 = 맵 1 물량 적. 실제 그림은 Enemy.ApplyType 이 맵 스킨으로 바꾼다
+            RebuildVisual("Assets/_Art/Prefabs/OBJ_Enemy.prefab", "mob_snow_sakura_grunt", enemyKeys);
         }
 
         private static void RebuildVisual(string prefabPath, string spritePrefix, string[] enemyKeys)
@@ -450,7 +504,7 @@ namespace Jinhyeong_GameData.Editor
                         continue;
 
                     bool brokenNest = PrefabUtility.IsPrefabAssetMissing(cg);
-                    bool oldVisual = c.name == "Visual"
+                    bool oldVisual = c.name == "Visual" || c.name == "FootRing"
                         || c.GetComponentInChildren<SkinnedMeshRenderer>(true) != null
                         || c.GetComponentInChildren<MeshRenderer>(true) != null;
 
@@ -473,6 +527,23 @@ namespace Jinhyeong_GameData.Editor
                 sr.sortingOrder = enemyKeys == null ? OrderPlayer : OrderCharacter;
                 visual.AddComponent<SpriteAnimator>();
                 visual.AddComponent<Jinhyeong_UI.Billboard>();
+
+                // 주인공만: 발밑 도트 링 (바닥에 눕힘). 적 · 보스와 겹쳐도 내 캐릭터 자리가 보이게. Visual 다음 자식으로 둔다
+                if (enemyKeys == null)
+                {
+                    Sprite ringSprite = LoadSprite($"{SpriteDir}/hero_ring.png");
+                    if (ringSprite != null)
+                    {
+                        GameObject ring = new GameObject("FootRing");
+                        ring.transform.SetParent(root.transform, false);
+                        ring.transform.localPosition = new Vector3(0f, 0.02f, 0f);
+                        ring.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                        SpriteRenderer rsr = ring.AddComponent<SpriteRenderer>();
+                        rsr.sprite = ringSprite;
+                        rsr.color = new Color(1f, 0.86f, 0.42f, 1f);
+                        rsr.sortingOrder = OrderPickup - 1;
+                    }
+                }
 
                 Sprite[] idle = { LoadSprite($"{SpriteDir}/{spritePrefix}_idle.png") };
                 Sprite[] walk = LoadNumbered(SpriteDir, spritePrefix + "_walk", 4);
@@ -510,14 +581,26 @@ namespace Jinhyeong_GameData.Editor
                         lib = root.AddComponent<SpriteSetLibrary>();
                     SetPrivate(lib, "_view", view);
 
+                    // 맵 스킨 "<맵키>:<역할>" (mob_<맵키>_<역할>_*, build_mobs.py · build_bosses.py). 맵키 = Stage 하위 폴더 이름
+                    // 공용 키 "<역할>" 은 맵 1 스킨 — 맵을 못 찾을 때의 그림
+                    string[] mapKeys = Directory.Exists(StageDir)
+                        ? Directory.GetDirectories(StageDir).Select(Path.GetFileName).OrderBy(n => n).ToArray()
+                        : new string[0];
                     SpriteSetLibrary.Entry[] entries = enemyKeys
                         .Select(k => new SpriteSetLibrary.Entry
                         {
                             Key = k,
-                            Frames = LoadNumbered(SpriteDir, "alien_" + k + "_walk", 4),
-                            FramesUp = LoadNumbered(SpriteDir, "alien_" + k + "_walkup", 4),
-                            FramesSide = LoadNumbered(SpriteDir, "alien_" + k + "_walkside", 4)
+                            Frames = LoadNumbered(SpriteDir, "mob_snow_sakura_" + k + "_walk", 4),
+                            FramesUp = LoadNumbered(SpriteDir, "mob_snow_sakura_" + k + "_walkup", 4),
+                            FramesSide = LoadNumbered(SpriteDir, "mob_snow_sakura_" + k + "_walkside", 4)
                         })
+                        .Concat(mapKeys.SelectMany(m => enemyKeys.Select(k => new SpriteSetLibrary.Entry
+                        {
+                            Key = m + ":" + k,
+                            Frames = LoadNumbered(SpriteDir, $"mob_{m}_{k}_walk", 4),
+                            FramesUp = LoadNumbered(SpriteDir, $"mob_{m}_{k}_walkup", 4),
+                            FramesSide = LoadNumbered(SpriteDir, $"mob_{m}_{k}_walkside", 4)
+                        })))
                         .Where(e => e.Frames.Length > 0)
                         .ToArray();
                     SetPrivate(lib, "_entries", entries);
@@ -557,7 +640,7 @@ namespace Jinhyeong_GameData.Editor
         }
 
         // RunSelection.Heroes 순서. build_heroes.py 가 dog_<키>_* 를 낸다
-        private static readonly string[] HeroKeys = { "shiba", "corgi", "greyhound", "pomeranian", "samoyed" };
+        private static readonly string[] HeroKeys = { "shiba", "jindo", "akita", "chow", "pug", "shepherd", "poodle", "husky", "beagle", "dachshund" };
 
         private static void BindHeroSkins(GameObject root, CharacterView view)
         {

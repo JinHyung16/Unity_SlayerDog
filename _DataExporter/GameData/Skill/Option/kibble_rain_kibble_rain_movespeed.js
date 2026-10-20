@@ -1,8 +1,8 @@
 module.exports = {
     id: 4411,
     name: 'kibble_rain_movespeed',
-    desc: '음표 소나기 — 이동속도 +6%',
-    displayName: '사료 유성우 · 날쌘',
+    desc: '화살비 — 이동속도 +6%',
+    displayName: '화살비 · 날쌘',
     partId: 2020,
     trait: 'MoveSpeed',
     value: 0.06,

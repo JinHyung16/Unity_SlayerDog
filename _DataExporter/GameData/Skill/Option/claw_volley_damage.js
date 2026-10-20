@@ -1,8 +1,8 @@
 module.exports = {
     id: 4121,
     name: 'claw_volley_damage',
-    desc: '기타 피크 연사 — 피해량 +30%',
-    displayName: '발톱 갈기',
+    desc: '비도 연사 — 피해량 +30%',
+    displayName: '칼날 갈기',
     partId: 2006,
     trait: 'Damage',
     value: 0.3,

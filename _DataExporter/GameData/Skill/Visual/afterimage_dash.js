@@ -1,11 +1,11 @@
-/** 잔상 질주 — 4초간 빨라지고 지나간 자리에 잔상이 남아 피해를 준다. 10초마다 */
+/** 분신 질주 — 4초간 빨라지고 지나간 자리에 분신이 남아 피해를 준다. 10초마다 */
 module.exports = {
     color: '#A66BFF',
-    desc: "잔상 질주 — 4초간 빨라지고 지나간 자리에 잔상이 남아 피해를 준다. 10초마다",
+    desc: "분신 질주 — 4초간 빨라지고 지나간 자리에 분신이 남아 피해를 준다. 10초마다",
     values: {
-        "Projectile": "Fx_DogDust",
-        "Impact": "Fx_DogDust",
-        "Cast": "Fx_DogDust",
+        "Projectile": "Fx_Afterimage",
+        "Impact": "Fx_Afterimage",
+        "Cast": "Fx_Gale",
         "Orient": "Ground",
         "Color": "#A66BFF",
         "Cooldown": 10,

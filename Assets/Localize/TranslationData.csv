@@ -1,0 +1,673 @@
+TranslationKey,Id,Korean,English,_State
+Part_displayName,2103,분신 질주,Shadow Dash,신규
+Part_desc,2103,4초간 빨라지고 지나간 자리에 분신이 남아 피해를 준다. 10초마다,"Speed up for 4s, leaving damaging clones in your wake. Every 10s",신규
+Part_displayName,2018,광폭화,Frenzy,신규
+Part_desc,2018,8초간 공격속도 +40%. 16초마다,Attack speed +40% for 8s. Every 16s,신규
+Part_displayName,2002,서리 숨결,Frost Breath,신규
+Part_desc,2002,전방 부채꼴 적에게 냉기를 뿜어 공격력 100% 피해 + 둔화. 2.5초마다,Breathe frost in a forward cone for 100% attack damage + slow. Every 2.5s,신규
+Part_displayName,2208,회전 도끼,Whirling Axe,신규
+Part_desc,2208,도끼를 1.2초간 휘돌려 반경 1.8m 에 0.3초마다 공격력 38% 피해. 1.6초마다,"Spin an axe for 1.2s, dealing 38% attack damage every 0.3s in a 1.8m radius. Every 1.6s",신규
+Part_displayName,2207,화염구,Fireball,신규
+Part_desc,2207,화염구가 날아가 터지며 반경 1.5m 공격력 120% 피해 + 화상. 1.1초마다,Launch a fireball that explodes for 120% attack damage + burn in a 1.5m radius. Every 1.1s,신규
+Part_displayName,2210,산탄 포격,Grapeshot,신규
+Part_desc,2210,산탄 5발을 부채꼴로 뿌려 각 공격력 60% 피해. 1.1초마다,"Spray 5 pellets in a cone, 60% attack damage each. Every 1.1s",신규
+Part_displayName,2201,발도 일섬,Iaido Slash,신규
+Part_desc,2201,칼을 뽑아 전방 반달 반경 1.9m 에 공격력 200% 피해. 0.9초마다,Draw and slash a 1.9m half-moon ahead for 200% attack damage. Every 0.9s,신규
+Part_displayName,2206,심판,Judgement,신규
+Part_desc,2206,발밑에 성광을 2초간 깔아 반경 2.2m 에 0.4초마다 공격력 40% 피해. 2초마다,"Holy light covers the ground for 2s, dealing 40% attack damage every 0.4s in a 2.2m radius. Every 2s",신규
+Part_displayName,2204,장풍,Palm Blast,신규
+Part_desc,2204,손바닥에서 기를 내뿜어 반경 2.6m 적에게 공격력 85% 피해 + 둔화. 1.2초마다,Blast ki from your palm for 85% attack damage + slow within 2.6m. Every 1.2s,신규
+Part_displayName,2209,관통 화살,Piercing Arrow,신규
+Part_desc,2209,긴 화살이 일직선으로 적 4명을 꿰뚫어 공격력 120% 피해. 0.9초마다,A long arrow pierces 4 enemies in a line for 120% attack damage. Every 0.9s,신규
+Part_displayName,2202,편전,Volley Arrows,신규
+Part_desc,2202,짧은 화살 4발을 부채꼴로 쏘아 각 공격력 75% 피해. 1초마다,"Fire 4 short arrows in a cone, 75% attack damage each. Every 1s",신규
+Part_displayName,2203,수리검,Shuriken,신규
+Part_desc,2203,흔들리며 날아가는 표창이 적 3명까지 맞혀 공격력 85% 피해. 0.8초마다,A wobbling throwing star hits up to 3 enemies for 85% attack damage. Every 0.8s,신규
+Part_displayName,2205,추혼부,Soul-Chaser Talisman,신규
+Part_desc,2205,부적이 적을 쫓아가 터지며 반경 1.2m 공격력 130% 피해 + 받는 피해 증가. 0.9초마다,A homing talisman bursts in a 1.2m radius for 130% attack damage + vulnerability. Every 0.9s,신규
+Part_displayName,2001,흡혈 송곳니,Vampire Fangs,신규
+Part_desc,2001,"앞의 적을 물어 공격력 150% 피해, 물 때마다 체력을 조금 회복. 1.2초마다","Bite the enemy ahead for 150% attack damage, healing a little with each bite. Every 1.2s",신규
+Part_displayName,2008,폭뢰 부적,Thunder-Seal Talisman,신규
+Part_desc,2008,발밑에 폭뢰 부적을 붙인다. 적이 밟으면 반경 1.5m 공격력 200% 폭발. 4초마다,Plant a thunder seal underfoot. Enemies that step on it trigger a 1.5m blast for 200% attack damage. Every 4s,신규
+Part_displayName,2102,대검 내려치기,Greatsword Slam,신규
+Part_desc,2102,대검을 내려쳐 사방 반경 3m 에 공격력 80% 피해. 2.5초마다,Slam your greatsword down for 80% attack damage in a 3m radius. Every 2.5s,신규
+Part_displayName,2025,유성 낙하,Meteor Fall,신규
+Part_desc,2025,유성 셋이 무작위 적 3명 위로 떨어져 반경 1.4m 공격력 90% 피해. 3초마다,Three meteors fall on 3 random enemies for 90% attack damage in a 1.4m radius. Every 3s,신규
+Part_displayName,2006,비도 연사,Knife Volley,신규
+Part_desc,2006,전방으로 비도를 날려 각 공격력 60% 피해. 2초마다,"Hurl flying knives forward, 60% attack damage each. Every 2s",신규
+Part_displayName,2005,회전 검무,Blade Dance,신규
+Part_desc,2005,검무를 추는 동안 0.5초마다 반경 1.5m 공격력 30% 피해 (상시 장판),"While dancing, deal 30% attack damage in a 1.5m radius every 0.5s (always-on field)",신규
+Part_displayName,2015,공명진,Resonance Circle,신규
+Part_desc,2015,반경 4m 원형 기파로 공격력 60% 피해. 2.5초마다,A 4m ring of ki deals 60% attack damage. Every 2.5s,신규
+Part_displayName,2013,빛의 창,Spear of Light,신규
+Part_desc,2013,"전방으로 빛의 창을 1.5초간 발사, 0.2초마다 공격력 25% 피해. 4초마다","Fire a spear of light ahead for 1.5s, dealing 25% attack damage every 0.2s. Every 4s",신규
+Part_displayName,2022,차크람,Chakram,신규
+Part_desc,2022,차크람이 흔들리며 날아가 공격력 110% 피해. 2초마다,A wobbling chakram flies out for 110% attack damage. Every 2s,신규
+Part_displayName,2019,수호 결계,Guardian Ward,신규
+Part_desc,2019,최대체력 15% 보호막을 8초간. 10초마다,Gain a shield worth 15% max HP for 8s. Every 10s,신규
+Part_displayName,2003,사자후,Lion's Roar,신규
+Part_desc,2003,반경 3m 적에게 공격력 80% 피해 + 2초간 둔화. 3초마다,Roar for 80% attack damage + 2s slow within 3m. Every 3s,신규
+Part_displayName,2101,부동심,Unshakable Mind,신규
+Part_desc,2101,3초간 단단해지며 주변 적을 끌어당긴다. 12초마다,Harden for 3s and pull in nearby enemies. Every 12s,신규
+Part_displayName,2021,화염 단지,Fire Jar,신규
+Part_desc,2021,화염 단지를 던져 반경 2m 공격력 90% 피해 + 화상. 3초마다,Throw a fire jar for 90% attack damage + burn in a 2m radius. Every 3s,신규
+Part_displayName,2020,화살비,Arrow Rain,신규
+Part_desc,2020,랜덤한 적 위치로 화살이 쏟아져 반경 1.5m 공격력 80% 피해. 5초마다,Arrows pour down on random enemies for 80% attack damage in a 1.5m radius. Every 5s,신규
+Part_displayName,2026,맥동 룬,Pulse Rune,신규
+Part_desc,2026,1초마다 발밑 룬이 맥동해 반경 2.4m 공격력 35% 피해,"Every 1s, a rune underfoot pulses for 35% attack damage in a 2.4m radius",신규
+Part_displayName,2017,연쇄 번개,Chain Lightning,신규
+Part_desc,2017,번개가 가까운 적들을 연쇄로 타고 공격력 70% 피해. 2.5초마다,Lightning chains through nearby enemies for 70% attack damage. Every 2.5s,신규
+Part_displayName,2014,추적 마탄,Seeker Bolt,신규
+Part_desc,2014,가장 먼 적을 유도 추적해 공격력 130% 피해 + 받는 피해 증가. 2초마다,A bolt homes in on the farthest enemy for 130% attack damage + vulnerability. Every 2s,신규
+Part_displayName,2024,쿠나이,Kunai,신규
+Part_desc,2024,쿠나이를 던져 공격력 300% 피해. 5초마다,Throw a kunai for 300% attack damage. Every 5s,신규
+Part_displayName,2010,뇌운,Thundercloud,신규
+Part_desc,2010,뇌운에서 번개가 떨어져 모든 적에게 공격력 40% 피해. 6초마다,Lightning strikes every enemy for 40% attack damage. Every 6s,신규
+Part_displayName,2012,회오리 베기,Whirlwind Slash,신규
+Part_desc,2012,칼날을 돌려 반경 2m 에 0.4초마다 공격력 35% 피해. 8초마다,"Spin your blade, dealing 35% attack damage every 0.4s in a 2m radius. Every 8s",신규
+Part_displayName,2009,창 찌르기,Spear Thrust,신규
+Part_desc,2009,창을 내질러 적을 꿰뚫으며 공격력 120% 피해. 1.5초마다,Thrust a spear through enemies for 120% attack damage. Every 1.5s,신규
+Part_displayName,2011,쇠사슬 채찍,Chain Whip,신규
+Part_desc,2011,쇠사슬을 휘둘러 직선상 적에게 공격력 140% 피해. 2초마다,Lash a chain through enemies in a line for 140% attack damage. Every 2s,신규
+Part_displayName,2023,부메랑,Boomerang,신규
+Part_desc,2023,"가장 가까운 적을 쫓는 부메랑, 공격력 100% 피해. 1.8초마다",A boomerang that chases the nearest enemy for 100% attack damage. Every 1.8s,신규
+Part_displayName,2016,심안 관통,Mind's-Eye Pierce,신규
+Part_desc,2016,가장 가까운 적을 꿰뚫는 기로 공격력 180% 피해. 3초마다,Pierce the nearest enemy with a ki bolt for 180% attack damage. Every 3s,신규
+Part_displayName,2004,잠의 주문,Sleep Spell,신규
+Part_desc,2004,전방 90° 적을 3초간 크게 느리게 만든다 (피해 없음). 6초마다,Greatly slow enemies in a 90° cone ahead for 3s (no damage). Every 6s,신규
+Part_displayName,2007,질풍,Gale,신규
+Part_desc,2007,6초간 이동속도 +40%. 12초마다,Move speed +40% for 6s. Every 12s,신규
+PartOption_displayName,6071,분신 질주 · 날쌘,Shadow Dash · Swift,신규
+PartOption_desc,6071,분신 질주 — 이동속도 +6%,Shadow Dash — Move speed +6%,신규
+PartOption_displayName,6062,숨 고르기,Catch Your Breath,신규
+PartOption_desc,6062,분신 질주 — 쿨타임 -10%,Shadow Dash — Cooldown -10%,신규
+PartOption_displayName,6061,날 선 분신,Sharp Clones,신규
+PartOption_desc,6061,분신 질주 — 피해량 +30%,Shadow Dash — Damage +30%,신규
+PartOption_displayName,6067,긴 분신,Lasting Clones,신규
+PartOption_desc,6067,분신 질주 — 지속시간 +25%,Shadow Dash — Duration +25%,신규
+PartOption_displayName,6070,분신 질주 · 흡혈,Shadow Dash · Leech,신규
+PartOption_desc,6070,분신 질주 — 처치 시 체력 +1.4,Shadow Dash — Heal on kill +1.4,신규
+PartOption_displayName,6068,전력 질주,Full Sprint,신규
+PartOption_desc,6068,분신 질주 — 이동속도 증가 +15%p,Shadow Dash — Move speed bonus +15%,신규
+PartOption_displayName,4362,빠른 재각성,Quick Reawaken,신규
+PartOption_desc,4362,광폭화 — 쿨타임 -10%,Frenzy — Cooldown -10%,신규
+PartOption_displayName,4367,광기 연장,Prolonged Madness,신규
+PartOption_desc,4367,광폭화 — 지속시간 +25%,Frenzy — Duration +25%,신규
+PartOption_displayName,4370,광폭화 · 흡혈,Frenzy · Leech,신규
+PartOption_desc,4370,광폭화 — 처치 시 체력 +1.4,Frenzy — Heal on kill +1.4,신규
+PartOption_displayName,4369,광폭화 · 튼튼,Frenzy · Sturdy,신규
+PartOption_desc,4369,광폭화 — 최대 체력 +15%,Frenzy — Max HP +15%,신규
+PartOption_displayName,4368,피의 각성,Blood Awakening,신규
+PartOption_desc,4368,광폭화 — 공격속도 증가 +10%p,Frenzy — Attack speed bonus +10%,신규
+PartOption_displayName,4045,넓은 숨결,Wide Breath,신규
+PartOption_desc,4045,서리 숨결 — 범위 +20%,Frost Breath — Area +20%,신규
+PartOption_displayName,4042,쉴 새 없이,Relentless,신규
+PartOption_desc,4042,서리 숨결 — 쿨타임 -10%,Frost Breath — Cooldown -10%,신규
+PartOption_displayName,4041,혹한,Deep Freeze,신규
+PartOption_desc,4041,서리 숨결 — 피해량 +30%,Frost Breath — Damage +30%,신규
+PartOption_displayName,4050,서리 숨결 · 흡혈,Frost Breath · Leech,신규
+PartOption_desc,4050,서리 숨결 — 처치 시 체력 +1.4,Frost Breath — Heal on kill +1.4,신규
+PartOption_displayName,4049,서리 숨결 · 튼튼,Frost Breath · Sturdy,신규
+PartOption_desc,4049,서리 숨결 — 최대 체력 +15%,Frost Breath — Max HP +15%,신규
+PartOption_displayName,4048,얼음 송곳,Ice Spikes,신규
+PartOption_desc,4048,서리 숨결 — 둔화량 +10%p,Frost Breath — Slow +10%,신규
+PartOption_displayName,7133,긴 자루,Long Haft,신규
+PartOption_desc,7133,회전 도끼 — 범위 +20%,Whirling Axe — Area +20%,신규
+PartOption_displayName,7132,광전사,Berserker,신규
+PartOption_desc,7132,회전 도끼 — 쿨타임 -10%,Whirling Axe — Cooldown -10%,신규
+PartOption_displayName,7131,날 세우기,Honed Edge,신규
+PartOption_desc,7131,회전 도끼 — 피해량 +30%,Whirling Axe — Damage +30%,신규
+PartOption_displayName,7134,멈추지 않는 회전,Endless Spin,신규
+PartOption_desc,7134,회전 도끼 — 지속시간 +25%,Whirling Axe — Duration +25%,신규
+PartOption_displayName,7135,피의 축제,Blood Feast,신규
+PartOption_desc,7135,회전 도끼 — 처치 시 체력 +1.4,Whirling Axe — Heal on kill +1.4,신규
+PartOption_displayName,7129,대폭발,Big Boom,신규
+PartOption_desc,7129,화염구 — 범위 +20%,Fireball — Area +20%,신규
+PartOption_displayName,7128,빠른 영창,Quick Cast,신규
+PartOption_desc,7128,화염구 — 쿨타임 -10%,Fireball — Cooldown -10%,신규
+PartOption_displayName,7130,작열,Scorch,신규
+PartOption_desc,7130,화염구 — 치명타 피해량 +25%p,Fireball — Crit damage +25%,신규
+PartOption_displayName,7127,화염 정수,Flame Essence,신규
+PartOption_desc,7127,화염구 — 피해량 +30%,Fireball — Damage +30%,신규
+PartOption_displayName,7141,재장전,Reload,신규
+PartOption_desc,7141,산탄 포격 — 쿨타임 -10%,Grapeshot — Cooldown -10%,신규
+PartOption_displayName,7142,산탄 추가,Extra Pellet,신규
+PartOption_desc,7142,산탄 포격 — 개수 +1,Grapeshot — Count +1,신규
+PartOption_displayName,7143,근접 사격,Point Blank,신규
+PartOption_desc,7143,산탄 포격 — 치명타 피해량 +25%p,Grapeshot — Crit damage +25%,신규
+PartOption_displayName,7140,화약 증량,Extra Powder,신규
+PartOption_desc,7140,산탄 포격 — 피해량 +30%,Grapeshot — Damage +30%,신규
+PartOption_displayName,7103,긴 칼날,Long Blade,신규
+PartOption_desc,7103,발도 일섬 — 범위 +20%,Iaido Slash — Area +20%,신규
+PartOption_displayName,7102,빠른 발도,Quick Draw,신규
+PartOption_desc,7102,발도 일섬 — 쿨타임 -10%,Iaido Slash — Cooldown -10%,신규
+PartOption_displayName,7104,일섬,Flash Cut,신규
+PartOption_desc,7104,발도 일섬 — 치명타 확률 +10%p,Iaido Slash — Crit chance +10%,신규
+PartOption_displayName,7105,급소 베기,Vital Cut,신규
+PartOption_desc,7105,발도 일섬 — 치명타 피해량 +25%p,Iaido Slash — Crit damage +25%,신규
+PartOption_displayName,7101,벼린 칼날,Tempered Blade,신규
+PartOption_desc,7101,발도 일섬 — 피해량 +30%,Iaido Slash — Damage +30%,신규
+PartOption_displayName,7124,빛의 원,Circle of Light,신규
+PartOption_desc,7124,심판 — 범위 +20%,Judgement — Area +20%,신규
+PartOption_displayName,7123,기도,Prayer,신규
+PartOption_desc,7123,심판 — 쿨타임 -10%,Judgement — Cooldown -10%,신규
+PartOption_displayName,7122,성스러운 맹세,Holy Oath,신규
+PartOption_desc,7122,심판 — 피해량 +30%,Judgement — Damage +30%,신규
+PartOption_displayName,7125,긴 심판,Lasting Judgement,신규
+PartOption_desc,7125,심판 — 지속시간 +25%,Judgement — Duration +25%,신규
+PartOption_displayName,7126,성기사의 갑주,Paladin's Plate,신규
+PartOption_desc,7126,심판 — 최대 체력 +15%,Judgement — Max HP +15%,신규
+PartOption_displayName,7116,기공 확장,Expanded Ki,신규
+PartOption_desc,7116,장풍 — 범위 +20%,Palm Blast — Area +20%,신규
+PartOption_displayName,7115,호흡법,Breath Control,신규
+PartOption_desc,7115,장풍 — 쿨타임 -10%,Palm Blast — Cooldown -10%,신규
+PartOption_displayName,7114,내공,Inner Power,신규
+PartOption_desc,7114,장풍 — 피해량 +30%,Palm Blast — Damage +30%,신규
+PartOption_displayName,7117,금강불괴,Diamond Body,신규
+PartOption_desc,7117,장풍 — 최대 체력 +15%,Palm Blast — Max HP +15%,신규
+PartOption_displayName,7137,숙련된 시위,Practiced String,신규
+PartOption_desc,7137,관통 화살 — 쿨타임 -10%,Piercing Arrow — Cooldown -10%,신규
+PartOption_displayName,7138,꿰뚫는 화살,Skewer Shot,신규
+PartOption_desc,7138,관통 화살 — 개수 +1,Piercing Arrow — Count +1,신규
+PartOption_displayName,7139,매의 눈,Hawk Eye,신규
+PartOption_desc,7139,관통 화살 — 치명타 확률 +10%p,Piercing Arrow — Crit chance +10%,신규
+PartOption_displayName,7136,사냥꾼의 촉,Hunter's Instinct,신규
+PartOption_desc,7136,관통 화살 — 피해량 +30%,Piercing Arrow — Damage +30%,신규
+PartOption_displayName,7107,속사,Rapid Fire,신규
+PartOption_desc,7107,편전 — 쿨타임 -10%,Volley Arrows — Cooldown -10%,신규
+PartOption_displayName,7108,한 발 더,One More Shot,신규
+PartOption_desc,7108,편전 — 개수 +1,Volley Arrows — Count +1,신규
+PartOption_displayName,7109,명궁,Master Archer,신규
+PartOption_desc,7109,편전 — 치명타 확률 +10%p,Volley Arrows — Crit chance +10%,신규
+PartOption_displayName,7106,강궁,Strong Bow,신규
+PartOption_desc,7106,편전 — 피해량 +30%,Volley Arrows — Damage +30%,신규
+PartOption_displayName,7111,손놀림,Quick Hands,신규
+PartOption_desc,7111,수리검 — 쿨타임 -10%,Shuriken — Cooldown -10%,신규
+PartOption_displayName,7112,쌍수리검,Twin Shuriken,신규
+PartOption_desc,7112,수리검 — 개수 +1,Shuriken — Count +1,신규
+PartOption_displayName,7113,급소 노리기,Go for the Vitals,신규
+PartOption_desc,7113,수리검 — 치명타 확률 +10%p,Shuriken — Crit chance +10%,신규
+PartOption_displayName,7110,독 바른 날,Poisoned Edge,신규
+PartOption_desc,7110,수리검 — 피해량 +30%,Shuriken — Damage +30%,신규
+PartOption_displayName,7119,빠른 붓,Swift Brush,신규
+PartOption_desc,7119,추혼부 — 쿨타임 -10%,Soul-Chaser Talisman — Cooldown -10%,신규
+PartOption_displayName,7120,겹부적,Double Talisman,신규
+PartOption_desc,7120,추혼부 — 개수 +1,Soul-Chaser Talisman — Count +1,신규
+PartOption_displayName,7121,혼 빼기,Soul Snatch,신규
+PartOption_desc,7121,추혼부 — 치명타 피해량 +25%p,Soul-Chaser Talisman — Crit damage +25%,신규
+PartOption_displayName,7118,주사 먹,Cinnabar Ink,신규
+PartOption_desc,7118,추혼부 — 피해량 +30%,Soul-Chaser Talisman — Damage +30%,신규
+PartOption_displayName,4023,예리한 송곳니,Keen Fangs,신규
+PartOption_desc,4023,흡혈 송곳니 — 치명타 확률 +10%p,Vampire Fangs — Crit chance +10%,신규
+PartOption_displayName,4024,급소 물기,Jugular Bite,신규
+PartOption_desc,4024,흡혈 송곳니 — 치명타 피해량 +25%p,Vampire Fangs — Crit damage +25%,신규
+PartOption_displayName,4022,굶주림,Hunger,신규
+PartOption_desc,4022,흡혈 송곳니 — 쿨타임 -10%,Vampire Fangs — Cooldown -10%,신규
+PartOption_displayName,4021,흡혈귀의 이빨,Vampire's Bite,신규
+PartOption_desc,4021,흡혈 송곳니 — 피해량 +30%,Vampire Fangs — Damage +30%,신규
+PartOption_displayName,4030,흡혈 송곳니 · 흡혈,Vampire Fangs · Leech,신규
+PartOption_desc,4030,흡혈 송곳니 — 처치 시 체력 +1.4,Vampire Fangs — Heal on kill +1.4,신규
+PartOption_displayName,4029,흡혈 송곳니 · 튼튼,Vampire Fangs · Sturdy,신규
+PartOption_desc,4029,흡혈 송곳니 — 최대 체력 +15%,Vampire Fangs — Max HP +15%,신규
+PartOption_displayName,4028,피의 갈증,Bloodthirst,신규
+PartOption_desc,4028,흡혈 송곳니 — 흡혈량 +1%p,Vampire Fangs — Lifesteal +1%,신규
+PartOption_displayName,4165,폭심 확장,Wider Blast,신규
+PartOption_desc,4165,폭뢰 부적 — 범위 +20%,Thunder-Seal Talisman — Area +20%,신규
+PartOption_displayName,4164,정확한 인,Precise Seal,신규
+PartOption_desc,4164,폭뢰 부적 — 치명타 피해량 +25%p,Thunder-Seal Talisman — Crit damage +25%,신규
+PartOption_displayName,4171,폭뢰 부적 · 날쌘,Thunder-Seal Talisman · Swift,신규
+PartOption_desc,4171,폭뢰 부적 — 이동속도 +6%,Thunder-Seal Talisman — Move speed +6%,신규
+PartOption_displayName,4166,겹부적,Double Talisman,신규
+PartOption_desc,4166,폭뢰 부적 — 개수 +1,Thunder-Seal Talisman — Count +1,신규
+PartOption_displayName,4161,강한 화약,Potent Powder,신규
+PartOption_desc,4161,폭뢰 부적 — 피해량 +30%,Thunder-Seal Talisman — Damage +30%,신규
+PartOption_displayName,4170,폭뢰 부적 · 흡혈,Thunder-Seal Talisman · Leech,신규
+PartOption_desc,4170,폭뢰 부적 — 처치 시 체력 +1.4,Thunder-Seal Talisman — Heal on kill +1.4,신규
+PartOption_displayName,6045,대지 가르기,Earthsplitter,신규
+PartOption_desc,6045,대검 내려치기 — 범위 +20%,Greatsword Slam — Area +20%,신규
+PartOption_displayName,6042,칼날 갈기,Sharpen Blade,신규
+PartOption_desc,6042,대검 내려치기 — 쿨타임 -10%,Greatsword Slam — Cooldown -10%,신규
+PartOption_displayName,6041,무거운 대검,Heavy Greatsword,신규
+PartOption_desc,6041,대검 내려치기 — 피해량 +30%,Greatsword Slam — Damage +30%,신규
+PartOption_displayName,6050,대검 내려치기 · 흡혈,Greatsword Slam · Leech,신규
+PartOption_desc,6050,대검 내려치기 — 처치 시 체력 +1.4,Greatsword Slam — Heal on kill +1.4,신규
+PartOption_displayName,6049,대검 내려치기 · 튼튼,Greatsword Slam · Sturdy,신규
+PartOption_desc,6049,대검 내려치기 — 최대 체력 +15%,Greatsword Slam — Max HP +15%,신규
+PartOption_displayName,6048,일도양단,Clean Cleave,신규
+PartOption_desc,6048,대검 내려치기 — 치명타 확률 +10%p,Greatsword Slam — Crit chance +10%,신규
+PartOption_displayName,7025,큰 운석,Big Meteor,신규
+PartOption_desc,7025,유성 낙하 — 범위 +20%,Meteor Fall — Area +20%,신규
+PartOption_displayName,7024,별자리 정렬,Aligned Stars,신규
+PartOption_desc,7024,유성 낙하 — 쿨타임 -10%,Meteor Fall — Cooldown -10%,신규
+PartOption_displayName,7026,유성우,Meteor Shower,신규
+PartOption_desc,7026,유성 낙하 — 개수 +1,Meteor Fall — Count +1,신규
+PartOption_displayName,7023,무거운 운석,Heavy Meteor,신규
+PartOption_desc,7023,유성 낙하 — 피해량 +30%,Meteor Fall — Damage +30%,신규
+PartOption_displayName,7027,별의 축복,Star's Blessing,신규
+PartOption_desc,7027,유성 낙하 — 처치 시 체력 +1.4,Meteor Fall — Heal on kill +1.4,신규
+PartOption_displayName,7028,유성 걸음,Meteor Stride,신규
+PartOption_desc,7028,유성 낙하 — 이동속도 +6%,Meteor Fall — Move speed +6%,신규
+PartOption_displayName,4123,갈고리 칼날,Hooked Blades,신규
+PartOption_desc,4123,비도 연사 — 치명타 확률 +10%p,Knife Volley — Crit chance +10%,신규
+PartOption_displayName,4122,연속 투척,Rapid Toss,신규
+PartOption_desc,4122,비도 연사 — 쿨타임 -10%,Knife Volley — Cooldown -10%,신규
+PartOption_displayName,4126,비도 하나 더,One More Knife,신규
+PartOption_desc,4126,비도 연사 — 개수 +1,Knife Volley — Count +1,신규
+PartOption_displayName,4121,칼날 갈기,Sharpen Blade,신규
+PartOption_desc,4121,비도 연사 — 피해량 +30%,Knife Volley — Damage +30%,신규
+PartOption_displayName,4130,비도 연사 · 흡혈,Knife Volley · Leech,신규
+PartOption_desc,4130,비도 연사 — 처치 시 체력 +1.4,Knife Volley — Heal on kill +1.4,신규
+PartOption_displayName,4129,비도 연사 · 튼튼,Knife Volley · Sturdy,신규
+PartOption_desc,4129,비도 연사 — 최대 체력 +15%,Knife Volley — Max HP +15%,신규
+PartOption_displayName,4105,넓은 검무,Wide Dance,신규
+PartOption_desc,4105,회전 검무 — 범위 +20%,Blade Dance — Area +20%,신규
+PartOption_displayName,4101,검기,Sword Aura,신규
+PartOption_desc,4101,회전 검무 — 피해량 +30%,Blade Dance — Damage +30%,신규
+PartOption_displayName,4111,회전 검무 · 날쌘,Blade Dance · Swift,신규
+PartOption_desc,4111,회전 검무 — 이동속도 +6%,Blade Dance — Move speed +6%,신규
+PartOption_displayName,4107,끝없는 검무,Endless Dance,신규
+PartOption_desc,4107,회전 검무 — 지속시간 +25%,Blade Dance — Duration +25%,신규
+PartOption_displayName,4110,회전 검무 · 흡혈,Blade Dance · Leech,신규
+PartOption_desc,4110,회전 검무 — 처치 시 체력 +1.4,Blade Dance — Heal on kill +1.4,신규
+PartOption_displayName,4108,신명,In the Groove,신규
+PartOption_desc,4108,회전 검무 — 피해 간격 -0.1초,Blade Dance — Hit interval -0.1s,신규
+PartOption_displayName,4305,넓은 진,Wide Circle,신규
+PartOption_desc,4305,공명진 — 범위 +20%,Resonance Circle — Area +20%,신규
+PartOption_displayName,4302,빠른 각인,Quick Inscribe,신규
+PartOption_desc,4302,공명진 — 쿨타임 -10%,Resonance Circle — Cooldown -10%,신규
+PartOption_displayName,4301,공명 증폭,Amplified Resonance,신규
+PartOption_desc,4301,공명진 — 피해량 +30%,Resonance Circle — Damage +30%,신규
+PartOption_displayName,4303,정확한 파장,True Frequency,신규
+PartOption_desc,4303,공명진 — 치명타 확률 +10%p,Resonance Circle — Crit chance +10%,신규
+PartOption_displayName,4310,공명진 · 흡혈,Resonance Circle · Leech,신규
+PartOption_desc,4310,공명진 — 처치 시 체력 +1.4,Resonance Circle — Heal on kill +1.4,신규
+PartOption_displayName,4309,공명진 · 튼튼,Resonance Circle · Sturdy,신규
+PartOption_desc,4309,공명진 — 최대 체력 +15%,Resonance Circle — Max HP +15%,신규
+PartOption_displayName,4262,빛 모으기,Gather Light,신규
+PartOption_desc,4262,빛의 창 — 쿨타임 -10%,Spear of Light — Cooldown -10%,신규
+PartOption_displayName,4261,성광 집중,Focused Radiance,신규
+PartOption_desc,4261,빛의 창 — 피해량 +30%,Spear of Light — Damage +30%,신규
+PartOption_displayName,4267,긴 창,Long Lance,신규
+PartOption_desc,4267,빛의 창 — 지속시간 +25%,Spear of Light — Duration +25%,신규
+PartOption_displayName,4264,꿰뚫는 빛,Piercing Light,신규
+PartOption_desc,4264,빛의 창 — 치명타 피해량 +25%p,Spear of Light — Crit damage +25%,신규
+PartOption_displayName,4271,빛의 창 · 날쌘,Spear of Light · Swift,신규
+PartOption_desc,4271,빛의 창 — 이동속도 +6%,Spear of Light — Move speed +6%,신규
+PartOption_displayName,4270,빛의 창 · 흡혈,Spear of Light · Leech,신규
+PartOption_desc,4270,빛의 창 — 처치 시 체력 +1.4,Spear of Light — Heal on kill +1.4,신규
+PartOption_displayName,4446,쌍차크람,Twin Chakram,신규
+PartOption_desc,4446,차크람 — 개수 +1,Chakram — Count +1,신규
+PartOption_displayName,4441,황금 연마,Gilded Edge,신규
+PartOption_desc,4441,차크람 — 피해량 +30%,Chakram — Damage +30%,신규
+PartOption_displayName,4443,날 선 테두리,Razor Rim,신규
+PartOption_desc,4443,차크람 — 치명타 확률 +10%p,Chakram — Crit chance +10%,신규
+PartOption_displayName,4451,차크람 · 날쌘,Chakram · Swift,신규
+PartOption_desc,4451,차크람 — 이동속도 +6%,Chakram — Move speed +6%,신규
+PartOption_displayName,4450,차크람 · 흡혈,Chakram · Leech,신규
+PartOption_desc,4450,차크람 — 처치 시 체력 +1.4,Chakram — Heal on kill +1.4,신규
+PartOption_displayName,4448,되돌아오는 날,Returning Blade,신규
+PartOption_desc,4448,차크람 — 관통 +1,Chakram — Pierce +1,신규
+PartOption_displayName,4382,빠른 결계,Quick Ward,신규
+PartOption_desc,4382,수호 결계 — 쿨타임 -10%,Guardian Ward — Cooldown -10%,신규
+PartOption_displayName,4387,질긴 결계,Tough Ward,신규
+PartOption_desc,4387,수호 결계 — 지속시간 +25%,Guardian Ward — Duration +25%,신규
+PartOption_displayName,4390,수호 결계 · 흡혈,Guardian Ward · Leech,신규
+PartOption_desc,4390,수호 결계 — 처치 시 체력 +1.4,Guardian Ward — Heal on kill +1.4,신규
+PartOption_displayName,4389,수호 결계 · 튼튼,Guardian Ward · Sturdy,신규
+PartOption_desc,4389,수호 결계 — 최대 체력 +15%,Guardian Ward — Max HP +15%,신규
+PartOption_displayName,4388,이중 결계,Double Ward,신규
+PartOption_desc,4388,수호 결계 — 보호막량 +5%p,Guardian Ward — Shield +5%,신규
+PartOption_displayName,4065,메아리,Echo,신규
+PartOption_desc,4065,사자후 — 범위 +20%,Lion's Roar — Area +20%,신규
+PartOption_displayName,4062,숨 고르기,Catch Your Breath,신규
+PartOption_desc,4062,사자후 — 쿨타임 -10%,Lion's Roar — Cooldown -10%,신규
+PartOption_displayName,4061,단전 단련,Core Training,신규
+PartOption_desc,4061,사자후 — 피해량 +30%,Lion's Roar — Damage +30%,신규
+PartOption_displayName,4070,사자후 · 흡혈,Lion's Roar · Leech,신규
+PartOption_desc,4070,사자후 — 처치 시 체력 +1.4,Lion's Roar — Heal on kill +1.4,신규
+PartOption_displayName,4069,사자후 · 튼튼,Lion's Roar · Sturdy,신규
+PartOption_desc,4069,사자후 — 최대 체력 +15%,Lion's Roar — Max HP +15%,신규
+PartOption_displayName,4068,산을 울리는 소리,Mountain Shaker,신규
+PartOption_desc,4068,사자후 — 둔화량 +10%p,Lion's Roar — Slow +10%,신규
+PartOption_displayName,6022,명상,Meditation,신규
+PartOption_desc,6022,부동심 — 쿨타임 -10%,Unshakable Mind — Cooldown -10%,신규
+PartOption_displayName,6027,흔들림 없는 마음,Steady Heart,신규
+PartOption_desc,6027,부동심 — 지속시간 +25%,Unshakable Mind — Duration +25%,신규
+PartOption_displayName,6030,부동심 · 흡혈,Unshakable Mind · Leech,신규
+PartOption_desc,6030,부동심 — 처치 시 체력 +1.4,Unshakable Mind — Heal on kill +1.4,신규
+PartOption_displayName,6029,부동심 · 튼튼,Unshakable Mind · Sturdy,신규
+PartOption_desc,6029,부동심 — 최대 체력 +15%,Unshakable Mind — Max HP +15%,신규
+PartOption_displayName,6028,태산,Immovable Mountain,신규
+PartOption_desc,6028,부동심 — 보호막량 +10%p,Unshakable Mind — Shield +10%,신규
+PartOption_displayName,4425,큰 단지,Big Jar,신규
+PartOption_desc,4425,화염 단지 — 범위 +20%,Fire Jar — Area +20%,신규
+PartOption_displayName,4422,빠른 투척,Quick Throw,신규
+PartOption_desc,4422,화염 단지 — 쿨타임 -10%,Fire Jar — Cooldown -10%,신규
+PartOption_displayName,4421,기름 증량,Extra Oil,신규
+PartOption_desc,4421,화염 단지 — 피해량 +30%,Fire Jar — Damage +30%,신규
+PartOption_displayName,4431,화염 단지 · 날쌘,Fire Jar · Swift,신규
+PartOption_desc,4431,화염 단지 — 이동속도 +6%,Fire Jar — Move speed +6%,신규
+PartOption_displayName,4430,화염 단지 · 흡혈,Fire Jar · Leech,신규
+PartOption_desc,4430,화염 단지 — 처치 시 체력 +1.4,Fire Jar — Heal on kill +1.4,신규
+PartOption_displayName,4428,지옥불,Hellfire,신규
+PartOption_desc,4428,화염 단지 — 화상 초당 피해 +5%p,Fire Jar — Burn damage per second +5%,신규
+PartOption_displayName,4405,넓은 화살비,Wide Volley,신규
+PartOption_desc,4405,화살비 — 범위 +20%,Arrow Rain — Area +20%,신규
+PartOption_displayName,4406,화살 다발,Arrow Bundle,신규
+PartOption_desc,4406,화살비 — 개수 +1,Arrow Rain — Count +1,신규
+PartOption_displayName,4401,무거운 화살촉,Heavy Arrowheads,신규
+PartOption_desc,4401,화살비 — 피해량 +30%,Arrow Rain — Damage +30%,신규
+PartOption_displayName,4411,화살비 · 날쌘,Arrow Rain · Swift,신규
+PartOption_desc,4411,화살비 — 이동속도 +6%,Arrow Rain — Move speed +6%,신규
+PartOption_displayName,4410,화살비 · 흡혈,Arrow Rain · Leech,신규
+PartOption_desc,4410,화살비 — 처치 시 체력 +1.4,Arrow Rain — Heal on kill +1.4,신규
+PartOption_displayName,7030,넓은 룬,Wide Rune,신규
+PartOption_desc,7030,맥동 룬 — 범위 +20%,Pulse Rune — Area +20%,신규
+PartOption_displayName,7031,정확한 맥동,True Pulse,신규
+PartOption_desc,7031,맥동 룬 — 치명타 확률 +10%p,Pulse Rune — Crit chance +10%,신규
+PartOption_displayName,7029,각인 강화,Deep Engraving,신규
+PartOption_desc,7029,맥동 룬 — 피해량 +30%,Pulse Rune — Damage +30%,신규
+PartOption_displayName,7032,생명의 룬,Rune of Life,신규
+PartOption_desc,7032,맥동 룬 — 처치 시 체력 +1.4,Pulse Rune — Heal on kill +1.4,신규
+PartOption_displayName,7033,수호 룬,Rune of Warding,신규
+PartOption_desc,7033,맥동 룬 — 최대 체력 +15%,Pulse Rune — Max HP +15%,신규
+PartOption_displayName,4342,쉴 틈 없는 번개,Ceaseless Lightning,신규
+PartOption_desc,4342,연쇄 번개 — 쿨타임 -10%,Chain Lightning — Cooldown -10%,신규
+PartOption_displayName,4346,긴 사슬,Long Chain,신규
+PartOption_desc,4346,연쇄 번개 — 개수 +1,Chain Lightning — Count +1,신규
+PartOption_displayName,4341,천둥 증폭,Amplified Thunder,신규
+PartOption_desc,4341,연쇄 번개 — 피해량 +30%,Chain Lightning — Damage +30%,신규
+PartOption_displayName,4350,연쇄 번개 · 흡혈,Chain Lightning · Leech,신규
+PartOption_desc,4350,연쇄 번개 — 처치 시 체력 +1.4,Chain Lightning — Heal on kill +1.4,신규
+PartOption_displayName,4349,연쇄 번개 · 튼튼,Chain Lightning · Sturdy,신규
+PartOption_desc,4349,연쇄 번개 — 최대 체력 +15%,Chain Lightning — Max HP +15%,신규
+PartOption_displayName,4343,날 선 번개,Sharp Lightning,신규
+PartOption_desc,4343,연쇄 번개 — 치명타 확률 +10%p,Chain Lightning — Crit chance +10%,신규
+PartOption_displayName,4282,빠른 장전,Quick Load,신규
+PartOption_desc,4282,추적 마탄 — 쿨타임 -10%,Seeker Bolt — Cooldown -10%,신규
+PartOption_displayName,4286,마탄 하나 더,One More Bolt,신규
+PartOption_desc,4286,추적 마탄 — 개수 +1,Seeker Bolt — Count +1,신규
+PartOption_displayName,4281,마력 증폭,Mana Surge,신규
+PartOption_desc,4281,추적 마탄 — 피해량 +30%,Seeker Bolt — Damage +30%,신규
+PartOption_displayName,4290,추적 마탄 · 흡혈,Seeker Bolt · Leech,신규
+PartOption_desc,4290,추적 마탄 — 처치 시 체력 +1.4,Seeker Bolt — Heal on kill +1.4,신규
+PartOption_displayName,4284,급소 추적,Seek the Vitals,신규
+PartOption_desc,4284,추적 마탄 — 치명타 피해량 +25%p,Seeker Bolt — Crit damage +25%,신규
+PartOption_displayName,4291,추적 마탄 · 날쌘,Seeker Bolt · Swift,신규
+PartOption_desc,4291,추적 마탄 — 이동속도 +6%,Seeker Bolt — Move speed +6%,신규
+PartOption_displayName,4288,저주 각인,Curse Mark,신규
+PartOption_desc,4288,추적 마탄 — 받는 피해 증가 +5%p,Seeker Bolt — Vulnerability +5%,신규
+PartOption_displayName,4482,던지기 숙련,Practiced Throw,신규
+PartOption_desc,4482,쿠나이 — 쿨타임 -10%,Kunai — Cooldown -10%,신규
+PartOption_displayName,4481,독 바른 날,Poisoned Edge,신규
+PartOption_desc,4481,쿠나이 — 피해량 +30%,Kunai — Damage +30%,신규
+PartOption_displayName,4490,쿠나이 · 흡혈,Kunai · Leech,신규
+PartOption_desc,4490,쿠나이 — 처치 시 체력 +1.4,Kunai — Heal on kill +1.4,신규
+PartOption_displayName,4483,정확한 조준,Precise Aim,신규
+PartOption_desc,4483,쿠나이 — 치명타 확률 +10%p,Kunai — Crit chance +10%,신규
+PartOption_displayName,4484,정통으로,Dead Center,신규
+PartOption_desc,4484,쿠나이 — 치명타 피해량 +25%p,Kunai — Crit damage +25%,신규
+PartOption_displayName,4491,쿠나이 · 날쌘,Kunai · Swift,신규
+PartOption_desc,4491,쿠나이 — 이동속도 +6%,Kunai — Move speed +6%,신규
+PartOption_displayName,4202,빠른 뇌운,Quick Storm,신규
+PartOption_desc,4202,뇌운 — 쿨타임 -10%,Thundercloud — Cooldown -10%,신규
+PartOption_displayName,4201,천둥 충전,Thunder Charge,신규
+PartOption_desc,4201,뇌운 — 피해량 +30%,Thundercloud — Damage +30%,신규
+PartOption_displayName,4210,뇌운 · 흡혈,Thundercloud · Leech,신규
+PartOption_desc,4210,뇌운 — 처치 시 체력 +1.4,Thundercloud — Heal on kill +1.4,신규
+PartOption_displayName,4209,뇌운 · 튼튼,Thundercloud · Sturdy,신규
+PartOption_desc,4209,뇌운 — 최대 체력 +15%,Thundercloud — Max HP +15%,신규
+PartOption_displayName,4203,번쩍,Flash,신규
+PartOption_desc,4203,뇌운 — 치명타 확률 +10%p,Thundercloud — Crit chance +10%,신규
+PartOption_displayName,4245,넓은 회오리,Wide Whirlwind,신규
+PartOption_desc,4245,회오리 베기 — 범위 +20%,Whirlwind Slash — Area +20%,신규
+PartOption_displayName,4242,빠른 재회전,Quick Respin,신규
+PartOption_desc,4242,회오리 베기 — 쿨타임 -10%,Whirlwind Slash — Cooldown -10%,신규
+PartOption_displayName,4241,날 세우기,Honed Edge,신규
+PartOption_desc,4241,회오리 베기 — 피해량 +30%,Whirlwind Slash — Damage +30%,신규
+PartOption_displayName,4247,오래 돌기,Long Spin,신규
+PartOption_desc,4247,회오리 베기 — 지속시간 +25%,Whirlwind Slash — Duration +25%,신규
+PartOption_displayName,4250,회오리 베기 · 흡혈,Whirlwind Slash · Leech,신규
+PartOption_desc,4250,회오리 베기 — 처치 시 체력 +1.4,Whirlwind Slash — Heal on kill +1.4,신규
+PartOption_displayName,4251,회오리 베기 · 날쌘,Whirlwind Slash · Swift,신규
+PartOption_desc,4251,회오리 베기 — 이동속도 +6%,Whirlwind Slash — Move speed +6%,신규
+PartOption_displayName,4182,빠른 찌르기,Quick Thrust,신규
+PartOption_desc,4182,창 찌르기 — 쿨타임 -10%,Spear Thrust — Cooldown -10%,신규
+PartOption_displayName,4186,쌍창,Twin Spears,신규
+PartOption_desc,4186,창 찌르기 — 개수 +1,Spear Thrust — Count +1,신규
+PartOption_displayName,4181,창술 단련,Spear Training,신규
+PartOption_desc,4181,창 찌르기 — 피해량 +30%,Spear Thrust — Damage +30%,신규
+PartOption_displayName,4190,창 찌르기 · 흡혈,Spear Thrust · Leech,신규
+PartOption_desc,4190,창 찌르기 — 처치 시 체력 +1.4,Spear Thrust — Heal on kill +1.4,신규
+PartOption_displayName,4189,창 찌르기 · 튼튼,Spear Thrust · Sturdy,신규
+PartOption_desc,4189,창 찌르기 — 최대 체력 +15%,Spear Thrust — Max HP +15%,신규
+PartOption_displayName,4184,급소 꿰기,Vital Thrust,신규
+PartOption_desc,4184,창 찌르기 — 치명타 피해량 +25%p,Spear Thrust — Crit damage +25%,신규
+PartOption_displayName,4188,관통 창,Piercing Spear,신규
+PartOption_desc,4188,창 찌르기 — 관통 +1,Spear Thrust — Pierce +1,신규
+PartOption_displayName,4222,손목 스냅,Wrist Snap,신규
+PartOption_desc,4222,쇠사슬 채찍 — 쿨타임 -10%,Chain Whip — Cooldown -10%,신규
+PartOption_displayName,4226,두 줄 사슬,Double Chain,신규
+PartOption_desc,4226,쇠사슬 채찍 — 개수 +1,Chain Whip — Count +1,신규
+PartOption_displayName,4221,무거운 사슬,Heavy Chain,신규
+PartOption_desc,4221,쇠사슬 채찍 — 피해량 +30%,Chain Whip — Damage +30%,신규
+PartOption_displayName,4230,쇠사슬 채찍 · 흡혈,Chain Whip · Leech,신규
+PartOption_desc,4230,쇠사슬 채찍 — 처치 시 체력 +1.4,Chain Whip — Heal on kill +1.4,신규
+PartOption_displayName,4229,쇠사슬 채찍 · 튼튼,Chain Whip · Sturdy,신규
+PartOption_desc,4229,쇠사슬 채찍 — 최대 체력 +15%,Chain Whip — Max HP +15%,신규
+PartOption_displayName,4228,긴 사슬,Long Chain,신규
+PartOption_desc,4228,쇠사슬 채찍 — 사거리 +20%,Chain Whip — Range +20%,신규
+PartOption_displayName,4462,빠른 회수,Quick Return,신규
+PartOption_desc,4462,부메랑 — 쿨타임 -10%,Boomerang — Cooldown -10%,신규
+PartOption_displayName,4466,부메랑 하나 더,One More Boomerang,신규
+PartOption_desc,4466,부메랑 — 개수 +1,Boomerang — Count +1,신규
+PartOption_displayName,4461,단단한 나무,Hardwood,신규
+PartOption_desc,4461,부메랑 — 피해량 +30%,Boomerang — Damage +30%,신규
+PartOption_displayName,4470,부메랑 · 흡혈,Boomerang · Leech,신규
+PartOption_desc,4470,부메랑 — 처치 시 체력 +1.4,Boomerang — Heal on kill +1.4,신규
+PartOption_displayName,4464,강속구,Fastball,신규
+PartOption_desc,4464,부메랑 — 치명타 피해량 +25%p,Boomerang — Crit damage +25%,신규
+PartOption_displayName,4471,부메랑 · 날쌘,Boomerang · Swift,신규
+PartOption_desc,4471,부메랑 — 이동속도 +6%,Boomerang — Move speed +6%,신규
+PartOption_displayName,4322,빠른 시선,Quick Glance,신규
+PartOption_desc,4322,심안 관통 — 쿨타임 -10%,Mind's-Eye Pierce — Cooldown -10%,신규
+PartOption_displayName,4326,두 번 보기,Double Take,신규
+PartOption_desc,4326,심안 관통 — 개수 +1,Mind's-Eye Pierce — Count +1,신규
+PartOption_displayName,4321,심안 단련,Inner Eye Training,신규
+PartOption_desc,4321,심안 관통 — 피해량 +30%,Mind's-Eye Pierce — Damage +30%,신규
+PartOption_displayName,4330,심안 관통 · 흡혈,Mind's-Eye Pierce · Leech,신규
+PartOption_desc,4330,심안 관통 — 처치 시 체력 +1.4,Mind's-Eye Pierce — Heal on kill +1.4,신규
+PartOption_displayName,4324,꿰뚫는 눈,Piercing Gaze,신규
+PartOption_desc,4324,심안 관통 — 치명타 피해량 +25%p,Mind's-Eye Pierce — Crit damage +25%,신규
+PartOption_displayName,4331,심안 관통 · 날쌘,Mind's-Eye Pierce · Swift,신규
+PartOption_desc,4331,심안 관통 — 이동속도 +6%,Mind's-Eye Pierce — Move speed +6%,신규
+PartOption_displayName,4085,넓은 주문,Wide Spell,신규
+PartOption_desc,4085,잠의 주문 — 범위 +20%,Sleep Spell — Area +20%,신규
+PartOption_displayName,4082,잦은 주문,Frequent Spell,신규
+PartOption_desc,4082,잠의 주문 — 쿨타임 -10%,Sleep Spell — Cooldown -10%,신규
+PartOption_displayName,4087,깊은 잠,Deep Sleep,신규
+PartOption_desc,4087,잠의 주문 — 지속시간 +25%,Sleep Spell — Duration +25%,신규
+PartOption_displayName,4090,잠의 주문 · 흡혈,Sleep Spell · Leech,신규
+PartOption_desc,4090,잠의 주문 — 처치 시 체력 +1.4,Sleep Spell — Heal on kill +1.4,신규
+PartOption_displayName,4089,잠의 주문 · 튼튼,Sleep Spell · Sturdy,신규
+PartOption_desc,4089,잠의 주문 — 최대 체력 +15%,Sleep Spell — Max HP +15%,신규
+PartOption_displayName,4088,전염되는 잠,Contagious Yawn,신규
+PartOption_desc,4088,잠의 주문 — 둔화량 +10%p,Sleep Spell — Slow +10%,신규
+PartOption_displayName,4142,짧은 휴식,Short Rest,신규
+PartOption_desc,4142,질풍 — 쿨타임 -10%,Gale — Cooldown -10%,신규
+PartOption_displayName,4147,긴 질풍,Long Gale,신규
+PartOption_desc,4147,질풍 — 지속시간 +25%,Gale — Duration +25%,신규
+PartOption_displayName,4150,질풍 · 흡혈,Gale · Leech,신규
+PartOption_desc,4150,질풍 — 처치 시 체력 +1.4,Gale — Heal on kill +1.4,신규
+PartOption_displayName,4149,질풍 · 튼튼,Gale · Sturdy,신규
+PartOption_desc,4149,질풍 — 최대 체력 +15%,Gale — Max HP +15%,신규
+PartOption_displayName,4148,바람의 가호,Wind's Blessing,신규
+PartOption_desc,4148,질풍 — 이동속도 증가 +10%p,Gale — Move speed bonus +10%,신규
+Synergy_displayName,8011,투지,Fighting Spirit,신규
+Synergy_desc,8011,각성 2개 — 각성 스킬 지속 +30%,2 Awaken — Awaken skill duration +30%,신규
+Synergy_displayName,8015,전의 고양,Rising Morale,신규
+Synergy_desc,8015,각성 3개 — 처치 시 체력 +1.2,3 Awaken — Heal on kill +1.2,신규
+Synergy_displayName,8012,영웅의 기개,Heroic Resolve,신규
+Synergy_desc,8012,각성 4개 — 각성 스킬 쿨타임 -25%,4 Awaken — Awaken skill cooldown -25%,신규
+Synergy_displayName,8005,결계,Barrier,신규
+Synergy_desc,8005,장판 2개 — 장판 스킬 지속 +30%,2 Field — Field skill duration +30%,신규
+Synergy_displayName,8017,진법,Formation,신규
+Synergy_desc,8017,장판 3개 — 처치 시 체력 +1.2,3 Field — Heal on kill +1.2,신규
+Synergy_displayName,8006,대진법,Grand Formation,신규
+Synergy_desc,8006,장판 4개 — 장판 스킬 피해 +40%,4 Field — Field skill damage +40%,신규
+Synergy_displayName,8009,집중,Focus,신규
+Synergy_desc,8009,시선 2개 — 시선 스킬 치명타 피해 +40%p,2 Gaze — Gaze skill crit damage +40%,신규
+Synergy_displayName,8014,매의 눈,Hawk Eye,신규
+Synergy_desc,8014,시선 3개 — 처치 시 체력 +1.2,3 Gaze — Heal on kill +1.2,신규
+Synergy_displayName,8010,심안,Mind's Eye,신규
+Synergy_desc,8010,시선 4개 — 시선 스킬 피해 +50%,4 Gaze — Gaze skill damage +50%,신규
+Synergy_displayName,8007,연격,Combo,신규
+Synergy_desc,8007,근접 2개 — 근접 스킬 피해 +25%,2 Melee — Melee skill damage +25%,신규
+Synergy_displayName,8013,검기,Sword Aura,신규
+Synergy_desc,8013,근접 3개 — 처치 시 체력 +1.2,3 Melee — Heal on kill +1.2,신규
+Synergy_displayName,8008,무쌍,Peerless,신규
+Synergy_desc,8008,근접 4개 — 근접 스킬 치명타 확률 +15%p,4 Melee — Melee skill crit chance +15%,신규
+Synergy_displayName,8003,투척술,Throwing Arts,신규
+Synergy_desc,8003,투척 2개 — 투척 스킬 쿨타임 -15%,2 Throw — Throw skill cooldown -15%,신규
+Synergy_displayName,8018,속사,Rapid Fire,신규
+Synergy_desc,8018,투척 3개 — 처치 시 체력 +1.2,3 Throw — Heal on kill +1.2,신규
+Synergy_displayName,8004,만개,Full Bloom,신규
+Synergy_desc,8004,투척 4개 — 투척 스킬 피해 +40%,4 Throw — Throw skill damage +40%,신규
+Synergy_displayName,8001,공명,Resonance,신규
+Synergy_desc,8001,파동 2개 — 파동 스킬 범위 +25%,2 Wave — Wave skill area +25%,신규
+Synergy_displayName,8016,기공,Qigong,신규
+Synergy_desc,8016,파동 3개 — 처치 시 체력 +1.2,3 Wave — Heal on kill +1.2,신규
+Synergy_displayName,8002,대기공,Grand Qigong,신규
+Synergy_desc,8002,파동 4개 — 파동 스킬 피해 +40%,4 Wave — Wave skill damage +40%,신규
+Synergy_displayName,8020,업화,Karmic Flame,신규
+Synergy_desc,8020,화상·중독 걸린 적에게 피해 +30%,Burning · poisoned enemies take +30% damage,신규
+Synergy_displayName,8021,약점 간파,Weak Spot,신규
+Synergy_desc,8021,취약 걸린 적에게 피해 +40%,Vulnerable enemies take +40% damage,신규
+Synergy_displayName,8019,빙결 족쇄,Frozen Shackles,신규
+Synergy_desc,8019,둔화된 적에게 피해 +35%,Slowed enemies take +35% damage,신규
+Synergy_displayName,8048,분신 질주 통달,Shadow Dash Mastery,신규
+Synergy_desc,8048,분신 질주 증강 4개 — 피해 +80%,4 Shadow Dash Augments — Damage +80%,신규
+Synergy_displayName,8039,광폭화 통달,Frenzy Mastery,신규
+Synergy_desc,8039,광폭화 증강 4개 — 지속시간 +50%,4 Frenzy Augments — Duration +50%,신규
+Synergy_displayName,8023,서리 숨결 통달,Frost Breath Mastery,신규
+Synergy_desc,8023,서리 숨결 증강 4개 — 피해 +80%,4 Frost Breath Augments — Damage +80%,신규
+Synergy_displayName,8208,회전 도끼 통달,Whirling Axe Mastery,신규
+Synergy_desc,8208,회전 도끼 증강 4개 — 피해 +80%,4 Whirling Axe Augments — Damage +80%,신규
+Synergy_displayName,8207,화염구 통달,Fireball Mastery,신규
+Synergy_desc,8207,화염구 증강 4개 — 피해 +80%,4 Fireball Augments — Damage +80%,신규
+Synergy_displayName,8210,산탄 포격 통달,Grapeshot Mastery,신규
+Synergy_desc,8210,산탄 포격 증강 4개 — 피해 +80%,4 Grapeshot Augments — Damage +80%,신규
+Synergy_displayName,8201,발도 일섬 통달,Iaido Slash Mastery,신규
+Synergy_desc,8201,발도 일섬 증강 4개 — 피해 +80%,4 Iaido Slash Augments — Damage +80%,신규
+Synergy_displayName,8206,심판 통달,Judgement Mastery,신규
+Synergy_desc,8206,심판 증강 4개 — 피해 +80%,4 Judgement Augments — Damage +80%,신규
+Synergy_displayName,8204,장풍 통달,Palm Blast Mastery,신규
+Synergy_desc,8204,장풍 증강 4개 — 피해 +80%,4 Palm Blast Augments — Damage +80%,신규
+Synergy_displayName,8209,관통 화살 통달,Piercing Arrow Mastery,신규
+Synergy_desc,8209,관통 화살 증강 4개 — 피해 +80%,4 Piercing Arrow Augments — Damage +80%,신규
+Synergy_displayName,8202,편전 통달,Volley Arrows Mastery,신규
+Synergy_desc,8202,편전 증강 4개 — 피해 +80%,4 Volley Arrows Augments — Damage +80%,신규
+Synergy_displayName,8203,수리검 통달,Shuriken Mastery,신규
+Synergy_desc,8203,수리검 증강 4개 — 피해 +80%,4 Shuriken Augments — Damage +80%,신규
+Synergy_displayName,8205,추혼부 통달,Soul-Chaser Talisman Mastery,신규
+Synergy_desc,8205,추혼부 증강 4개 — 피해 +80%,4 Soul-Chaser Talisman Augments — Damage +80%,신규
+Synergy_displayName,8022,흡혈 송곳니 통달,Vampire Fangs Mastery,신규
+Synergy_desc,8022,흡혈 송곳니 증강 4개 — 피해 +80%,4 Vampire Fangs Augments — Damage +80%,신규
+Synergy_displayName,8029,폭뢰 부적 통달,Thunder-Seal Talisman Mastery,신규
+Synergy_desc,8029,폭뢰 부적 증강 4개 — 피해 +80%,4 Thunder-Seal Talisman Augments — Damage +80%,신규
+Synergy_displayName,8047,대검 내려치기 통달,Greatsword Slam Mastery,신규
+Synergy_desc,8047,대검 내려치기 증강 4개 — 피해 +80%,4 Greatsword Slam Augments — Damage +80%,신규
+Synergy_displayName,8106,유성 낙하 통달,Meteor Fall Mastery,신규
+Synergy_desc,8106,유성 낙하 증강 4개 — 피해 +80%,4 Meteor Fall Augments — Damage +80%,신규
+Synergy_displayName,8027,비도 연사 통달,Knife Volley Mastery,신규
+Synergy_desc,8027,비도 연사 증강 4개 — 피해 +80%,4 Knife Volley Augments — Damage +80%,신규
+Synergy_displayName,8026,회전 검무 통달,Blade Dance Mastery,신규
+Synergy_desc,8026,회전 검무 증강 4개 — 피해 +80%,4 Blade Dance Augments — Damage +80%,신규
+Synergy_displayName,8036,공명진 통달,Resonance Circle Mastery,신규
+Synergy_desc,8036,공명진 증강 4개 — 피해 +80%,4 Resonance Circle Augments — Damage +80%,신규
+Synergy_displayName,8034,빛의 창 통달,Spear of Light Mastery,신규
+Synergy_desc,8034,빛의 창 증강 4개 — 피해 +80%,4 Spear of Light Augments — Damage +80%,신규
+Synergy_displayName,8043,차크람 통달,Chakram Mastery,신규
+Synergy_desc,8043,차크람 증강 4개 — 피해 +80%,4 Chakram Augments — Damage +80%,신규
+Synergy_displayName,8040,수호 결계 통달,Guardian Ward Mastery,신규
+Synergy_desc,8040,수호 결계 증강 4개 — 지속시간 +50%,4 Guardian Ward Augments — Duration +50%,신규
+Synergy_displayName,8024,사자후 통달,Lion's Roar Mastery,신규
+Synergy_desc,8024,사자후 증강 4개 — 피해 +80%,4 Lion's Roar Augments — Damage +80%,신규
+Synergy_displayName,8046,부동심 통달,Unshakable Mind Mastery,신규
+Synergy_desc,8046,부동심 증강 4개 — 지속시간 +50%,4 Unshakable Mind Augments — Duration +50%,신규
+Synergy_displayName,8042,화염 단지 통달,Fire Jar Mastery,신규
+Synergy_desc,8042,화염 단지 증강 4개 — 피해 +80%,4 Fire Jar Augments — Damage +80%,신규
+Synergy_displayName,8041,화살비 통달,Arrow Rain Mastery,신규
+Synergy_desc,8041,화살비 증강 4개 — 피해 +80%,4 Arrow Rain Augments — Damage +80%,신규
+Synergy_displayName,8107,맥동 룬 통달,Pulse Rune Mastery,신규
+Synergy_desc,8107,맥동 룬 증강 4개 — 피해 +80%,4 Pulse Rune Augments — Damage +80%,신규
+Synergy_displayName,8038,연쇄 번개 통달,Chain Lightning Mastery,신규
+Synergy_desc,8038,연쇄 번개 증강 4개 — 피해 +80%,4 Chain Lightning Augments — Damage +80%,신규
+Synergy_displayName,8035,추적 마탄 통달,Seeker Bolt Mastery,신규
+Synergy_desc,8035,추적 마탄 증강 4개 — 피해 +80%,4 Seeker Bolt Augments — Damage +80%,신규
+Synergy_displayName,8045,쿠나이 통달,Kunai Mastery,신규
+Synergy_desc,8045,쿠나이 증강 4개 — 피해 +80%,4 Kunai Augments — Damage +80%,신규
+Synergy_displayName,8031,뇌운 통달,Thundercloud Mastery,신규
+Synergy_desc,8031,뇌운 증강 4개 — 피해 +80%,4 Thundercloud Augments — Damage +80%,신규
+Synergy_displayName,8033,회오리 베기 통달,Whirlwind Slash Mastery,신규
+Synergy_desc,8033,회오리 베기 증강 4개 — 피해 +80%,4 Whirlwind Slash Augments — Damage +80%,신규
+Synergy_displayName,8030,창 찌르기 통달,Spear Thrust Mastery,신규
+Synergy_desc,8030,창 찌르기 증강 4개 — 피해 +80%,4 Spear Thrust Augments — Damage +80%,신규
+Synergy_displayName,8032,쇠사슬 채찍 통달,Chain Whip Mastery,신규
+Synergy_desc,8032,쇠사슬 채찍 증강 4개 — 피해 +80%,4 Chain Whip Augments — Damage +80%,신규
+Synergy_displayName,8044,부메랑 통달,Boomerang Mastery,신규
+Synergy_desc,8044,부메랑 증강 4개 — 피해 +80%,4 Boomerang Augments — Damage +80%,신규
+Synergy_displayName,8037,심안 관통 통달,Mind's-Eye Pierce Mastery,신규
+Synergy_desc,8037,심안 관통 증강 4개 — 피해 +80%,4 Mind's-Eye Pierce Augments — Damage +80%,신규
+Synergy_displayName,8025,잠의 주문 통달,Sleep Spell Mastery,신규
+Synergy_desc,8025,잠의 주문 증강 4개 — 지속시간 +50%,4 Sleep Spell Augments — Duration +50%,신규
+Synergy_displayName,8028,질풍 통달,Gale Mastery,신규
+Synergy_desc,8028,질풍 증강 4개 — 지속시간 +50%,4 Gale Augments — Duration +50%,신규
+Map_displayName,9001,벚꽃 설산,Snowy Sakura Peak,신규
+Map_boss,9001,오니 장군,Oni General,신규
+Map_desc,9001,눈 위로 꽃잎이 지는 산길. 오니 무리가 내려온다,A mountain path where petals fall on snow. The oni horde descends,신규
+Map_displayName,9002,궁궐 활터,Palace Archery Range,신규
+Map_boss,9002,구미호,Nine-Tailed Fox,신규
+Map_desc,9002,과녁이 늘어선 궁궐 마당. 여우불이 담을 넘는다,A palace yard lined with targets. Foxfire leaps over the walls,신규
+Map_displayName,9003,달밤 기와지붕,Moonlit Rooftops,신규
+Map_boss,9003,그림자 쇼군,Shadow Shogun,신규
+Map_desc,9003,보름달 아래 기와 위를 닌자들이 달린다,Ninjas race across the roof tiles under a full moon,신규
+Map_displayName,9004,대나무 산사,Bamboo Temple,신규
+Map_boss,9004,철갑 나한,Iron Arhat,신규
+Map_desc,9004,종소리가 울리는 대숲 절. 돌부처가 눈을 뜬다,A bamboo temple with tolling bells. The stone buddhas awaken,신규
+Map_displayName,9005,안개 선계,Misty Immortal Realm,신규
+Map_boss,9005,강시 대왕,Jiangshi King,신규
+Map_desc,9005,구름 위 선계. 부적을 붙인 강시가 뛰어온다,A realm above the clouds. Talisman-bound jiangshi hop toward you,신규
+Map_displayName,9006,성채 광장,Castle Square,신규
+Map_boss,9006,타락 기사단장,Fallen Knight Commander,신규
+Map_desc,9006,무너진 성의 광장. 해골 병사가 줄지어 선다,The square of a fallen castle. Skeleton soldiers stand in ranks,신규
+Map_displayName,9007,마탑 서고,Mage Tower Library,신규
+Map_boss,9007,미믹 대마도서,Mimic Grimoire,신규
+Map_desc,9007,책장이 끝없는 마탑. 책이 이빨을 드러낸다,A mage tower of endless shelves. The books bare their teeth,신규
+Map_displayName,9008,빙하 피오르,Glacier Fjord,신규
+Map_boss,9008,서리 거인,Frost Giant,신규
+Map_desc,9008,얼어붙은 협만. 서리늑대가 떼로 몰려온다,A frozen fjord. Frost wolves charge in packs,신규
+Map_displayName,9009,거목 숲,Giant Tree Forest,신규
+Map_boss,9009,썩은 엔트,Rotten Ent,신규
+Map_desc,9009,하늘을 가린 거목 숲. 버섯 정령이 깨어난다,A forest of sky-hiding giants. The mushroom spirits stir,신규
+Map_displayName,9010,해골섬 갑판,Skull Isle Deck,신규
+Map_boss,9010,유령 선장,Ghost Captain,신규
+Map_desc,9010,해골섬으로 가는 유령선. 마지막 항해다,A ghost ship bound for Skull Isle. The final voyage,신규
+ConstellationText_name,1,개,Dog,신규
+ConstellationText_desc,1,여기서 시작한다,Your journey starts here,신규
+ConstellationText_name,44,송곳니 각인,Fang Mark,신규
+ConstellationText_desc,44,근접 계열 피해 +25%,Melee family damage +25%,신규
+ConstellationText_name,89,메아리,Echo,신규
+ConstellationText_desc,89,파동 계열 범위 +35%,Wave family area +35%,신규
+ConstellationText_name,127,탄창 증설,Bigger Quiver,신규
+ConstellationText_desc,127,투척 계열 발사체 +1,Throw family projectiles +1,신규
+ConstellationText_name,156,잔류 흔적,Lingering Trace,신규
+ConstellationText_desc,156,장판 계열 지속 +40%,Field family duration +40%,신규
+ConstellationText_name,179,정조준,Dead Aim,신규
+ConstellationText_desc,179,시선 계열 치명타 피해 +60%,Gaze family crit damage +60%,신규
+ConstellationText_name,207,군체 본능,Pack Instinct,신규
+ConstellationText_desc,207,최대 체력 +20%,Max HP +20%,신규
+Round_banner,7004,정예 부대 출현!,Elite squad incoming!,신규
+Round_banner,7011,거대한 기운이 다가온다...,A mighty presence approaches...,신규
+Round_banner,7012,최후의 라운드!,Final round!,신규
+WaveEvent_banner,6001,정예 부대가 몰려옵니다!,The elite horde is coming!,신규

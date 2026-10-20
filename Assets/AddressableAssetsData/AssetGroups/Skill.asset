@@ -15,43 +15,43 @@ MonoBehaviour:
   m_GroupName: Skill
   m_GUID: ae7d3d8bfe3f1f2499d5f7345e9d5e56
   m_SerializeEntries:
-  - m_GUID: 03fe29ddbfb4f1043a56f6c303bdb3f2
-    m_Address: Fx_Shield
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0807dbea87755f346a6faa2beb80c532
-    m_Address: Fx_NoteBeat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 09c314c2943e88643a1823a9a438bac2
     m_Address: Fx_PartBox
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0a4094d4184b4004fb13fb296ff8e272
-    m_Address: Fx_Burst
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0ca7dd8b52023dd49be78f7fefecb5f8
-    m_Address: obj_ground
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0d5a9aff02b70974da7d4aa447ae4f31
-    m_Address: Fx_Yawn
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 15ff0659808593a4180a80fa331c0c5f
-    m_Address: Fx_NoteBass
+  - m_GUID: 12310bcba9981244b9298d3641f9521f
+    m_Address: obj_ground_bamboo_temple
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1875bcbedda61b944ab08f896a04b907
     m_Address: Fx_Hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 187a3f2d40706714688d5db7e22b01f7
+    m_Address: obj_ground_glacier_fjord
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a2b646f4b0b74643a00029a902116f2
+    m_Address: Fx_Chakram
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a499f8354b1ed042b0c0d4be6fe0029
+    m_Address: obj_ground_mage_library
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c3b3575b71ceca42a57c61ec39d95c2
+    m_Address: obj_ground_skull_deck
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28ccc10a5965b4942ab104f32d67f53e
+    m_Address: Fx_Sleep
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -65,48 +65,103 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 51488789bcd7b844891b4029c83e4ee2
-    m_Address: Fx_Scent
+  - m_GUID: 3292c6d9024233049bab2e5c89ce9ff8
+    m_Address: obj_ground_palace_range
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5aae73d1a2e64f542b908b353cccba0f
-    m_Address: Fx_TailSwing
+  - m_GUID: 3b8d8cac9b197e245a661acb4cd7047e
+    m_Address: Fx_Lightning
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5c03e5dd4bb438e488ee217441a00729
-    m_Address: Fx_Static
+  - m_GUID: 409df182c63c30047a792c2d707cbf8d
+    m_Address: Fx_Pellet
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 673ad3b87a2e57c499fb96f8fe4ba5cd
-    m_Address: Fx_Teeth
+  - m_GUID: 4283617497aa3914b88e3962139906fd
+    m_Address: Fx_FireJar
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6f3d575e82b653c4896775fd194d6c1c
-    m_Address: Fx_StaffBeam
+  - m_GUID: 45ebbceeeca12da4bac79baf7c8f277e
+    m_Address: Fx_Roar
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 71aebbe047fdef145a555a26db95debc
-    m_Address: Fx_Bark
+  - m_GUID: 5456724b962abe74c878585e19fa9b82
+    m_Address: Fx_Greatsword
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 737e3f14d5ac94f49950bcb3e9021978
-    m_Address: Fx_EyeBeam
+  - m_GUID: 559eba220f9366945b553725d021e233
+    m_Address: Fx_Seal
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7879adcfe52ceff499a4b891b94bd6ce
-    m_Address: Fx_DogDust
+  - m_GUID: 6436b6b197cb5b249ada8f0abcdd72a4
+    m_Address: Fx_LightRay
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9127f745c125e1e47abe0c47a9d7293f
-    m_Address: Fx_Taunt
+  - m_GUID: 670ceddde5559c84488dc653c45b1eff
+    m_Address: obj_ground_moon_roof
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 694c4e77671cb82489920b312a7f9333
+    m_Address: Fx_Muzzle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 708b42d4bac3a2f4784b4bbea25b820d
+    m_Address: Fx_Palm
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77c99d09bafc6454ea04634c6cddb6b5
+    m_Address: Fx_Shuriken
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 797ebc330c71f864cb85b0214ccf4f26
+    m_Address: Fx_Boomerang
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79f7913d1d1cec8449cf94aa26c63122
+    m_Address: Fx_Meat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c16aeb9bc5ae794f9b627037fb6d8b0
+    m_Address: Fx_Barrier
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f2fec1d5441754489f440689ee89b65
+    m_Address: obj_ground_castle_square
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8901faa6309b6a746b56026adcc6d1da
+    m_Address: Fx_Steadfast
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b07b4aee6248c6459db50052245b9ba
+    m_Address: Fx_LongArrow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c29db7ef2044c04fa5aee06f24df440
+    m_Address: Fx_Knife
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 924d2f0c90e8ac748a1c3f299188bf2d
+    m_Address: Fx_AxeWhirl
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -115,68 +170,93 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 93ee64731c04b264f8a16989902ad1e9
-    m_Address: Fx_Sonar
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 95c162197e274c84a90ef09aa09e4513
-    m_Address: Fx_Ball
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 961c41b81a6b1334ab2a0b945ae0a391
     m_Address: Fx_Chain
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 973b15cf12479c8418093871b37df777
-    m_Address: Fx_Chord
+  - m_GUID: 97c95a247a6a00f4b84c095996dbe7f4
+    m_Address: Fx_ChainWhip
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9916ffe8802848742a1350fd8ea8102f
-    m_Address: Fx_Growl
+  - m_GUID: 97d1548ff2354604aa6d35e4a758cbb3
+    m_Address: obj_ground_giant_forest
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 995e4c78916689a4ea40c4694d2be992
-    m_Address: Fx_Kibble
+  - m_GUID: a32e4fc7cf4250c41909b76df052e8e6
+    m_Address: Fx_Arrow
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9ba6f741bfbd5dc488c4e0e9fd7e5bcc
-    m_Address: Fx_Bread
+  - m_GUID: a6658adef0c3ec24eacf8947cd6e4d74
+    m_Address: Fx_Kunai
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9eb09ac4b57e0b744913a3c29f624e16
-    m_Address: Fx_Slipper
+  - m_GUID: ab0a5fe705a8c98498e1c8c61033c639
+    m_Address: Fx_Rage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a196576adc910bf45aa121a55a780980
-    m_Address: Fx_Howl
+  - m_GUID: ac5e9eee193c8c740a4d9605afe19f6b
+    m_Address: Fx_Meteor
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b7dff05856a24dc419e23b6037e93962
-    m_Address: Fx_NoteScale
+  - m_GUID: aca2106eb95d83d4186e5bc184bbae18
+    m_Address: Fx_Fang
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bcbdaf653578c4847b0e4710dc38781f
-    m_Address: Fx_NoteWhole
+  - m_GUID: ae0f210fc557c9d46ba4881149cda50d
+    m_Address: Fx_Thunder
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c1715c9e00cba1a4786ef2560975ef87
-    m_Address: Fx_Zoom
+  - m_GUID: b4173b0f6983bd54e925b62786012e5f
+    m_Address: Fx_Holy
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c51b3f8c246667f499fac3582f0dc8fe
-    m_Address: Fx_Frisbee
+  - m_GUID: b83589cbbb134c84490ecf11c67aabf0
+    m_Address: obj_ground_snow_sakura
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8bb06f5869a60f47875e7c345cff86e
+    m_Address: Fx_Blast
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc839a007faf5c241b425b8c996724ba
+    m_Address: Fx_Talisman
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf3f02916ed8b7942a16f5bb75b74074
+    m_Address: Fx_Rune
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c059a272b5767dd42891d25029cde41e
+    m_Address: Fx_Magnet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0c439f966da6504c844457af1848ed9
+    m_Address: obj_ground_mist_realm
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c171b6c0a379b2e4eb8b8b81eb87cf4c
+    m_Address: Fx_Frost
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c505bce57b028914a9b72d472df1a750
+    m_Address: Fx_BladeSwirl
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -185,23 +265,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5f4e62e94445184cba233d35b730e6f
+    m_Address: Fx_Spear
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8cef162eaa797c41ae1e710ad398fc6
+    m_Address: Fx_MagicShot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d14d1da98b62eec41b81878056addc26
     m_Address: Fx_Paw
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d37a75e883bf6ba4b893fb0b711dfc9a
-    m_Address: Fx_Gaze
+  - m_GUID: dcfe916498a65ac4fb52c9540e53e887
+    m_Address: Fx_ArrowRain
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d6abf17f947ef824da04f2cce883e51f
-    m_Address: Fx_Bone
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dbbb0ecf2e2704a4592ce0c7c06f7a37
-    m_Address: Fx_Awaken
+  - m_GUID: e035af7e26550a94a904fb55ae20198a
+    m_Address: Fx_Afterimage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -210,12 +295,29 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ec159a9eecbb33d40becf488a63be71a
-    m_Address: Fx_DogClaw
+  - m_GUID: eab0b2159d2f1d84e989db45b4959ef3
+    m_Address: Fx_Fireball
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1ce7cbd74b26db42a4405a8274d0d72
+    m_Address: Fx_QiBolt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb254fa327da66544ae6490eebd15447
+    m_Address: Fx_Gale
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff2e9040b767bac44828c3d24a925c1f
+    m_Address: Fx_Iaido
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ee692a7449d27bb47982fbe04cd2757c, type: 2}
   m_SchemaSet:
-    m_Schemas: []
+    m_Schemas:
+    - {fileID: 11400000, guid: ef214daf65e6408419d5070d48579663, type: 2}
+    - {fileID: 11400000, guid: 6e72ff649a4a79f469196c2fc8dec52a, type: 2}

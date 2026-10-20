@@ -91,7 +91,7 @@ namespace Jinhyeong_AI
             {
                 Jinhyeong_SkillSystem.RoundData rd = Jinhyeong_SkillSystem.RoundRegistry.Get(nowRound);
                 string banner = rd != null && string.IsNullOrEmpty(rd.Banner) == false
-                    ? rd.Banner : $"ROUND {nowRound}";
+                    ? rd.Banner : Loc.F("Wave_Round", "라운드 {0}", nowRound);
                 if (OnBanner != null)
                     OnBanner.Invoke(banner);
             }
@@ -151,8 +151,16 @@ namespace Jinhyeong_AI
                     }
                 }
 
-                if (OnBanner != null && string.IsNullOrEmpty(ev.Banner) == false)
-                    OnBanner.Invoke(ev.Banner);
+                // 보스 배너는 맵 보스 이름 (Tables/map boss)
+                string banner = ev.Banner;
+                if (ev.IsBoss)
+                {
+                    Jinhyeong_SkillSystem.MapData map = Jinhyeong_SkillSystem.MapRegistry.Current;
+                    if (map != null && string.IsNullOrEmpty(map.Boss) == false)
+                        banner = Loc.F("Wave_BossAppears", "{0} 출현!", map.Boss);
+                }
+                if (OnBanner != null && string.IsNullOrEmpty(banner) == false)
+                    OnBanner.Invoke(banner);
             }
         }
 

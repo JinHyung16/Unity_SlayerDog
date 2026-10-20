@@ -1,8 +1,8 @@
 module.exports = {
     id: 4021,
     name: 'bite_heal_damage',
-    desc: '스타카토 바이트 — 피해량 +30%',
-    displayName: '치아 강화',
+    desc: '흡혈 송곳니 — 피해량 +30%',
+    displayName: '흡혈귀의 이빨',
     partId: 2001,
     trait: 'Damage',
     value: 0.3,

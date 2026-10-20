@@ -3,7 +3,7 @@ module.exports = {
     id: 8006,
     name: 'fam_field_4',
     desc: '장판 4개 — 장판 스킬 피해 +40%',
-    displayName: '플로어 장악',
+    displayName: '대진법',
     family: 'Field',
     reqFamilyCount: 4,
     reqSkillId: 0,

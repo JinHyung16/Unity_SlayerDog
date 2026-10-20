@@ -1,0 +1,118 @@
+LocalKey,Korean,English,_State
+Char_Hint,고유 스킬의 계열이 이번 판에 더 자주 나옵니다,Your signature skill's family shows up more often this run,신규
+Char_JoinsOnClear,<size=75%>{0} 클리어</size>,<size=75%>Clear {0}</size>,신규
+Char_Locked,<size=75%>잠김</size>,<size=75%>Locked</size>,신규
+Char_NoUniqueSkill,<size=75%>고유 스킬 없음</size>,<size=75%>No Signature Attack</size>,신규
+Char_ShopHint,사료 {0} · 눌러서 영구 강화,{0} Kibble · Click to upgrade permanently,신규
+Char_StatAttack,공격력,Attack,신규
+Char_StatCost,사료 {0},{0} Kibble,신규
+Char_StatHp,체력,HP,신규
+Char_StatMax,최대,MAX,신규
+Char_StatSpeed,이동속도,Move Speed,신규
+Char_Title,캐릭터 목록,Heroes,신규
+Hero_1,시바 무사,Shiba Ronin,신규
+Hero_10,닥스훈트 포수,Dachshund Gunner,신규
+Hero_2,진돗개 무관,Jindo Officer,신규
+Hero_3,아키타 닌자,Akita Ninja,신규
+Hero_4,차우차우 무승,Chow Chow Monk,신규
+Hero_5,퍼그 도사,Pug Taoist,신규
+Hero_6,셰퍼드 성기사,Shepherd Paladin,신규
+Hero_7,푸들 대마법사,Poodle Archmage,신규
+Hero_8,허스키 광전사,Husky Berserker,신규
+Hero_9,비글 레인저,Beagle Ranger,신규
+Hud_BossDefeated,{0} 격파!,{0} defeated!,신규
+Hud_BossDefeatedDefault,보스 격파!,Boss defeated!,신규
+Hud_CardAmp,고유 공격 강화,Signature Upgrade,신규
+Hud_CardNewWeapon,새 무기,New Weapon,신규
+Hud_CardStat,능력,Stat,신규
+Hud_CardUpgrade,무기 강화,Weapon Upgrade,신규
+Hud_LevelUpHint,하나를 고르세요  ·  클릭 또는 1 · 2 · 3,Pick one  ·  Click or 1 · 2 · 3,신규
+Hud_PauseGiveUp,포기하고 결과 보기,Give Up & See Results,신규
+Hud_PauseResume,계속하기 (ESC),Resume (ESC),신규
+Hud_PauseTitle,일시정지,Paused,신규
+Hud_Restart,다시 하기,Retry,신규
+Hud_ResultStats,"생존 시간  {0:00}:{1:00}
+처치  {2}
+레벨  {3}","Survived  {0:00}:{1:00}
+Kills  {2}
+Level  {3}",신규
+Hud_StatDamageDesc,공격력 +{0}%,Attack +{0}%,신규
+Hud_StatDamageName,날 벼리기,Whetstone,신규
+Hud_StatHealOnKillDesc,처치 시 체력 +{0:0.#},Heal on kill +{0:0.#},신규
+Hud_StatHealOnKillName,전장의 함성,Battle Cry,신규
+Hud_StatMaxHpDesc,최대 체력 +{0}%,Max HP +{0}%,신규
+Hud_StatMaxHpName,강철 갑옷,Steel Armor,신규
+Hud_StatMoveSpeedDesc,이동속도 +{0}%,Move speed +{0}%,신규
+Hud_StatMoveSpeedName,바람 발걸음,Wind Step,신규
+Hud_Tip,WASD · 방향키로 이동  ·  공격은 자동  ·  보물상자를 주워 무기를 늘리세요,WASD / Arrows: move  ·  Attacks are automatic  ·  Open chests for weapons,원문변경
+Input_Arrow,방향키,Arrow Keys,신규
+Lobby_FamilyAura,각성,Awaken,신규
+Lobby_FamilyField,장판,Field,신규
+Lobby_FamilyGaze,시선,Gaze,신규
+Lobby_FamilyMelee,근접,Melee,신규
+Lobby_FamilyThrow,투척,Throw,신규
+Lobby_FamilyWave,파동,Wave,신규
+Lobby_StatusLoadingEffects,스킬 이펙트 로딩 중...,Loading skill effects...,신규
+Lobby_StatusLoadingSkills,스킬 데이터 로딩 중...,Loading skill data...,신규
+Lobby_StatusLoadingWorld,월드 로딩 중...,Loading world...,신규
+Lobby_StatusNoSkills,사용 가능 스킬 없음 (Resources/GameData 확인),No skills available,신규
+Lobby_StatusSkillCount,사용 가능 스킬 {0}개,{0} skills available,신규
+Lobby_StatusSkillLoadFailed,스킬 로드 실패: {0},Skill load failed: {0},신규
+Lobby_StatusSpawnFailed,스폰 실패: {0},Spawn failed: {0},신규
+Lobby_TabCharacter,캐릭터,Heroes,신규
+Lobby_TabSettings,설정,Settings,신규
+Lobby_TabSkill,스킬 트리,Skill Tree,신규
+Lobby_TabStart,시작,Start,신규
+Lobby_Tagline,"열 세계의 개 영웅, 12분 동안 침공군을 벤다.",Dog heroes of ten worlds. 12 minutes to cut down the invaders.,신규
+Settings_EditorResNote,에디터에서는 해상도 변경이 Game 뷰에 반영되지 않는다,"In the Editor, resolution changes don't apply to the Game view",신규
+Settings_FullscreenOff,전체화면: 끔,Fullscreen: Off,신규
+Settings_FullscreenOn,전체화면: 켬,Fullscreen: On,신규
+Settings_MoveKeys,이동키,Move Keys,신규
+Settings_Resolution,해상도,Resolution,신규
+Settings_Title,설정,Settings,신규
+Settings_Volume,음량,Volume,신규
+Settings_Wipe,데이터 초기화,Reset Data,신규
+Settings_WipeConfirm,정말 지울까요?,Erase everything?,신규
+Settings_WipeNote,기록 · 재화 · 해금 · 강화가 모두 사라집니다,"Erases all records, currency, unlocks, and upgrades",신규
+Skill_AlreadyOwned,이미 열었다,Already unlocked,신규
+Skill_CostAfford,별 {0}개 · DNA {1} — 한 번 더 누르면 산다,{0} Stars · {1} DNA — press again to buy,신규
+Skill_CostShort,별 {0}개 · DNA {1} — {2} 부족합니다,{0} Stars · {1} DNA — need {2} more,원문변경
+Skill_Hint,슈퍼 DNA {0} · 별 {1}/{2} · 끌어서 이동 · 휠로 확대,Super DNA {0} · Stars {1}/{2} · Drag to pan · Scroll to zoom,신규
+Skill_Unreachable,아직 길이 닿지 않습니다,No path leads here yet,신규
+Star_GateDesc,클리어 {0}회 이상이어야 지나갈 수 있습니다,Requires at least {0} clears to pass,신규
+Star_GateName,관문,Gate,신규
+Star_SkillFallbackName,스킬 {0},Skill {0},신규
+Star_SkillUnlockDesc,해금 — 필드에서 이 파츠가 나오기 시작합니다,Unlock — this Part starts appearing in the field,신규
+Start_FirstRun,첫 판입니다,Your first run,신규
+Start_MapInfo,<size=15>보스 {0} · 난이도 {1}</size>,<size=15>Boss {0} · Difficulty {1}</size>,신규
+Start_MapLocked,맵 {0} · 잠김,Map {0} · Locked,신규
+Start_MapName,맵 {0} · {1},Map {0} · {1},신규
+Start_MapUnlockHint,<size=15>맵 {0}을(를) 클리어하면 열립니다</size>,<size=15>Clear Map {0} to unlock</size>,신규
+Start_NoMap,맵 없음,No Map,신규
+Start_NoStartSkill,시작 스킬 없음,No starting skill,신규
+Start_RecordBest,최고 {0}분 {1}초 · 라운드 {2} · 처치 {3},Best {0}m {1}s · Round {2} · Kills {3},신규
+Start_RecordTotals,클리어 {0}회 / {1}판   ·   사료 {2}  ·  슈퍼 DNA {3},Clears {0} / {1} runs   ·   Kibble {2}  ·  Super DNA {3},신규
+Start_StartButton,게임 시작,Start,신규
+Start_StartSkillFooter,<size=17>나머지는 필드에서 줍습니다</size>,<size=17>Pick up the rest in the field</size>,신규
+Start_StartSkillHeader,시작 스킬,Starting Skill,신규
+Start_StartSkillLine,· {0}  ({1} 계열),· {0}  ({1} family),신규
+Trait_Area,범위,Area,신규
+Trait_Cooldown,재사용 단축,Cooldown,신규
+Trait_Count,발사체,Projectiles,신규
+Trait_CritChance,치명타 확률,Crit Chance,신규
+Trait_CritDamage,치명타 피해,Crit Damage,신규
+Trait_Damage,피해,Damage,신규
+Trait_Default,특성,Trait,신규
+Trait_Duration,지속,Duration,신규
+Trait_Lifesteal,처치 회복,Heal on Kill,신규
+Trait_LongAll,모든 스킬 {0} {1},All skills {0} {1},신규
+Trait_LongFamily,{0} 계열 {1} {2},{0} family {1} {2},신규
+Trait_MaxHp,최대 체력,Max HP,신규
+Trait_MoveSpeed,이동 속도,Move Speed,신규
+Wave_BossAppears,{0} 출현!,{0} appears!,신규
+Wave_Round,라운드 {0},Round {0},신규
+Hud_Kills,처치 {0},Kills {0},신규
+Hud_Boss,보스,Boss,신규
+Hud_ResultNewHero,{0} 합류!,{0} joins the pack!,신규
+Hud_ResultNewMap,새 맵 열림 — {0},New map unlocked — {0},신규
+Hud_ResultReward,사료 +{0}  ·  슈퍼 DNA +{1},Kibble +{0}  ·  Super DNA +{1},신규

@@ -13,10 +13,21 @@ namespace Jinhyeong_SkillSystem
         private bool _flying;
         private float _flySpeed;
         private float _spawnTime;
+        private int _merged;
+        private Vector3 _baseScale = Vector3.zero;
+
+        // 쉬는(아직 안 끌려온) 뼈 목록. 이 수를 넘으면 새로 떨어지는 경험치는 반경 안 가장 가까운 뼈에 합친다
+        private const int MergeAbove = 50;
+        private const float MergeRadius = 3f;
+        private const int MaxMergeSteps = 6;
+        private static readonly System.Collections.Generic.List<XpGem> _resting = new System.Collections.Generic.List<XpGem>(128);
 
         public static void Drop(Vector3 position, float xp)
         {
             if (PoolManager.Instance == null)
+                return;
+
+            if (_resting.Count >= MergeAbove && TryMerge(position, xp))
                 return;
 
             GameObject go = PoolManager.Instance.Pool_Fx_Get(PoolKey);
@@ -35,6 +46,58 @@ namespace Jinhyeong_SkillSystem
             gem._flying = false;
             gem._flySpeed = 0f;
             gem._spawnTime = Time.time;
+            gem._merged = 0;
+            if (gem._baseScale == Vector3.zero)
+                gem._baseScale = gem.transform.localScale;
+            gem.transform.localScale = gem._baseScale;
+            if (_resting.Contains(gem) == false)
+                _resting.Add(gem);
+        }
+
+        private static bool TryMerge(Vector3 position, float xp)
+        {
+            XpGem best = null;
+            float bestSq = MergeRadius * MergeRadius;
+            for (int i = 0; i < _resting.Count; i++)
+            {
+                XpGem g = _resting[i];
+                if (g == null)
+                    continue;
+                Vector3 d = g.transform.position - position;
+                float sq = d.x * d.x + d.z * d.z;
+                if (sq < bestSq)
+                {
+                    bestSq = sq;
+                    best = g;
+                }
+            }
+            if (best == null)
+                return false;
+            best._xp += xp;
+            best._merged++;
+            // 합칠수록 조금씩 크게 (최대 1.6배) — 큰 뼈 = 값진 뼈로 읽히게
+            float k = 1f + 0.1f * Mathf.Min(best._merged, MaxMergeSteps);
+            best.transform.localScale = best._baseScale * k;
+            return true;
+        }
+
+        protected override void OnDisabled()
+        {
+            _resting.Remove(this);
+        }
+
+        // 자석 아이템: 쉬는 뼈를 전부 플레이어에게 날린다
+        public static void PullAll()
+        {
+            for (int i = _resting.Count - 1; i >= 0; i--)
+            {
+                XpGem g = _resting[i];
+                if (g == null)
+                    continue;
+                g._flying = true;
+                g._flySpeed = 6f;
+            }
+            _resting.Clear();
         }
 
         private void Update()
@@ -55,7 +118,10 @@ namespace Jinhyeong_SkillSystem
 
                 float magnet = CommonConfig.Run.MagnetRadius;
                 if (distSq <= magnet * magnet)
+                {
                     _flying = true;
+                    _resting.Remove(this);
+                }
                 return;
             }
 

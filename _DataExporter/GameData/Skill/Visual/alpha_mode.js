@@ -1,11 +1,11 @@
-/** 개쌘놈 모드 — 8초간 공격속도 +40%. 16초마다 */
+/** 광폭화 — 8초간 공격속도 +40%. 16초마다 */
 module.exports = {
-    color: '#FFB03A',
-    desc: "개쌘놈 모드 — 8초간 공격속도 +40%. 16초마다",
+    color: '#FFC266',
+    desc: "광폭화 — 8초간 공격속도 +40%. 16초마다",
     values: {
-        "Projectile": "Fx_Awaken",
-        "Impact": "Fx_Awaken",
-        "Cast": "Fx_Awaken",
+        "Projectile": "Fx_Rage",
+        "Impact": "Fx_Rage",
+        "Cast": "Fx_Rage",
         "Orient": "Billboard",
         "Color": "#FFB03A",
         "Cooldown": 16,

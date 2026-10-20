@@ -17,6 +17,206 @@ namespace Jinhyeong_GameData.Editor
         private const string RequestFile = "Temp/runloop.request";
         private const string ActiveFile = "Temp/runloop.active";
         private const string ReportFile = "Temp/runloop.report";
+        // 판마다 한 줄 덧붙는 결과 표 (B-1 다중 시드 일괄). 지우는 건 일괄 스크립트가 한다
+        private const string ResultsFile = "Temp/runloop_results.tsv";
+        private const string ResultsHeader = "hero\tmap\tseed\tcleared\tsurvived\tkills\tkills_r5\tlevel\tlate_min_hp\tsynergies\ttop_family";
+
+        // 빨리 감기 (필멸 판): 게임 카메라를 끄고 프레임당 게임 시간을 1/30 초로 묶는다
+        // 렌더를 안 하니 프레임이 오르는 만큼 빨리 돈다. 1/30 은 실시간 30fps 판과 같은 간격 — 최고 탄속 24 가 한 프레임 0.8 이동
+        // (1/60 으로 묶으면 백그라운드 에디터가 60fps 를 못 내 실시간보다 느려진다 — 10-12 실측)
+        private const float FastStep = 1f / 30f;
+        private static Camera[] _mutedCameras;
+
+        // 투어 캡처 (아트 · 감각 점검 봇용): 8번째 칸 = 몇 게임 초마다 한 장. Temp/tour/m<맵>_h<주인공>_<초>.png
+        private static float _tourEvery;
+        private static float _tourNext;
+        // 촬영 모드 (트레일러 · 스크린샷): 9 · 10번째 칸 = 찍을 구간(게임 초). 간격이 한 프레임(1/30) 이하면
+        // 매 프레임을 Temp/video/f<번호>.png 로 바로 찍는다 — 빨리 감기 간격이 고정이라 그대로 30fps 영상이 된다
+        private static float _tourStart;
+        private static float _tourEnd = float.MaxValue;
+        private static int _videoFrame;
+
+        private static void CaptureTour(float elapsed)
+        {
+            if (_tourEvery <= 0f || elapsed < _tourStart || elapsed > _tourEnd)
+                return;
+            if (_tourEvery <= FastStep + 0.0001f)
+            {
+                Directory.CreateDirectory("Temp/video");
+                ScreenCapture.CaptureScreenshot($"Temp/video/f{_videoFrame:00000}.png");
+                _videoFrame++;
+                return;
+            }
+            if (elapsed < _tourNext)
+                return;
+            _tourNext += _tourEvery;
+            Directory.CreateDirectory("Temp/tour");
+            string file = $"Temp/tour/m{Jinhyeong_Common.RunSelection.MapIndex:00}_h{Jinhyeong_Common.RunSelection.CharacterIndex:00}_{Mathf.RoundToInt(elapsed):000}.png";
+            Shot(file, true);
+        }
+
+        // 찍을 파일 하나를 들고 있다가, 카메라를 강제로 켠 뒤 ForceDrawFrames 프레임 지나 찍는다
+        // combat = 레벨업 창이 열려 있으면 닫힐 때까지 기다린다 (전투 장면이 창에 가리지 않게)
+        private const int ForceDrawFrames = 3;
+        private static readonly List<(string file, bool combat)> _shots = new List<(string, bool)>(4);
+        private static int _forceDraw;
+        private static int _drawHold;
+
+        private static void Shot(string file, bool combat)
+        {
+            for (int i = 0; i < _shots.Count; i++)
+            {
+                if (_shots[i].file == file)
+                    return;
+            }
+            _shots.Add((file, combat));
+        }
+
+        private static void PumpShots()
+        {
+            if (_drawHold > 0)
+                _drawHold--;
+            if (_shots.Count == 0)
+                return;
+            bool levelOpen = Jinhyeong_UI.SurvivorHud.Instance != null && Jinhyeong_UI.SurvivorHud.Instance.LevelUpOpen;
+            if (_shots[0].combat && levelOpen)
+            {
+                _forceDraw = 0;
+                return;
+            }
+            if (_forceDraw <= 0)
+            {
+                _forceDraw = ForceDrawFrames;
+                return;
+            }
+            _forceDraw--;
+            if (_forceDraw > 0)
+                return;
+            ScreenCapture.CaptureScreenshot(_shots[0].file);
+            _shots.RemoveAt(0);
+            _drawHold = ForceDrawFrames + 2;
+        }
+
+        // 빨리 감기 중 렌더는 이 프레임에 한 번 — 끄면 Game 뷰가 검게 보여 사람이 판을 못 본다
+        private const int FastRenderEvery = 6;
+
+        private static void ThrottleCameras()
+        {
+            if (_mutedCameras == null)
+                return;
+            bool draw = Time.frameCount % FastRenderEvery == 0 || _forceDraw > 0 || _drawHold > 0;
+            for (int i = 0; i < _mutedCameras.Length; i++)
+            {
+                if (_mutedCameras[i] != null)
+                    _mutedCameras[i].enabled = draw;
+            }
+        }
+        private static int _startFrame;
+        private static float _endShotReal;
+        private static string _saveBackup;
+        private const string BossShotFile = "Temp/runloop_boss.png";
+        private static float _bossSeenAt = -1f;
+        private static bool _bossShotTaken;
+
+        // 보스가 나오고 게임 4초 뒤 한 장 — 끝 캡처 때는 보스가 이미 죽어 있기 쉽다 (카메라를 끈 빨리 감기 판은 검게 찍힌다)
+        // 성장 재현 — 판당 사료 1,500 · DNA 31, 앞 챕터 첫 클리어마다 DNA 30 (SaveData 경제와 같은 가정)
+        // 챕터 첫 클리어 목표 시점(누적 판). 볼트 SlayerDog 기획서 진행 절과 같다
+        private static readonly int[] ChapterRuns = { 2, 5, 9, 14, 20, 27, 35, 44, 54, 65 };
+        private const int KibblePerRun = 1500;
+        private const int DnaPerRun = 31;
+        private static int _growth;
+        private static string _growthNote = string.Empty;
+
+        private static void ApplyGrowth()
+        {
+            _growth = 0;
+            _growthNote = string.Empty;
+            string spec = string.Empty;
+            try { spec = File.ReadAllText(ActiveFile).Trim(); } catch { }
+            string[] parts = spec.Split(':');
+            if (parts.Length <= 6 || int.TryParse(parts[6], out _growth) == false || _growth <= 0)
+                return;
+
+            int cleared = 0;
+            for (int i = 0; i < ChapterRuns.Length; i++)
+            {
+                if (ChapterRuns[i] < _growth)
+                    cleared++;
+            }
+            Jinhyeong_Common.SaveData.DebugSetProgress(_growth * KibblePerRun,
+                _growth * DnaPerRun + cleared * Jinhyeong_Common.SaveData.FirstClearDna, Mathf.Max(1, cleared), cleared);
+            Jinhyeong_Constellation.ConstellationManager.Reload();
+
+            // 스탯: 가장 싼 것부터 (사람이 고르는 순서의 근사)
+            Jinhyeong_Common.SaveData.EStat[] stats = { Jinhyeong_Common.SaveData.EStat.Attack, Jinhyeong_Common.SaveData.EStat.Hp, Jinhyeong_Common.SaveData.EStat.Speed };
+            for (int guard = 0; guard < 200; guard++)
+            {
+                Jinhyeong_Common.SaveData.EStat pick = stats[0];
+                int best = int.MaxValue;
+                for (int i = 0; i < stats.Length; i++)
+                {
+                    if (Jinhyeong_Common.SaveData.StatLevel(stats[i]) >= Jinhyeong_Common.SaveData.StatMaxLevel)
+                        continue;
+                    int c = Jinhyeong_Common.SaveData.StatCost(stats[i]);
+                    if (c < best)
+                    {
+                        best = c;
+                        pick = stats[i];
+                    }
+                }
+                if (best == int.MaxValue || Jinhyeong_Common.SaveData.BuyStat(pick) == false)
+                    break;
+            }
+
+            // 스킬 트리: 닿는 노드 중 가장 싼 것부터 하나씩
+            int bought = 0;
+            for (int guard = 0; guard < 600; guard++)
+            {
+                Jinhyeong_Constellation.ConstellationNode cheapest = null;
+                int best = int.MaxValue;
+                foreach (Jinhyeong_Constellation.ConstellationNode n in Jinhyeong_Constellation.ConstellationManager.Graph.Nodes)
+                {
+                    if (Jinhyeong_Constellation.ConstellationManager.CanReach(n) == false)
+                        continue;
+                    int c = Jinhyeong_Constellation.ConstellationManager.NextCost(n);
+                    if (c < best)
+                    {
+                        best = c;
+                        cheapest = n;
+                    }
+                }
+                if (cheapest == null || best > Jinhyeong_Common.SaveData.SuperDna)
+                    break;
+                if (Jinhyeong_Constellation.ConstellationManager.BuyPath(cheapest.Id) == false)
+                    break;
+                bought++;
+            }
+            _growthNote = $"성장 {_growth}판 — 스탯 공 {Jinhyeong_Common.SaveData.StatLevel(Jinhyeong_Common.SaveData.EStat.Attack)} · 체 {Jinhyeong_Common.SaveData.StatLevel(Jinhyeong_Common.SaveData.EStat.Hp)} · 이 {Jinhyeong_Common.SaveData.StatLevel(Jinhyeong_Common.SaveData.EStat.Speed)}, 트리 {bought}노드, 남은 DNA {Jinhyeong_Common.SaveData.SuperDna}";
+        }
+
+        private static void CaptureBoss(float elapsed)
+        {
+            if (_bossShotTaken)
+                return;
+            Jinhyeong_AI.EnemySpawner sp = Jinhyeong_AI.EnemySpawner.Instance;
+            if (sp == null || sp.BossSpawnCount <= 0)
+                return;
+            if (_bossSeenAt < 0f)
+                _bossSeenAt = elapsed;
+            if (elapsed - _bossSeenAt < 4f)
+                return;
+            Shot(BossShotFile, true);
+            _bossShotTaken = true;
+            _bossPatternCount = -1;
+            foreach (Jinhyeong_AI.Enemy e in Object.FindObjectsByType<Jinhyeong_AI.Enemy>(FindObjectsSortMode.None))
+            {
+                if (e != null && e.IsBoss && e.Skills != null)
+                    _bossPatternCount = e.Skills.AutoSkillCount;
+            }
+        }
+
+        private static int _bossPatternCount = -1;
+        private static bool _resultWritten;
         private const string PanelShotFile = "Temp/runloop_panel.png";
         private const string EndShotFile = "Temp/runloop_end.png";
         private const string LobbyShotFile = "Temp/runloop_lobby.png";
@@ -43,6 +243,10 @@ namespace Jinhyeong_GameData.Editor
         private static bool _refreshed;
         private static bool _mortal;
         private static float _deathTime;
+        private static int _seed;
+        private static float _startGame;
+        private static int _killsR5 = -1;
+        private static float _lateMinHp = 100f;
         private static bool _lobbyShotDone;
         private static int _lobbyWaitTicks;
         private const int LobbyWaitMaxTicks = 30;
@@ -105,6 +309,11 @@ namespace Jinhyeong_GameData.Editor
             File.Delete(RequestFile);
             File.WriteAllText(ActiveFile, string.IsNullOrEmpty(mode) ? "god" : mode);
 
+            // 하네스 판은 플레이어 세이브를 남기지 않는다 — Play 에 들어가기 전에 한 번 떠 두고 Finish 에서 되돌린다
+            // (Play 안에서 뜨면 Setup 이 다시 불릴 때 성장 재현이 들어간 세이브를 뜬다)
+            _saveBackup = PlayerPrefs.HasKey(Jinhyeong_Common.SaveData.Key)
+                ? PlayerPrefs.GetString(Jinhyeong_Common.SaveData.Key) : null;
+
             _lobbyShotDone = false;
             _lobbyWaitTicks = 0;
             _levelShotDone = false;
@@ -134,7 +343,7 @@ namespace Jinhyeong_GameData.Editor
                 return;
             }
 
-            float elapsed = Time.realtimeSinceStartup - _startReal;
+            float elapsed = Time.time - _startGame;
 
             if (_mortal && _deathTime < 0f && _player != null && _player.Damageable != null
                 && _player.Damageable.Hp <= 0f)
@@ -159,21 +368,32 @@ namespace Jinhyeong_GameData.Editor
                 }
                 Jinhyeong_UI.SurvivorHud.Instance.DebugAutoPick();
             }
+            PumpShots();
+            ThrottleCameras();
+            CaptureTour(elapsed);
             DriveMoveTowardGems();
             SampleRound(elapsed);
             CapturePeak(elapsed);
             TrackPacing(elapsed);
 
-            if (_endShotTaken == false && elapsed >= _runSeconds)
+            // 끝: 정한 게임 시간 · 보스 격파(클리어되면 게임이 멈춰 게임 시간이 안 흐른다) · 실시간 안전판
+            bool clearedNow = Jinhyeong_UI.GameFlow.IsCleared;
+            CaptureBoss(elapsed);
+            bool stalled = Time.realtimeSinceStartup - _startReal > _runSeconds * 1.2f + 60f;
+            if (_endShotTaken == false && (elapsed >= _runSeconds || clearedNow || stalled))
             {
+                if (stalled && elapsed < _runSeconds && clearedNow == false)
+                    _errorNote = $"실시간 안전판으로 끝냄 — 게임 {elapsed:0}초에서 멈춤";
                 if (_mortal && Jinhyeong_UI.GameFlow.IsRunning)
                     Jinhyeong_UI.GameFlow.EndGame();
 
                 ScreenCapture.CaptureScreenshot(EndShotFile);
                 _endShotTaken = true;
+                _endShotReal = Time.realtimeSinceStartup;
                 return;
             }
-            if (_endShotTaken && elapsed >= _runSeconds + 2f)
+            // 판이 끝나면 게임이 멈춰 게임 시간이 안 흐른다 — 캡처 저장 대기는 실시간으로
+            if (_endShotTaken && Time.realtimeSinceStartup - _endShotReal >= 2f)
                 Finish(null);
         }
 
@@ -198,6 +418,7 @@ namespace Jinhyeong_GameData.Editor
                 Jinhyeong_SkillSystem.SkillRegistry.Load();
 
             ApplyRequestedHero();
+            ApplyGrowth();
 
             Jinhyeong_Character.Player already = Object.FindFirstObjectByType<Jinhyeong_Character.Player>();
             GameObject go = already != null
@@ -222,12 +443,13 @@ namespace Jinhyeong_GameData.Editor
                 _errorNote = "PartLoadout 이 obj_player 에 없습니다";
             }
 
+            string groundKey = Jinhyeong_Managers.WorldSpawner.GroundKey;
             GameObject groundPrefab = UnityEngine.AddressableAssets.Addressables
-                .LoadAssetAsync<GameObject>("obj_ground").WaitForCompletion();
+                .LoadAssetAsync<GameObject>(groundKey).WaitForCompletion();
             if (groundPrefab != null)
                 Object.Instantiate(groundPrefab, Vector3.zero, Quaternion.identity);
             else
-                _errorNote = "obj_ground 로드 실패";
+                _errorNote = groundKey + " 로드 실패";
 
             Cysharp.Threading.Tasks.UniTaskExtensions.Forget(
                 AddressableManager.Ensure().LoadAsync(Jinhyeong_Parts.PartDropper.PickupKey));
@@ -251,7 +473,50 @@ namespace Jinhyeong_GameData.Editor
             _levelShotTaken = false;
             _levelPicks = 0;
             _roundMinHp = 100f;
+            _lateMinHp = 100f;
+            _killsR5 = -1;
+            _resultWritten = false;
+            _tourEvery = 0f;
+            _tourNext = 0f;
+            if (parts2.Length > 7 && float.TryParse(parts2[7], out float tour) && tour > 0f)
+            {
+                _tourEvery = tour;
+                _tourNext = tour;
+            }
+            _tourStart = 0f;
+            _tourEnd = float.MaxValue;
+            _videoFrame = 0;
+            if (parts2.Length > 8 && float.TryParse(parts2[8], out float tStart))
+            {
+                _tourStart = tStart;
+                _tourNext = Mathf.Max(_tourNext, tStart);
+            }
+            if (parts2.Length > 9 && float.TryParse(parts2[9], out float tEnd) && tEnd > 0f)
+                _tourEnd = tEnd;
+            _bossSeenAt = -1f;
+            _bossShotTaken = false;
             _slotsFullAt = -1f;
+
+            // 6번째 칸 = 시드 (mortal:820:<주인공>:-1:<맵>:<시드>). 0 이면 고정하지 않는다
+            _seed = 0;
+            if (parts2.Length > 5 && int.TryParse(parts2[5], out int seed))
+                _seed = seed;
+            if (_seed != 0)
+                UnityEngine.Random.InitState(_seed);
+            if (_mortal)
+            {
+                QualitySettings.vSyncCount = 0;
+                Application.targetFrameRate = -1;
+                Time.captureDeltaTime = FastStep;
+                // 투어 판(사진이 목적)은 카메라를 끄지 않는다 — HUD 는 오버레이 캔버스라 카메라가 안 그린 프레임에서는
+                // 화면을 지우지 않고 덧그려, 사진에 지난 레벨업 창이 남고 어두운 막이 쌓여 월드가 검게 찍혔다
+                if (_tourEvery <= 0f)
+                {
+                    _mutedCameras = Camera.allCameras;
+                    for (int i = 0; i < _mutedCameras.Length; i++)
+                        _mutedCameras[i].enabled = false;
+                }
+            }
             _peakShotAt = -100f;
             _lastSampledRound = 0;
 
@@ -306,6 +571,8 @@ namespace Jinhyeong_GameData.Editor
                 RunProgress.Instance.OnLevelUp += HandleLevelUp;
 
             _startReal = Time.realtimeSinceStartup;
+            _startGame = Time.time;
+            _startFrame = Time.frameCount;
             _spawned = true;
         }
 
@@ -332,6 +599,11 @@ namespace Jinhyeong_GameData.Editor
             _shotTab = -1;
             if (parts.Length > 3 && int.TryParse(parts[3], out int tabIdx) && tabIdx >= 0)
                 _shotTab = tabIdx;
+
+            // 5번째 칸 = 맵 순서 (mortal:820:<주인공>:-1:<맵>). 없으면 맵 1
+            Jinhyeong_Common.RunSelection.MapIndex = 1;
+            if (parts.Length > 4 && int.TryParse(parts[4], out int mapIdx) && mapIdx > 0)
+                Jinhyeong_Common.RunSelection.MapIndex = mapIdx;
         }
 
         private static void HandleLevelUp(int level)
@@ -512,6 +784,9 @@ namespace Jinhyeong_GameData.Editor
             Damageable hp = _player != null ? _player.Damageable : null;
             if (hp != null && hp.MaxHp > 0f)
                 _roundMinHp = Mathf.Min(_roundMinHp, hp.Hp / hp.MaxHp * 100f);
+            Jinhyeong_AI.WaveDirector wdNow = Jinhyeong_AI.WaveDirector.Instance;
+            if (hp != null && hp.MaxHp > 0f && wdNow != null && Jinhyeong_SkillSystem.RoundRegistry.RoundOf(wdNow.Elapsed) >= 10)
+                _lateMinHp = Mathf.Min(_lateMinHp, hp.Hp / hp.MaxHp * 100f);
             Jinhyeong_Parts.PartLoadout pl = _player != null ? _player.GetComponent<Jinhyeong_Parts.PartLoadout>() : null;
             if (_slotsFullAt < 0f && pl != null && pl.EquippedCount >= Jinhyeong_Parts.PartLoadout.SlotCount)
                 _slotsFullAt = elapsed;
@@ -527,7 +802,7 @@ namespace Jinhyeong_GameData.Editor
                 return;
             _peakEnemies = n;
             _peakShotAt = elapsed;
-            ScreenCapture.CaptureScreenshot(PeakShotFile);
+            Shot(PeakShotFile, true);
         }
 
         private static void SampleRound(float elapsed)
@@ -548,6 +823,8 @@ namespace Jinhyeong_GameData.Editor
             Jinhyeong_SkillSystem.SkillObject so = _player != null ? _player.Skills : null;
 
             float hpPct = hp != null && hp.MaxHp > 0f ? hp.Hp / hp.MaxHp * 100f : -1f;
+            if (r == 6 && sp != null)
+                _killsR5 = sp.KillCount;
             Jinhyeong_Parts.PartInstance basic = pl != null ? pl.UniquePart : null;
             _samples.Add(string.Format(
                 "| {0} | {1:0} | {2} | {3} | {4} | {5} | {6:0} | {7:0} | {8} | {9} | {10:0} |",
@@ -591,11 +868,76 @@ namespace Jinhyeong_GameData.Editor
             return $"[버스트] 적중 {hits.Count}종 · 버스트 {n}종 ({(hits.Count > 0 ? n * 100 / hits.Count : 0)}%)";
         }
 
+        // "<계열>:<개수>/<장착 수>" — 고유 공격(첫 칸)도 포함
+        private static string TopFamily(Jinhyeong_Parts.PartLoadout pl)
+        {
+            if (pl == null)
+                return "-";
+            Dictionary<ESkillFamily, int> count = new Dictionary<ESkillFamily, int>();
+            int total = 0;
+            for (int i = 0; i < pl.Equipped.Count; i++)
+            {
+                Jinhyeong_Parts.PartInstance p = pl.Equipped[i];
+                if (p == null || p.Data == null)
+                    continue;
+                total++;
+                count.TryGetValue(p.Data.Family, out int n);
+                count[p.Data.Family] = n + 1;
+            }
+            ESkillFamily best = ESkillFamily.None;
+            int bestN = 0;
+            foreach (KeyValuePair<ESkillFamily, int> kv in count)
+            {
+                if (kv.Value > bestN)
+                {
+                    best = kv.Key;
+                    bestN = kv.Value;
+                }
+            }
+            return best + ":" + bestN + "/" + total;
+        }
+
+        private static void AppendResult(EnemySpawner spawner, RunProgress progress, bool cleared)
+        {
+            // 사망 판은 Finish 가 두 번 불릴 수 있다 — 한 판에 한 줄
+            if (_resultWritten)
+                return;
+            _resultWritten = true;
+            Jinhyeong_Parts.PartLoadout pl = _player != null ? _player.GetComponent<Jinhyeong_Parts.PartLoadout>() : null;
+            string row = string.Join("\t", new[]
+            {
+                Jinhyeong_Common.RunSelection.CharacterIndex.ToString(),
+                Jinhyeong_Common.RunSelection.MapIndex.ToString(),
+                _seed.ToString() + (_growth > 0 ? "g" + _growth : string.Empty),
+                cleared ? "1" : "0",
+                (_deathTime >= 0f ? _deathTime : _runSeconds).ToString("0"),
+                (spawner != null ? spawner.KillCount : -1).ToString(),
+                _killsR5.ToString(),
+                (progress != null ? progress.Level : -1).ToString(),
+                _lateMinHp.ToString("0"),
+                (pl != null ? pl.ActiveSynergies.Count : -1).ToString(),
+                TopFamily(pl)
+            });
+            try
+            {
+                if (File.Exists(ResultsFile) == false)
+                    File.WriteAllText(ResultsFile, ResultsHeader + "\n", Encoding.UTF8);
+                File.AppendAllText(ResultsFile, row + "\n", Encoding.UTF8);
+            }
+            catch (IOException e)
+            {
+                _errorNote = $"결과 줄 쓰기 실패 — {e.Message} · {row}";
+            }
+        }
+
         private static void Finish(string error)
         {
             EditorApplication.update -= Drive;
             if (RunProgress.Instance != null)
                 RunProgress.Instance.OnLevelUp -= HandleLevelUp;
+            _shots.Clear();
+            _forceDraw = 0;
+            _drawHold = 0;
 
             StringBuilder report = new StringBuilder(1024);
             if (string.IsNullOrEmpty(error) == false)
@@ -638,6 +980,9 @@ namespace Jinhyeong_GameData.Editor
 
                 Jinhyeong_Parts.PartLoadout plForReport =
                     _player != null ? _player.GetComponent<Jinhyeong_Parts.PartLoadout>() : null;
+                Jinhyeong_SkillSystem.MapData mapForReport = Jinhyeong_SkillSystem.MapRegistry.Current;
+                report.AppendLine($"맵={(mapForReport != null ? mapForReport.DisplayName : "-")}(#{Jinhyeong_Common.RunSelection.MapIndex})" +
+                    $"  적HP x{(mapForReport != null ? mapForReport.HpMul : 1f):0.00} 피해 x{(mapForReport != null ? mapForReport.DamageMul : 1f):0.00}");
                 report.AppendLine($"슈퍼독={Jinhyeong_Common.RunSelection.CurrentHero.Name}" +
                     $"(#{Jinhyeong_Common.RunSelection.CharacterIndex})" +
                     $"  고유스킬={(plForReport != null && plForReport.EquippedCount > 0 ? plForReport.Equipped[0].DisplayName : "-")}");
@@ -712,6 +1057,10 @@ namespace Jinhyeong_GameData.Editor
                     ? "[자해] 없음"
                     : $"[자해] {Damageable.FriendlyFireHits}회 · 최대 {Damageable.FriendlyFireWorst:0.0} · {Damageable.FriendlyFireNote}");
                 report.AppendLine($"[최대 밀도] 동시 적 {_peakEnemies} · 캡처 {PeakShotFile}");
+                if (_bossShotTaken)
+                    report.AppendLine($"[보스 패턴] 장착 {_bossPatternCount} · 캡처 {BossShotFile}");
+                if (string.IsNullOrEmpty(_growthNote) == false)
+                    report.AppendLine($"[성장] {_growthNote}");
                 report.AppendLine(_slotsFullAt >= 0f ? $"[슬롯 완성] {_slotsFullAt:0}초" : "[슬롯 완성] 못 채움");
                 report.AppendLine($"[로비] LobbyWindow {Object.FindObjectsByType<Jinhyeong_UI.Lobby.LobbyWindow>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length}개 · StartPanel {Object.FindObjectsByType<Jinhyeong_UI.Lobby.LobbyStartPanel>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length}개 (씬 배치 재사용이면 각 1)");
                 report.AppendLine($"[레벨업 3택1] 열린 프레임 {_levelPicks} · 캡처 {LevelShotFile}");
@@ -728,6 +1077,30 @@ namespace Jinhyeong_GameData.Editor
                     ? GameEvents.CurrentPlayer.GetComponent<Damageable>() : null;
                 report.AppendLine($"플레이어 HP={(hp != null ? hp.Hp : -1f):0.0}/{(hp != null ? hp.MaxHp : -1f):0.0}  버프={(hp != null ? hp.Status.Count : -1)}");
                 report.AppendLine($"timeScale={Time.timeScale} (1 이어야 정상 복귀)");
+
+                float real = Time.realtimeSinceStartup - _startReal;
+                float game = Time.time - _startGame;
+                report.AppendLine($"[속도] 게임 {game:0}초 / 실시간 {real:0}초 = x{game / Mathf.Max(1f, real):0.0} · {(Time.frameCount - _startFrame) / Mathf.Max(1f, real):0} fps");
+
+                if (_mortal)
+                    AppendResult(spawner, progress, Jinhyeong_UI.GameFlow.IsCleared);
+            }
+            Time.captureDeltaTime = 0f;
+            if (_saveBackup != null)
+                PlayerPrefs.SetString(Jinhyeong_Common.SaveData.Key, _saveBackup);
+            else
+                PlayerPrefs.DeleteKey(Jinhyeong_Common.SaveData.Key);
+            PlayerPrefs.Save();
+            Jinhyeong_Common.SaveData.Load();
+            Jinhyeong_Constellation.ConstellationManager.Reload();
+            if (_mutedCameras != null)
+            {
+                for (int i = 0; i < _mutedCameras.Length; i++)
+                {
+                    if (_mutedCameras[i] != null)
+                        _mutedCameras[i].enabled = true;
+                }
+                _mutedCameras = null;
             }
 
             File.WriteAllText(ReportFile, report.ToString(), Encoding.UTF8);

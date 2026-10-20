@@ -1,11 +1,11 @@
-/** 왈왈 — 전방 부채꼴 적에게 공격력 100% 피해 + 둔화. 2.5초마다 */
+/** 서리 숨결 — 전방 부채꼴 적에게 냉기를 뿜어 공격력 100% 피해 + 둔화. 2.5초마다 */
 module.exports = {
-    color: '#2DE6FF',
-    desc: "왈왈 — 전방 부채꼴 적에게 공격력 100% 피해 + 둔화. 2.5초마다",
+    color: '#66EDFF',
+    desc: "서리 숨결 — 전방 부채꼴 적에게 냉기를 뿜어 공격력 100% 피해 + 둔화. 2.5초마다",
     values: {
-        "Projectile": "Fx_Bark",
-        "Impact": "Fx_Bark",
-        "Cast": "Fx_Bark",
+        "Projectile": "Fx_Frost",
+        "Impact": "Fx_Frost",
+        "Cast": "Fx_Frost",
         "Orient": "Ground",
         "Color": "#2DE6FF",
         "Cooldown": 2.5,

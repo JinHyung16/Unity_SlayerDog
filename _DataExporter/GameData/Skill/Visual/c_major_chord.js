@@ -1,11 +1,11 @@
-/** 다장조 화음 — 도 · 미 · 솔 세 음이 무작위 적 3명 위로 떨어져 반경 1.4m 공격력 90% 피해. 3초마다 */
+/** 유성 낙하 — 유성 셋이 무작위 적 3명 위로 떨어져 반경 1.4m 공격력 90% 피해. 3초마다 */
 module.exports = {
     color: '#A66BFF',
-    desc: "다장조 화음 — 도 · 미 · 솔 세 음이 무작위 적 3명 위로 떨어져 반경 1.4m 공격력 90% 피해. 3초마다",
+    desc: "유성 낙하 — 유성 셋이 무작위 적 3명 위로 떨어져 반경 1.4m 공격력 90% 피해. 3초마다",
     values: {
-        "Projectile": "Fx_Chord",
-        "Impact": "Fx_Chord",
-        "Cast": "Fx_Chord",
+        "Projectile": "Fx_Meteor",
+        "Impact": "Fx_Meteor",
+        "Cast": "Fx_Meteor",
         "Orient": "Billboard",
         "Color": "#A66BFF",
         "Cooldown": 3,

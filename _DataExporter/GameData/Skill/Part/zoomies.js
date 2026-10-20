@@ -3,7 +3,7 @@ module.exports = {
     id: 2007,
     name: 'Zoomies',
     desc: '6초간 이동속도 +40%. 12초마다',
-    displayName: '업템포',
+    displayName: '질풍',
     slot: 'Feet',
     family: 'Aura',
     appliesDebuff: 'None',

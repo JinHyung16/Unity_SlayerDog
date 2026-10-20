@@ -2,8 +2,8 @@
 module.exports = {
     id: 2103,
     name: 'Afterimage',
-    desc: '4초간 빨라지고 지나간 자리에 잔상이 남아 피해를 준다. 10초마다',
-    displayName: '글리산도 대시',
+    desc: '4초간 빨라지고 지나간 자리에 분신이 남아 피해를 준다. 10초마다',
+    displayName: '분신 질주',
     slot: 'Feet',
     family: 'Field',
     appliesDebuff: 'None',

@@ -557,7 +557,7 @@ namespace Jinhyeong_Constellation
             n.Cost = CostOf(CommonConfig.Constellation.CostSkill, cluster.Ring);
             n.SkillId = skill.SkillId;
             n.DisplayName = skill.DisplayName;
-            n.Description = "해금 — 필드에서 이 파츠가 나오기 시작한다";
+            n.Description = "해금 — 필드에서 이 파츠가 나오기 시작합니다";
             return n;
         }
 

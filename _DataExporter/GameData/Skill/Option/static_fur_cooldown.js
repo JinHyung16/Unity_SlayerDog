@@ -1,8 +1,8 @@
 module.exports = {
     id: 4202,
     name: 'static_fur_cooldown',
-    desc: '일렉 스파크 — 쿨타임 -10%',
-    displayName: '방전 가속',
+    desc: '뇌운 — 쿨타임 -10%',
+    displayName: '빠른 뇌운',
     partId: 2010,
     trait: 'Cooldown',
     value: 0.1,

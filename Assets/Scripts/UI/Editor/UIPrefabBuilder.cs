@@ -109,6 +109,7 @@ namespace Jinhyeong_UI.Editor
             {
                 TMP_Text label;
                 Button b = UIBuild.MakeButton(rail, "Tab_" + i, LobbyWindow.TabNames[i], 28f, UIBuild.ColorTabOff, out label);
+                AttachTabLabel(label, (LobbyWindow.ETab)i);
                 UIBuild.PreferredHeight((RectTransform)b.transform, 62f);
                 tabButtons[i] = b;
                 tabImages[i] = b.image;
@@ -131,6 +132,26 @@ namespace Jinhyeong_UI.Editor
             BindArray(window, "_tabImages", tabImages);
 
             return Save(root, LobbyWindow.PrefabPath);
+        }
+
+        // 탭 글자 — 추출기가 읽도록 키와 한국어를 글자 그대로 둔다 (LobbyWindow.TabNames 와 같은 순서)
+        private static void AttachTabLabel(TMP_Text label, LobbyWindow.ETab tab)
+        {
+            switch (tab)
+            {
+                case LobbyWindow.ETab.Start:
+                    LocLabel.Attach(label, "Lobby_TabStart", "시작");
+                    break;
+                case LobbyWindow.ETab.Character:
+                    LocLabel.Attach(label, "Lobby_TabCharacter", "캐릭터");
+                    break;
+                case LobbyWindow.ETab.Skill:
+                    LocLabel.Attach(label, "Lobby_TabSkill", "스킬 트리");
+                    break;
+                case LobbyWindow.ETab.Settings:
+                    LocLabel.Attach(label, "Lobby_TabSettings", "설정");
+                    break;
+            }
         }
 
         public static RectTransform MakeWindowRoot(string name, SafeAreaUtil.ApplySideType applySide,
@@ -224,21 +245,48 @@ namespace Jinhyeong_UI.Editor
             right.offsetMax = new Vector2(-40f, -20f);
 
             TMP_Text title = UIBuild.MakeText(right, "Title", LobbyWindow.GameTitle, 60f, TextAlignmentOptions.Left);
-            title.fontStyle = FontStyles.Bold;
+            title.fontStyle = FontStyles.Normal;
             title.color = UIBuild.ColorGold;
             UIBuild.Band(title.rectTransform, 0.80f, 0.98f, 0f);
 
             TMP_Text tagline = UIBuild.MakeText(right, "Tagline", LobbyWindow.GameTagline, 22f, TextAlignmentOptions.Left);
+            LocLabel.Attach(tagline, "Lobby_Tagline", "열 세계의 개 영웅, 12분 동안 침공군을 벤다.");
             tagline.color = new Color(0.78f, 0.82f, 0.95f, 1f);
             UIBuild.Band(tagline.rectTransform, 0.71f, 0.80f, 0f);
 
             TMP_Text loadout = UIBuild.MakeText(right, "Loadout", string.Empty, 20f, TextAlignmentOptions.TopLeft);
             loadout.color = new Color(0.82f, 0.86f, 1f, 1f);
-            UIBuild.Band(loadout.rectTransform, 0.30f, 0.68f, 0f);
+            UIBuild.Band(loadout.rectTransform, 0.50f, 0.68f, 0f);
+
+            // 맵 선택 줄 — ◀ 맵 이름 ▶. 잠긴 맵은 이름 대신 열리는 조건을 보여 주고 시작을 막는다
+            RectTransform mapRow = UIBuild.MakeRect("MapRow", right);
+            UIBuild.Band(mapRow, 0.39f, 0.48f, 0f);
+            TMP_Text prevLabel;
+            Button mapPrev = UIBuild.MakeButton(mapRow, "MapPrev", "<", 26f, UIBuild.ColorCard, out prevLabel);
+            RectTransform mp = (RectTransform)mapPrev.transform;
+            mp.anchorMin = new Vector2(0f, 0f);
+            mp.anchorMax = new Vector2(0.12f, 1f);
+            mp.offsetMin = Vector2.zero;
+            mp.offsetMax = Vector2.zero;
+            TMP_Text nextLabel;
+            Button mapNext = UIBuild.MakeButton(mapRow, "MapNext", ">", 26f, UIBuild.ColorCard, out nextLabel);
+            RectTransform mn = (RectTransform)mapNext.transform;
+            mn.anchorMin = new Vector2(0.88f, 0f);
+            mn.anchorMax = new Vector2(1f, 1f);
+            mn.offsetMin = Vector2.zero;
+            mn.offsetMax = Vector2.zero;
+            TMP_Text mapLabel = UIBuild.MakeText(mapRow, "MapLabel", string.Empty, 20f, TextAlignmentOptions.Center);
+            mapLabel.enableAutoSizing = true;
+            mapLabel.fontSizeMin = 11f;
+            mapLabel.fontSizeMax = 20f;
+            mapLabel.rectTransform.anchorMin = new Vector2(0.12f, 0f);
+            mapLabel.rectTransform.anchorMax = new Vector2(0.88f, 1f);
+            mapLabel.rectTransform.offsetMin = Vector2.zero;
+            mapLabel.rectTransform.offsetMax = Vector2.zero;
 
             TMP_Text record = UIBuild.MakeText(right, "Record", string.Empty, 17f, TextAlignmentOptions.Left);
             record.color = new Color(0.66f, 0.70f, 0.82f, 1f);
-            UIBuild.Band(record.rectTransform, 0.26f, 0.38f, 0f);
+            UIBuild.Band(record.rectTransform, 0.26f, 0.37f, 0f);
 
             TMP_Text status = UIBuild.MakeText(right, "Status", string.Empty, 18f, TextAlignmentOptions.Left);
             status.color = new Color(0.7f, 0.7f, 0.75f, 1f);
@@ -246,6 +294,7 @@ namespace Jinhyeong_UI.Editor
 
             TMP_Text startLabel;
             Button start = UIBuild.MakeButton(right, "StartButton", "게임 시작", 30f, UIBuild.ColorStart, out startLabel);
+            LocLabel.Attach(startLabel, "Start_StartButton", "게임 시작");
             RectTransform sb = (RectTransform)start.transform;
             sb.anchorMin = new Vector2(0f, 0.04f);
             sb.anchorMax = new Vector2(0.62f, 0.17f);
@@ -259,6 +308,16 @@ namespace Jinhyeong_UI.Editor
             Bind(panel, "_record", record);
             Bind(panel, "_status", status);
             Bind(panel, "_startButton", start);
+            TMP_Text version = UIBuild.MakeText(page, "Version", "v" + Application.version, 14f, TextAlignmentOptions.BottomRight);
+            version.color = UIBuild.ColorDim;
+            version.rectTransform.anchorMin = new Vector2(0.35f, 0f);
+            version.rectTransform.anchorMax = new Vector2(1f, 0.05f);
+            version.rectTransform.offsetMin = Vector2.zero;
+            version.rectTransform.offsetMax = new Vector2(-16f, 0f);
+            Bind(panel, "_version", version);
+            Bind(panel, "_mapPrev", mapPrev);
+            Bind(panel, "_mapNext", mapNext);
+            Bind(panel, "_mapLabel", mapLabel);
 
             return Save(page.gameObject, LobbyStartPanel.PrefabPath);
         }
@@ -268,9 +327,11 @@ namespace Jinhyeong_UI.Editor
             RectTransform page = NewPanelRoot("CharacterPanel");
 
             TMP_Text title = UIBuild.MakeText(page, "Title", "캐릭터 목록", 34f, TextAlignmentOptions.Center);
+            LocLabel.Attach(title, "Char_Title", "캐릭터 목록");
             UIBuild.Band(title.rectTransform, 0.86f, 0.99f, 0f);
 
-            TMP_Text hint = UIBuild.MakeText(page, "Hint", "고유 스킬의 계열이 이번 판에 더 자주 나온다", 19f, TextAlignmentOptions.Center);
+            TMP_Text hint = UIBuild.MakeText(page, "Hint", "고유 스킬의 계열이 이번 판에 더 자주 나옵니다", 19f, TextAlignmentOptions.Center);
+            LocLabel.Attach(hint, "Char_Hint", "고유 스킬의 계열이 이번 판에 더 자주 나옵니다");
             hint.color = UIBuild.ColorMuted;
             UIBuild.Band(hint.rectTransform, 0.79f, 0.86f, 0f);
 
@@ -279,7 +340,13 @@ namespace Jinhyeong_UI.Editor
             cardRoot.anchorMax = new Vector2(1f, 0.76f);
             cardRoot.offsetMin = new Vector2(24f, 0f);
             cardRoot.offsetMax = new Vector2(-24f, 0f);
-            UIBuild.Vertical(cardRoot, 10f, false);
+            // 캐릭터 10 → 5열 2줄. 세로 목록은 10장에서 카드가 26px 로 찌그러진다
+            GridLayoutGroup grid = cardRoot.gameObject.AddComponent<GridLayoutGroup>();
+            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            grid.constraintCount = 5;
+            grid.cellSize = new Vector2(188f, 172f);
+            grid.spacing = new Vector2(12f, 12f);
+            grid.childAlignment = TextAnchor.MiddleCenter;
 
             TMP_Text shopHint = UIBuild.MakeText(page, "ShopHint", string.Empty, 17f, TextAlignmentOptions.Center);
             shopHint.color = UIBuild.ColorMuted;
@@ -345,7 +412,7 @@ namespace Jinhyeong_UI.Editor
             tip.anchorMin = new Vector2(0.5f, 0.5f);
             tip.anchorMax = new Vector2(0.5f, 0.5f);
             tip.pivot = new Vector2(0.5f, 0f);
-            tip.sizeDelta = new Vector2(340f, 108f);
+            tip.sizeDelta = new Vector2(420f, 140f);
             Image tipBg = tip.gameObject.AddComponent<Image>();
             tipBg.color = new Color(0.10f, 0.11f, 0.16f, 0.97f);
             UISkin.ApplySliced(tipBg, UISkin.CardBg, UIBuild.CardCorner);
@@ -356,10 +423,16 @@ namespace Jinhyeong_UI.Editor
 
             TMP_Text tipDesc = UIBuild.MakeText(tip, "TipDesc", string.Empty, 16f, TextAlignmentOptions.Center);
             tipDesc.color = UIBuild.ColorMuted;
+            tipDesc.enableAutoSizing = true;
+            tipDesc.fontSizeMin = 12f;
+            tipDesc.fontSizeMax = 16f;
             UIBuild.Band(tipDesc.rectTransform, 0.30f, 0.62f, -16f);
 
             TMP_Text tipCost = UIBuild.MakeText(tip, "TipCost", string.Empty, 16f, TextAlignmentOptions.Center);
             tipCost.color = UIBuild.ColorGold;
+            tipCost.enableAutoSizing = true;
+            tipCost.fontSizeMin = 12f;
+            tipCost.fontSizeMax = 16f;
             UIBuild.Band(tipCost.rectTransform, 0.03f, 0.30f, -16f);
 
             tip.gameObject.SetActive(false);
@@ -382,9 +455,11 @@ namespace Jinhyeong_UI.Editor
             RectTransform page = NewPanelRoot("SettingsPanel");
 
             TMP_Text title = UIBuild.MakeText(page, "Title", "설정", 34f, TextAlignmentOptions.Center);
+            LocLabel.Attach(title, "Settings_Title", "설정");
             UIBuild.Band(title.rectTransform, 0.88f, 0.99f, 0f);
 
             TMP_Text resLabel = UIBuild.MakeText(page, "ResLabel", "해상도", 22f, TextAlignmentOptions.Center);
+            LocLabel.Attach(resLabel, "Settings_Resolution", "해상도");
             resLabel.color = UIBuild.ColorSubHead;
             UIBuild.Band(resLabel.rectTransform, 0.79f, 0.86f, 0f);
 
@@ -397,6 +472,7 @@ namespace Jinhyeong_UI.Editor
             UIBuild.Horizontal(resRow, 12f);
 
             TMP_Text moveLabel = UIBuild.MakeText(page, "MoveLabel", "이동키", 22f, TextAlignmentOptions.Center);
+            LocLabel.Attach(moveLabel, "Settings_MoveKeys", "이동키");
             moveLabel.color = UIBuild.ColorSubHead;
             UIBuild.Band(moveLabel.rectTransform, 0.585f, 0.655f, 0f);
 
@@ -408,35 +484,61 @@ namespace Jinhyeong_UI.Editor
             moveRow.anchoredPosition = Vector2.zero;
             UIBuild.Horizontal(moveRow, 12f);
 
+            RectTransform langRow = UIBuild.MakeRect("LangRow", page);
+            langRow.anchorMin = new Vector2(0.5f, 0.88f);
+            langRow.anchorMax = new Vector2(0.5f, 0.97f);
+            langRow.pivot = new Vector2(1f, 0.5f);
+            langRow.sizeDelta = new Vector2(300f, 0f);
+            langRow.anchoredPosition = new Vector2(420f, 0f);
+            UIBuild.Horizontal(langRow, 8f);
+
+            TMP_Text volLabel = UIBuild.MakeText(page, "VolLabel", "음량", 22f, TextAlignmentOptions.Center);
+            LocLabel.Attach(volLabel, "Settings_Volume", "음량");
+            volLabel.color = UIBuild.ColorSubHead;
+            UIBuild.Band(volLabel.rectTransform, 0.40f, 0.465f, 0f);
+
+            RectTransform volRow = UIBuild.MakeRect("VolRow", page);
+            volRow.anchorMin = new Vector2(0.5f, 0.30f);
+            volRow.anchorMax = new Vector2(0.5f, 0.39f);
+            volRow.pivot = new Vector2(0.5f, 0.5f);
+            volRow.sizeDelta = new Vector2(620f, 0f);
+            volRow.anchoredPosition = Vector2.zero;
+            UIBuild.Horizontal(volRow, 10f);
+
             TMP_Text fsLabel;
             Button fullscreen = UIBuild.MakeButton(page, "Fullscreen", "전체화면", 20f, UIBuild.ColorCard, out fsLabel);
             RectTransform fr = (RectTransform)fullscreen.transform;
-            fr.anchorMin = new Vector2(0.5f, 0.365f);
-            fr.anchorMax = new Vector2(0.5f, 0.455f);
+            fr.anchorMin = new Vector2(0.5f, 0.20f);
+            fr.anchorMax = new Vector2(0.5f, 0.28f);
             fr.pivot = new Vector2(0.5f, 0.5f);
             fr.sizeDelta = new Vector2(300f, 0f);
             fr.anchoredPosition = Vector2.zero;
 
-            TMP_Text note = UIBuild.MakeText(page, "Note", "에디터에서는 해상도 변경이 Game 뷰에 반영되지 않는다", 16f, TextAlignmentOptions.Center);
+            TMP_Text note = UIBuild.MakeText(page, "Note", "에디터에서는 해상도 변경이 Game 뷰에 반영되지 않는다", 15f, TextAlignmentOptions.Center);
+            LocLabel.Attach(note, "Settings_EditorResNote", "에디터에서는 해상도 변경이 Game 뷰에 반영되지 않는다");
             note.color = UIBuild.ColorDim;
-            UIBuild.Band(note.rectTransform, 0.30f, 0.35f, 0f);
+            UIBuild.Band(note.rectTransform, 0.155f, 0.195f, 0f);
+
 
             TMP_Text wipeLabel;
             Button wipe = UIBuild.MakeButton(page, "Wipe", "데이터 초기화", 18f, UIBuild.ColorDanger, out wipeLabel);
             RectTransform wr = (RectTransform)wipe.transform;
-            wr.anchorMin = new Vector2(0.5f, 0.14f);
-            wr.anchorMax = new Vector2(0.5f, 0.24f);
+            wr.anchorMin = new Vector2(0.5f, 0.065f);
+            wr.anchorMax = new Vector2(0.5f, 0.14f);
             wr.pivot = new Vector2(0.5f, 0.5f);
             wr.sizeDelta = new Vector2(300f, 0f);
             wr.anchoredPosition = Vector2.zero;
 
-            TMP_Text wipeNote = UIBuild.MakeText(page, "WipeNote", "기록 · 재화 · 해금 · 강화가 모두 사라진다", 15f, TextAlignmentOptions.Center);
+            TMP_Text wipeNote = UIBuild.MakeText(page, "WipeNote", "기록 · 재화 · 해금 · 강화가 모두 사라집니다", 14f, TextAlignmentOptions.Center);
+            LocLabel.Attach(wipeNote, "Settings_WipeNote", "기록 · 재화 · 해금 · 강화가 모두 사라집니다");
             wipeNote.color = new Color(0.6f, 0.45f, 0.45f, 1f);
-            UIBuild.Band(wipeNote.rectTransform, 0.08f, 0.13f, 0f);
+            UIBuild.Band(wipeNote.rectTransform, 0.02f, 0.06f, 0f);
 
             LobbySettingsPanel panel = page.gameObject.AddComponent<LobbySettingsPanel>();
             Bind(panel, "_resRow", resRow);
             Bind(panel, "_moveRow", moveRow);
+            Bind(panel, "_volRow", volRow);
+            Bind(panel, "_langRow", langRow);
             Bind(panel, "_fullscreenButton", fullscreen);
             Bind(panel, "_fullscreenLabel", fsLabel);
             Bind(panel, "_wipeButton", wipe);
@@ -461,16 +563,19 @@ namespace Jinhyeong_UI.Editor
             face.preserveAspect = true;
             face.raycastTarget = false;
             face.enabled = false;
-            face.rectTransform.anchorMin = new Vector2(0f, 0f);
-            face.rectTransform.anchorMax = new Vector2(0.3f, 1f);
-            face.rectTransform.offsetMin = new Vector2(20f, 12f);
-            face.rectTransform.offsetMax = new Vector2(-10f, -12f);
+            face.rectTransform.anchorMin = new Vector2(0f, 0.36f);
+            face.rectTransform.anchorMax = new Vector2(1f, 1f);
+            face.rectTransform.offsetMin = new Vector2(12f, 0f);
+            face.rectTransform.offsetMax = new Vector2(-12f, -8f);
 
-            TMP_Text label = UIBuild.MakeText(rt, "Label", string.Empty, 22f, TextAlignmentOptions.Left);
-            label.rectTransform.anchorMin = new Vector2(0.32f, 0f);
-            label.rectTransform.anchorMax = new Vector2(1f, 1f);
-            label.rectTransform.offsetMin = new Vector2(0f, 12f);
-            label.rectTransform.offsetMax = new Vector2(-24f, -12f);
+            TMP_Text label = UIBuild.MakeText(rt, "Label", string.Empty, 18f, TextAlignmentOptions.Center);
+            label.enableAutoSizing = true;
+            label.fontSizeMin = 10f;
+            label.fontSizeMax = 18f;
+            label.rectTransform.anchorMin = new Vector2(0f, 0f);
+            label.rectTransform.anchorMax = new Vector2(1f, 0.36f);
+            label.rectTransform.offsetMin = new Vector2(8f, 6f);
+            label.rectTransform.offsetMax = new Vector2(-8f, 0f);
 
             HeroCardComponent comp = go.AddComponent<HeroCardComponent>();
             Bind(comp, "_bg", bg);
@@ -531,7 +636,7 @@ namespace Jinhyeong_UI.Editor
             UIBuild.Outline(rt, UIBuild.ColorOutline, UISkin.CardFrame, UIBuild.CardCorner);
 
             TMP_Text label = UIBuild.MakeText(rt, "Label", string.Empty, 18f, TextAlignmentOptions.Center);
-            label.fontStyle = FontStyles.Bold;
+            label.fontStyle = FontStyles.Normal;
             UIBuild.Stretch(label.rectTransform);
 
             LabelButtonComponent comp = go.AddComponent<LabelButtonComponent>();

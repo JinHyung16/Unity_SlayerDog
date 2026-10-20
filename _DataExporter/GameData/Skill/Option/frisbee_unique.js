@@ -1,8 +1,8 @@
 module.exports = {
     id: 4448,
     name: 'frisbee_unique',
-    desc: 'LP 판 날리기 — 관통 +1',
-    displayName: '탄성 코팅',
+    desc: '차크람 — 관통 +1',
+    displayName: '되돌아오는 날',
     partId: 2022,
     trait: 'Unique',
     value: 1,

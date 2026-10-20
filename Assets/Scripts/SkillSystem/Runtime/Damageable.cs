@@ -241,7 +241,10 @@ namespace Jinhyeong_SkillSystem
                 _lastHitTime = Time.time;
                 // 플레이어가 맞으면 위험 색(레드오렌지) 스파크. 적이 맞을 때는 SkillHit 가 스킬 색 버스트를 낸다
                 if (Team == ESkillTeam.Friend)
+                {
                     HitEffect.Spawn(transform.position + Vector3.up * 1f, HurtSparkColor);
+                    Jinhyeong_Character.CameraFollow.Shake(Mathf.Clamp(0.18f + incoming / Mathf.Max(1f, MaxHp) * 2f, 0.18f, 0.5f));
+                }
                 StartHitFlash();
                 DamagePopup.Spawn(transform.position + Vector3.up * 1.6f, incoming, Team == ESkillTeam.Friend);
                 ApplyKnockback(source);

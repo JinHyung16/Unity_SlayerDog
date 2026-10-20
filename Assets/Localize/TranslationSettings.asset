@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c93fc1ddf2e73d203644a738743877, type: 3}
+  m_Name: TranslationSettings
+  m_EditorClassIdentifier: Translation.Unity.Editor::Translation.Unity.Editor.TranslationSettings
+  SourceLanguage: Korean
+  Languages:
+  - Id: Korean
+    DisplayName: "\uD55C\uAD6D\uC5B4"
+    Bcp47: ko
+    FallbackId: 
+    Font: 
+    Enabled: 1
+  - Id: English
+    DisplayName: English
+    Bcp47: en
+    FallbackId: Korean
+    Font: 
+    Enabled: 1
+  GameDataFolder: {fileID: 102900000, guid: b5ae3daf4b2ec054bae25c189d676018, type: 3}
+  GameDataFormat: 0
+  SheetFolder: {fileID: 0}
+  OutputFolder: {fileID: 102900000, guid: 320a10e9731d92645b46bb388afc291b, type: 3}
+  Targets:
+  - Table: 
+    IdColumn: Key
+    SubIdColumn: 
+    Columns: []
+    ArraySeparator: 
+    SourceTable: LocalizationData
+    SourceColumn: Korean
+    Sheet: 
+  - Table: Part
+    IdColumn: id
+    SubIdColumn: 
+    Columns:
+    - displayName
+    - desc
+    ArraySeparator: 
+    SourceTable: 
+    SourceColumn: 
+    Sheet: 
+  - Table: PartOption
+    IdColumn: id
+    SubIdColumn: 
+    Columns:
+    - displayName
+    - desc
+    ArraySeparator: 
+    SourceTable: 
+    SourceColumn: 
+    Sheet: 
+  - Table: Synergy
+    IdColumn: id
+    SubIdColumn: 
+    Columns:
+    - displayName
+    - desc
+    ArraySeparator: 
+    SourceTable: 
+    SourceColumn: 
+    Sheet: 
+  - Table: Map
+    IdColumn: id
+    SubIdColumn: 
+    Columns:
+    - displayName
+    - boss
+    - desc
+    ArraySeparator: 
+    SourceTable: 
+    SourceColumn: 
+    Sheet: 
+  - Table: ConstellationText
+    IdColumn: id
+    SubIdColumn: 
+    Columns:
+    - name
+    - desc
+    ArraySeparator: 
+    SourceTable: 
+    SourceColumn: 
+    Sheet: 
+  - Table: Round
+    IdColumn: id
+    SubIdColumn: 
+    Columns:
+    - banner
+    ArraySeparator: 
+    SourceTable: 
+    SourceColumn: 
+    Sheet: 
+  - Table: WaveEvent
+    IdColumn: id
+    SubIdColumn: 
+    Columns:
+    - banner
+    ArraySeparator: 
+    SourceTable: 
+    SourceColumn: 
+    Sheet: 
+  ScriptFolder: {fileID: 0}
+  ScriptNamespace: Game
+  DataRowOffset: 0
+  BundleVersion: 

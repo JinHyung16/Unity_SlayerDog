@@ -1,7 +1,7 @@
 module.exports = {
     id: 4326,
     name: 'third_eye_count',
-    desc: '하이 C 관통음 — 개수 +1',
+    desc: '심안 관통 — 개수 +1',
     displayName: '두 번 보기',
     partId: 2016,
     trait: 'Count',
