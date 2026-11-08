@@ -1,5 +1,6 @@
 /** 라운드 5 — 240~300초. 스폰 간격/한 번에/동시 상한이 난이도의 본체다. */
 // LV1 (10-04): 레벨업 자동 체력(레벨당 +4%, 20레벨이면 ×2.2)이 빠져 라운드 5~12 피해 ×0.8
+// 뱀서 웨이브 리듬 (11-08): 물량 라운드 — 동시 상한 ×1.25 · 체력 ×0.85 (많은 수, 무른 적. 경험치 잔치). 이전 maxAlive 52 · hpMul 1.5 — 필드 총 체력(상한×체력)은 ±6% 안
 module.exports = {
     id: 7005,
     name: 'Round5',
@@ -7,8 +8,8 @@ module.exports = {
     round: 5,
     spawnGap: 0.9,
     spawnBatch: 2,
-    maxAlive: 52,
-    hpMul: 1.5,
+    maxAlive: 65,
+    hpMul: 1.28,
     damageMul: 1.12,
     banner: ''
 };

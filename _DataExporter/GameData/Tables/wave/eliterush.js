@@ -12,5 +12,8 @@ module.exports = {
     banner: '정예 부대가 몰려옵니다!',
     boss: false,
     enemyTypeId: 0,
-    speedMul: 1
+    speedMul: 1,
+    hpLevelRef: 0,
+    hpLevelMin: 0,
+    hpLevelMax: 0
 };

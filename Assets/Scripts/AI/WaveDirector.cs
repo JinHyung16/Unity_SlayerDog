@@ -143,7 +143,7 @@ namespace Jinhyeong_AI
                     Enemy e = spawner.Spawn(center + dir * r, type);
                     if (e == null)
                         continue;
-                    e.ApplyEventMultipliers(ev.HpMul, ev.DamageMul, ev.ScaleMul, ev.XpMul, ev.SpeedMul, ev.IsBoss == false);
+                    e.ApplyEventMultipliers(ev.HpMul * LevelHpFactor(ev), ev.DamageMul, ev.ScaleMul, ev.XpMul, ev.SpeedMul, ev.IsBoss == false);
                     if (ev.IsBoss)
                     {
                         e.MarkAsBoss();
@@ -162,6 +162,19 @@ namespace Jinhyeong_AI
                 if (OnBanner != null && string.IsNullOrEmpty(banner) == false)
                     OnBanner.Invoke(banner);
             }
+        }
+
+        // 레벨 비례 HP (뱀서 HP_x_Level) — clamp(지금 레벨 / 기준 레벨, 하한, 상한). 기준 0 이면 끈다
+        // 빌드가 잘 풀려 레벨이 높으면 보스가 단단해지고, 덜 풀렸으면 물러진다 → 클리어 판 체감 난이도 편차를 줄인다
+        private static float LevelHpFactor(Jinhyeong_SkillSystem.WaveEventData ev)
+        {
+            if (ev.HpLevelRef <= 0f)
+                return 1f;
+            Jinhyeong_SkillSystem.RunProgress progress = Jinhyeong_SkillSystem.RunProgress.Instance;
+            int level = progress != null ? progress.Level : 1;
+            float factor = Mathf.Clamp(level / ev.HpLevelRef, ev.HpLevelMin, ev.HpLevelMax);
+            Debug.Log($"[WaveDirector] {ev.Name} 출현 Lv{level} → HP ×{factor:0.00}");
+            return factor;
         }
 
         private float CurrentInterval()

@@ -23,6 +23,9 @@ namespace Jinhyeong_SkillSystem
         public bool IsBoss;
         public int EnemyTypeId;
         public float SpeedMul;
+        public float HpLevelRef;
+        public float HpLevelMin;
+        public float HpLevelMax;
 
         /// <summary>JSON 한 행을 읽어 채운다. 실패한 필드는 기본값으로 남는다.</summary>
         public static WaveEventData FromJson(JsonValue row)
@@ -42,6 +45,9 @@ namespace Jinhyeong_SkillSystem
             data.IsBoss = row["boss"].AsBool();
             data.EnemyTypeId = row.GetInt("enemyTypeId");
             data.SpeedMul = row.GetFloat("speedMul");
+            data.HpLevelRef = row.GetFloat("hpLevelRef");
+            data.HpLevelMin = row.GetFloat("hpLevelMin");
+            data.HpLevelMax = row.GetFloat("hpLevelMax");
             return data;
         }
     }

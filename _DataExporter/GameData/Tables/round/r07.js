@@ -1,5 +1,6 @@
 /** 라운드 7 — 360~420초. 스폰 간격/한 번에/동시 상한이 난이도의 본체다. */
 // LV1 (10-04): 레벨업 자동 체력(레벨당 +4%, 20레벨이면 ×2.2)이 빠져 라운드 5~12 피해 ×0.8
+// 뱀서 웨이브 리듬 (11-08): 탱커 라운드 — 동시 상한 ×0.7 · 체력 ×1.4 (적은 수, 단단한 적. 숨 고르기 + 빌드 점검). 이전 maxAlive 76 · hpMul 1.9 — 필드 총 체력(상한×체력)은 ±6% 안
 module.exports = {
     id: 7007,
     name: 'Round7',
@@ -7,8 +8,8 @@ module.exports = {
     round: 7,
     spawnGap: 0.7,
     spawnBatch: 3,
-    maxAlive: 76,
-    hpMul: 1.9,
+    maxAlive: 53,
+    hpMul: 2.66,
     damageMul: 1.6,
     banner: ''
 };

@@ -86,6 +86,10 @@ namespace Jinhyeong_GameData.Editor
                         BuildRunner.BuildWindows();
                         break;
 
+                    case "playersettings":
+                        BuildRunner.ApplyPlayerSettings();
+                        break;
+
                     case "lang_en":
                     case "lang_ko":
                         PlayerPrefs.SetString(Translation.Unity.TranslationRuntime.LanguagePrefKey, task == "lang_en" ? "English" : "Korean");

@@ -238,7 +238,16 @@ namespace Jinhyeong_UI.Lobby
             SetStatus(count > 0
                 ? Loc.F("Lobby_StatusSkillCount", "사용 가능 스킬 {0}개", count)
                 : Loc.T("Lobby_StatusNoSkills", "사용 가능 스킬 없음 (Resources/GameData 확인)"));
+
+            // 빌드 스모크 테스트 — 실행 인자 -autostart 면 로비가 준비되자마자 시작 버튼을 누른 것처럼 진입한다 (클릭 없이 Player.log 로 진입 경로 확인)
+            if (Array.IndexOf(Environment.GetCommandLineArgs(), AutoStartArg) >= 0)
+            {
+                Debug.Log("[LobbyWindow] -autostart — 월드 진입 시작");
+                StartRun();
+            }
         }
+
+        private const string AutoStartArg = "-autostart";
 
         public async void StartRun()
         {

@@ -401,6 +401,21 @@
           "name": "SpeedMul",
           "json": "speedMul",
           "type": "float"
+        },
+        {
+          "name": "HpLevelRef",
+          "json": "hpLevelRef",
+          "type": "float"
+        },
+        {
+          "name": "HpLevelMin",
+          "json": "hpLevelMin",
+          "type": "float"
+        },
+        {
+          "name": "HpLevelMax",
+          "json": "hpLevelMax",
+          "type": "float"
         }
       ]
     },
