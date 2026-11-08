@@ -421,6 +421,16 @@
                         "BuffId": 3005
                     },
                     "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Gale",
+                        "VisualColor": "#FFB03A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
                 }
             ]
         },
@@ -1076,6 +1086,16 @@
                         "BuffId": 3002
                     },
                     "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Rage",
+                        "VisualColor": "#FFB03A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
                 }
             ]
         },
@@ -1112,6 +1132,16 @@
                     "type": "BuffSelf",
                     "params": {
                         "BuffId": 3004
+                    },
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Barrier",
+                        "VisualColor": "#FFB03A",
+                        "VisualOrient": "Billboard"
                     },
                     "children": []
                 }
@@ -1585,6 +1615,16 @@
                         "BuffId": 3004
                     },
                     "children": []
+                },
+                {
+                    "id": 5,
+                    "type": "LaunchInstant",
+                    "params": {
+                        "Visual": "Fx_Steadfast",
+                        "VisualColor": "#FFB03A",
+                        "VisualOrient": "Billboard"
+                    },
+                    "children": []
                 }
             ]
         },
@@ -1719,7 +1759,7 @@
         "desc": "칼을 뽑아 전방 반달 반경 1.9m 에 공격력 200% 피해. 0.9초마다",
         "maxLevel": 1,
         "visualPath": "Skill/Visual/basic_iaido",
-        "methodPath": "Skill/Method/instant",
+        "methodPath": "Skill/Method/instant_swing",
         "tree": {
             "id": 1,
             "type": "Sequence",
@@ -1764,6 +1804,7 @@
                     "type": "LaunchInstant",
                     "params": {
                         "Visual": "Fx_Hit",
+                        "CastVisual": "Fx_Iaido",
                         "VisualColor": "#FF8FC8",
                         "VisualOrient": "Ground"
                     },

@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ce2dcf1b4860441a9efe8e122647a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Jinhyeong_View.KeepOwnColor
-  _tintWeight: 0.25
+  _tintWeight: 0
 --- !u!1 &6538500573960621915
 GameObject:
   m_ObjectHideFlags: 0

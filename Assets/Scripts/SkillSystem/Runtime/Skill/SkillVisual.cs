@@ -74,6 +74,12 @@ namespace Jinhyeong_SkillSystem.Skill
             _art.transform.localRotation = Quaternion.identity;
             _artKey = artKey;
 
+            // Fx_Hit · Fx_HitBurst 는 공용 타격 불꽃(HitEffect)으로도 쓰인다. 스킬 아트로 붙으면 그 수명 타이머가
+            // Init 없이 돌아 첫 프레임에 자기를 FX 풀로 돌려보낸다(스킬에서 아트가 떨어져 나감) — 여기선 끈다
+            HitEffect hitFx = _art.GetComponent<HitEffect>();
+            if (hitFx != null)
+                hitFx.enabled = false;
+
             _art.GetComponentsInChildren(true, _anims);
             _art.GetComponentsInChildren(true, _sprites);
             _tintHex = null;
@@ -161,6 +167,9 @@ namespace Jinhyeong_SkillSystem.Skill
             _lastGhostPos = pos;
             _lastGhostTime = Time.time;
         }
+
+        // 프레임을 한 바퀴 다 도는 시간 (Play 가 fps 를 이 값에 맞춘다)
+        public float PlayLife { get { return LifeSeconds(); } }
 
         private float LifeSeconds()
         {

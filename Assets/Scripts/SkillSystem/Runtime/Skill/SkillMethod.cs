@@ -32,6 +32,8 @@ namespace Jinhyeong_SkillSystem.Skill
         private Damageable _homingTarget;
         private float _turnRate;
 
+        private float _instantLife;
+
         public EMotion Motion { get { return _motion; } }
 
         public bool Arrived { get; private set; }
@@ -41,9 +43,12 @@ namespace Jinhyeong_SkillSystem.Skill
             _config = GetComponent<SkillConfig>();
         }
 
-        public void InitInstant()
+        // 제자리. 판정이 꺼진(적중을 다 썼거나 처음부터 연출만인) 뒤 life 초가 지나면 사라진다 — 그림이 한 바퀴 돌 시간
+        // 판정이 살아 있는 동안(빗나감)은 SkillHit 의 유예 규칙을 따른다
+        public void InitInstant(float life)
         {
             _motion = EMotion.Instant;
+            _instantLife = life;
         }
 
         public void InitLinear(Vector3 dir, float speed, float maxDist)
@@ -90,6 +95,8 @@ namespace Jinhyeong_SkillSystem.Skill
             switch (_motion)
             {
                 case EMotion.Instant:
+                    if (_config.Armed == false && Time.time - _config.SpawnTime >= _instantLife)
+                        _config.Despawn();
                     break;
                 case EMotion.Linear:
                     StepLinear();

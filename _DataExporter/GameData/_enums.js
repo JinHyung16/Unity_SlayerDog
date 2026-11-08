@@ -142,7 +142,9 @@ module.exports = {
         // 연발 — 한 번 발동에 N 발. 간격(초) 0 이면 동시, 각도(도) 0 이면 같은 방향. 개수 증강(CountAdd)이 BurstCount 에 더해진다
         'BurstCount',
         'BurstInterval',
-        'BurstSpread'
+        'BurstSpread',
+        // 즉발에 덧붙는 시전 연출 — 시전자 앞에 대상 방향으로 한 번 그린다 (판정 없음). 발도 일섬의 반달
+        'CastVisual'
     ],
 
     // 같은 효과가 다시 걸렸을 때의 처리. 데이터로 정해야 화상=갱신 / 중독=중첩 같은 게

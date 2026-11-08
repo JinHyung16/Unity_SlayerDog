@@ -38,6 +38,9 @@ namespace Jinhyeong_GameData.Editor
         private static float _phaseStartReal;
         private static int _phaseStartFrame;
         private static float _travelMax;
+        // 이펙트가 화면에 그려진 구간 (스킬 발동 기준 게임 초). 한 번도 안 그려지면 음수
+        private static float _seenFirst;
+        private static float _seenLast;
         private static Vector3 _spawnPos;
         private static bool _running;
         private static bool _shotTaken;
@@ -155,7 +158,8 @@ namespace Jinhyeong_GameData.Editor
 
             GameObject casterGo = new GameObject("Caster");
             casterGo.transform.SetParent(_arena.transform, false);
-            casterGo.transform.forward = Vector3.forward;
+            // 더미 쪽(+X)을 본다 — 원뿔 · 직선 발사도 맞는다
+            casterGo.transform.forward = Vector3.right;
             Damageable casterHp = casterGo.AddComponent<Damageable>();
             casterHp.Team = ESkillTeam.Friend;
             casterHp.DestroyOnDeath = false;
@@ -166,7 +170,8 @@ namespace Jinhyeong_GameData.Editor
             {
                 GameObject dummy = new GameObject($"Dummy{i}");
                 dummy.transform.SetParent(_arena.transform, false);
-                dummy.transform.localPosition = new Vector3(6f + i * 1.6f, 0f, 0f);
+                // 가까운 첫 더미는 근접 사거리(일섬 3) 안
+                dummy.transform.localPosition = new Vector3(2f + i * 1.6f, 0f, 0f);
                 Damageable d = dummy.AddComponent<Damageable>();
                 d.Team = ESkillTeam.Enemy;
                 d.MaxHp = 100000f;
@@ -188,11 +193,11 @@ namespace Jinhyeong_GameData.Editor
             _queue.Sort((a, b) => a.Meta.Id.CompareTo(b.Meta.Id));
 
             _report.AppendLine("=== 스킬 플레이 검증 ===");
-            _report.AppendLine($"캐스터 forward=+Z, 더미 {DummyCount}기는 +X 6~14 (직선 발사는 구조적으로 빗나감)");
+            _report.AppendLine($"캐스터 forward=+X, 더미 {DummyCount}기는 +X 2~10. 보임 = 이펙트가 그려진 구간(초), 잔존 = 창 끝({SkillWindow}s)에 남은 스킬 오브젝트");
             _report.AppendLine();
             _report.AppendLine($"timeScale={Time.timeScale}");
             _report.AppendLine();
-            _report.AppendLine("id    이름               launch                 피해   프레임  이동  상태이상  궤도(시작→끝)");
+            _report.AppendLine("id    이름               launch                 피해   프레임  이동  상태이상  보임         잔존  궤도(시작→끝)");
 
             _running = true;
             _waitingPreload = true;
@@ -251,6 +256,8 @@ namespace Jinhyeong_GameData.Editor
 
             _path.Clear();
             _travelMax = 0f;
+            _seenFirst = -1f;
+            _seenLast = -1f;
             _spawnPos = Vector3.positiveInfinity;
             _phaseStartScaled = Time.time;
             _phaseStartReal = Time.realtimeSinceStartup;
@@ -276,6 +283,14 @@ namespace Jinhyeong_GameData.Editor
                 return;
             }
 
+            if (AnyDrawn(live))
+            {
+                float t = Time.time - _phaseStartScaled;
+                if (_seenFirst < 0f)
+                    _seenFirst = t;
+                _seenLast = t;
+            }
+
             Vector3 local = live[0].transform.position - ArenaOrigin;
             if (float.IsInfinity(_spawnPos.x))
             {
@@ -294,6 +309,20 @@ namespace Jinhyeong_GameData.Editor
                 _shotTaken = true;
                 ScreenCapture.CaptureScreenshot(ShotFile);
             }
+        }
+
+        private static bool AnyDrawn(SkillConfig[] live)
+        {
+            for (int i = 0; i < live.Length; i++)
+            {
+                SpriteRenderer[] srs = live[i].GetComponentsInChildren<SpriteRenderer>(false);
+                for (int k = 0; k < srs.Length; k++)
+                {
+                    if (srs[k].enabled && srs[k].sprite != null && srs[k].color.a > 0.01f)
+                        return true;
+                }
+            }
+            return false;
         }
 
         private static void RecordCurrent()
@@ -319,8 +348,11 @@ namespace Jinhyeong_GameData.Editor
                 trail = $"({first.x:0.0},{first.z:0.0})→({last.x:0.0},{last.z:0.0})";
             }
 
+            string seen = _seenFirst < 0f ? "없음" : $"{_seenFirst:0.00}~{_seenLast:0.00}";
+            int alive = Object.FindObjectsByType<SkillConfig>(FindObjectsSortMode.None).Length;
+
             _report.AppendLine(string.Format(CultureInfo.InvariantCulture,
-                "{0,-5} {1,-18} {2,-22} {3,6:0.0} {4,6} {5,6:0.0} {6,5}  {7}",
+                "{0,-5} {1,-18} {2,-22} {3,6:0.0} {4,6} {5,6:0.0} {6,5}  {7,-11} {8,4}  {9}",
                 def.Meta.Id,
                 def.Meta.Name,
                 def.Meta.MethodPath.Replace("Skill/Method/", ""),
@@ -328,6 +360,8 @@ namespace Jinhyeong_GameData.Editor
                 Time.frameCount - _phaseStartFrame,
                 _travelMax,
                 statusCount,
+                seen,
+                alive,
                 trail));
         }
 

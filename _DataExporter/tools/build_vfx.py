@@ -13,14 +13,14 @@
 # - 캐릭터 고유 공격 10종은 전용 이펙트 + 캐릭터 색 (gen_slayer.js HEROES 의 fx · color)
 # - 표(폴더 · 주소 · 종류)는 _DataExporter/_fx_table.tsv 로 낸다. Art2DBuilder 가 그 표로 프리팹을 굽는다
 #
-# 사용: python build_vfx.py [--preview]
+# 사용: python build_vfx.py [--preview] [폴더 ...]   (폴더를 주면 그 이펙트 그림만 쓴다)
 
 from PIL import Image, ImageDraw, ImageFilter
 import os, sys, math, json, random, shutil
 from pixkit import *
 sys.stdout.reconfigure(encoding="utf-8")
 
-ROOT = r"C:\jinhyeong_project\Unity_SkillSystem_Module"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 DST = os.path.join(ROOT, r"Assets\_Art\FX")
 TABLE = os.path.join(ROOT, "_DataExporter", "_fx_table.tsv")
 PREVIEW_DIR = os.path.join(ROOT, "_DataExporter", "preview")
@@ -180,23 +180,8 @@ def spin(im, deg):
 
 # ---------------------------------------------------------------- 캐릭터 고유 10
 
-def e_iaido(t):
-    """시바 발도 일섬 — 오른쪽으로 휘두르는 반달 + 벚꽃잎."""
-    im, d = blank()
-    sweep = ease(min(1.0, t * 1.8))
-    a0, a1 = -75, -75 + 150 * sweep
-    if a1 > a0 + 4:
-        band(d, 22, 32, 26, lambda u: 1 + 5 * math.sin(math.pi * u), a0, a1, EDGE)
-        band(d, 22, 32, 25, lambda u: 0.5 + 3 * math.sin(math.pi * u), a0, a1, CORE)
-    rnd = random.Random(3)
-    for i in range(7):
-        a = math.radians(rnd.uniform(-70, 70))
-        r = 22 + t * rnd.uniform(4, 12)
-        x, y = 22 + math.cos(a) * r, 32 + math.sin(a) * r + t * 4
-        if t > 0.15:
-            d.polygon([(x, y), (x + 2, y - 1), (x + 3, y + 1), (x + 1, y + 2)], fill=CORE)
-    return im
-
+# pixelfx 에서 떠 온 이펙트(일섬 · 타격 불꽃 · 정전기 · 뼈 지뢰 폭발 · 기탄 · 광탄)는 그리는 함수 없이 PX("<폴더>") —
+# 표와 옵션은 pixelfx_import.mjs 에 있다
 
 def o_arrow_short(f):
     """진돗개 편전 — 짧은 화살, 붉은 깃."""
@@ -471,26 +456,6 @@ def e_rune(t):
     return im
 
 
-def e_lightray(t):
-    """빛의 창 — 앞쪽 긴 빛줄기 + 창날."""
-    im, d = blank()
-    flick = 1 if int(t * 10) % 2 else 0
-    d.rectangle([2, 30 - flick, 52, 34 + flick], fill=EDGE)
-    d.rectangle([2, 31, 52, 33], fill=CORE)
-    d.polygon([(52, 27), (62, 32), (52, 37)], fill=CORE)
-    return im
-
-
-def e_qibolt(t):
-    """심안 관통 — 길쭉한 기의 마름모 + 잔광."""
-    im, d = blank()
-    d.polygon([(14, 32), (36, 28), (52, 32), (36, 36)], fill=EDGE)
-    d.polygon([(22, 32), (38, 30), (50, 32), (38, 34)], fill=CORE)
-    for i, x in enumerate((8, 12)):
-        d.point((x, 32), fill=EDGE)
-    return im
-
-
 def e_magicshot(t):
     """추적 마탄 — 마력 구슬 + 감기는 꼬리."""
     im, d = blank()
@@ -512,22 +477,6 @@ def e_lightning(t):
         pts.append((x, 32 + rnd.randint(-6, 6)))
     zig(d, pts, EDGE, 3)
     zig(d, pts, CORE, 1)
-    return im
-
-
-def e_thunder(t):
-    """뇌운 — 위에서 내리꽂는 번개 + 바닥 섬광 (Billboard)."""
-    im, d = blank()
-    rnd = random.Random(int(t * 6) + 4)
-    pts = [(32, 0)]
-    for y in range(6, 54, 6):
-        pts.append((32 + rnd.randint(-5, 5), y))
-    pts.append((32, 56))
-    if t < 0.7:
-        zig(d, pts, EDGE, 4)
-        zig(d, pts, CORE, 2)
-    r = 4 + 10 * ease(t)
-    d.ellipse([32 - r, 56 - r * 0.4, 32 + r, 56 + r * 0.4], fill=CORE)
     return im
 
 
@@ -615,14 +564,6 @@ def e_paw(t):
     return im
 
 
-def e_hit(t):
-    im, d = blank()
-    r = 4 + 9 * ease(t)
-    star4(d, 32, 32, r, CORE)
-    d.ellipse([29, 29, 35, 35], fill=CORE)
-    return im
-
-
 def e_shards(t):
     im, d = blank()
     r = 4 + 18 * ease(t)
@@ -653,16 +594,29 @@ def O_frames(fn, n=N, loop=False):
     return ("object", [obj(lambda f, k=k: fn(f, k / (n - 1) if not loop else k)) for k in range(n)], loop)
 
 
+def PX(folder):
+    """pixelfx 에서 떠 온 64×K 격자 프레임 (pixelfx_import.mjs 가 _DataExporter/pixelfx/<폴더>/ 에 쓴다).
+    제 페이드를 들고 있으니 그대로 키우고, 번짐만 도트 링으로 굽는다.
+    표 종류는 kind.txt — object(제 색) 또는 tint(회색조, 데이터 색을 입힌다).
+    중간 프레임은 저장소에 없다(gitignore). 없으면 None — 이미 구운 Assets/_Art/FX 를 건드리지 않는다."""
+    d = os.path.join(ROOT, "_DataExporter", "pixelfx", folder)
+    if os.path.isdir(d) is False:
+        return None
+    names = sorted(f for f in os.listdir(d) if f.endswith(".png"))
+    kind = open(os.path.join(d, "kind.txt"), encoding="utf-8").read().strip()
+    return ("pixel:" + kind, [Image.open(os.path.join(d, f)).convert("RGBA") for f in names], False)
+
+
 FX = {
     # 캐릭터 고유 10 (+ 착탄 · 발사)
-    "fx_iaido": ("Fx_Iaido", lambda: E(e_iaido)),
+    "fx_iaido": ("Fx_Iaido", lambda: PX("fx_iaido")),
     "fx_arrow": ("Fx_Arrow", lambda: O_static(o_arrow_short)),
     "fx_shuriken": ("Fx_Shuriken", lambda: O_spin(o_shuriken)),
     "fx_palm": ("Fx_Palm", lambda: E(e_palm)),
     "fx_talisman": ("Fx_Talisman", lambda: ("object", [obj(lambda f, s=s: o_talisman(f, s)) for s in (-2, 0, 2, 0)], True)),
     "fx_holy": ("Fx_Holy", lambda: E(e_holy)),
     "fx_fireball": ("Fx_Fireball", lambda: O_frames(o_fireball, 4, loop=True)),
-    "fx_blast": ("Fx_Blast", lambda: O_frames(o_blast)),
+    "fx_blast": ("Fx_Blast", lambda: PX("fx_blast")),
     "fx_axewhirl": ("Fx_AxeWhirl", lambda: E(e_axewhirl)),
     "fx_longarrow": ("Fx_LongArrow", lambda: O_static(o_longarrow)),
     "fx_pellet": ("Fx_Pellet", lambda: O_static(o_pellet)),
@@ -683,11 +637,11 @@ FX = {
     "fx_frost": ("Fx_Frost", lambda: E(e_frost)),
     "fx_roar": ("Fx_Roar", lambda: E(e_roar)),
     "fx_rune": ("Fx_Rune", lambda: E(e_rune)),
-    "fx_lightray": ("Fx_LightRay", lambda: E(e_lightray)),
-    "fx_qibolt": ("Fx_QiBolt", lambda: E(e_qibolt)),
+    "fx_lightray": ("Fx_LightRay", lambda: PX("fx_lightray")),
+    "fx_qibolt": ("Fx_QiBolt", lambda: PX("fx_qibolt")),
     "fx_magicshot": ("Fx_MagicShot", lambda: E(e_magicshot)),
     "fx_lightning": ("Fx_Lightning", lambda: E(e_lightning)),
-    "fx_thunder": ("Fx_Thunder", lambda: E(e_thunder)),
+    "fx_thunder": ("Fx_Thunder", lambda: PX("fx_thunder")),
     "fx_bladeswirl": ("Fx_BladeSwirl", lambda: E(e_bladeswirl)),
     "fx_afterimage": ("Fx_Afterimage", lambda: E(e_afterimage)),
     "fx_barrier": ("Fx_Barrier", lambda: E(e_barrier)),
@@ -697,7 +651,7 @@ FX = {
     "fx_gale": ("Fx_Gale", lambda: E(e_gale)),
     # 공용 (코드 키: CommonConfig HitFxKey · HitBurstKey, 시전 발자국)
     "fx_paw": ("Fx_Paw", lambda: E(e_paw)),
-    "fx_hit": ("Fx_Hit", lambda: E(e_hit)),
+    "fx_hit": ("Fx_Hit", lambda: PX("fx_hit")),
     "fx_shards": ("Fx_HitBurst", lambda: E(e_shards)),
 }
 
@@ -736,6 +690,10 @@ def build(kind, frames, loop):
     cores, glows = [], []
     for i, im in enumerate(frames):
         k = 1.0
+        if kind.startswith("pixel"):
+            cores.append(big(im, UP))
+            glows.append(glow_of(im, grow=1, strength=0.6))
+            continue
         if kind == "energy":
             k = fade(i / max(1, len(frames) - 1))
         elif not loop:
@@ -760,22 +718,37 @@ def write_scale(keys, ks):
 
 def main():
     preview_only = "--preview" in sys.argv
+    # 폴더 이름을 주면 그 이펙트 그림만 쓴다 (표 · 배율은 늘 전부). 예: python build_vfx.py fx_iaido
+    only = [a for a in sys.argv[1:] if a.startswith("--") is False]
     os.makedirs(PREVIEW_DIR, exist_ok=True)
     global K
     table = scale_table()
     ks = {k: (1.0 if k in COMMON else table.get(addr, 1.0)) for k, (addr, _) in FX.items()}
-    built, kinds = {}, {}
+    # pixelfx 중간 프레임이 없는 이펙트는 굽지 않고 표의 종류만 그대로 잇는다
+    old_kinds = {}
+    if os.path.exists(TABLE):
+        for line in open(TABLE, encoding="utf-8"):
+            cols = line.rstrip("\n").split("\t")
+            if line.startswith("#") is False and len(cols) >= 3:
+                old_kinds[cols[0]] = cols[2]
+    built, kinds, kept = {}, {}, []
     for k, (_, mk) in FX.items():
         K = ks[k]
         made = mk()
+        if made is None:
+            kinds[k] = old_kinds.get(k, "object")
+            kept.append(k)
+            continue
         kinds[k] = made[0]
         built[k] = build(*made)
+    if kept:
+        print("pixelfx 중간 프레임 없음 — 기존 그림 유지: " + " ".join(kept) + " (다시 뽑으려면 pixelfx_import.mjs)")
     K = 1.0
     print("캔버스 배율: " + " ".join("%s=%g" % (k[3:], v) for k, v in ks.items() if v > 1))
 
     if not preview_only:
         # 표에 없는 옛 폴더(음악 · 개 소품 이펙트)는 폴더째 지운다
-        for name in os.listdir(DST):
+        for name in ([] if only else os.listdir(DST)):
             p = os.path.join(DST, name)
             if name.startswith("fx_") and name not in FX:
                 if os.path.isdir(p):
@@ -783,19 +756,23 @@ def main():
                 elif name.endswith(".meta") and name[:-5] not in FX:
                     os.remove(p)
         for k, (cores, glows) in built.items():
+            if only and k not in only:
+                continue
             d = os.path.join(DST, k)
             for sub, frames in (("core", cores), ("glow", glows)):
                 sd = os.path.join(d, sub)
                 os.makedirs(sd, exist_ok=True)
+                # 그림만 지운다. .meta 는 남긴다 — 지우면 Unity 가 기본 설정(스프라이트 아님 · PPU 100)으로 새로 만든다
                 for f in os.listdir(sd):
-                    os.remove(os.path.join(sd, f))
+                    if f.endswith(".png"):
+                        os.remove(os.path.join(sd, f))
                 for i, im in enumerate(frames):
                     im.save(os.path.join(sd, "%02d.png" % i))
         write_scale(list(FX), ks)
         with open(TABLE, "w", encoding="utf-8", newline="\n") as fp:
             fp.write("# build_vfx.py 가 쓴다. 폴더\t주소\t종류(energy=흰 심지 틴트 / object=제 색)\n")
             for k, (addr, _) in FX.items():
-                fp.write("%s\t%s\t%s\n" % (k, addr, kinds[k]))
+                fp.write("%s\t%s\t%s\n" % (k, addr, kinds[k].split(":")[-1]))
 
     # 미리보기: 어두운 바닥 위에 번짐(청록 근사) + 심지, 프레임 6칸
     T = 96
@@ -810,8 +787,9 @@ def main():
             cell.alpha_composite(cores[i])
             sheet.alpha_composite(cell.resize((T, T), Image.NEAREST), (i * T, r * T))
     sheet.save(os.path.join(PREVIEW_DIR, "vfx_all.png"))
-    print("이펙트 %d종 (기운 %d · 물건 %d)%s" % (len(FX), sum(1 for v in kinds.values() if v == "energy"),
-                                        sum(1 for v in kinds.values() if v == "object"), " (미리보기만)" if preview_only else ""))
+    print("이펙트 %d종 (기운 %d · 물건 %d · pixelfx %d)%s" % (len(FX), sum(1 for v in kinds.values() if v == "energy"),
+                                        sum(1 for v in kinds.values() if v == "object"),
+                                        sum(1 for v in kinds.values() if v.startswith("pixel")), " (미리보기만)" if preview_only else ""))
 
 
 main()

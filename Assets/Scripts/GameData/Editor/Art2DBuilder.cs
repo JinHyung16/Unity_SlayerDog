@@ -51,10 +51,11 @@ namespace Jinhyeong_GameData.Editor
 
         // 이펙트 표 = build_vfx.py 가 쓰는 _DataExporter/_fx_table.tsv (폴더 · 주소 · 종류). 각 폴더에 core/ · glow/ 두 층
         // 종류 object(무기 · 투사체)는 제 색을 지키고, energy(기운형)는 흰 심지가 데이터 색을 CoreTintEnergy 만큼만 받는다
+        // tint(pixelfx 회색조)는 명암만 든 그림이라 데이터 색을 CoreTintGray 만큼 받아 색이 된다 — 같은 그림을 보스 위험 색으로도 쓴다
         private const string FxTablePath = "_DataExporter/_fx_table.tsv";
 
         private static Dictionary<string, string> _fxAddress;
-        private static HashSet<string> _fxObjects;
+        private static Dictionary<string, float> _fxCoreTint;
 
         private static Dictionary<string, string> FxAddress
         {
@@ -65,21 +66,20 @@ namespace Jinhyeong_GameData.Editor
             }
         }
 
-        private static HashSet<string> FxObjects
+        // 심지가 데이터 색을 받는 정도. 종류 열: object 0 (제 색) · tint 0.6 (회색조 그림에 색을 입힌다) · 그 밖(energy) 0.25
+        private static float FxCoreTint(string folder)
         {
-            get
-            {
-                LoadFxTable();
-                return _fxObjects;
-            }
+            LoadFxTable();
+            return _fxCoreTint.TryGetValue(folder, out float w) ? w : CoreTintEnergy;
         }
 
-        private static void LoadFxTable()
+        // 표는 굽기마다 새로 읽는다 — 정적 캐시로 두면 도메인 리로드 전까지 표 수정이 무시된다
+        private static void LoadFxTable(bool reload = false)
         {
-            if (_fxAddress != null)
+            if (_fxAddress != null && reload == false)
                 return;
             _fxAddress = new Dictionary<string, string>();
-            _fxObjects = new HashSet<string>();
+            _fxCoreTint = new Dictionary<string, float>();
             if (File.Exists(FxTablePath) == false)
             {
                 Debug.LogWarning($"[Art2DBuilder] {FxTablePath} 가 없습니다 — build_vfx.py 를 먼저 돌린다");
@@ -94,11 +94,14 @@ namespace Jinhyeong_GameData.Editor
                     continue;
                 _fxAddress[cols[0]] = cols[1];
                 if (cols[2] == "object")
-                    _fxObjects.Add(cols[0]);
+                    _fxCoreTint[cols[0]] = 0f;
+                else if (cols[2] == "tint")
+                    _fxCoreTint[cols[0]] = CoreTintGray;
             }
         }
 
         private const float CoreTintEnergy = 0.25f;
+        private const float CoreTintGray = 0.6f;
         private const string GlowShader = "Jinhyeong/SpriteAdditive";
         private const string GlowMaterialPath = MaterialDir + "/Fx_Glow.mat";
 
@@ -301,6 +304,7 @@ namespace Jinhyeong_GameData.Editor
         {
             int made = 0;
             Material glowMat = LoadGlowMaterial();
+            LoadFxTable(reload: true);
             foreach (KeyValuePair<string, string> kv in FxAddress)
             {
                 string dir = FxDir + "/" + kv.Key;
@@ -316,8 +320,7 @@ namespace Jinhyeong_GameData.Editor
                 // 번짐이 먼저(아래), 심지가 위. 같은 정렬 순서 안에서 형제 순서를 따르지 않으므로 order 로 가른다
                 if (glow.Length > 0)
                     AddFxLayer(go, "Glow", glow, OrderFx, glowMat, -1f);
-                bool keepOwn = FxObjects.Contains(kv.Key);
-                AddFxLayer(go, "Core", core, OrderFx + 1, null, keepOwn ? 0f : CoreTintEnergy);
+                AddFxLayer(go, "Core", core, OrderFx + 1, null, FxCoreTint(kv.Key));
 
                 if (kv.Value == "Fx_Hit" || kv.Value == "Fx_HitBurst")
                     go.AddComponent<HitEffect>();

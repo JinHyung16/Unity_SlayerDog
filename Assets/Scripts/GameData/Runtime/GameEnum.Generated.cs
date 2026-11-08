@@ -119,7 +119,8 @@ namespace Jinhyeong_GameData
         DebuffId,
         BurstCount,
         BurstInterval,
-        BurstSpread
+        BurstSpread,
+        CastVisual
     }
 
     public enum EStatusStackMode

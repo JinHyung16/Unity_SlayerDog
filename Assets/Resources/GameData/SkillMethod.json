@@ -100,6 +100,41 @@
         ]
     },
     {
+        "path": "Skill/Method/instant_swing",
+        "desc": "즉발 + 휘두르기 — 대상 위치에 바로 적중, 시전자 앞에 Cast 그림. 대상이 없으면 실패",
+        "slots": [
+            "onHit"
+        ],
+        "nodes": [
+            {
+                "slot": "onHit"
+            },
+            {
+                "slot": "onDebuff",
+                "optional": true
+            },
+            {
+                "slot": "onCast",
+                "optional": true
+            },
+            {
+                "type": "DespawnAfterHits",
+                "params": {
+                    "Value": 1
+                }
+            },
+            {
+                "type": "LaunchInstant",
+                "params": {
+                    "Visual": "@visual.Impact",
+                    "CastVisual": "@visual.Cast",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
+            }
+        ]
+    },
+    {
         "path": "Skill/Method/projectile/arc",
         "desc": "포물선 낙하 — 발사 시점의 목표 지점에 떨어진다 (착탄지 고정)",
         "slots": [
@@ -297,13 +332,21 @@
     },
     {
         "path": "Skill/Method/self_cast",
-        "desc": "자기 자신에게 즉시 적용 — 발사체 없음",
+        "desc": "자기 자신에게 즉시 적용 — 발사체 없음, 시전자 자리에 Cast 그림",
         "slots": [
             "onCast"
         ],
         "nodes": [
             {
                 "slot": "onCast"
+            },
+            {
+                "type": "LaunchInstant",
+                "params": {
+                    "Visual": "@visual.Cast",
+                    "VisualColor": "@visual.Color",
+                    "VisualOrient": "@visual.Orient"
+                }
             }
         ]
     }

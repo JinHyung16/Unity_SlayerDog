@@ -54,7 +54,7 @@ for (const dir of ['Skill/Master', 'Skill/Visual', 'Skill/Part', 'Skill/Option',
 // 화력 기준: 예전 LV2 5/5 클리어 판의 기본 공격 단일 대상 초당 150~200, 광역은 그 절반 안팎
 const HEROES = [
     { id: 2201, key: 'basic_iaido', name: 'Iaido', disp: '발도 일섬', owner: 1, family: 'Melee', slot: 'Neck',
-      method: 'instant', fx: 'Fx_Iaido', impact: 'Fx_Hit', cast: 'Fx_Iaido', orient: 'Ground', color: '#FF8FC8',
+      method: 'instant_swing', fx: 'Fx_Iaido', impact: 'Fx_Hit', cast: 'Fx_Iaido', orient: 'Ground', color: '#FF8FC8',
       copy: '칼을 뽑아 전방 반달 반경 1.9m 에 공격력 200% 피해. 0.9초마다',
       target: { type: 'TargetCone', params: { Range: '@stat.Range', HalfAngle: 60 } },
       stat: { Cooldown: 0.9, Range: 3.0, Damage: 200, Radius: 1.9 },

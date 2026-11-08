@@ -289,8 +289,15 @@ namespace Jinhyeong_SkillSystem.Skill
             if (ds == null || ds.NodeType != ESkillNodeType.DespawnAfterHits)
                 return;
             int max = Mathf.Max(1, ds.GetInt(ESkillParamKey.Value, null, 1, _config.Modifier));
-            if (_config.PulseCount >= max)
-                _config.Despawn();
+            if (_config.PulseCount < max)
+                return;
+            // 즉발은 적중한 프레임에 지우면 그림이 한 장도 안 나간다 — 판정만 끄고, SkillMethod 가 한 바퀴 뒤에 지운다
+            if (_method != null && _method.Motion == SkillMethod.EMotion.Instant)
+            {
+                _config.Armed = false;
+                return;
+            }
+            _config.Despawn();
         }
 
         private void CheckTimedDespawn()

@@ -256,6 +256,12 @@ namespace Jinhyeong_SkillSystem
                 buffer.Add(visual);
             }
 
+            string cast = node.GetString(ESkillParamKey.CastVisual);
+            if (string.IsNullOrEmpty(cast) == false)
+            {
+                buffer.Add(cast);
+            }
+
             for (int i = 0; i < node.Children.Count; i++)
             {
                 CollectVisualKeys(node.Children[i], buffer);

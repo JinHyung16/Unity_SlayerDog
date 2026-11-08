@@ -83,14 +83,36 @@ namespace Jinhyeong_SkillSystem
             if (ctx.Targets.Count == 0)
                 return false;
 
+            // Hit 노드가 없으면(self_cast 버프) 판정 없는 연출만 — 한 바퀴 돌고 사라진다
+            bool hits = ctx.HitNode != null;
             Vector3 spawnPos = TargetPos(ctx.Targets[0]);
-            SkillConfig config = Spawn(launchNode, ctx, spawnPos, Quaternion.identity, armed: true);
+            SkillConfig config = Spawn(launchNode, ctx, spawnPos, Quaternion.identity, armed: hits);
             if (config == null)
                 return false;
 
-            config.GetComponent<SkillMethod>().InitInstant();
-            config.GetComponent<SkillHit>().ImmediateHit(ctx.Targets);
+            config.GetComponent<SkillMethod>().InitInstant(config.GetComponent<SkillVisual>().PlayLife);
+            if (hits)
+                config.GetComponent<SkillHit>().ImmediateHit(ctx.Targets);
+
+            SpawnCastFlourish(launchNode, ctx);
             return true;
+        }
+
+        // 시전 연출 — CastVisual 이 있으면 시전자 앞에 대상 방향으로 한 번 그린다. 판정 없이 한 바퀴 재생하고 사라진다
+        // (즉발 본체는 대상 위치에 뜨므로 몸 앞에서 나가는 그림은 따로 띄운다)
+        private static void SpawnCastFlourish(SkillNodeData launchNode, SkillContext ctx)
+        {
+            string castKey = launchNode.GetString(ESkillParamKey.CastVisual);
+            if (string.IsNullOrEmpty(castKey))
+                return;
+
+            Vector3 dir = ResolveDirection(ctx);
+            dir.y = 0f;
+            SkillConfig cast = Spawn(launchNode, ctx, castKey, OriginPos(ctx), LookTo(dir), armed: false);
+            if (cast == null)
+                return;
+
+            cast.GetComponent<SkillMethod>().InitInstant(cast.GetComponent<SkillVisual>().PlayLife);
         }
 
         private static bool LaunchLinear(SkillNodeData launchNode, SkillContext ctx)
@@ -157,7 +179,11 @@ namespace Jinhyeong_SkillSystem
 
         private static SkillConfig Spawn(SkillNodeData launchNode, SkillContext ctx, Vector3 pos, Quaternion rot, bool armed)
         {
-            string visualKey = launchNode.GetString(ESkillParamKey.Visual);
+            return Spawn(launchNode, ctx, launchNode.GetString(ESkillParamKey.Visual), pos, rot, armed);
+        }
+
+        private static SkillConfig Spawn(SkillNodeData launchNode, SkillContext ctx, string visualKey, Vector3 pos, Quaternion rot, bool armed)
+        {
             if (PoolManager.Instance == null)
             {
                 Debug.LogError("[LaunchExecutor] PoolManager 가 없어 스킬을 스폰할 수 없습니다");
